@@ -8,7 +8,7 @@ The 2nd will actually call `f` once while the 1st will call that *much more time
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution 1.1~40,42,43,45 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution 1.1~46 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
@@ -767,6 +767,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       It splits $N_1$ out and pairs $(D_i,N_{i+1})$ and then at last $D_n$.
   - repo see `diff ~/SICP/1_Building_Abstractions_with_Procedures/1.3_Formulating_Abstractions_with_Higher-Order_Procedures/Exercise_1_37.rkt ~/SICP/1_Building_Abstractions_with_Procedures/1.3_Formulating_Abstractions_with_Higher-Order_Procedures/Exercise_1_39.rkt`
 - [x] 1.40 trivial
+- [ ] 1.41 `5+8` is wrong See wiki
+  - wiki
+    ` double3 double2 = double2 (double2)` implies
+    $a_{n+1}=a_n^2$ where $a_n$ is the call number.
 - [x] 1.42 trivial
 - [x] 1.43
   - wiki
@@ -780,13 +784,17 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       Also see
       > A logarithmic *iterative* solution.
       which is similar to exercise 1.16
+- [x] 1.44 very similar to 1.45 but simpler.
+  - wiki 
+    - "Be aware below is WRONG:" is similar to .
 - [ ] 1.45
+  Originally I didn't know the answer $\lfloor\log(n)\rfloor$.
   - wiki
     - `(pow b p)` just Exercise 1.16 `fast-expt-iter`.
     - the 2nd comment shares the same basic idea as the 1st.
   - my implementation
     - See https://stackoverflow.com/a/53933846/21294350
-      - the key is as [the comment](https://stackoverflow.com/questions/53925944/sicp-1-45-why-are-these-two-higher-order-functions-not-equivalent#comment138739132_53933846) says
+      - the key is as An5Drama's comment "In a summary ..." says
         - > my key takeaway/ah-ha moment was when you named and simplified the lambda function and *then defined h*
   - repo
     - https://deltam.blogspot.com/2015/08/sicp145ex145.html
@@ -831,7 +839,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       plt.show()
       ```
   - ~~TODO it seems we can't use neither too large nor too small number of `average-damp`.~~
-
+- [ ] 1.46
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

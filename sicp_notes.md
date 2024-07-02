@@ -1,54 +1,13 @@
----
-
-I tried to use one different phone to log in. It works.
-
-It fails for me to use one different proxy address of VPN which doesn't solve the above problem.
-
----
-
-As reference, the formula is derived in https://math.libretexts.org/Bookshelves/Calculus/CLP-1_Differential_Calculus_(Feldman_Rechnitzer_and_Yeager)/06%3A_Appendix/6.03%3A_C-_Root_Finding/6.3.02%3A_C.2_The_Error_Behaviour_of_Newton's_Method (almost same as https://personal.math.ubc.ca/~feldman/m120/newtConv.pdf) by "Subtracting (E2) from (E1)". Here the question may assume both derivatives are positive ($f''(\epsilon_n)\neq 0$ to ensure we will continue iteration and $f'(x_n)\neq 0$ since it is the denominator).
-
-IMHO Here if $b_n$ is too negative, then "the estimate of the number of digits doubles each time" doesn't hold. We need to take $b_n$ into consideration as the libretexts link https://math.libretexts.org/Bookshelves/Calculus/CLP-1_Differential_Calculus_(Feldman_Rechnitzer_and_Yeager)/06%3A_Appendix/6.03%3A_C-_Root_Finding/6.3.02%3A_C.2_The_Error_Behaviour_of_Newton's_Method says "You can see why from (E5). Since ..." although the main idea is still same.
-
----s
-Thanks. As indicated in your answer, my wrong calculation for $\frac1x\frac{\mathrm{d}\frac{\sin(x)}{x}}{\mathrm{d}x}$ should have the sum index starting from $1$ instead of $0$.
-
-Correct calculation:
-$$\begin{align*}
-\frac1x\frac{\mathrm{d}\frac{\sin(x)}{x}}{\mathrm{d}x}&=\frac1x\sum\limits_{k=1}^\infty\frac{(-1)^k\cdot2k}{(2k+1)!}x^{2k-1}\\
-&=\sum\limits_{k=1}^\infty\frac{(-1)^k\cdot2k}{(2k+1)!}x^{2k-2}\\
-&=\sum\limits_{k=1}^\infty\frac{(-x^2)^{k-1}\cdot(-2k)}{(2k+1)!}\\
-&=\sum\limits_{k=0}^\infty\frac{(-x^2)^k\cdot(-1)\cdot(2k+2)}{(2k+3)!}\\
-&=\frac{-1}{2k+3}\sum\limits_{k=0}^\infty\frac{(-x^2)^k}{(2k+1)!}.\end{align*}
-$$
-The original post
-$$
-\begin{align*}
-&=\sum\limits_{k=0}^\infty k\cdot (-x^2)^{k-1}\cdot(\frac{-2x}x)\cdot\dfrac1{(2k+1)!}\\&=\sum\limits_{k=0}^\infty(-2k)\cdot(-x^2)^{k-1}\dfrac1{(2k+1)  
-!}\\&\neq P_1(x)\end{align*}
-$$
-should be 
-$$
-\begin{align*}
-\sum\limits_{k=1}^\infty(-2k)\cdot(-x^2)^{k-1}\dfrac1{(2k+1)!}&=\sum\limits_{k=0}^\infty(-1)\cdot(2k+2)\cdot(-x^2)^{k}\dfrac1{(2k+3)!}\\
-&=\sum\limits_{k=0}^\infty\frac{-1}{2k+3}\cdot(-x^2)^{k}\dfrac1{(2k+1)!}
-\end{align*}
-$$
----
-
-Could I ask one small question? Here it is fine by omitting $\left(-\frac1x\frac{\mathrm{d}}{\mathrm{d}x}\right)^n\frac{\sin(x)}{x}$ for proof when saying about $P_n(x)$. Then why do you explicitly say that (are there some tricky ideas behind that and the relation between derivatives and the continued fraction)?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
 - My edits to *schemewiki* is shown with nickname LisScheSic
-  See http://community.schemewiki.org/?c=r (I won't update the history list since it will be [archived](https://web.archive.org/web/20160809060947/http://community.schemewiki.org/?p=sicp-ex-2.70&c=h))
-sicp-ex-1.45	03:25:51	(1 minute ago)	clarify some comments
-sicp-ex-1.45	03:20:30	(6 minutes ago)	fix one analysis typo error.
-sicp-ex-1.45	03:16:43	(10 minutes ago)	remove redundant codes
-sicp-ex-1.37	07:23:29	(1 minute ago)	connect comments to the author whose info page shows what Scheme interpreter is used for the comments.
-sicp-ex-1.43	07:22:50	(2 minutes ago)	connect comments to the author whose info page shows what Scheme interpreter is used for the comments.
-LisScheSic	07:20:13	(4 minutes ago)	show information of software used by myself.
-sicp-ex-1.45	07:16:36	(8 minutes ago)	fix one analysis error.
+```
+----
+<<<LisScheSic
+...
+>>>
+```
 # reading order recommendation with other books
 - better read *pure* "Computer Architecture" (So not csapp) before SICP if having learnt other programming languages like C.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
@@ -56,9 +15,9 @@ sicp-ex-1.45	07:16:36	(8 minutes ago)	fix one analysis error.
     1. Figure 1.5
 # book reading order
 - The reading order:
-  book with footnotes -> em -> check "to reread after reading later chapters" -> exercise
+  book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*.
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to exercise 1.35 finished
+- up to exercise 1.40 finished
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 1.2 (included) by searching "chapter" and "section".
 ### 1.2
@@ -397,9 +356,10 @@ I only check labs without checking Homework, Quizzes and Retakes
   - Rule 1: not "Don't put closing (or opening) parens on a line of their own", i.e. one line with only one paren.
     > Notice how the closing parens are all on a line of their own, *indented so to mark* where the expression will continue. Remember, it's *an exception - use this rarely*.
   - For the rest I only read their titles.
-- [naming](https://web.archive.org/web/20231129221311/http://community.schemewiki.org/?variable-naming-convention)
+- [naming](http://community.schemewiki.org/?variable-naming-convention)
   - TODO
     *Name
+  - From RnRS is same as [1.3.5 in R7RS](https://standards.scheme.org/official/r7rs.pdf)
 - [comment convention](https://web.archive.org/web/20220526005605/http://community.schemewiki.org/?comment-style)
 - I skipped "Scheme Tips from Dartmouth" since format is not that important but needs to be consistent when cooperation.
 
@@ -623,6 +583,9 @@ Since I was to learn programming, so for paragraphs not intensively with program
   - [TR](https://kb.mit.edu/confluence/display/glossary/TR) meaning in "TR, 7-9PM"
 - Newton's method (i.e. approximation based on derivative) -> Heron's method [proof](https://math.stackexchange.com/a/1733394/1059606)
   notice here we can't use $f(x)=\sqrt{x}-\sqrt{2},x\mapsto x-\frac{\sqrt{x}-\sqrt{2}}{\frac{1}{2\sqrt{x}}}=2\sqrt{2x}-x$ where the mapped result contains $\sqrt{2}$ which is what ~~since~~ we want to calculate~~$\sqrt{2}$~~.
+  - Also see chapter 1.3
+    > When we first introduced the square-root procedure, in section 1.1.7, we mentioned that this was *a special case of Newton's method*.
+    > For instance, to find the square root of x, we can use Newton's method to find a zero of the function y  y2 - x starting with an initial guess of 1.
 - [shire album book series](https://www.somethingunderthebed.com/CURTAIN/SHIRE_ALBUM.html)
   - TODO does the author have one website (search by "Calculating Machines and Computers Geoffrey Tweedale page")?
 - TODO what is silicon well, Higgs field?
@@ -910,6 +873,9 @@ IMHO it is fine to read 1.2 without reading 1.3 first.
   - > But not every function has this property.
     since one is oscillating while the other is strictly decreasing.
   - Also see [this](https://math.stackexchange.com/a/3518585/1059606) for why choose average function.
+- > to derive it, add y to both sides of the equation and divide by 2
+  See exercise 1.45 zhihu link.
+  Here although these 2 functions are not same, they have one shared intersection point.
 #### 1.3.4
 - `fixed-point` similar to `good-enough?` where the former cares about `(- y (/ x y))` and the latter is about `abs (- (square guess) x)`
   `average-damp` -> `average`
@@ -1031,6 +997,12 @@ different length sentence. The range is from 0 to N − 1.
       ```
 - > computes a few unnecessary ones
   i.e. at least the *other* terms at the target row.
+# Colophon
+- > is image of the engraving is hosted by J. E. Johnson of New Goland.
+  [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
+- > e typefaces are Linux Libertine for body text and Linux Biolinum for headings, both by Philipp H. Poll
+  [See](https://www.fontsquirrel.com/fonts/list/foundry/philipp-poll)
+- [Inconsolata](https://fonts.google.com/?query=Raph+Levien) (Also see Alegreya) [LGC](https://online-fonts.com/fonts/inconsolata-lgc)
 # TODO about the earlier chapters after reading later chapters
 - > by incorporating a limited form of normal-order evaluation
 # TODO after lambda calculus
