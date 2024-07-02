@@ -1,0 +1,3 @@
+[submodule "SICP"]
+	path = SICP
+	url = https://github.com/sci-42ver/SICP.git

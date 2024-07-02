@@ -1,0 +1,322 @@
+MIT/GNU Scheme running under GNU/Linux
+Type `^C' (control-C) followed by `H' to obtain information about interrupts.
+
+Copyright (C) 2022 Massachusetts Institute of Technology
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Image saved on Friday January 6, 2023 at 10:11:41 PM
+  Release 12.1 || SF || LIAR/x86-64
+
+1 ]=> (load "1_43.scm")
+;Loading "1_43.scm"...
+;  Loading "1_42.scm"... done
+;... done
+;Value: 390625
+
+1 ]=> ;;; from book
+(define (average-damp f)
+  (lambda (x) (average x (f x))))
+;Value: average-damp
+
+1 ]=> ;;; borrow from 1.36
+(define tolerance 0.00001)
+;Value: tolerance
+
+1 ]=> (define (fixed-point f first-guess)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess)
+    (let ((next (f guess)))
+      (newline)
+      (display guess)
+      (if (close-enough? guess next)
+          next
+          (try next))))
+  (try first-guess))
+;Value: fixed-point
+
+1 ]=> (define (average x y)
+  (/ (+ x y) 2))
+;Value: average
+
+1 ]=> (define (cube_root_naive x)
+  (fixed-point (lambda (y) (/ x (* y y)))
+               1.0))
+;Value: cube_root_naive
+
+1 ]=> (define (cube_root x)
+  (fixed-point (lambda (y) (average y (/ x (* y y))))
+               1.0))
+;Value: cube_root
+
+1 ]=> ; (cube_root_naive 27) ; x^inf, so loop between inf and 0
+(cube_root 27)
+1.
+14.
+7.0688775510204085
+3.804606118073623
+2.8349437604593346
+3.0972227433212662
+2.9559185053407466
+3.0230317274669494
+2.988746677335714
+3.0056902981459395
+2.9971709998261664
+3.0014185067452175
+2.999291752074178
+3.000354374849445
+2.9998228753561564
+3.0000885780097266
+2.999955714918014
+3.000022143521597
+2.999988928484367
+3.0000055358191062
+;Value: 2.9999972321057697
+
+1 ]=> (define (quartic_root_one_average x)
+  (fixed-point (lambda (y) (average y (/ x (* y y y))))
+               1.0))
+;Value: quartic_root_one_average
+
+1 ]=> ; (quartic_root_one_average 81)
+
+;;; check Kaihao's comment in wiki
+(define (fifth_root_one_average x)
+  (fixed-point (lambda (y) (average y (/ x (* y y y y))))
+               1.0))
+;Value: fifth_root_one_average
+
+1 ]=> ; (fifth_root_one_average 729) ; 3^6
+
+(define (sixth_root_one_average x)
+  (fixed-point (lambda (y) (average y (/ x (* y y y y y))))
+               1.0))
+;Value: sixth_root_one_average
+
+1 ]=> ; (sixth_root_one_average 59049) ; 3^10
+
+;;; check the needed average-damp count
+(define (fixed-point f first-guess bound)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess count)
+    (let ((next (f guess)))
+      (newline)
+      (display guess)
+      (if (or (close-enough? guess next) (= count bound))
+          next
+          (try next (+ count 1)))))
+  (trace try)
+  (try first-guess 1))
+;Value: fixed-point
+
+1 ]=> ;; from https://sicp.readthedocs.io/en/latest/chp1/45.html
+(define (expt base n)
+  ; (repeated (lambda (m) (* y m)) (- n 1))
+  (if (= n 0)
+    1
+    ((repeated (lambda (x) (* base x)) n) 1)))
+;Value: expt
+
+1 ]=> (define (root n x average_damp_level count)
+  (define (f y)
+    ; (/ x (expt y (- n 1))))
+    (/ x ((repeated (lambda (m) (* y m)) (- n 1)) 1)))
+  ;; This is wrong https://stackoverflow.com/a/53933846/21294350
+  ; (fixed-point (repeated (average-damp f) average_damp_level) 1 count))
+  ; (fixed-point ((repeated average-damp average_damp_level) f) 1 count))
+  ;; 1 will make exact fraction which takes much longer time.
+  (fixed-point ((repeated average-damp average_damp_level) f) 1.0 count))
+;Value: root
+
+1 ]=> (define bound 100000)
+;Value: bound
+
+1 ]=> (root 3 27 1 bound)
+[Entering #[compound-procedure 12 try]
+    Args: 1.
+          1]
+
+1.
+[Entering #[compound-procedure 12 try]
+    Args: 14.
+          2]
+
+14.
+[Entering #[compound-procedure 12 try]
+    Args: 7.0688775510204085
+          3]
+
+7.0688775510204085
+[Entering #[compound-procedure 12 try]
+    Args: 3.804606118073623
+          4]
+
+3.804606118073623
+[Entering #[compound-procedure 12 try]
+    Args: 2.8349437604593346
+          5]
+
+2.8349437604593346
+[Entering #[compound-procedure 12 try]
+    Args: 3.0972227433212662
+          6]
+
+3.0972227433212662
+[Entering #[compound-procedure 12 try]
+    Args: 2.9559185053407466
+          7]
+
+2.9559185053407466
+[Entering #[compound-procedure 12 try]
+    Args: 3.0230317274669494
+          8]
+
+3.0230317274669494
+[Entering #[compound-procedure 12 try]
+    Args: 2.988746677335714
+          9]
+
+2.988746677335714
+[Entering #[compound-procedure 12 try]
+    Args: 3.0056902981459395
+          10]
+
+3.0056902981459395
+[Entering #[compound-procedure 12 try]
+    Args: 2.9971709998261664
+          11]
+
+2.9971709998261664
+[Entering #[compound-procedure 12 try]
+    Args: 3.0014185067452175
+          12]
+
+3.0014185067452175
+[Entering #[compound-procedure 12 try]
+    Args: 2.999291752074178
+          13]
+
+2.999291752074178
+[Entering #[compound-procedure 12 try]
+    Args: 3.000354374849445
+          14]
+
+3.000354374849445
+[Entering #[compound-procedure 12 try]
+    Args: 2.9998228753561564
+          15]
+
+2.9998228753561564
+[Entering #[compound-procedure 12 try]
+    Args: 3.0000885780097266
+          16]
+
+3.0000885780097266
+[Entering #[compound-procedure 12 try]
+    Args: 2.999955714918014
+          17]
+
+2.999955714918014
+[Entering #[compound-procedure 12 try]
+    Args: 3.000022143521597
+          18]
+
+3.000022143521597
+[Entering #[compound-procedure 12 try]
+    Args: 2.999988928484367
+          19]
+
+2.999988928484367
+[Entering #[compound-procedure 12 try]
+    Args: 3.0000055358191062
+          20]
+
+3.0000055358191062
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0000055358191062
+          20]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.999988928484367
+          19]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.000022143521597
+          18]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.999955714918014
+          17]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0000885780097266
+          16]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.9998228753561564
+          15]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.000354374849445
+          14]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.999291752074178
+          13]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0014185067452175
+          12]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.9971709998261664
+          11]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0056902981459395
+          10]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.988746677335714
+          9]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0230317274669494
+          8]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.9559185053407466
+          7]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.0972227433212662
+          6]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 2.8349437604593346
+          5]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 3.804606118073623
+          4]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 7.0688775510204085
+          3]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 14.
+          2]
+[2.9999972321057697
+      <== #[compound-procedure 12 try]
+    Args: 1.
+          1]
+;Value: 2.9999972321057697
+
+1 ]=> ; (- (root 3 27 2 bound) 3)
+; (- (root 3 27 2 bound) 3)
+End of input stream reached.
+Ceterum censeo Carthaginem esse delendam.

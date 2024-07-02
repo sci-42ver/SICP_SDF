@@ -1,0 +1,3 @@
+#!bash
+tr -d '.,;:"\!\[]()' | tr ' ' ' ' | tr ' ' '\n' \
+| tr '[A-Z]' '[a-z]' | sort | uniq | join -v1 - words

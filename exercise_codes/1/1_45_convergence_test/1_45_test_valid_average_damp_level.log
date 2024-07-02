@@ -1,0 +1,208 @@
+MIT/GNU Scheme running under GNU/Linux
+Type `^C' (control-C) followed by `H' to obtain information about interrupts.
+
+Copyright (C) 2022 Massachusetts Institute of Technology
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Image saved on Friday January 6, 2023 at 10:11:41 PM
+  Release 12.1 || SF || LIAR/x86-64
+
+1 ]=> ;;; from the above wiki
+(define (average-damp f) 
+    (lambda (x) (/ (+ x (f x)) 2)))
+;Value: average-damp
+
+1 ]=> (define (repeated f n) 
+    (define (compose f g) 
+      (lambda (x) (f (g x)))) 
+    (if (= n 1) 
+      f 
+      (compose f (repeated f (- n 1)))))
+;Value: repeated
+
+1 ]=> ;;; from book
+(define tolerance 0.00001)
+;Value: tolerance
+
+1 ]=> ;;; small modified fixed_point
+(define (displayln x)
+  (newline)
+  (display x))
+;Value: displayln
+
+1 ]=> (define (fixed_point_bound f first-guess bound whether_output_cnt)
+  (define (close-enough? v1 v2)
+    (< (abs (- v1 v2)) tolerance))
+  (define (try guess count)
+    (let ((next (f guess)))
+      (displayln guess)
+      (if (or (close-enough? guess next) (= count bound))
+          (begin 
+            ; (displayln "finished count:")
+            ; (displayln count)
+            (displayln next)
+            (if whether_output_cnt
+              count
+              next))
+          (try next (+ count 1)))))
+  ; (displayln "fixed_point_bound:")
+  (try first-guess 1))
+;Value: fixed_point_bound
+
+1 ]=> (define small_bound 100)
+;Value: small_bound
+
+1 ]=> (define (init_map x y n) 
+  (/ x ((repeated (lambda (m) (* y m)) (- n 1)) 1)))
+;Value: init_map
+
+1 ]=> (define (root n x average_damp_level bound init whether_output_cnt) 
+  (define transformed_f ((repeated average-damp average_damp_level) (lambda (y) (init_map x y n)))) 
+  ; (displayln "average_damp_level:")
+  ; (displayln average_damp_level)
+  (fixed_point_bound transformed_f init bound whether_output_cnt))
+;Value: root
+
+1 ]=> (define n2 50)
+;Value: n2
+
+1 ]=> ;;; same as the wiki parameter choice.
+(define (find_valid_average_damp_level max_root start_root bound init)
+  (define x 2.0)
+  (define (helper root_order average_damp_level)
+    (if (< (root root_order x average_damp_level bound init #t) bound)
+      average_damp_level
+      (helper root_order (+ average_damp_level 1))))
+  (if (> start_root max_root)
+    (displayln "finish")
+    (begin
+      (displayln "")
+      (displayln "start_root:")
+      (displayln start_root)
+      (displayln "needed average_damp_level:")
+      (displayln (helper start_root 1))
+      (find_valid_average_damp_level max_root (+ start_root 1) bound init))))
+;Value: find_valid_average_damp_level
+
+1 ]=> ; (find_valid_average_damp_level 20 2 small_bound 1.0)
+
+(root 6 2.0 1 1000000000 1.0 #t)
+
+1 ]=> ; 1.1224646553523452 ; next
+;Value: 212597
+
+
+;;; from wiki
+(define tolerance 0.00001)
+;Value: tolerance
+
+1 ]=> (define (fixed-point f first-guess) 
+  (define (close-enough? v1 v2) 
+    (< (abs (- v1 v2)) tolerance)) 
+  (define (try guess) 
+    (let ((next (f guess)))
+      (displayln next) 
+      (if (close-enough? guess next) 
+        next
+        (try next)))) 
+  (try first-guess))
+;Value: fixed-point
+
+1 ]=> (define (average a b) 
+  (/ (+ a b) 2))
+;Value: average
+
+1 ]=> (define (average-damp f) 
+  (lambda (x) (average x (f x))))
+;Value: average-damp
+
+1 ]=> (define (square x) 
+  (* x x))
+;Value: square
+
+1 ]=> (define (fast-expt b n) 
+  (cond ((= n 0) 1) 
+        ((even? n) (square (fast-expt b (/ n 2)))) 
+        (else (* b (fast-expt b (- n 1))))))
+;Value: fast-expt
+
+1 ]=> (define (compose f g) 
+  (lambda (x) 
+    (g (f x))))
+;Value: compose
+
+1 ]=> (define (repeated f n) 
+  (if (> n 1) 
+    (compose (repeated f (- n 1)) f) 
+    f))
+;Value: repeated
+
+1 ]=> ;; avarage-damp d times 
+(define (nth-root x n d) 
+  (fixed-point ((repeated average-damp d)  
+                ; (lambda (y) (/ x (fast-expt y (- n 1))))) 
+                (lambda (y) (/ x (expt y (- n 1))))) 
+              1.0))
+;Value: nth-root
+
+1 ]=> (nth-root 2.0 6 1)
+1 ]=> ; 1.1224646553523452 ; next
+;Value: 212597
+
+
+;;; from wiki
+(define tolerance 0.00001)
+;Value: tolerance
+
+1 ]=> (define (fixed-point f first-guess) 
+  (define (close-enough? v1 v2) 
+    (< (abs (- v1 v2)) tolerance)) 
+  (define (try guess) 
+    (let ((next (f guess)))
+      (displayln next) 
+      (if (close-enough? guess next) 
+        next
+        (try next)))) 
+  (try first-guess))
+;Value: fixed-point
+
+1 ]=> (define (average a b) 
+  (/ (+ a b) 2))
+;Value: average
+
+1 ]=> (define (average-damp f) 
+  (lambda (x) (average x (f x))))
+;Value: average-damp
+
+1 ]=> (define (square x) 
+  (* x x))
+;Value: square
+
+1 ]=> (define (fast-expt b n) 
+  (cond ((= n 0) 1) 
+        ((even? n) (square (fast-expt b (/ n 2)))) 
+        (else (* b (fast-expt b (- n 1))))))
+;Value: fast-expt
+
+1 ]=> (define (compose f g) 
+  (lambda (x) 
+    (g (f x))))
+;Value: compose
+
+1 ]=> (define (repeated f n) 
+  (if (> n 1) 
+    (compose (repeated f (- n 1)) f) 
+    f))
+;Value: repeated
+
+1 ]=> ;; avarage-damp d times 
+(define (nth-root x n d) 
+  (fixed-point ((repeated average-damp d)  
+                ; (lambda (y) (/ x (fast-expt y (- n 1))))) 
+                (lambda (y) (/ x (expt y (- n 1))))) 
+              1.0))
+;Value: nth-root
+
+1 ]=> (nth-root 2.0 6 1)
+

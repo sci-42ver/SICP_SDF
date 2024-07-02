@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+  <title>sicp-ex-1.13</title>
+  <base href="http://community.schemewiki.org/">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/?c=rss">
+  <link rel="stylesheet" href="/css/default.css" type="text/css">
+</head>
+
+<body>
+  <h1 id="title">
+    <div><a href="/?c=s&amp;key=[[sicp-ex-1.13]]">sicp-ex-1.13</a></div>
+  </h1>
+  <div id="nav"><a href="/">[Top Page]</a><a href="/?c=r">[Recent Changes]</a><a href="/?c=a">[All Pages]</a><a
+      href="/?c=settings">[Settings]</a><a href="/?category-category">[Categories]</a><a href="/?wiki-howto">[Wiki
+      Howto]</a><br><a href="/?p=sicp-ex-1.13&amp;c=e">[Edit]</a><a href="/?p=sicp-ex-1.13&amp;c=h">[Edit
+      History]</a><br>
+    <form method="POST" action="/" style="margin:0pt; padding:0pt"><input type="hidden" name="c" value="s"
+        style="margin:0pt; padding:0pt"><span>Search:<input type="text" name="key" size="10"></span></form>
+  </div>
+  <hr>
+  <hr>
+  <p><a href="http://community.schemewiki.org/?sicp-ex-1.12">&lt;&lt; Previous exercise (1.12)</a> | <a
+      href="/?sicp-solutions">sicp-solutions</a> | <a href="http://community.schemewiki.org/?sicp-ex-1.14">Next exercise
+      (1.14) &gt;&gt;</a>
+  </p>
+  <hr>
+  <p>A simple, beautiful modern solution by Sébastien Gignoux:
+  </p>
+  <p><a
+      href="https://codology.net/post/sicp-solution-exercise-1-13/">https://codology.net/post/sicp-solution-exercise-1-13/</a>
+  </p>
+  <p>Another one by <a href="http://www.luxiyalu.com/cisp-in-scheme-ruby-and-javascript/">Lucia</a>:
+  </p>
+  <p><a
+      href="https://www.evernote.com/shard/s100/sh/6a4b59d5-e99f-417c-9ef3-bcf03a4efecd/7e030d4602a0bef5df0d6dd4c2ad47bf">https://www.evernote.com/shard/s100/sh/6a4b59d5-e99f-417c-9ef3-bcf03a4efecd/7e030d4602a0bef5df0d6dd4c2ad47bf</a>
+  </p>
+  <hr>
+  <p>This is a solution by <a href="https://github.com/phillbush">Seninha (aka phillbush)</a>.
+  </p>
+  <p>The solution is divided in two proofs, the first one divided in
+    two parts. First, it's proved by induction that <tt>Fib(n)=(φⁿ-ψⁿ)/√5</tt>,
+    this involves two parts: proving for the base case, and proving for
+    the inductive case. Then, that proof is used to prove that <tt>Fib(n)</tt>
+    is the closest integer to <tt>φⁿ/√5</tt>.
+  </p>
+  <p>The solution uses the <tt>⊦</tt> notation,
+    known as sequent calculus. What is after the ⊦ is what we want to
+    prove. So, for example, <tt>⊦ A</tt> means that we want to prove <tt>A</tt>; we will
+    simplify or apply properties to <tt>A</tt> during the proof. What comes before
+    the <tt>⊦</tt> are hypotheses that are helpful for our proof. So, for example,
+    <tt>H₁ ⊦ A</tt> means that we are using the hypothesis <tt>H₁</tt> to prove <tt>A</tt>.
+    We may use ellipsis to omit previous hypotheses.
+    The symbol <tt>⊤</tt> means <em>tautology</em> or <em>truth</em>.
+  </p>
+  <p><strong>Proof 1, part 1 (base case).</strong>
+  </p>
+  <p>We need to prove that <tt>Fib(n)=(φⁿ-ψⁿ)/√5</tt> is valid for <tt>n=0</tt> and for <tt>n=1</tt>.
+  </p>
+  <pre>      ⊦ Fib(0)=(φ⁰-ψ⁰)/√5 ∧ Fib(1)=(φ¹-ψ¹)/√5.
+</pre>
+  <p>Simplifying both sides of the conjunction.
+  </p>
+  <pre>      ⊦ Fib(0)=0 ∧ Fib(1)=1.
+</pre>
+  <p>By definition, <tt>Fib(0)=0</tt> and <tt>Fib(1)=1</tt>, so both sides of the conjunction are true.
+  </p>
+  <pre>      ⊦ ⊤ ∧ ⊤.
+</pre>
+  <p>Simplifying this conjunction, we prove this part.
+  </p>
+  <pre>      ⊦ ⊤.
+</pre>
+  <p><strong>Proof 1, part 2 (inductive case).</strong>
+  </p>
+  <p>Let <tt>k</tt> be a natural number. We are given the two inductive hypothesis
+    <tt>H₁</tt> and <tt>H₂</tt>, and we need to prove that <tt>Fib(n) = (φⁿ-ψⁿ)/√5</tt> is valid for
+    <tt>n=k+2</tt>.
+  </p>
+  <pre>      k:ℕ;
+      H₁:Fib(k) = (φᵏ-ψᵏ)/√5;
+      H₂:Fib(k+1) = (φᵏ⁺¹-ψᵏ⁺¹)/√5
+      ⊦ Fib(k+2) = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>By the definition of <tt>Fib</tt> on the goal, we know that <tt>Fib(k+2)</tt> is equal
+    to <tt>Fib(k) + Fib(k+1)</tt>. We can rewrite the goal with this fact.
+  </p>
+  <pre>      … ⊦ Fib(k) + Fib(k+1) = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>We can rewrite the goal with the hypotheses <tt>H₁</tt> and <tt>H₂</tt>.
+  </p>
+  <pre>      … ⊦ (φᵏ-ψᵏ)/√5 + (φᵏ⁺¹-ψᵏ⁺¹)/√5 = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>We can simplify the left side of the equation on the goal.
+  </p>
+  <pre>      … ⊦ (φᵏ(φ+1) - ψᵏ(ψ+1))/√5 = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>As declared in page 38, <tt>φ</tt> is the golden ratio, the only positive
+    solution to the equation <tt>x²=x+1</tt>. The <tt>ψ</tt> constant also share that
+    property, being the only negative solution to that equation. We
+    can apply this equation to <tt>φ</tt> and to <tt>ψ</tt>:
+  </p>
+  <pre>      … ⊦ (φᵏ·φ² - ψᵏ·ψ²)/√5 = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>We can simplify the left side of the equation on the goal.
+  </p>
+  <pre>      … ⊦ (φᵏ⁺² - ψᵏ⁺²)/√5 = (φᵏ⁺²-ψᵏ⁺²)/√5.
+</pre>
+  <p>Both sides of the equation on the goal are equal. We achieved truth.
+  </p>
+  <pre>      … ⊦ ⊤.
+</pre>
+  <p><strong>Proof 2.</strong>
+  </p>
+  <p>Now that we proved that <tt>Fib(n)=(φⁿ-ψⁿ)/√5</tt>, we can use this fact as
+    hypothesis <tt>H₁</tt> to prove that <tt>Fib(n)</tt> is the closest integer to <tt>φⁿ/√5</tt>.
+    Formally, we want to prove that the absolute value of <tt>Fib(n)</tt> minus
+    <tt>φⁿ/√5</tt> is less than <tt>1/2</tt>, for all n natural.
+  </p>
+  <pre>      n:ℕ;
+      H₁:Fib(n)=(φⁿ-ψⁿ)/√5
+      ⊦ |Fib(n) - φⁿ/√5| &lt; 1/2.
+</pre>
+  <p>We can rewrite <tt>Fib(n)</tt> on the goal with the hypothesis <tt>H₁</tt>.
+  </p>
+  <pre>      … ⊦ |(φⁿ-ψⁿ)/√5 - φⁿ/√5| &lt; 1/2.
+</pre>
+  <p>We can simplify the left side of the inequality on the goal.
+  </p>
+  <pre>      … ⊦ |ψⁿ|/√5 &lt; 1/2.
+</pre>
+  <p>We can then apply the definition of <tt>ψ</tt>.
+  </p>
+  <pre>      … ⊦ |((1-√5)/2)ⁿ|/√5 &lt; 1/2.
+</pre>
+  <p>We can simplify the left side of the inequality on the goal.
+  </p>
+  <pre>      … ⊦ ((√5-1)/2)ⁿ/√5 &lt; 1/2.
+</pre>
+  <p>We can add another hypothesis (<tt>H₂</tt>) for the fact that <tt>√5&lt;3</tt>.
+  </p>
+  <pre>      …; H₂:√5&lt;3 ⊦ ((√5-1)/2)ⁿ/√5 &lt; 1/2.
+</pre>
+  <p>We can subtract both sides of the inequality in the hypothesis <tt>H₂</tt> by
+    one, then divide both sides by two, raise both sides to the <tt>n</tt>-th power,
+    and multiply both sides by <tt>1/√5</tt>.
+  </p>
+  <pre>      …; H₂:1/√5 × ((√5-1)/2)ⁿ &lt; 1/√5 ⊦ ((√5-1)/2)ⁿ/√5 &lt; 1/2.
+</pre>
+  <p>It's a fact that <tt>1/√5 &lt; 1/2</tt>, we can apply this fact to <tt>H₂</tt>.
+  </p>
+  <pre>      …; H₂:((√5-1)/2)ⁿ/√5 &lt; 1/√5 &lt; 1/2 ⊦ ((√5-1)/2)ⁿ/√5 &lt; 1/2.
+</pre>
+  <p>We can fold the double inequality in <tt>H₂</tt> by removing the middle part.
+  </p>
+  <pre>      …; H₂:((√5-1)/2)ⁿ/√5 &lt; 1/2 ⊦ ((√5-1)/2)ⁿ/√5 &lt; 1/2.
+</pre>
+  <p>The hypothesis <tt>H₂</tt> is exactly what we want to prove, we achieved the
+    truth by redundancy.
+  </p>
+  <pre>      … ⊦ ⊤.
+</pre>
+  <p>QED.
+  </p>
+  <hr>
+  <div class="footer" style="text-align:right">Last modified : 2022-05-30 22:50:00<br><a
+      href="http://www.shiro.dreamhost.com/scheme/wiliki/wiliki.cgi">WiLiKi 0.5-tekili-7</a> running on <a
+      href="http://www.shiro.dreamhost.com/scheme/gauche/">Gauche 0.9</a></div>
+</body>
+
+</html>

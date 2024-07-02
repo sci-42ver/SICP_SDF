@@ -1,0 +1,12 @@
+# lame file
+.DS_Store
+
+# emacs
+*~
+\#*\#
+.\#*
+
+# vmd
+*.temp
+
+history_mit_Course_Catalogue.pdf
