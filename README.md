@@ -1,3 +1,5 @@
+Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.
+
 [booklist](https://billthelizard.blogspot.com/2008/12/books-programmers-dont-really-read.html)
 better read it [with the adequate maths background](https://tekkie.wordpress.com/2018/04/03/a-word-of-advice-before-you-get-into-sicp/)
 
