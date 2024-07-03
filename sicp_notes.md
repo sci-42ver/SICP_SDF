@@ -1,3 +1,8 @@
+The above "@unknown" means I forgot my username, but I know my email address and my password @gzc3Lea4CPC
+
+Please send one email about the results of this request to easeAunbeli@proton.me. Thanks in advance.
+---
+
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -997,6 +1002,14 @@ different length sentence. The range is from 0 to N − 1.
       ```
 - > computes a few unnecessary ones
   i.e. at least the *other* terms at the target row.
+### 1.3
+- > the formal parameter list obviously isn’t evaluated, but the body isn’t evaluated when we see the lambda, either—only when we invoke the function can we evaluate its body.
+  See exercise 1.6 notes where the arguments are evaluated first.
+- If using [this definition](https://rosettacode.org/wiki/First-class_functions#:~:text=Since%20one%20can't%20create,C%20has%20second%20class%20functions.), C  doesn't have first-class functions since
+  > Create new functions from preexisting functions *at run-time*
+  is not met.
+- > you’ll learn more about this in CS 164.
+  It's about ["the design of programming languages and the implementation of translators"](https://web.archive.org/web/20200129153230/https://inst.eecs.berkeley.edu/~cs164/sp11/)
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
