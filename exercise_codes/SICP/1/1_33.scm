@@ -23,12 +23,12 @@
   (define (divides? a b) 
     (= 0 (remainder b a))) 
   (define (find-div n test) 
-      (cond ((> (sq test) n) n) ((divides? test n) test) 
-            (else (find-div n (+ test 1))))) 
+    (cond ((> (sq test) n) n) ((divides? test n) test) 
+          (else (find-div n (+ test 1))))) 
   (find-div n 2)) 
 
 (define (prime? n) 
-    (if (= n 1) false (= n (smallest-div n)))) 
+  (if (= n 1) false (= n (smallest-div n)))) 
 
 ;; with small changes to cater to here.
 (define (sum-of-prime-squares a b) (filtered-accumulate prime? + 0 sq a inc b))

@@ -11,10 +11,10 @@
   (cond ((= amount 0) 1)
         ((or (< amount 0) (= kinds-of-coins 0)) 0)
         (else (+ (cc amount
-              (- kinds-of-coins 1))
-          (cc (- amount
-            (first-denomination kinds-of-coins))
-              kinds-of-coins)))))
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
 
 ;; Second version of cc: 
 ;; ---------------------
@@ -29,10 +29,10 @@
   (cond ((or (= amount 0) (= kinds-of-coins 1)) 1) ; assume leave penny eventually
         ((or (< amount 0) (= kinds-of-coins 0)) 0)
         (else (+ (cc amount
-              (- kinds-of-coins 1))
-          (cc (- amount
-            (first-denomination kinds-of-coins))
-              kinds-of-coins)))))
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
 
 ;; Third version: 
 ;; --------------
@@ -46,10 +46,10 @@
         ((or (= kinds-of-coins 1) (= amount 0)) 1)
         ((or (< amount 0) (= kinds-of-coins 0)) 0)
         (else (+ (cc amount
-              (- kinds-of-coins 1))
-          (cc (- amount
-            (first-denomination kinds-of-coins))
-              kinds-of-coins)))))
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
 
 ;; Fourth version: 
 ;; ---------------
@@ -59,18 +59,18 @@
 (define (cc amount kinds-of-coins)
   (set! counter (+ counter 1))
   (cond ((= kinds-of-coins 3) (+ (* (quotient amount 10)
-				    (quotient amount 5))
-                                (- (square (quotient amount 10)))
-                                (quotient amount 5)
-                                1))
+                                    (quotient amount 5))
+                                 (- (square (quotient amount 10)))
+                                 (quotient amount 5)
+                                 1))
         ((= kinds-of-coins 2) (+ 1 (quotient amount 5)))
         ((or (= kinds-of-coins 1) (= amount 0)) 1)
         ((or (< amount 0) (= kinds-of-coins 0)) 0)
         (else (+ (cc amount
-              (- kinds-of-coins 1))
-          (cc (- amount
-            (first-denomination kinds-of-coins))
-              kinds-of-coins)))))
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
 
 ;; US coin denominations
 (define (first-denomination kinds-of-coins)
@@ -100,8 +100,8 @@
     ;; > but the bindings are performed sequentially from left to right
     ;; "the region of a binding" may mean the region influenced by the binding.
     (let* ((ways (count-change amount))
-	    ;  (c (logn amount counter))) 
-	     (k (exact->inexact (/ counter (square amount)))))
+           ;  (c (logn amount counter))) 
+           (k (exact->inexact (/ counter (square amount)))))
       (display ways) (display " ways to make change for ") 
       (display amount) (display " cents") (newline)
       (display "number of calls to cc: ") (display counter) (newline)
@@ -155,10 +155,10 @@
         ((or (= kinds-of-coins 1) (= amount 0)) 1)
         ((or (< amount 0) (= kinds-of-coins 0)) 0)
         (else (+ (cc amount
-              (- kinds-of-coins 1))
-          (cc (- amount
-            (first-denomination kinds-of-coins))
-              kinds-of-coins)))))
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
 (estimation 11)       ; 4            c -> 0.67  0.92  1.18  1.67
 (estimation 100)      ; 292               0.62  0.96  1.39  2.10
 (estimation 200)      ; 2435              0.73  1.14  1.60  2.33

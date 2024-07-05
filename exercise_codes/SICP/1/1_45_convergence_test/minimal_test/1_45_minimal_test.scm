@@ -1,12 +1,12 @@
 ;;; from the above wiki
 (define (average-damp f) 
-    (lambda (x) (/ (+ x (f x)) 2)))
+  (lambda (x) (/ (+ x (f x)) 2)))
 (define (repeated f n) 
-    (define (compose f g) 
-      (lambda (x) (f (g x)))) 
-    (if (= n 1) 
-      f 
-      (compose f (repeated f (- n 1)))))
+  (define (compose f g) 
+    (lambda (x) (f (g x)))) 
+  (if (= n 1) 
+    f 
+    (compose f (repeated f (- n 1)))))
 
 ;;; from book
 (define tolerance 0.00001)
@@ -24,15 +24,15 @@
         (displayln guess)
         )
       (if (or (close-enough? guess next) (= count bound))
-          (begin 
-            (displayln "finished count:")
-            (displayln count)
-            (displayln "result:")
-            (displayln next)
-            (if whether_output_cnt
-              count
-              next))
-          (try next (+ count 1)))))
+        (begin 
+          (displayln "finished count:")
+          (displayln count)
+          (displayln "result:")
+          (displayln next)
+          (if whether_output_cnt
+            count
+            next))
+        (try next (+ count 1)))))
   (if whether_output_guess_mapping
     (displayln "fixed_point_bound mapping process:")
     )
@@ -71,8 +71,8 @@
   (/ (log n) (log base)))
 (define (find_floor_worse_than_ceil use_power_plus_one init_exp base count init ending_exp whether_output_guess_mapping)
   (define n ((if use_power_plus_one
-                  +
-                  -) (expt 2 init_exp) 1)) ; this will make n-floor(n) greatest for one init_exp
+               +
+               -) (expt 2 init_exp) 1)) ; this will make n-floor(n) greatest for one init_exp
   (define x (expt base n))
   (define floor_average_damp_level (inexact->exact (floor (log_base 2 n))))
   (define ceiling_average_damp_level (inexact->exact (ceiling (log_base 2 n))))

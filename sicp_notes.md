@@ -1,7 +1,4 @@
-The above "@unknown" means I forgot my username, but I know my email address and my password @gzc3Lea4CPC
-
-Please send one email about the results of this request to easeAunbeli@proton.me. Thanks in advance.
----
+This seems to one problem caused by code changes as https://lore.kernel.org/git/20170530170557.GA2798@google.com/T/ says. "by first pushing changes in each submodule manually" works for me.
 
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
@@ -24,7 +21,7 @@ Please send one email about the results of this request to easeAunbeli@proton.me
 ## em tracking when reading the book (Read before doing the related exercises)
 - up to exercise 1.40 finished
 ## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 1.2 (included) by searching "chapter" and "section".
+tracked up to section 1.3 (included) by searching "chapter" and "section".
 ### 1.2
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### 1.3
@@ -61,7 +58,7 @@ tracked up to section 1.2 (included) by searching "chapter" and "section".
 > Examples include an event-driven object-oriented simulation game, a conversational program that uses rules and pattern matching, symbolic algebra of polynomials and rational functions, interpreters for various languages, and a compiler with register optimization.
 I skipped [Problem Sets](https://github.com/abrantesasf/sicp-abrantes-study-guide?tab=readme-ov-file), Exam, homework and Quizzes because IMHO those numerous exercises in the book is enough and most of courses pay more attention for projects when grading. Also 
 - see [this](https://github.com/junqi-xie-learning/SICP-Projects?tab=readme-ov-file) (Here [one fork](https://github.com/junqi-xie-learning/SICP-Projects/forks) may be itself)
-- I will only does skipping
+- I will only does 6.5151 skipping
   1. [sample projects](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/psets/index.html)
   2. 6.037 IAP
   3. 6.001 fall 2007
@@ -126,6 +123,10 @@ To join this it seems that we must be one mit student and [request a form (this 
   > GROWL! For those of you who did not show up in lecture on Tuesday, 6 November 2007, the essential handout you missed is here.
 ## 6.037 (notice [IAP may be not reliable](https://www.wisdomandwonder.com/link/2110/why-mit-switched-from-scheme-to-python#comment-365) and the instructor website [seems to not exist](https://web.archive.org/web/20120121084033/http://web.mit.edu/alexmv) different from [Gerald Jay Sussman](https://groups.csail.mit.edu/mac/users/gjs/gjs.html))
 TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki/Mike_Phillips_(speech_recognition))?
+- From 
+  > 6 units of P/D/F credit are available; only the projects are graded.
+  only "projects" need to be done after reading the lectures.
+  But as the above says, I will skip that.
 - See R5RS although sicp books uses R4RS as the reference.
   The newest is [R7RS](https://standards.scheme.org/official/r7rs.pdf) from [this](https://standards.scheme.org/) although racket seems to [not support](https://web.archive.org/web/20231208093804/http://community.schemewiki.org/?scheme-faq-standards#implementations) and has [one unofficial implementation](https://github.com/lexi-lambda/racket-r7rs)
   - R7RS [official](https://r7rs.org/) [errata](https://github.com/johnwcowan/r7rs-work/blob/master/R7RSSmallErrata.md) / [this](https://small.r7rs.org/wiki/R7RSSmallErrata/)
@@ -157,40 +158,6 @@ TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki
   - This should *not be used arbitrarily* because that will cause mess by my history experience.
     > If the debugger doesn't give you the needed information, sometimes it is useful to put a *display* or display expression into your code to gather information.
   - > It is often *easier to avoid bugs* than to find them so use a *clear* design *instead of clever or tricky* code
-## 6.5151 (6.905)
-1. I *can't find the pdf lecture* by "mit 6.5151 lecture filetype:pdf".
-2. It seems to have no homework by '6.5151 "homework"' (with only Red Tape pdf), similarly for Exam by 'mit 6.5151 "exam"' and Quizzes by "mit 6.5151 Quiz".
-   It only has *problem set / assignment*.
-- [old ~~project~~ assignment implementation 2009](https://buffer.rajpatil.dev/%2F20240410114903-mit_ocw_6_945_aiasp.html) and [2019](https://github.com/bmitc/mit-6.945-project) (weird still [can't find its fork](https://github.com/bmitc/mit-6.945-project/forks?include=active&page=1&period=&sort_by=stargazer_counts))
-  TODO [project](https://groups.csail.mit.edu/mac/users/gjs/6.945/final-project.pdf) needs team and is a bit general about "symbolic-manipulation software".
-- I only find one 2009 [video lectues](https://archive.org/details/adventures-in-advanced-symbolic-programming)
-  - https://news.ycombinator.com/item?id=23599794
-    > but the entire class is centered around psets
-  - [This](https://github.com/prakhar1989/awesome-courses?tab=readme-ov-file) is [not archived](https://web.archive.org/web/20240513002054/https://camo.githubusercontent.com/afb2fd943e89b86299f1e2c61e629fe0e5a3b8ecde5221e683445077b0754101/68747470733a2f2f6173736574732d63646e2e6769746875622e636f6d2f696d616765732f69636f6e732f656d6f6a692f756e69636f64652f31663464642e706e67)
-    but it seems to be still [the video](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-anonymized-urls)
-- [AI_preq_sicp]
-  > if you want to do Sussman's more recent books like SDF you're going to have to use the latest mit-scheme anyway
-- pset / PS09 -> assignment.
-### [overview](https://groups.csail.mit.edu/mac/users/gjs/6.945/overview.pdf)
-- >  Substantial *weekly programming assignments and a final project* are an *integral* part of the subject.
-### [red-tape](https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf)
-- Assignments
-- project
-  > If you don’t come up with a great IDEA yourself, we have *some ideas that you might pursue*. You will be expected to write elegant code that can be *easily read and understood* by us. You must supply a clear *English explanation* of how your software works, and a set of *test cases* *illustrating and testing* its operation. You will present a brief summary and demo in class near the end of the term.
-- homework may mean assignment
-  > by a combination of classroom participation, homework, and project work
-- Collaborative work
-  > *involve themselves in all aspects* of the work. ... you should indicate the names of any collaborators for *each part* of the assignment
-### sdf solutions
-- partial
-  [this having the most solutions](https://github.com/compclub/exercises/blob/main/chapter-2-dsl/rmoehn/README.md) uses Clojure
-  [this](https://github.com/compclub/projects) uses Rust...
-  [This](https://github.com/chebert/software-design-for-flexibility) I can't find the relation with the exercises
-  [This](https://github.com/nbardiuk/software-design-for-flexibility) too less
-  [This](https://github.com/mbillingr/sdf) and [this](https://github.com/jeffhhk/SoftwareDesignForFlexibility) has no solutions
-- See [this with annotations](https://docs.google.com/document/d/1oyk2EHiTfSe1t0Wbr-HJtfVVvLvulonckpOWaD5KD3E/edit) from [this](https://docs.google.com/document/d/1daYgzQX6Wuxy-iEA9jqpu8b50a_Zbd0FxvKswxAV478/edit)
-  [summary](https://docs.google.com/document/d/1vs9ep6A9VLvtn6QLMalYgxQSMXvfPdZA0vdVT6POoJs/edit#)
-  - I [can't join its slack](https://compositional-cb63110.slack.com/) room and this course has finished
 # course besides 6.001,037 in mit
 - teachyourselfcs recommends [cs61a 2011](https://teachyourselfcs.com/#programming) which is [the last course](https://www.reddit.com/r/berkeley/comments/hl9rxt/comment/fwxonlz/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) to teach with scheme (See [this](https://github.com/theurere/berkeley_cs61a_spring-2011_archive/tree/master) for all resources [unavailable directly](https://web.archive.org/web/20110306121705/http://wla.berkeley.edu/~cs61a/sp11/lectures/) from university)
   See also [CS61AS](https://www.reddit.com/r/berkeley/comments/hl9rxt/comment/fwxpxo4/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) [mainly based on labs](https://www.reddit.com/r/berkeley/comments/38my8j/comment/cry702u/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) which is also said in its page
@@ -218,7 +185,7 @@ TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki
         DeNero doesn't teach these 2 courses.
         > Also there is DeNero factor for 61A, I know.
 ## 2011 [hw, project etc. solution](https://github.com/zackads/sicp/tree/main)
-TODO ""CS61AS" lab solution github" seems to not have CS61AS solutions. I will try that.
+~~TODO ""CS61AS" lab solution github" seems to not have CS61AS solutions. I will try that.~~
 [video with Transcript to help search](https://www.youtube.com/watch?v=JAFUtlTrTHA&list=PL-4wJVBe4rQVeITP7acgaX86ukMKtOS3C)
 A&S means "Abelson & Sussman" book.
 interestingly inst.eecs.berkeley.edu [doesn't need one account before](https://web.archive.org/web/20120120151042/https://inst.eecs.berkeley.edu/~cs61a/su11/) and can be indexed by google.
@@ -289,6 +256,7 @@ recommended since the course general information shows (more detailed see 1.md)
   1. > all book exercises which cover the homework
   2. > I prefer doing the project assignments from MIT 6.5151
   3. > it is a bit overkill to do all these sample exams
+  - [notes](https://people.eecs.berkeley.edu/~bh/61a-pages/Volume2/notes.pdf) (originally I accessed it from [this](http://wla.berkeley.edu/~cs61a/reader/notes.pdf) where both have the same page count) and [lab](https://people.eecs.berkeley.edu/~bh/61a-pages/Volume1/labs.pdf)
 ## cs61as
 The latest should be CS "61AS" spring 2016 since 'CS "61AS" fall 2016' has nothing.
 I only check labs without checking Homework, Quizzes and Retakes
@@ -461,6 +429,9 @@ I only check labs without checking Homework, Quizzes and Retakes
     - 6.001 2007
   - read the book
   - use video when unable to understand
+- When learning OSTEP, I read almost the book word by word since there is not many formulae or programs in it. But when reviewing briefly what I have got from this learning method now, I found there is not much.
+  So I will read SICP cover to cover by reading the 1st sentence for each paragraph and decide whether to read more about that paragraph by whether that paragraph matters and I can get the idea merely from the 1st sentence.
+  But I will read footnote and quotes word by word since they may imply something important.
 - For SICP book, I didn't revisit the book back for something like
   > who explained it in terms of the “message-passing” model of computation that we *shall discuss in Chapter 3*
 # CS 61AS chapter 0
@@ -579,9 +550,24 @@ I only check labs without checking Homework, Quizzes and Retakes
 - `tr ’[A-Z]’ ’[a-z]’ < oneword > lowcase` See `info tr`.
 - [`[=e=]` (See macOS tr)](https://www.davekb.com/browse_computer_tips:linux_tr_equiv_chars:txt)
 - Also see `info join` example
+# CS 61A lab
+## Week 1 part 1
+- I won't check `emacs`.
+- I [don't have 32-bit system](https://people.eecs.berkeley.edu/~bh/61a-pages/Scheme/source/linux.html), so I won't install stk
+## Week 1 part 2
+[sol](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week1)
+- 3 is already done in Exercise 1.3.
+  - > The way I like best, I think, is a little tricky:
+    Here it just sort the 1st 2 items and then sort the latter 2 items.
+    Then the 2 bigger are put at first.
+  - > This hardly seems worth the effort, but the attempt to *split the problem into logical pieces* was well-motivated.
+  - https://code.google.com/archive/p/jrm-code-project/wikis/ProgrammingArt.wiki
+    > Consider this solution: (define (sum-square-largest x y z) (cond ((and (< x y) (< x z)) ;; x is smallest (+ (* y y) (* z z))) (else (sum-square-largest y z x))))
+    i.e. filter the smallest number step by step.
+    https://web.archive.org/web/20080723104814/http://programming.reddit.com/info/1nb8t/comments not with much valuable comments about "art".
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
-## 6.037 (dropped for future reading except this one already read)
+## 6.037 ~~(dropped for future reading except this one already read)~~ (may read as one quick review after reading the book)
 - [web.mit.edu/alexmv/6.037/](https://web.archive.org/web/20200113183359/http://web.mit.edu/alexmv/6.037/)
 - [Graduate P/D/F](https://registrar.mit.edu/classes-grades-evaluations/grades/grading-policies/graduate-pdf-option) is *not one standard* option
 - TODO
@@ -1010,6 +996,19 @@ different length sentence. The range is from 0 to N − 1.
   is not met.
 - > you’ll learn more about this in CS 164.
   It's about ["the design of programming languages and the implementation of translators"](https://web.archive.org/web/20200129153230/https://inst.eecs.berkeley.edu/~cs164/sp11/)
+# chapter 2
+## book
+### 2.1
+- > We now come to the decisive step of mathematical abstraction: we forget about what the symbols stand for. ...[The mathematician] need not be idle; there are many operations which he may carry out with these symbols, *without ever having to look at the things they stand for*.
+  [original paper](https://sci-hub.se/https://www.jstor.org/stable/1666589). 
+  TODO IMHO Here it just means we can manipulate with data without knowing about it.
+  See
+  > it is irrelevant what a, b, x, and y are and even more *irrelevant how they might happen to be represented in terms of more primitive data*
+- > is will further blur the distinction between “procedure” and “data,” which was already becoming tenuous toward the end of chapter 1
+  Since procedure can be the argument and the returned value.
+- [closure](https://en.wikipedia.org/wiki/Closure_(mathematics)), i.e. codomain $\subseteq$ domain.
+- data-directed programming is different from [Data-driven programming](https://en.wikipedia.org/wiki/Data-driven_programming)
+  TODO how it is implemented?
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

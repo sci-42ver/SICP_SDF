@@ -24,7 +24,7 @@
   ; (trace expmod)      
   (cond ((= times 0) true)
         ((fermat-test (inexact->exact n)) ; enforce using integer
-                         (fast-prime? (inexact->exact n) (- times 1)))
+         (fast-prime? (inexact->exact n) (- times 1)))
         (else false)))
 
 ; (trace fast-prime?)

@@ -2,9 +2,9 @@
 
 (define (sum term a next b)
   (if (> a b)
-      0
-      (+ (term a)
-         (sum term (next a) next b))))
+    0
+    (+ (term a)
+       (sum term (next a) next b))))
 (define (Simpson_Rule_approximation f a b n)
   ; (define (sum_no_factor f a b n)
   ;   (if (even? n)

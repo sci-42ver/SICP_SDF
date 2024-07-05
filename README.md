@@ -1,3 +1,4 @@
+# SICP
 Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.
 
 [booklist](https://billthelizard.blogspot.com/2008/12/books-programmers-dont-really-read.html)
@@ -5,9 +6,9 @@ better read it [with the adequate maths background](https://tekkie.wordpress.com
 
 I will use [official wiki](https://web.archive.org/web/20240228152042/http://community.schemewiki.org/?sicp-solutions) (http://community.schemewiki.org/?sicp-ex-1.27 resumed at least when 2024-6-21) as the main part. 
 
-# why I still learn sicp in 2024. See [this](https://github.com/sci-42ver/Discrete_Mathematics_and_Algorithm/tree/master/CRLS#why-it-is-still-useful-also-see-why-it-is-discontinued) especially cemerick.
+## why I still learn sicp in 2024. See [this](https://github.com/sci-42ver/Discrete_Mathematics_and_Algorithm/tree/master/CRLS#why-it-is-still-useful-also-see-why-it-is-discontinued) especially cemerick.
 
-# Scheme interpreter choice
+## Scheme interpreter choice
 Notice [Racket](https://gitlab.com/utkarsh181/sicp)/[PLTScheme](https://tekkie.wordpress.com/2011/07/26/just-a-quick-note-about-sicp-mutable-pairs-and-pltscheme/) doesn't have *mutable pairs*.
 from tekkie.wordpress
 > This change only applies to the issue of immutable vs. mutable pairs. The dev. team made this decision, because in their view it made Scheme more of a pure functional language
@@ -16,26 +17,26 @@ I choose R5RS as Racket is based on it and 6.5151 (6.905) Red Tape Memo recommen
 
 I use MIT/GNU Scheme.
 
-# what I skipped
+## what I skipped
 - https://web.archive.org/web/20150318225436/http://schemecookbook.org/ since I don't plan to learn scheme *specially*
-# lacking exercise solutions
+## lacking exercise solutions
 - 5.51~52
-# book
+## book
 - sicp from [this 2019 course material although "The End of an Era" says 6.001 is obsolete since 2008](https://web.mit.edu/6.001/6.037/sicp.pdf) ([newer 2.andresraba6.6](https://sarabander.github.io/sicp/) [without](https://github.com/sarabander/sicp-pdf/tree/master) the corresponding pdf). Also see [this](https://www.cliki.net/SICP) and [this](https://news.ycombinator.com/item?id=13918465) for other forms.
   [*official*](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-5.html) ([archive](https://web.archive.org/web/20170710220837/https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-1.html))
   - [interactive](https://xuanji.appspot.com/isicp/1-1-elements.html)
-# prerequisite
+## prerequisite
 - [no prerequisite](https://github.com/ossu/computer-science/issues/1081) is needed although [tekkie](https://tekkie.wordpress.com/2018/04/03/a-word-of-advice-before-you-get-into-sicp/) says more advanced maths is needed.
   Also see [history Course Catalogue](https://dome.mit.edu/handle/1721.3/187889), i.e. history_mit_Course_Catalogue.pdf.
 - newer course needs [programming experience](https://web.mit.edu/6.001/6.037/) like [6.145 A Brief Introduction to Programming in Python](https://hz.mit.edu/catsoop/6.145) or [6.178 about Java](https://ocw.mit.edu/ans7870/6/6.005/s16/getting-started/java.html) ([6.005](https://web.mit.edu/6.005/www/archive/))
-# [errata](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html)
+## [errata](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html)
 - So we better read the HTML version to avoid ambiguity.
   > is is the second edition  book, from Unofficial Texinfo Format.
   > e freely-distributed official -and- format was first con-verted personally to Unofficial Texinfo Format () version 1
   > Also, it’s quite possible that *some errors of ambiguity were introduced* during the conversion
   - older computer seems to read the book using Emacs due to its performance.
     > You are probably reading it in an Info hypertext browser, such as the Info mode of Emacs. You might alternatively be reading it TEX-formaed on your screen or printer, though that would be silly.
-# other solutions
+## other solutions
 - ~~almost full~~ (all skipped since they lack exercise solutions existing in this repo)
   - detailed
     - [1](https://www.inchmeal.io/sicp/ch-1/notes.html) no 1.14, etc.
@@ -96,12 +97,56 @@ I use MIT/GNU Scheme.
   - [3](https://adrianstoll.com/post/sicp-structure-and-interpretation-of-computer-programs-solutions/)
 - only partially
   - [1](https://tekkie.wordpress.com/?s=sicp&submit=Search)
-# How to learn
+## How to learn
 - [see](https://github.com/abrantesasf/sicp-abrantes-study-guide?tab=readme-ov-file)
   - I skipped
     https://web.archive.org/web/20221024062249/https://code-and-cocktails.herokuapp.com/blog/2014/07/06/what-i-have-re-learned-from-sicp/
   - The most of links are covered in this doc and the related doc in DMIA_CRLS repo.
-# TODO
+## TODO
 - [programming assignments](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/psets/index.html) from [the official page](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html)
 - ~~[community-wiki](http://community.schemewiki.org/?sicp-ex-1.18)~~
 - how to make vim maybe [directly running the code](https://www.neilvandyke.org/sicp-texi/) in the texinfo/info ("the Info hypertext format that can be viewed in Emacs").
+# SDF
+## TODO
+- https://lobste.rs/s/m6gnaq/review_software_design_for_flexibility from https://www.reddit.com/r/scheme/comments/t4bbrq/have_you_read_the_book_software_design_for/
+## course 6.5151 (6.905)
+1. I *can't find the pdf lecture* by "mit 6.5151 lecture filetype:pdf".
+2. It seems to have no homework by '6.5151 "homework"' (with only Red Tape pdf), similarly for Exam by 'mit 6.5151 "exam"' and Quizzes by "mit 6.5151 Quiz".
+   It *only* has *problem set / assignment*.
+   - By seeing their pdf's, they are mainly directly book exercises.
+- [old ~~project~~ assignment implementation 2009 (partial)](https://buffer.rajpatil.dev/%2F20240410114903-mit_ocw_6_945_aiasp.html) and [2019 (only have the project solution)](https://github.com/bmitc/mit-6.945-project) (weird still [can't find its fork](https://github.com/bmitc/mit-6.945-project/forks?include=active&page=1&period=&sort_by=stargazer_counts))
+  TODO [project](https://groups.csail.mit.edu/mac/users/gjs/6.945/final-project.pdf) needs team and is a bit general about "symbolic-manipulation software".
+- I only find one 2009 [video lectues](https://archive.org/details/adventures-in-advanced-symbolic-programming)
+  - https://news.ycombinator.com/item?id=23599794
+    > but the entire class is centered around psets
+  - [This](https://github.com/prakhar1989/awesome-courses?tab=readme-ov-file) is [not archived](https://web.archive.org/web/20240513002054/https://camo.githubusercontent.com/afb2fd943e89b86299f1e2c61e629fe0e5a3b8ecde5221e683445077b0754101/68747470733a2f2f6173736574732d63646e2e6769746875622e636f6d2f696d616765732f69636f6e732f656d6f6a692f756e69636f64652f31663464642e706e67)
+    but it seems to be still [the video](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-anonymized-urls)
+- [AI_preq_sicp]
+  > if you want to do Sussman's more recent books like SDF you're going to have to use the latest mit-scheme anyway
+- pset / PS09 -> assignment.
+### SDF
+- "course using Software Design for Flexibility" has no candidates while "course using SICP" has.
+- [This](https://www.reddit.com/r/scheme/comments/zmfwjb/the_book_software_design_for_flexibility_lukewarm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) is not helpful up to [this](https://www.reddit.com/r/scheme/comments/zmfwjb/comment/j0iq1d3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) sorted by Best when giving one brief reading.
+### [overview](https://groups.csail.mit.edu/mac/users/gjs/6.945/overview.pdf)
+- >  Substantial *weekly programming assignments and a final project* are an *integral* part of the subject.
+### [red-tape](https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf)
+- Assignments
+- project
+  > If you don’t come up with a great IDEA yourself, we have *some ideas that you might pursue*. You will be expected to write elegant code that can be *easily read and understood* by us. You must supply a clear *English explanation* of how your software works, and a set of *test cases* *illustrating and testing* its operation. You will present a brief summary and demo in class near the end of the term.
+- homework may mean assignment
+  > by a combination of classroom participation, homework, and project work
+- Collaborative work
+  > *involve themselves in all aspects* of the work. ... you should indicate the names of any collaborators for *each part* of the assignment
+### sdf solutions (by "Software Design for Flexibility exercise solution github")
+"Software Design for Flexibility exercise solution" and "Software Design for Flexibility exercise solution gitlab" both doesn't have more related links with exercises.
+- partial
+  [this having ~~the most~~ partial solutions although with full chapter dir's ...](https://github.com/compclub/exercises/blob/main/chapter-2-dsl/rmoehn/README.md) uses Clojure
+  [this](https://github.com/compclub/projects) uses *Rust*...
+  [This](https://github.com/chebert/software-design-for-flexibility) I *can't find the relation* with the exercises
+  [This](https://github.com/nbardiuk/software-design-for-flexibility) too *less*
+  [This](https://github.com/mbillingr/sdf) and [this](https://github.com/jeffhhk/SoftwareDesignForFlexibility) has *no* solutions
+  https://github.com/bishwa-poudel/Software-Design-and-Architecture-Specialization-Coursera weirdly use Java.
+- See [this with annotations](https://docs.google.com/document/d/1oyk2EHiTfSe1t0Wbr-HJtfVVvLvulonckpOWaD5KD3E/edit) from [this](https://docs.google.com/document/d/1daYgzQX6Wuxy-iEA9jqpu8b50a_Zbd0FxvKswxAV478/edit)
+  [summary](https://docs.google.com/document/d/1vs9ep6A9VLvtn6QLMalYgxQSMXvfPdZA0vdVT6POoJs/edit#)
+  - The above seems to have no solutions for Assignment by searching "Assignment".
+  - I [can't join its slack](https://compositional-cb63110.slack.com/) room and this course has finished

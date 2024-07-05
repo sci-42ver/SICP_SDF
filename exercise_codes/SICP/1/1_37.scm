@@ -7,8 +7,8 @@
 
 (define k 10)
 (- (cont-frac (lambda (i) 1.0)
-           (lambda (i) 1.0)
-           k) 
+              (lambda (i) 1.0)
+              k) 
    0.6180339887498948) ; 1/\varphi
 
 ;;; Compared with

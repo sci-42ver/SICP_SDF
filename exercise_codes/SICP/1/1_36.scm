@@ -9,8 +9,8 @@
       (newline) ; This should be printed first to be more readable
       (display guess)
       (if (close-enough? guess next)
-          next
-          (try next))))
+        next
+        (try next))))
   ; (display first-guess)
   ; (newline)
   (try first-guess))

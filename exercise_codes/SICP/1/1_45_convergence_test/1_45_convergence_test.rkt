@@ -17,8 +17,8 @@
     (let ((next (f guess)))
       ; (displayln guess)
       (if (close-enough? guess next)
-          next
-          (try next))))
+        next
+        (try next))))
   (try first-guess))
 
 (define (cube_root_naive x)
@@ -58,13 +58,13 @@
     (let ((next (f guess)))
       (displayln guess)
       (if (or (close-enough? guess next) (= count bound))
-          (begin 
-            (displayln "finished count:")
-            (displayln count)
-            (displayln guess)
-            (displayln next)
-            next)
-          (try next (+ count 1)))))
+        (begin 
+          (displayln "finished count:")
+          (displayln count)
+          (displayln guess)
+          (displayln next)
+          next)
+        (try next (+ count 1)))))
   ; (trace try)
   (displayln "fixed_point_bound:")
   (try first-guess 1))
@@ -157,13 +157,13 @@ Following the zhihu link formula
     (let ((next (f guess)))
       (displayln guess)
       (if (or (close-enough? guess next) (= count bound))
-          (begin 
-            (displayln "finished count:")
-            (displayln count)
-            (displayln guess)
-            (displayln next)
-            count)
-          (try next (+ count 1)))))
+        (begin 
+          (displayln "finished count:")
+          (displayln count)
+          (displayln guess)
+          (displayln next)
+          count)
+        (try next (+ count 1)))))
   ; (trace try)
   (displayln "fixed_point_bound:")
   (try first-guess 1))

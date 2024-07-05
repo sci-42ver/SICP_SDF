@@ -16,8 +16,8 @@
 (define (iterative-improve good_enough? improve)
   (lambda (guess)
     (if (good_enough? guess)
-        guess
-        ((iterative-improve good_enough? improve) (improve guess))))) ; from wiki
+      guess
+      ((iterative-improve good_enough? improve) (improve guess))))) ; from wiki
 
 (define guess 1.0)
 (define (sqrt x)
@@ -43,8 +43,8 @@
   (lambda (first-guess) 
     (define (iter guess) 
       (if (good-enough? guess) 
-          guess 
-          (iter (improve guess)))) 
+        guess 
+        (iter (improve guess)))) 
     iter))
 
 ; (define (iterative-improve good-enough? improve)  

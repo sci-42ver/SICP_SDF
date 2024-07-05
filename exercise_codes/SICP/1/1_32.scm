@@ -17,5 +17,5 @@
   (iter a null-value))
 
 (+ (let ((x 3))
-        (+ x (* x 10)))
-        x)
+     (+ x (* x 10)))
+   x)

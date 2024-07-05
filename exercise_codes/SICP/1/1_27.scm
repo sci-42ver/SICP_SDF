@@ -4,8 +4,8 @@
          (remainder (square (expmod base (/ exp 2) m))
                     m))
         (else
-         (remainder (* base (expmod base (- exp 1) m))
-                    m))))
+          (remainder (* base (expmod base (- exp 1) m))
+                     m))))
 
 (define (fermat-test n)
   (define (try-it a)
@@ -28,8 +28,8 @@
           ((expmod a n n ) a) (iter (+ a 1) n)
           ; (else #f)))
           (else #f))
-  ; (iter 1 n))
-  (iter 1 n)))
+    ; (iter 1 n))
+    (iter 1 n)))
 
 ;;; > Both of the above implementations fail to take into account the special case of 1 which by definition is not a prime number.
 ;;; Same for the original implementation where `(random 0)` fails.

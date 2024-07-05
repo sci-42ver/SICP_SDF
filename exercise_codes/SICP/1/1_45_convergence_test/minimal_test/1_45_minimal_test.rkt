@@ -1,13 +1,13 @@
 #lang racket/base
 ;;; from the above wiki
 (define (average-damp f) 
-    (lambda (x) (/ (+ x (f x)) 2)))
+  (lambda (x) (/ (+ x (f x)) 2)))
 (define (repeated f n) 
-    (define (compose f g) 
-      (lambda (x) (f (g x)))) 
-    (if (= n 1) 
-      f 
-      (compose f (repeated f (- n 1)))))
+  (define (compose f g) 
+    (lambda (x) (f (g x)))) 
+  (if (= n 1) 
+    f 
+    (compose f (repeated f (- n 1)))))
 
 ;;; from book
 (define tolerance 0.00001)
@@ -23,15 +23,15 @@
     (let ((next (f guess)))
       (displayln guess)
       (if (or (close-enough? guess next) (= count bound))
-          (begin 
-            (displayln "finished count:")
-            (displayln count)
-            (displayln guess)
-            (displayln next)
-            (if whether_output_cnt
-              count
-              next))
-          (try next (+ count 1)))))
+        (begin 
+          (displayln "finished count:")
+          (displayln count)
+          (displayln guess)
+          (displayln next)
+          (if whether_output_cnt
+            count
+            next))
+        (try next (+ count 1)))))
   (displayln "fixed_point_bound:")
   (try first-guess 1))
 

@@ -1,8 +1,8 @@
 (define (prod term a next b)
   (if (> a b)
-      1
-      (* (term a)
-         (prod term (next a) next b))))
+    1
+    (* (term a)
+       (prod term (next a) next b))))
 
 ;; only consider n>0
 (define (inc x)

@@ -56,7 +56,7 @@
 
 ;;; from wiki Kaihao's comment
 (define tolerance 0.00001) 
-  
+
 (define (fixed-point f first-guess) 
   (define (close-enough? v1 v2) 
     (< (abs (- v1 v2)) tolerance)) 
@@ -97,5 +97,5 @@
                 ; (lambda (y) (/ x (fast-expt y (- n 1))))) 
                 ;; `fast-expt` seems to be same as the internal `expt` since they have the same result.
                 (lambda (y) (/ x (expt y (- n 1))))) 
-              1.0))
+               1.0))
 (nth-root 2.0 6 1)
