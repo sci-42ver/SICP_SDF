@@ -78,16 +78,16 @@ Also see [this TA's site](https://people.csail.mit.edu/dalleyg/6.001/SP2007/) be
 ### [comparison](https://stackoverflow.com/a/10251655/21294350) between MIT Scheme and DrScheme
 ### [recitation](https://people.csail.mit.edu/dalleyg/6.001/SP2007/) (not include the 1st recitation by Eric Grimson)
 ## [6.001 fall 2007](https://web.archive.org/web/20160306110531/http://sicp.csail.mit.edu/Fall-2007/)
-### The following are mainly from https://web.archive.org/web/20160415073756/http://sicp.csail.mit.edu/Fall-2007/generalinfo_ft07.htm
+### The following are mainly from https://web.archive.org/web/20160415073756/http://sicp.csail.mit.edu/Fall-2007/generalinfo_ft07.htm where "(*)" means it needs to be done.
 https://web.archive.org/web/20070501000000*/http://sicp.csail.mit.edu/SchemeImplementations/index.html is not archived.
 https://web.archive.org/web/20160629180214/http://sicp.csail.mit.edu/Fall-2007/SchemeImplementations/ is skipped since I don't use DrScheme.
-#### lecture
+#### lecture (*)
 - where is link in [calendar](https://web.archive.org/web/20080908062550/http://sicp.csail.mit.edu/Fall-2007/calendar.txt)?
 - partial lecture is [not archived](https://web.archive.org/web/20080908062839/http://sicp.csail.mit.edu/Fall-2007/lectures/)
 - [This](https://github.com/abrantesasf/sicp-abrantes-study-guide?tab=readme-ov-file) only has [2005 "lecture notes"](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/lecture-notes/), [96~98 notes](https://groups.csail.mit.edu/mac/classes/6.001/).
 It seems to only have video lectures
 > we have engaged in a major educational experiment in which the lectures were replaced with online lectures, to which students were *expected to listen*, either in the 6.001 lab, or on their own computer. ... but that material will *not be identical to the live* lectures.
-#### recitations
+#### recitations (*)
 ~~I~~ ~~don't have time to find that difference and also the lecture is old.~~ ~~will only do the~~ [recitations](https://people.csail.mit.edu/jastr/6001/fall07/) which is based on the video lecture.
 Better read this if possible because this course is [taught by Gerald Jay Sussman](https://web.archive.org/web/20160415061035/http://sicp.csail.mit.edu/Fall-2007/staff.txt).
 > Lectures are the primary vehicle for introducing and motivating new material, some of which is *not in the book*. It is essential that you *listen to the lectures* (whether live – which we prefer – or online), as the *recitations will assume you have already heard the material*, and will *build upon it*. ... Recitations *expand* upon the material currently being introduced in lecture, as well as introducing supplementary material that is *not directly covered in lecture*. ... your attendance at recitation is *essential to good performance* in this class.
@@ -95,7 +95,7 @@ Better read this if possible because this course is [taught by Gerald Jay Sussma
 I can't find by "6.001 fall 2007 Problem set site:mit.edu" which may be implied by
 > Problem sets are released, typically on a weekly basis, onto the 6.001 *online tutor* system
 #### tutorial
-skipped due to
+*skipped* due to
 > to obtain *individual help*, to *review homework* assignments, and to have your *progress in the subject* checked
 #### Assignments (i.e. [project](https://web.archive.org/web/20160415060551/http://sicp.csail.mit.edu/Fall-2007/projects/index.html)/~~Problem set~~)
 > *failing to prepare ahead* for programming assignments generally ensures that the assignments will *take much longer* than necessary
@@ -108,14 +108,14 @@ inappropriate
 #### bible (See the bold text)
 #### grades
 - homework
-  > This applies to the weekly problem sets and to the programming projects.
+  > This applies to the weekly problem sets and to the *programming projects*.
   tutorials (skipped due to the following)
   > You may be asked to explain or to *expand upon your written homework solutions* in order to demonstrate your mastery of the material.
 #### tutor
 They are for tutorial's.
 > If you are unable to attend a tutorial, you should contact your tutor in advance to make alternate arrangements for that week.
 
-To join this it seems that we must be one mit student and [request a form (this is from the chemistry department)](https://chemistry.mit.edu/academic-programs/undergraduate-programs/tutoring/). This is also implied in spring 2007 6.001 lec01 p2.
+To join this it seems that we *must be one mit student* and [request a form (this is from the chemistry department)](https://chemistry.mit.edu/academic-programs/undergraduate-programs/tutoring/). This is also implied in spring 2007 6.001 lec01 p2.
 ### Complete Announcements
 - not archived
   > GROWL! For those of you who did not show up in lecture on Tuesday, 2 October 2007, the essential handout you missed is here.
@@ -123,10 +123,6 @@ To join this it seems that we must be one mit student and [request a form (this 
   > GROWL! For those of you who did not show up in lecture on Tuesday, 6 November 2007, the essential handout you missed is here.
 ## 6.037 (notice [IAP may be not reliable](https://www.wisdomandwonder.com/link/2110/why-mit-switched-from-scheme-to-python#comment-365) and the instructor website [seems to not exist](https://web.archive.org/web/20120121084033/http://web.mit.edu/alexmv) different from [Gerald Jay Sussman](https://groups.csail.mit.edu/mac/users/gjs/gjs.html))
 TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki/Mike_Phillips_(speech_recognition))?
-- From 
-  > 6 units of P/D/F credit are available; only the projects are graded.
-  only "projects" need to be done after reading the lectures.
-  But as the above says, I will skip that.
 - See R5RS although sicp books uses R4RS as the reference.
   The newest is [R7RS](https://standards.scheme.org/official/r7rs.pdf) from [this](https://standards.scheme.org/) although racket seems to [not support](https://web.archive.org/web/20231208093804/http://community.schemewiki.org/?scheme-faq-standards#implementations) and has [one unofficial implementation](https://github.com/lexi-lambda/racket-r7rs)
   - R7RS [official](https://r7rs.org/) [errata](https://github.com/johnwcowan/r7rs-work/blob/master/R7RSSmallErrata.md) / [this](https://small.r7rs.org/wiki/R7RSSmallErrata/)
@@ -136,6 +132,11 @@ TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki
     - [cookbook](https://cookbook.scheme.org/)
     - [man](https://man.scheme.org/)
   - If using Racket, then [R5RS may be better](https://stackoverflow.com/a/3358638)
+### what to do
+- From 
+  > 6 units of P/D/F credit are available; *only the projects* are graded.
+  only "projects" need to be done after reading the lectures.
+  But as the above says, I will skip that.
 ### comparison
 - > which Spring 2007 6.001 lectures we've drawn the material from, in case you *want to delve deeper, get a second opinion*, read ahead, etc.
   > we are mostly *tracking the 6.001 lectures*
@@ -551,6 +552,8 @@ I only check labs without checking Homework, Quizzes and Retakes
 - [`[=e=]` (See macOS tr)](https://www.davekb.com/browse_computer_tips:linux_tr_equiv_chars:txt)
 - Also see `info join` example
 # CS 61A lab
+Up to Week 3, they are much easier than the book exercises 
+or more specifically they are easy after having done exercises.
 ## Week 1 part 1
 - I won't check `emacs`.
 - I [don't have 32-bit system](https://people.eecs.berkeley.edu/~bh/61a-pages/Scheme/source/linux.html), so I won't install stk
@@ -565,6 +568,55 @@ I only check labs without checking Homework, Quizzes and Retakes
     > Consider this solution: (define (sum-square-largest x y z) (cond ((and (< x y) (< x z)) ;; x is smallest (+ (* y y) (* z z))) (else (sum-square-largest y z x))))
     i.e. filter the smallest number step by step.
     https://web.archive.org/web/20080723104814/http://programming.reddit.com/info/1nb8t/comments not with much valuable comments about "art".
+## Week 2
+[sol](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week2) with the different order from the lab pdf.
+- `((lambda (x) (+ x 3) 7)` notice the bold text which implies the unpaired parentheses.
+- [x] 2
+  - sol
+    - TODO
+      meaning of "PL-SENT", ENDS-E.
+- [x] 3
+  - 0, procedure.
+- [x] 4
+  ```scheme
+  (define f 2)
+  ; f should be one procedure for `(f)`
+  ; (f 3): one procedure taking one number as the argument
+  ; ((f)): one procedure taking zero argument and return one procedure
+  (define (f)
+    (lambda () (lambda (x) (+ x 2))))
+  (((f))3) ; 5
+  ```
+  - sol
+    > Again, these definitions are *shorthand for lambda* expressions:
+    - > As a super tricky solution, for hotshots only, try this:
+      ~~endless loop~~
+      Here `f` has no meaning at all.
+    - kw:
+      > you could use `(define (f . args) f)` as the answer to *all* of these problems!
+- [x] 5
+  `((t 1+) 0)` -> 3
+  `((t (t 1+)) 0)` -> 3*3=9
+  `(((t t) 1+) 0)` -> `(((lambda (x) (t (t (t x)))) 1+) 0)` -> `((t(t(t 1+))) 0)` $3^3$
+  - sol
+    - kw:
+      > but what's important is the function, not the expression that produced the function
+- [x] 6 trivial same as 5
+- [x] 7
+  ```scheme
+  (define (make-tester x)
+    (lambda (y)
+      (equal? x y)))
+  ((make-tester 'hal) 'hal)
+  ((make-tester 'hal) 'cs61a)
+  ```
+## Week 3
+- [x] 1 reverses the order of `(= kinds-of-coins 1)`... or `(first-denomination (- 6 kinds-of-coins))`
+- [x] 2 should be almost ~~1:50.~~
+  - sol
+    > match *a small amount of money with a large coin* ... When the coins are tried in the book's order, by the time we are thinking about four cents, we have already *abandoned the idea of using nickels*
+- [x] 3
+- [ ] 
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 ## 6.037 ~~(dropped for future reading except this one already read)~~ (may read as one quick review after reading the book)

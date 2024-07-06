@@ -1,0 +1,137 @@
+MIT/GNU Scheme running under GNU/Linux
+Type `^C' (control-C) followed by `H' to obtain information about interrupts.
+
+Copyright (C) 2022 Massachusetts Institute of Technology
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Image saved on Friday January 6, 2023 at 10:11:41 PM
+  Release 12.1 || SF || LIAR/x86-64
+
+1 ]=> (define (count-change amount)
+  (cc amount 5))
+;Value: count-change
+
+1 ]=> (define (cc amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (= kinds-of-coins 0)) 0)
+        (else (+ (cc amount
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
+;Value: cc
+
+1 ]=> (define (first-denomination kinds-of-coins)
+  (cond ((= kinds-of-coins 1) 
+          (begin 
+            (display "remove change:")
+            (display 1)
+            (newline)
+            1))
+        ((= kinds-of-coins 2) 
+          (begin 
+            (display "remove change:")
+            (display 5)
+            (newline)
+            5))
+        ((= kinds-of-coins 3) 
+          (begin 
+            (display "remove change:")
+            (display 10)
+            (newline)
+            10))
+        ((= kinds-of-coins 4) 
+          (begin 
+            (display "remove change:")
+            (display 25)
+            (newline)
+            25))
+        ((= kinds-of-coins 5) 
+          (begin 
+            (display "remove change:")
+            (display 50)
+            (newline)
+            50))))
+;Value: first-denomination
+
+1 ]=> ; (count-change 100)
+
+(define choice 1)
+;Value: choice
+
+1 ]=> (cond ((= choice 1)
+        ;; my 2nd solution
+        (define (cc amount kinds-of-coins)
+          (cond ((= amount 0) 1)
+                ((or (< amount 0) (= kinds-of-coins 0)) 0)
+                (else (+ (cc amount
+                            (- kinds-of-coins 1))
+                        (cc (- amount
+                                (first-denomination (- 6 kinds-of-coins)))
+                            kinds-of-coins)))))
+        (count-change 100)
+      )
+      ((= choice 2) 
+                ;; instructor
+        (define (count-change amount)
+          (cc amount 1)) ; This is also changed
+
+        (define (cc amount kinds-of-coins)
+          (cond ((= amount 0) 1)
+                ((or (< amount 0) (> KINDS-OF-COINS 5)) 0)     ; changed here
+                ; (else (+ (cc (- amount
+                ;             (first-denomination kinds-of-coins))
+                ;               kinds-of-coins)
+                ;           (cc amount
+                ;               (+ KINDS-OF-COINS 1))))))         ; changed here
+                ;; We should not change the order since the output will be totally different
+                (else (+  (cc amount
+                              (+ KINDS-OF-COINS 1))
+                          (cc (- amount
+                            (first-denomination kinds-of-coins))
+                              kinds-of-coins)))))         ; changed here
+        (count-change 100)
+        )
+      ((= choice 3) 
+                ;; obvious solution
+        (define (first-denomination kinds-of-coins)
+          (cond ((= kinds-of-coins 1) 
+                  (begin 
+                    (display "remove change:")
+                    (display 50)
+                    (newline)
+                    50))
+                ((= kinds-of-coins 2) 
+                  (begin 
+                    (display "remove change:")
+                    (display 25)
+                    (newline)
+                    25))
+                ((= kinds-of-coins 3) 
+                  (begin 
+                    (display "remove change:")
+                    (display 10)
+                    (newline)
+                    10))
+                ((= kinds-of-coins 4) 
+                  (begin 
+                    (display "remove change:")
+                    (display 5)
+                    (newline)
+                    5))
+                ((= kinds-of-coins 5) 
+                  (begin 
+                    (display "remove change:")
+                    (display 1)
+                    (newline)
+                    1))))
+        (count-change 100)
+      ))
+;Definition may not be used as an expression: #[defn-item 12 cc #[expr-item 13]]
+;To continue, call RESTART with an option number:
+; (RESTART 1) => Return to read-eval-print level 1.
+
+2 error> 
+End of input stream reached.
+Ceterum censeo Carthaginem esse delendam.
