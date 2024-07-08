@@ -1,14 +1,9 @@
-In a summary, the 2nd will define the *whole nested* function first and then apply to one *function* parameter which is similar to `G=a(a(....a()))` then we call `G_f=G(f)` and then call `G_f(x)` (Here I see the function `f` as one type of data). The 1st will call `a_f=a(f)` first and finally we do`a_f(a_f(a_f...(a_f(x))))` (This also implies why the above `(h (h x))` does 2 `succ`s). The 2nd will take `x` into calculation at the final step while the 1st will do that much earlier when do the most inner `a_f(x)`. Notice they may do same sometimes like for the identity function.
-
-In a summary, the 2nd will define the *whole nested* function first and then apply to one *function* parameter which is similar to `G=a(a(....a()))` (`a` is average-damping) and then we call `G_f=G(f)` (`f` is the function parameter) and `G_f(x)` (Here I see the function `f` as one type of data). The 1st will call `a_f=a(f)` first and finally we do`a_f(a_f(a_f...(a_f(x))))` (This also implies why the above `(h (h x))` does 2 `succ`s).
-
-The 2nd will actually call `f` once while the 1st will call that *much more times*. Notice they may do the same sometimes, e.g. when `f` is the identity function.
 # notice
 - I didn't prove those theorems which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution 1.1~46 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~6 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
@@ -839,7 +834,82 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       plt.show()
       ```
   - ~~TODO it seems we can't use neither too large nor too small number of `average-damp`.~~
-- [ ] 1.46
+- [ ] 1.46 See codes
+## chapter 2
+- [x] 2.1
+  - wiki
+    - the 1st solution is based on the 4 cases.
+    - > it will have sign depending on the number of iterations it runs and the signs of a and b
+      due to [remainder implementation](https://conservatory.scheme.org/schemers/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_294)
+      > nr has the same sign as n1
+    - > Comment on how the above solution works:
+      This is about the 1st solution
+    - `(* n (/ d abs-d))` just uses `(/ d abs-d)` as the sign
+- [x] 2.2
+- [x] 2.3
+  - probably trivial as 2.2. Here I give one brief implementation description
+    `(make-rectangle tl_pnt br_pnt)` or `(make-rectangle tr_pnt bl_pnt)` where tl means top left and similar for others.
+    Then `(x_len rect)` by `(abs (x-point (minus (top_pnt rect) (bottom_pnt rect))))` (simiar for `y_len`)
+    Then `(perimeter x_side y_side)` and `(area x_side y_side)` are trivial.
+  - wiki
+    Same abstraction for `perimeter` and `area` as the above.
+    - > they should call some kind of factory method (cf "Domain Driven Design").
+      This just means [the arguments should be assumed to be known](https://en.wikipedia.org/wiki/Domain-driven_design).
+      > should match the business domain
+    - ~~`parallel-side` naming is a bit not readable.~~
+    - cmp's comment is outdated.
+    - ";; Here's another one" 
+      ~~it assumes these 2 sides are perpendicular then it is same as the top solution.~~
+      ```scheme
+      (let ((new-x (- x1 (* height (sin theta)))) 
+               (new-y (+ y1 (* height (cos theta))))) ...)
+      ```
+      I checked 2 cases (p1,p2: 1. bl,tr 2. tl,br) and here due to geometry (I won't give one strict proof. I lastly learned about pure geometry is when in middle high school) it can be probably generalized.
+    - https://en.wikipedia.org/wiki/Domain-driven_design
+- [x] 2.4 trivial `(z (lambda (p q) q))`.
+  - wiki
+    > That inner function will be passed p and q in that order, so just return the first arg, p. 
+    IMHO it is better to state that "passed a and b ... the first arg, a".
+- [x] 2.5
+  - This is proved using *the fundamental theorem of arithmetic*.
+  - `cons` is trivial
+    `car` may be implemented by keeping checking `(remainder x 2)` after division by 2 with one state variable to check division number until `(not (= (remainder x 2) 0))`. Similar for `cdr`.
+  - wiki
+    - > The top example has a few more layers than are really necessary, so I flattened it out
+      IMHO this is unnecessary for ";; Another way to define count-0-remainder-divisions ".
+    - chekkal's is interesting
+      where `(expt 3 (logb 3 x))` gets one $3^{b+k},k>=0$
+      then `(gcd x (expt 3 (logb 3 x)))` will get $3^b$
+      - jsdalton's uses one different implementation similar to the top by recursive calls but with *no state variables*.
+- [x] 2.6
+  - > Use substitution to evaluate (add-1 zero)
+    `(n f)` -> `(zero f)` -> `(lambda (x) x)`
+    `(f ((n f) x))` -> `(f ((lambda (x) x) x))` -> `(f x)`
+    This is more detailed than wiki.
+    - by induction if `(n f)` -> $\overbrace{f(f(\ldots))}^{n\text{ times }f}$
+      then it is trivial `((+ 1 n) f)` is also that case.
+    - Also directly implement using [wikipedia definition](https://en.wikipedia.org/wiki/Church_encoding#Church_numerals)
+  - > Give a direct definition of the addition procedure +
+    `(f ((n f) x)))` -> `((n1 f) ((n2 f) x)))`
+  - wiki
+    - > Essentially, we need to apply a's multiple calls to its f (its outer lambda arg) to b's multiple calls to its f and its x. Poor explanation.
+      Yes. The to syntax is a bit messy.
+      Just see codes ` (fa (fa (fa (fa ... (fa xa))))...) `, etc.
+    - IMHO better to abstract the maths definition and then define all functions.
+    - TODO who is Ken Dyck?
+    - jsdalton's is interesting (See anonymous's for small correction).
+    - alexh's is right by removing redundant `lambda`.
+    - in `(define (church-mult m n) (compose m n))`, it is `n` which is transformed by `m`
+      while in `(compose (m f) (n f))` it is `f`.
+      - `(compose m n)` -> `(lambda (x) (m (n x)))` -> `(m (n inc))`
+        while `(lambda (f) (compose (m f) (n f)))` -> `(lambda (f) (lambda (x) (m f) ((n f) x)))` -> `(lambda (x) (m inc) ((n inc) x))`
+        The latter needs `lambda` to glue `(m inc)` and `(n inc)`.
+      - it is also intuitive by thinking `m,n` as func data
+        then `(compose m n)` just means $m\circ n$
+        and `(compose (m f) (n f))` just means [$\bigcirc^{m} f\circ \bigcirc^{n}f$](https://math.stackexchange.com/a/1097075/1059606).
+    - we better transform `f^n` to `(f (f .. (f` to better understand it~~ since if it is seen as one  *single* entity~~.
+    - TODO [`...` semantics](http://erights.org/elang/quasi/terms/like-ellipses.html)
+
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

@@ -3,7 +3,7 @@
 
 ; (load "1_43.scm")
 (require "1_43.rkt")
-(require "../miscs_lib.rkt")
+(require "../../miscs_lib.rkt")
 ;;; from book
 (define (average-damp f)
   (lambda (x) (average x (f x))))

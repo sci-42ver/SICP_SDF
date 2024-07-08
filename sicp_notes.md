@@ -1,4 +1,6 @@
-This seems to one problem caused by code changes as https://lore.kernel.org/git/20170530170557.GA2798@google.com/T/ says. "by first pushing changes in each submodule manually" works for me.
+@sepp2k Thanks. I am not one native English speaker. Some sentences in SICP seems ambiguous for me, like https://stackoverflow.com/q/78641848/21294350, although I can understand what CSAPP and OSTEP etc. say well.
+
+Your point 2 is right. As sepp2k says, I understood what the author conveys wrongly.
 
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
@@ -10,6 +12,8 @@ This seems to one problem caused by code changes as https://lore.kernel.org/git/
 ...
 >>>
 ```
+  - IMHO wiki always have many redundant comments for some easy exercises
+    like 2.1, etc.
 # reading order recommendation with other books
 - better read *pure* "Computer Architecture" (So not csapp) before SICP if having learnt other programming languages like C.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
@@ -19,7 +23,7 @@ This seems to one problem caused by code changes as https://lore.kernel.org/git/
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*.
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to exercise 1.40 finished
+- up to 2.1 (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 1.3 (included) by searching "chapter" and "section".
 ### 1.2
@@ -33,8 +37,11 @@ tracked up to section 1.3 (included) by searching "chapter" and "section".
 ### 2
 - > In Chapter 2, when we investigate how to implement rational-number arithmetic, we will need to be able to compute s in order to reduce rational numbers to lowest terms.
 - chapter 1 footnote 23.
+  > We will learn how to implement arithmetic on rational numbers in Section 2.1.1
 - > We will return to these ideas in Section 2.2.3 when we show how to use sequences as interfaces
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
+  i.e. func in data structures
+- > In Section 2.2 we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -43,6 +50,7 @@ tracked up to section 1.3 (included) by searching "chapter" and "section".
   > we will investigate some of its implications in Chapter 3 and *Chapter 4*
 - > In particular, when we address in Chapter 3 the use of procedures with “mutable data,”
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
+- > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 ### 4
 - chapter 1 footnote 20
 - > We will return to this issue in section 4.1.6, after we learn more about evaluation.
@@ -232,7 +240,7 @@ interestingly inst.eecs.berkeley.edu [doesn't need one account before](https://w
 ### TODO
 - Course information handout
   - > Unlike the homework and projects, the *tests* in this course (except for the parts specifically designated as group parts) must be your own, individual work
-- why bh links to [Marxism](https://web.archive.org/web/20170225101107/https://www.anu.edu.au/polsci/marx/marx.html)??????
+- why bh homepage has links to [Marxism](https://web.archive.org/web/20170225101107/https://www.anu.edu.au/polsci/marx/marx.html)??????
 ### comparison between scheme and python
 - [1](https://news.ycombinator.com/item?id=9844181)
   >  You almost certainly *missed out on things* that you could very well *never see again*, or even know the existence of (at least for a very long time)
@@ -322,6 +330,7 @@ I only check labs without checking Homework, Quizzes and Retakes
 # html book searching tips
 - select by the specific emphasized text
   [XPath](https://scrapfly.io/blog/how-to-select-elements-by-text-in-xpath/) ([no corresponding CSS selector](https://stackoverflow.com/a/4561376/21294350))
+  - better use `//em` instead of `em` to avoid mere text searching.
 - following-sibling
   [XPath -> selector](https://devhints.io/xpath#using-axes)
 # scheme style
@@ -1061,6 +1070,16 @@ different length sentence. The range is from 0 to N − 1.
 - [closure](https://en.wikipedia.org/wiki/Closure_(mathematics)), i.e. codomain $\subseteq$ domain.
 - data-directed programming is different from [Data-driven programming](https://en.wikipedia.org/wiki/Data-driven_programming)
   TODO how it is implemented?
+- > e names car and cdr derive from the orig-inal implementation of Lisp on the  
+  See [this](https://www.iwriteiam.nl/HaCAR_CDR.html) and [wikipedia](https://en.wikipedia.org/wiki/CAR_and_CDR) "does not quite match the IBM 704 architecture"
+  - [manual](https://www.softwarepreservation.org/projects/LISP/book/LISP%201.5%20Programmers%20Manual.pdf)
+    TODO "as parts of trees"
+#### 2.1.3
+The key is "procedures plus *conditions*".
+> is use of procedures corresponds to nothing like our intuitive notion of what data should be.
+- `(error "Argument not 0 or 1: CONS" m)` is a bit ambiguous since `cons` needs 2 arguments
+  Here it means `car/cdr` is used wrongly.
+- [Message passing](https://en.wikipedia.org/wiki/Message_passing#:~:text=In%20computer%20science%2C%20message%20passing,and%20run%20some%20appropriate%20code) Here index is the message.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

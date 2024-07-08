@@ -1,48 +1,23 @@
-Recently when learning SICP, I read [this code][1] which is the reference of [sicp-solutions][2] which is the reference of [schemewiki][3].
+[One straightforward implementation][1] is
+```scheme
+(define (logb b n)
+  (/ (log n) (log b)))
+```
 
-It has one equation in [this code part][4]:
-$$
-f(k,3)=\lfloor \frac{k}{10}\rfloor\cdot\lfloor \frac{k}{5}\rfloor-\lfloor \frac{k}{10}\rfloor^2+\lfloor \frac{k}{5}\rfloor+1
-$$
+But this is not exact as [schemewiki][2] says:
+> (cdr (cons 11 17) will get 16 as output
+```
+(logb 3 (expt 3 17))
+;Value: 16.999999999999996
+```
 
-I thought this equation can be easily derived using Arithmetic Progression (See the figure with green nodes in the above sicp-solutions for how this equation is derived):
-$$
-\begin{align*}
-  f(k,3)&=\frac{[f(k,2)+f(k-10\cdot\lfloor \frac{k}{10}\rfloor,2)]\cdot(\lfloor \frac{k}{10}\rfloor+1)}{2}\\
-  &=\frac{[(\lfloor \frac{k}{5}\rfloor+1)+(\lfloor \frac{k-10\cdot\lfloor \frac{k}{10}\rfloor}{5}\rfloor+1)]\cdot(\lfloor \frac{k}{10}\rfloor+1)}{2}
-\end{align*}
-$$
-
-I have used codes to check the above 2nd equation. It should be equal to the 1st equation.
-
-The difficult part is $\lfloor \frac{k}{10}\rfloor\cdot\lfloor \frac{k-10\cdot\lfloor \frac{k}{10}\rfloor}{5}\rfloor$. I don't know how to simplify such a *deep nested* floor equation.
+It is not straightforward whether we need to do `ceiling` or `floor`.
 
 ---
 
-Following peterwhy's hints. We let $k=10m+t$ and $q=\lfloor \frac{k-10\cdot\lfloor \frac{k}{10}\rfloor}{5}\rfloor$
-Then we need to prove 
-$$
-\begin{align*}
-&&2(\lfloor \frac{k}{10}\rfloor\cdot\lfloor \frac{k}{5}\rfloor-\lfloor \frac{k}{10}\rfloor^2+\lfloor \frac{k}{5}\rfloor+1)&=2+q+\lfloor \frac{k}{10}\rfloor\cdot\lfloor \frac{k}{5}\rfloor+(2+q)\lfloor \frac{k}{10}\rfloor+\lfloor \frac{k}{5}\rfloor\\
-\Rightarrow&&\lfloor \frac{k}{10}\rfloor\cdot\lfloor \frac{k}{5}\rfloor-2\lfloor \frac{k}{10}\rfloor^2+\lfloor \frac{k}{5}\rfloor&=q+(2+q)\lfloor \frac{k}{10}\rfloor
-\end{align*}
-$$
-1. $k\bmod 10<5\Rightarrow q=0$. Then we need to prove
-  $$
-  \begin{align*}
-    m\cdot 2m-2m^2+2m=2m
-  \end{align*}
-  $$
-  This trivially holds.
-2. $k\bmod 10>=5\Rightarrow q=1$. Similar to the above
-  $$
-  \begin{align*}
-    m\cdot (2m+1)-2m^2+2m+1&=1+(2+1)m
-  \end{align*}
-  $$
-  This trivially holds again.
+I am learning SICP. Is there one elegant way to implement the exact logarithm? 
 
-  [1]: https://github.com/sarabander/p2pu-sicp/blob/master/1.2/Ex1.14.scm
-  [2]: https://sicp-solutions.net/post/sicp-solution-exercise-1-14/
-  [3]: http://community.schemewiki.org/?sicp-ex-1.14
-  [4]: https://github.com/sarabander/p2pu-sicp/blob/fbc49b67dac717da1487629fb2d7a7d86dfdbe32/1.2/Ex1.14.scm#L59-L63
+Any complex implementation is welcome but I may not dig into it now if it is beyond what SICP desires to teach too much. Please show some references to help understand that  complex implementation. I will read it in the future.
+
+  [1]: https://stackoverflow.com/a/47879957/21294350
+  [2]: http://community.schemewiki.org/?sicp-ex-2.5
