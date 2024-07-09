@@ -11,6 +11,7 @@ Your point 2 is right. As sepp2k says, I understood what the author conveys wron
 <<<LisScheSic
 ...
 >>>
+review history comments.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -23,7 +24,7 @@ Your point 2 is right. As sepp2k says, I understood what the author conveys wron
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*.
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.1 (not included)
+- up to 2.2 (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 1.3 (included) by searching "chapter" and "section".
 ### 1.2

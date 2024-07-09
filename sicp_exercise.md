@@ -4,6 +4,7 @@
   Then I read this repo codes.
   - repo read up to
     I have read repo solution chapter 1,2.1~6 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
@@ -909,7 +910,33 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         and `(compose (m f) (n f))` just means [$\bigcirc^{m} f\circ \bigcirc^{n}f$](https://math.stackexchange.com/a/1097075/1059606).
     - we better transform `f^n` to `(f (f .. (f` to better understand it~~ since if it is seen as one  *single* entity~~.
     - TODO [`...` semantics](http://erights.org/elang/quasi/terms/like-ellipses.html)
-
+- [ ] 2.7 trivial by `car` -> `lower-bound`
+  - wiki
+    - jz doesn't assume the order of `a,b` although the book assumes that when implementing `make-rat`.
+    - > The passage and the implementation indicate that lower-bound is positional rather than value dependent.
+      implies the above assumption.
+      We can ignore what HannibalZ says.
+- [x] 2.8 `(- (lower-bound x) (upper-bound y)) ...`
+  - > Specifying subtraction in terms of addition is more accurate. We also have the example of division specified in terms of multiplication in the text
+    ~~This doesn't comply to *abstraction barriers*.~~
+    Fine.
+    - > This even works for negative valued interval, whether or not , we want to use values in that range ;-)
+      trivially this is same as the original implementation. So the original implementation also "works for negative valued interval".
+  - > this width of the first interval minus the second interval must equal the width of the result of sub-interval.
+    trivially it should be "add" instead of "minus".
+- [x] 2.9
+  - See my comments for 2.8
+  - when $a,b,c,d>0$ for $[a,b],[c,d]$
+    then $bd-ac=a(d-c)+d(b-a)\quad(*)$
+    but when $a<0<b,c,d$
+    then the result is $[ad,bd]$
+    $d(b-a)\neq (*)$ trivially.
+  - > Give examples to show
+    So wiki is enough.
+- [ ] 2.10 strictly the result is $(-\infty,\infty)$. Then we just signal error without manipulating with it. This is trivial.
+  - wiki
+    > The answer above(vi) misunderstand the question, if the interval is zero(upper-bound = lower-bound), that's alright, it won't cause any problem
+    just reduced to the division by one number.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

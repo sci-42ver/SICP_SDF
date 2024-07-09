@@ -6,12 +6,12 @@
 
 (define (cc amount coin_list)
   (cond ((= amount 0) 1)
-        ((or (< amount 0) (empty? coin_list)) 0)
-        (else (+ (cc amount
-                     (bf coin_list))
-                 (cc (- amount
-                        (first-denomination coin_list))
-                     coin_list)))))
+    ((or (< amount 0) (empty? coin_list)) 0)
+    (else (+ (cc amount
+                 (bf coin_list))
+             (cc (- amount
+                    (first-denomination coin_list))
+                 coin_list)))))
 
 (define (first-denomination coin_list)
   (first coin_list))

@@ -8,6 +8,6 @@
 ;; > so that it correctly handles cases like (plural ’boy).
 (define (plural wd)
   (if (and (equal? (last wd) 'y) (not (vowel? (last (bl wd)))))
-      (word (bl wd) 'ies)
-      (word wd 's)))
+    (word (bl wd) 'ies)
+    (word wd 's)))
 (plural 'boy)

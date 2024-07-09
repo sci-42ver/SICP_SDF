@@ -30,7 +30,7 @@
   (display ")"))
 
 (print-point
- (midpoint-segment
-  (make-segment
-   (make-point 0 0)
-   (make-point 2 2))))
+  (midpoint-segment
+    (make-segment
+      (make-point 0 0)
+      (make-point 2 2))))
