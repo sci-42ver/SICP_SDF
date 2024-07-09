@@ -95,10 +95,15 @@ test-intervals
                         (cdr test-intervals)))
             (car test-intervals)))
 
+;; The first version of this is wrong which doesn't consider `zero? a` separately.
+;; This considers a<=0<=b interval.
 (define (opposite-pair? a b) 
-  (if (positive? a) 
-    (or (negative? b) (zero? b)) ; modified
-    (positive? b))) 
+  (cond ((positive? a) 
+          (not (positive? a))) ; modified
+        ((zero? a)
+          #t) ; Here we consider the (0,0) interval where the result must be also (0,0)
+        (else
+          (not (negative? b)))))
 
 (define (positive-pair? a b) 
   (if (opposite-pair? a b) 
@@ -137,13 +142,12 @@ test-intervals
     (cond   ((negative-pair? x0 x1) 
              (cond   ((negative-pair? y0 y1) 
                       (make-interval (* x0 y0) (* x1 y1)))
-                     ;; Here the latter 2 can be combined
                      ((opposite-pair? y0 y1) 
-                      (make-interval (* x0 y1) (* x1 y0)))
+                      (make-interval (* x0 y1) (* x0 y0)))
                      (else (make-interval (* x0 y1) (* x1 y0)))))
             ((opposite-pair? x0 x1)
              (cond   ((negative-pair? y0 y1) 
-                      (make-interval (* x0 y1) (* x1 y0)))
+                      (make-interval (* x1 y0) (* x0 y0)))
                      ((opposite-pair? y0 y1) 
                       (let            ((p1 (* x0 y0)) 
                                        (p2 (* x0 y1)) 
