@@ -35,6 +35,8 @@
   ; combinations of pairs. 
   (displayln (reverse test-list))
   ;; notice `(cons '(-10 . -5) '(-10 . -4))` -> `((-10 . -5) -10 . -4)`
+
+  ;; See wiki `(cons test-list test-list)` also works since we use 2 `for-each`'s to iterate them.
   (cons test-list (reverse test-list))) 
 
 ; Capture the result of `generate-intervals` so we don't have to 
@@ -99,11 +101,19 @@ test-intervals
 ;; This considers a<=0<=b interval.
 (define (opposite-pair? a b) 
   (cond ((positive? a) 
-          (not (positive? a))) ; modified
+         (not (positive? a))) ; modified
         ((zero? a)
-          #t) ; Here we consider the (0,0) interval where the result must be also (0,0)
+         #t) ; Here we consider the (0,0) interval where the result must be also (0,0)
         (else
           (not (negative? b)))))
+;; This also works here since when we use `opposite-pair?` a<=b is met. 
+;; Then a<=0 is catched by `(not (positive? a))` where we get a<=0<b with `(positive? b)` together.
+
+;; Notice it drops (0 . 0) interval. But it is caught by 2 `else` in the original code.
+; (define (opposite-pair? a b) 
+;   (if (positive? a) 
+;     (negative? b) 
+;     (positive? b))) 
 
 (define (positive-pair? a b) 
   (if (opposite-pair? a b) 
@@ -166,12 +176,11 @@ test-intervals
                           (max p1 p4))))
                      (else (make-interval (* x0 y1) (* x1 y1)))))
             (else 
-             (cond   ((negative-pair? y0 y1) 
-                      (make-interval (* x0 y1) (* x1 y0)))
-                     ;; Here the latter 2 can be combined
-                     ((opposite-pair? y0 y1) 
-                      (make-interval (* x1 y0) (* x1 y1)))
-                     (else (make-interval (* x0 y0) (* x1 y1)))))))) 
+              (cond   ((negative-pair? y0 y1) 
+                       (make-interval (* x0 y1) (* x1 y0)))
+                      ((opposite-pair? y0 y1) 
+                       (make-interval (* x1 y0) (* x1 y1)))
+                      (else (make-interval (* x0 y0) (* x1 y1)))))))) 
 ; nothing will be printed as both procedures are basically the same. 
 
 (test old-mul-interval mul-interval)

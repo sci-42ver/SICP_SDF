@@ -1,3 +1,4 @@
+;;;;;; See 2_11_atomik.scm for my try after wiki hints.
 ;;; > Rewrite this procedure using Ben’s suggestion.
 ;; from book
 (define (make-interval a b) (cons a b))

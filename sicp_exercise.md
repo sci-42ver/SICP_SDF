@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution chapter 1,2.1~6 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -933,10 +933,26 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     $d(b-a)\neq (*)$ trivially.
   - > Give examples to show
     So wiki is enough.
-- [ ] 2.10 strictly the result is $(-\infty,\infty)$. Then we just signal error without manipulating with it. This is trivial.
+- [x] 2.10 strictly the result is $(-\infty,\infty)$. Then we just signal error without manipulating with it. This is trivial.
   - wiki
     > The answer above(vi) misunderstand the question, if the interval is zero(upper-bound = lower-bound), that's alright, it won't cause any problem
     just reduced to the division by one number.
+- [ ] 2.11
+  - wiki
+    - > This ensures that we're never breaking any more than we need to at any given time.
+      This may mean "we need at ...".
+    - TODO
+      - > To see how this works draw a chart of the operator
+        meaning
+      - > What followed was *the cond block to end all cond blocks*. My next challenge would be to make a procedure that simplifies those ands at least, but I want to move on.
+        "but I want to move on": Yes. These comments are really too detailed.
+    - jared-ross's shares the same logic as atomik's but use the symbolic version.
+      - `(repeat-call f n)` will call `f` n-1 times.
+      - The test is based on random interval between $[-2.5,2.5]$.
+    - jz's is really similar to atomik's.
+    - all tests are based on intervals spanning zero.
+  - repo
+    
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
