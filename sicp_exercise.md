@@ -1,9 +1,10 @@
+1. One small question: "the range of this function is *included in the product* of the corresponding intervals obtained from the formula of the function": what does "included" mean here? 2. I get this link when reading http://community.schemewiki.org/?sicp-ex-2.14-2.15-2.16. Here I give one summary to help future readers: The examples in paragraph 4 to 6 shows the significance of "each symbol is used only once" to make "interval arithmetics" work. For paragraph 7 to 8, notice here "range" and "interval" mean different things.
 # notice
 - I didn't prove those theorems which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution chapter 1,2.1~11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~16 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -952,6 +953,65 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - jz's is really similar to atomik's.
     - all tests are based on intervals spanning zero.
   - repo
+- [ ] 2.12 See 2_11.scm
+  - wiki
+    here as "6.8 ohms with 10% tolerance" shows, we should use 10 as the param instead of 0.1.
+    - danlucraft's is *stricter* (also see ";We are talking about percentages rather than fractions.  Therefore")
+      - Also see point 2 of dxdm's to be stricter.
+- [ ] 2.13
+  - IMHO it is tedious to give cond for each case as 2.11 does which is also implied by 2.11 wiki comments.
+    > You may simplify the problem by assuming that all numbers are positive.
+  - wiki
+    - it should have no $0.5$.
+    - sTeven's is more rigorous.
+
+~~TODO http://wiki.drewhess.com/wiki/SICP_exercise_2.16~~
+- [ ] 2.14
+  - wiki
+    - > Here, for par1, R1*R2 and R1+R2 are dependent, so (div-interval R1*R2 R1+R2) got wrong answer.
+      ~~TODO At least for "R1 = [1, 2]; R2 = R1 + 1=[2, 3]", we will get the *right* answer.~~
+      > 1/R1 + 1/R2; they are all independent,
+      ~~why? since R1 and R2 are dependent, then also for 1/R1 and 1/R2.~~
+    -  for why "Lem is right".
+    - TODO
+      > You will get the most insight by using intervals whose width is a small percentage of the center value.
+      - ~~[This](https://web.archive.org/web/20141122102312/http://wqzhang.wordpress.com/2009/06/18/sicp-exercise-2-14/) just gives the test, i.e. `(make-center-percent 10. 2.) (make-center-percent 15. 2.)`, without giving the reasons behind that.~~
+    - solution
+      - > Demonstrate that Lem is right
+        See Tengs's comment.
+        Also see pt's comment.
+      - > Make some intervals A and B, and use them in computing the expressions A/A and A/B.
+        See jz's comment
+      - > You will get the most insight by using intervals whose width is a small percentage of the center value
+        See my first comment.
+      - > Examine the results of the computation in center-percent form
+        See wqzhang blog.
+- [ ] 2.15
+  I give one intuitive instead of strict proof:
+  Since one interval will increase the error bounds, no repeated intervals imply the better error bounds.
+  - wiki
+    The above is same as jz's.
+- [ ] 2.16
+  - > Can you devise an interval-arithmetic package that does not have this shortcoming, or is this task impossible?
+    As the examples in 2.14 shows, it may be impossible.
+    - See drewhess reference links.
+  - wiki
+    - jz's comment is mainly about manipulating with "identity".
+      - > See the problem is our simple implementation doesn't remember things or record what has been added before
+        i.e. not know C-C.
+    - > Then you take the min/max of all function values (all of them were 1)
+      TODO why min/max
+      > analytical methods
+      I skipped it
+    - https://web.archive.org/web/20200128110657/http://wiki.drewhess.com/wiki/SICP_exercise_2.16
+      > some of the laws of algebra that we're accustomed to don't apply to certain operations, so algebraic expressions that are equivalent in a non-interval arithmetic system are not necessarily equivalent in an interval arithmetic system.
+      > Which one is "correct"? Are both?
+
+      > There are other algebraic laws that fail in our system *as well*: try squaring the interval [-2,2], for example.
+      This says the problem essence.
+      - I skipped those too detailed reference links.
+      - This replies
+        > Explain, in general, why equivalent algebraic expressions may lead to different answers
     
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html

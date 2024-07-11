@@ -1094,6 +1094,8 @@ The key is "procedures plus *conditions*".
 # TODO after numerical analysis (Most of applications in SICP are about numerical analysis)
 - Why Newton’s method [only get to the local root](https://math.stackexchange.com/a/961171/1059606) but not global although intuitively it is that case.
   - Also see [one interesting problem](https://qr.ae/psBzi8)
+# TODO after differential equations
+- SICP 2.16
 ## See TODO in exercise
 - 1.45
 
