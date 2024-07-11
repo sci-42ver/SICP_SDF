@@ -1144,6 +1144,28 @@ The key is "procedures plus *conditions*".
 - `(error "Argument not 0 or 1: CONS" m)` is a bit ambiguous since `cons` needs 2 arguments
   Here it means `car/cdr` is used wrongly.
 - [Message passing](https://en.wikipedia.org/wiki/Message_passing#:~:text=In%20computer%20science%2C%20message%20passing,and%20run%20some%20appropriate%20code) Here index is the message.
+### lec
+#### lec05
+It says about `list` which has not been said up to the book corresponding chapter.
+- ~~TODO~~ cast in "Typecasting" means
+  > the arguments are *mapped* to the return value
+- > The following expressions evaluate to values of what type?
+  trivial: number, string, number.
+- > basis for many analysis and optimization algorithms
+  TODO after algorithm:
+  choose the correct type like floating precision?
+- > the result obtained by creating a compound data structure can itself be treated as a *primitive object* and thus be input to the creation of another compound object
+  [See](https://en.wikipedia.org/wiki/Closure_(computer_programming)#History_and_etymology)
+  > adds data to a data structure to also be able to add *nested* data structures
+  Here type implies ["subset"](https://en.wikipedia.org/wiki/Closure_(mathematics))
+  See `(cons (cons 1 2) 3)` where `(cons 1 2)` input generates the *same type* `cons`.
+- > Note that lists are closed under operations of cons and cdr.
+  ~~TODO why not have car.~~ See p6.
+- > relies on closure property of data structure
+  i.e. `(rest lst)` has the same type of `lst`.
+- > Schizophrenia can be a solid foundation for good programming style
+  i.e.
+  > Frequently the same person/people
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
