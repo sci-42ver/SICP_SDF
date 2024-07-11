@@ -38,11 +38,11 @@ tracked up to section 1.3 (included) by searching "chapter" and "section".
 ### 2
 - > In Chapter 2, when we investigate how to implement rational-number arithmetic, we will need to be able to compute s in order to reduce rational numbers to lowest terms.
 - chapter 1 footnote 23.
-  > We will learn how to implement arithmetic on rational numbers in Section 2.1.1
-- > We will return to these ideas in Section 2.2.3 when we show how to use sequences as interfaces
+  ~~> We will learn how to implement arithmetic on rational numbers in Section 2.1.1~~
+- > We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
   i.e. func in data structures
-- > In Section 2.2 we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.
+- > In *Section 2.2* we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -711,6 +711,41 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
 2. [ ] I originally planned to use base case for `n=1,2`.
   The solution is more elegant to use implicitly the 0th number being 0 although in the actual series that doesn't exist.
 1. [ ] See https://www.mathsisfun.com/numbers/golden-ratio.html. See the approximation formula said in mcs p1005.
+### rec1 from SP2007 (put at the end since I read this after reading the above)
+- > Missing ore than a couple of the homework assignments
+  i.e. "more than"
+- > Stupidly follow the rules
+  i.e. book
+  > e evolution of a process is directed by a paern of rules called a program.
+- > Any collection of characters that doesn’t start with a number.
+  [see](https://docs.scheme.org/schintro/schintro_104.html#:~:text=There%20is%20a%20slight%20restriction,%2C%20and%20so%20is%20...)
+- > Evaluate the subexpressions in any order
+  https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_6.html#SEC28
+- homework
+  - `(double double)` will be wrong since
+    > ;The object #[compound-procedure 14 double], passed as the second argument to integer-multiply, is *not the correct type*.
+  - `(* + -)`
+    This [depends on the implementation](https://docs.scheme.org/surveys/redefining-special-forms/).
+  - > How are they similar and how do they differ?
+    both is about addition but with different possible argument number.
+  - > Side-effect: In relation to an expression or procedure
+    [See](https://docs.scheme.org/schintro/schintro_13.html#:~:text=Expressions%20Return%20Values%2C%20But%20May,variables%20or%20objects%20by%20assignment.)
+    > They return values, but they can also have *side effects*---i.e., they can change the state of variables or objects by assignment.
+  - sol
+    - wrong
+      > (cannot multiply two procedures)
+### SP2007 handout2
+- `( " error " )`
+  trivially this is one wrong syntax.
+```scheme
+; Here lambda calculation -> #t which has no argument passed in.
+( cond (( lambda (x) (= 2 x))" two " )
+        (else" not two " ))
+
+; Here lambda calculation -> #f which has one argument passed in.
+( cond ((( lambda (x) (= 2 x)) x)" two " )
+        (else" not two " ))
+```
 ## book reading
 ### 1.1
 - > an integration of the motion of the Solar System

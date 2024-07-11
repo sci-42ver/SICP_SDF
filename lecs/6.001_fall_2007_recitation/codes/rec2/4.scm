@@ -44,13 +44,14 @@
   ; better use nil https://stackoverflow.com/a/9115801/21294350
   (lambda () '()))
 (empty-order)
-; (f)
+;; (f)
 (define add-to-order
   (lambda (x y) 
     (+ (* x 10) y)))
 (add-to-order 1 2)
 (add-to-order 12 2)
-; (g) https://stackoverflow.com/a/46964914/21294350
+;; (g) https://stackoverflow.com/a/46964914/21294350
+;; sol uses recursive solutions which has not been introduced explicitly up to now.
 (define (order-size n)
   (+ 1 (floor (/ (log n) (log 10))))
   )
@@ -70,7 +71,7 @@
 ; only in racket
 ; (time (length (fact 10000)))
 
-; (h)
+;; (h)
 ; (define (order-cost order)
 ;   ; https://www.cs.utexas.edu/ftp/garbage/cs345/schintro-v14/schintro_54.html https://stackoverflow.com/a/42458512/21294350
 ;   (let (
@@ -91,6 +92,7 @@
 ;     ))
 
 ; This follows the lecture iterative pattern
+;; See sol, here order can be changed for simplifying the implementation. 
 (define (order-cost order)
   (define max (order-size order))
   (define (digit_combo order digit)

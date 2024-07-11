@@ -43,3 +43,8 @@ It should be to correctly use `let` with local variables although the logic is w
     ((= cost (+ cost (combo-price (digit_combo order digit))))(= digit (+ digit 1))) ; O(1) space since no call to self, i.e. no stack accumulation.
     cost)))
 ```
+
+---
+
+[Solutions](https://people.csail.mit.edu/dalleyg/6.001/SP2007/solutions02.pdf)
+1. It doesn't test whether the argument is valid. This also works for the most of the rest.
