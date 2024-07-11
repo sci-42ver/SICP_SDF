@@ -746,6 +746,34 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
 ( cond ((( lambda (x) (= 2 x)) x)" two " )
         (else" not two " ))
 ```
+### 4 Orders of growth
+- See p3 for estimation of Fibonacci complexity.
+- > A little more math shows that
+  more specifically, it is $2^{\lfloor n/2\rfloor}$
+  - Also approximation for
+    > If n is odd, then 2 steps reduces to n/2 sized problem
+    since
+    > Usually, the order of growth is what we really care about:
+- > O(f(n) means t(n) ≤ k2f(n) “big-O”
+  This is different from [the wikipedia notation](https://en.m.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations).
+- TODO "Orders of growth for towers of Hanoi" move-tower meaning.
+  The tree structure has been learnt for Fib.
+  - See p9
+- > and has at most n deferred operations, which is also linear in space
+  This is based on applicative order where `(fact n)` is calculated first.
+- > why not just do the computation directly?
+  ~~i.e. without one extra call to `ifact`.~~
+  It directly calculates [$n^{\underline{j}}$](https://en.wikipedia.org/wiki/Factorial#Related_sequences_and_functions).
+### rec4
+- > Searching all possibilities usually results in expo-nential growth
+  [See](https://www.reddit.com/r/math/comments/1cg4j6u/comment/l2akaoi/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+- Problems
+  trivial: 1~3,6~7
+  4,5 are fast-expt and fast-expt-iter.
+  7 is just one small variation of the book first `(prime? n)`.
+  8 is Exercise 1.18.
+  4. > Space: Θ(log n)
+      approximately $\log n/2$ due to `else`.
 ## book reading
 ### 1.1
 - > an integration of the motion of the Solar System
