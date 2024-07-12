@@ -45,8 +45,8 @@
                   (make-interval (* x-lo y-up) 
                                  (* x-lo y-lo)))
                  (else         ; (- -) * (+ +)
-                  (make-interval (* x-lo y-up) 
-                                 (* x-up y-lo)))))
+                   (make-interval (* x-lo y-up) 
+                                  (* x-up y-lo)))))
           ((= x-sign 0)
            (cond ((< y-sign 0) ; (- +) * (- -)
                   (make-interval (* x-up y-lo) 
@@ -55,27 +55,27 @@
                   (make-interval (min (* x-up y-lo) (* x-lo y-up))
                                  (max (* x-lo y-lo) (* x-up y-up))))
                  (else         ; (- +) * (+ +)
-                  (make-interval (* x-lo y-up)
-                                 (* x-up y-up)))))
+                   (make-interval (* x-lo y-up)
+                                  (* x-up y-up)))))
           (else ; x: (+ +)
-           (cond ((< y-sign 0) ; (+ +) * (- -)
-                  (make-interval (* x-up y-lo) 
-                                 (* x-lo y-up)))
-                 ((= y-sign 0) ; (+ +) * (- +)
-                  (make-interval (* x-up y-lo)
-                                 (* x-up y-up)))
-                 (else         ; (+ +) * (+ +)
-                  (make-interval (* x-lo y-lo)
-                                 (* x-up y-up))))))))
+            (cond ((< y-sign 0) ; (+ +) * (- -)
+                   (make-interval (* x-up y-lo) 
+                                  (* x-lo y-up)))
+                  ((= y-sign 0) ; (+ +) * (- +)
+                   (make-interval (* x-up y-lo)
+                                  (* x-up y-up)))
+                  (else         ; (+ +) * (+ +)
+                    (make-interval (* x-lo y-lo)
+                                   (* x-up y-up))))))))
 
 (define (div-interval x y)
   (let ((y-up (upper-bound y))
         (y-lo (lower-bound y)))
     (if (> (* y-up y-lo) 0)
-        (mul-interval x 
-                      (make-interval (/ 1.0 y-up)
-                                     (/ 1.0 y-lo)))
-        (error "Argument y spans zero"))))
+      (mul-interval x 
+                    (make-interval (/ 1.0 y-up)
+                                   (/ 1.0 y-lo)))
+      (error "Argument y spans zero"))))
 
 (define (print-c-p i)
   (newline)
@@ -95,16 +95,16 @@
                                 (div-interval one r2)))))
 
 (print-c-p
- (par1 (make-center-percent 10. 2.) (make-center-percent 15. 2.)))
+  (par1 (make-center-percent 10. 2.) (make-center-percent 15. 2.)))
 ; 6.009603841536615 +- 5.993607670795042%
 
 (print-c-p
- (par2 (make-center-percent 10. 2.) (make-center-percent 15. 2.)))
+  (par2 (make-center-percent 10. 2.) (make-center-percent 15. 2.)))
 ; 6. +- 1.9999999999999944%
 
 ;;; See wiki 1st comment by LisScheSic
 (print-c-p
- (par1 (make-center-percent 10. 50.) (make-center-percent 15. 80.)))
+  (par1 (make-center-percent 10. 50.) (make-center-percent 15. 80.)))
 
 (print-c-p
- (par2 (make-center-percent 10. 50.) (make-center-percent 15. 80.)))
+  (par2 (make-center-percent 10. 50.) (make-center-percent 15. 80.)))

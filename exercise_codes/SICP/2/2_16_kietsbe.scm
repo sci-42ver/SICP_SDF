@@ -21,7 +21,7 @@
 
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
-                  (+ (upper-bound x) (upper-bound y))))
+                 (+ (upper-bound x) (upper-bound y))))
 
 ; (define (max a b)
 ;   (if (> a b)
@@ -35,17 +35,17 @@
 
 (define (mul-interval x y)
   (if (and (>= (upper-bound x) (lower-bound x)) (>= (upper-bound y) (lower-bound y)))
-      (let ((p1 (* (lower-bound x) (lower-bound y)))
-            (p2 (* (lower-bound x) (upper-bound y)))
-            (p3 (* (upper-bound x) (lower-bound y)))
-            (p4 (* (upper-bound x) (upper-bound y))))
-        (make-interval (min (min p1 p2) (min p3 p4))
-                        (max (max p1 p2) (max p3 p4))))
-      ;; weird implementation. Not work for 0<ux<lx, 0<ly<uy. Then up of the result should be lx*uy.
-      (make-interval (min (* (lower-bound x) (lower-bound y))
-                          (* (upper-bound x) (upper-bound y)))
-                      (max (* (lower-bound x) (lower-bound y))
-                          (* (upper-bound x) (upper-bound y))))))
+    (let ((p1 (* (lower-bound x) (lower-bound y)))
+          (p2 (* (lower-bound x) (upper-bound y)))
+          (p3 (* (upper-bound x) (lower-bound y)))
+          (p4 (* (upper-bound x) (upper-bound y))))
+      (make-interval (min (min p1 p2) (min p3 p4))
+                     (max (max p1 p2) (max p3 p4))))
+    ;; weird implementation. Not work for 0<ux<lx, 0<ly<uy. Then up of the result should be lx*uy.
+    (make-interval (min (* (lower-bound x) (lower-bound y))
+                        (* (upper-bound x) (upper-bound y)))
+                   (max (* (lower-bound x) (lower-bound y))
+                        (* (upper-bound x) (upper-bound y))))))
 
 ;; debug 1
 (define (old-mul-interval x y)
@@ -78,14 +78,14 @@
 
 (define (div-interval x y)
   (if (<= (* (upper-bound y) (lower-bound y)) 0)
-      (display "error")
-      (mul-interval
-        x
-        (inverse-obj y))))
+    (display "error")
+    (mul-interval
+      x
+      (inverse-obj y))))
 
 (div-interval test_x test_x)
 (div-interval test_y test_y)
-  
+
 (define (par1 r1 r2)
   (div-interval (mul-interval r1 r2)
                 (add-interval r1 r2)))

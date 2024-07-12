@@ -1144,8 +1144,8 @@ The key is "procedures plus *conditions*".
 - `(error "Argument not 0 or 1: CONS" m)` is a bit ambiguous since `cons` needs 2 arguments
   Here it means `car/cdr` is used wrongly.
 - [Message passing](https://en.wikipedia.org/wiki/Message_passing#:~:text=In%20computer%20science%2C%20message%20passing,and%20run%20some%20appropriate%20code) Here index is the message.
-### lec
-#### lec05
+## lec
+### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
 - ~~TODO~~ cast in "Typecasting" means
   > the arguments are *mapped* to the return value
@@ -1166,6 +1166,26 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > Schizophrenia can be a solid foundation for good programming style
   i.e.
   > Frequently the same person/people
+## recitation
+### 5
+- See Problem 1-(a) and (c).
+- I don't know why in Problem 1 printing, (d) has no `.` but (a) has.
+  Maybe by `(cons 1 (cons 2 (cons 3 ’())))` we have no `.` when we *link* to one object.
+- Problem 1-(d) has the same form as `(list 0 (list 1 2))` but the latter prints `(0 (1 2))` to distinguish between them.
+- 5 See answer
+  - `(zero? d)` checks parallel condition.
+  - See [this](https://stackoverflow.com/a/565282/21294350) and [this](https://www.nagwa.com/en/explainers/175169159270/) for 2d cross product.
+    Here $p$ is the 1st segment starting point and $s$ is the 2nd segment line vector.
+    $$
+    \begin{align*}
+      q-p&=(x3-x1,y3-y1)\\
+      s&=(x4-x3,y4-y3)\\
+      r&=(x2-x1,y2-y1)\\
+      (q-p)\times s=(y4-y3)\cdot(x3-x1)-(x4-x3)\cdot(y3-y1)=(x4-x3)\cdot(y1-y3)-(y4-y3)\cdot(x1-x3)=n1\\
+      (p-q)\times r=(x1-x3)\cdot(y2-y1)-\ldots
+    \end{align*}
+    $$
+    
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
