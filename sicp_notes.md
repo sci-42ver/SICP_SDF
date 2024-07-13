@@ -1198,7 +1198,15 @@ It says about `list` which has not been said up to the book corresponding chapte
     \end{align*}
     $$
 ### SP 7
-- 
+- correction to some codes. See `rec07.scm`.
+- > "know" that the real representation is (2 5 2 2), and depend on it
+  i.e. may throw error.
+  ~~Here `pf1` can be ~~
+- > (that makes the operators readable and efficient)
+  IMHO "efficient" depends on the application.
+  - Also see lec p2 and p4.
+- > Error Checking is Your Friend
+  See lec p6 and p7 Testing.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

@@ -1,0 +1,27 @@
+; representation ((2 3) (5 1)) (sorted order)
+
+(define (get-multiplicity pf p)
+  (cond ((null? pf) 0)
+    ((= (caar pf) p) (cadar pf))
+    ((> (caar pf) p) 0)
+    (else (get-multiplicity (cdr pf) p)))
+)
+(define test_pf '((2 3) (5 1)))
+(get-multiplicity test_pf 2)
+(get-multiplicity test_pf 5)
+(get-multiplicity test_pf 1)
+
+(define (divide? p m)
+  (= (remainder m p) 0))
+
+; representation (40 (2 5))
+(define (get-multiplicity pf p)
+  (define (multiplicity-of-p-in m)
+    (if (and (memq p (cadr pf)) (divide? p m)) ; changed
+      (+ 1 (multiplicity-of-p-in (quotient m p)))
+       0))
+  (multiplicity-of-p-in (car pf))
+)
+(define test_pf '(40 (2 5)))
+(get-multiplicity test_pf 2)
+(get-multiplicity test_pf 5)
