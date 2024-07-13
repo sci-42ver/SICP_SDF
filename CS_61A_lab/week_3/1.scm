@@ -63,15 +63,15 @@
 
        (define (cc amount kinds-of-coins)
          (cond ((= amount 0) 1)
-               ((or (< amount 0) (> KINDS-OF-COINS 5)) 0)     ; changed here
+               ((or (< amount 0) (> kinds-of-coins 5)) 0)     ; changed here
                ; (else (+ (cc (- amount
                ;             (first-denomination kinds-of-coins))
                ;               kinds-of-coins)
                ;           (cc amount
-               ;               (+ KINDS-OF-COINS 1))))))         ; changed here
+               ;               (+ kinds-of-coins 1))))))         ; changed here
                ;; We should not change the order since the output will be totally different
                (else (+  (cc amount
-                             (+ KINDS-OF-COINS 1))
+                             (+ kinds-of-coins 1))
                          (cc (- amount
                                 (first-denomination kinds-of-coins))
                              kinds-of-coins)))))         ; changed here

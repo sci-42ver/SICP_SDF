@@ -1,6 +1,4 @@
-@sepp2k Thanks. I am not one native English speaker. Some sentences in SICP seems ambiguous for me, like https://stackoverflow.com/q/78641848/21294350, although I can understand what CSAPP and OSTEP etc. say well.
-
-Your point 2 is right. As sepp2k says, I understood what the author conveys wrongly.
+Please deactivate this account since I won't use it anymore. If it is finished, please send email to qppq-czg@tutanota.com. Thanks in advance.
 
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
@@ -15,6 +13,7 @@ review history comments.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
+- Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 # reading order recommendation with other books
 - better read *pure* "Computer Architecture" (So not csapp) before SICP if having learnt other programming languages like C.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
@@ -1166,6 +1165,19 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > Schizophrenia can be a solid foundation for good programming style
   i.e.
   > Frequently the same person/people
+### lec06 (This seems to have no corresponding book chapter) very helpful
+- `(prime? temp1 temp2)` has worse complexity $O(n)$
+  - B doesn't have 2, 3 and 4.
+- > Why is optimization last on the list?
+  i.e. it can be achieved partly by hardware. So software optimization may be unnecessary.
+- `d,n` -> denominator, numerator.
+- DrScheme is now [DrRacket](https://linguisticlogic.wordpress.com/2010/06/15/plt-scheme-is-now-racket/).
+- p4 
+  Here the last code does point 2 and 4. It also does partially for point 1.
+- `(cons "a" (cons "b" '()))` is list by list definition.
+  - `(lambda (x) (if x 1 0))`: any -> number.
+- p5~7 as the title says they are reviews and have much overlap with the former lec.
+- > f the operands have the specified types, the procedure will result in a value of the specified type
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
@@ -1185,7 +1197,8 @@ It says about `list` which has not been said up to the book corresponding chapte
       (p-q)\times r=(x1-x3)\cdot(y2-y1)-\ldots
     \end{align*}
     $$
-    
+### SP 7
+- 
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
