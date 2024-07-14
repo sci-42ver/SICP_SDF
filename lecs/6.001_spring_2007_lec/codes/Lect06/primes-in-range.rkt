@@ -39,7 +39,7 @@
     ((= (caar pf) p) (cadar pf))
     ((> (caar pf) p) 0)
     (else (get-multiplicity (cdr pf) p)))
-)
+  )
 (define test_pf '((2 3) (5 1)))
 (get-multiplicity test_pf 2)
 (get-multiplicity test_pf 5)

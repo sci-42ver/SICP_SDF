@@ -7,13 +7,14 @@ Please deactivate this account since I won't use it anymore. If it is finished, 
 ```
 ----
 <<<LisScheSic
-...
+Review history comments.
 >>>
 review history comments.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
+- I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 # reading order recommendation with other books
 - better read *pure* "Computer Architecture" (So not csapp) before SICP if having learnt other programming languages like C.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
@@ -25,7 +26,7 @@ review history comments.
 ## em tracking when reading the book (Read before doing the related exercises)
 - up to 2.2 (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 1.3 (included) by searching "chapter" and "section".
+tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### 1.2
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### 1.3
@@ -1131,6 +1132,7 @@ different length sentence. The range is from 0 to N − 1.
 - > is will further blur the distinction between “procedure” and “data,” which was already becoming tenuous toward the end of chapter 1
   Since procedure can be the argument and the returned value.
 - [closure](https://en.wikipedia.org/wiki/Closure_(mathematics)), i.e. codomain $\subseteq$ domain.
+  Also see footnote 6.
 - data-directed programming is different from [Data-driven programming](https://en.wikipedia.org/wiki/Data-driven_programming)
   TODO how it is implemented?
 - > e names car and cdr derive from the orig-inal implementation of Lisp on the  
@@ -1143,6 +1145,14 @@ The key is "procedures plus *conditions*".
 - `(error "Argument not 0 or 1: CONS" m)` is a bit ambiguous since `cons` needs 2 arguments
   Here it means `car/cdr` is used wrongly.
 - [Message passing](https://en.wikipedia.org/wiki/Message_passing#:~:text=In%20computer%20science%2C%20message%20passing,and%20run%20some%20appropriate%20code) Here index is the message.
+### 2.2
+- TODO [closure in lisp](https://www.gnu.org/software/emacs/manual/html_node/elisp/Closures.html#:~:text=A%20closure%20is%20a%20function,use%20the%20retained%20lexical%20environment.)
+- > In Pascal the plethora of declarable data structures induces a specialization within functions that inhibits and penalizes casual cooperation.
+  This may be due to "declarable" which implies the type restriction.
+- > e names car and cdr persist *because* simple combinations like cadr are pronounceable. 
+  relation may be [due to primitives](https://ell.stackexchange.com/a/116218)
+  > CA, CD, AR and DR
+- `null? items` is one wrapper of `(equal? items '())`.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
@@ -1165,7 +1175,7 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > Schizophrenia can be a solid foundation for good programming style
   i.e.
   > Frequently the same person/people
-### lec06 (This seems to have no corresponding book chapter) very helpful
+### lec06 (This seems to have no corresponding book chapter) very helpful with Debugging introduction
 - `(prime? temp1 temp2)` has worse complexity $O(n)$
   - B doesn't have 2, 3 and 4.
 - > Why is optimization last on the list?

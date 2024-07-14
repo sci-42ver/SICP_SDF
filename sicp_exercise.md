@@ -1,10 +1,9 @@
-1. One small question: "the range of this function is *included in the product* of the corresponding intervals obtained from the formula of the function": what does "included" mean here? 2. I get this link when reading http://community.schemewiki.org/?sicp-ex-2.14-2.15-2.16. Here I give one summary to help future readers: The examples in paragraph 4 to 6 shows the significance of "each symbol is used only once" to make "interval arithmetics" work. For paragraph 7 to 8, notice here "range" and "interval" mean different things.
 # notice
 - I didn't prove those theorems which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution chapter 1,2.1~16 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~17 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -938,7 +937,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     > The answer above(vi) misunderstand the question, if the interval is zero(upper-bound = lower-bound), that's alright, it won't cause any problem
     just reduced to the division by one number.
-- [ ] 2.11
+- [ ] 2.11 See codes for what I was wrong originally
   - wiki
     - > This ensures that we're never breaking any more than we need to at any given time.
       This may mean "we need at ...".
@@ -1012,7 +1011,32 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       - I skipped those too detailed reference links.
       - This replies
         > Explain, in general, why equivalent algebraic expressions may lead to different answers
-    
+- [x] 2.17
+  - probably by iterative with one `length` state variable and the `list` variable.
+    when writing the code I think checking the length is enough.
+  - wiki
+    - the top answer tracks the *last* without using 2 variables.
+    - See otakutyrant's comment.
+    - Daniel-Amariei's comment is outdated.
+    - I skipped anon's comment since it is beyond the book.
+- [ ] 2.18
+  - concatenate the `last-pair` recursively.
+  - repo same as wiki jz's.
+- [x] 2.19
+  - `car`, `cdr`, `null?`
+  - wiki
+    - > -ve
+      may mean negati"ve".
+    - Rptx's comment has been said in CS 61A notes.
+    - I skipped Sphinxsky's comment.
+- [ ] 2.20
+  - use `(f x . y)` then iterate `y` and check `(= (remainder (- (car y) x) 2) 0)`
+  - wiki
+    - > It's better simply to build the list in reverse order, and then reverse the final list at the end
+      i.e. as Exercise 2.18 does. Use `cons`.
+      The comment has "----" in wiki to differentiate its comment from others.
+    - 
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
