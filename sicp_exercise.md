@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - repo read up to
-    I have read repo solution chapter 1,2.1~17 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~23 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1029,14 +1029,27 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       may mean negati"ve".
     - Rptx's comment has been said in CS 61A notes.
     - I skipped Sphinxsky's comment.
-- [ ] 2.20
+- [x] 2.20
   - use `(f x . y)` then iterate `y` and check `(= (remainder (- (car y) x) 2) 0)`
+    This is same as jz's comment.
   - wiki
     - > It's better simply to build the list in reverse order, and then reverse the final list at the end
       i.e. as Exercise 2.18 does. Use `cons`.
       The comment has "----" in wiki to differentiate its comment from others.
-    - 
-- [ ] 
+- [x] 2.21 trivial
+- [x] 2.22
+  - See 2.20 for why the 1st fails
+    the 2nd doesn't conform to the `list` structure.
+    It has something like `p_1:[nil,a], p_2:[p_1,b]` ...
+- [x] 23
+  - The preface is same as [R5RS](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX362).
+  - trivial by [mimicking](https://ell.stackexchange.com/a/338220) `map`.
+  - See wiki. Here the concatenation operator depends on the returned value of `(null? items)`.
+    - See simv's comment.
+      - the code after it assumes `(>= (length items) 1)`.
+      - See sritchie's comment for the improvement.
+    - > so it can arbitrarily be the list of items in the list applied to the given procedure.
+      it should be "the list of items which is got by applying the given procedure to the list".
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

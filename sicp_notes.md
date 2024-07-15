@@ -24,7 +24,7 @@ review history comments.
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*.
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.2 (not included)
+- up to "Mapping over lists" (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### 1.2
@@ -43,6 +43,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
   i.e. func in data structures
 - > In *Section 2.2* we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.
+- > *Section 2.2.3* expands on this use of sequences as a framework for organizing programs
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -1146,6 +1147,7 @@ The key is "procedures plus *conditions*".
   Here it means `car/cdr` is used wrongly.
 - [Message passing](https://en.wikipedia.org/wiki/Message_passing#:~:text=In%20computer%20science%2C%20message%20passing,and%20run%20some%20appropriate%20code) Here index is the message.
 ### 2.2
+#### 2.2.1
 - TODO [closure in lisp](https://www.gnu.org/software/emacs/manual/html_node/elisp/Closures.html#:~:text=A%20closure%20is%20a%20function,use%20the%20retained%20lexical%20environment.)
 - > In Pascal the plethora of declarable data structures induces a specialization within functions that inhibits and penalizes casual cooperation.
   This may be due to "declarable" which implies the type restriction.
@@ -1153,6 +1155,8 @@ The key is "procedures plus *conditions*".
   relation may be [due to primitives](https://ell.stackexchange.com/a/116218)
   > CA, CD, AR and DR
 - `null? items` is one wrapper of `(equal? items '())`.
+- > In effect, map helps establish an abstraction barrier that isolates the implementation of procedures that transform lists from the details of how the elements of the list are extracted and combined
+  i.e. `proc` and `cons, car`, etc.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
