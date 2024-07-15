@@ -62,7 +62,7 @@
 (drop-class test_schedule 100)
 (credit-limit test_schedule 10)
 
-;;; HOP
+;;; HOP Higher order procedures
 (define (make-student number sched-checker)
   (list number (list) sched-checker))
 (define get-student-number car)
@@ -97,11 +97,11 @@
 (define (credit-limit sched limit)
   (define (helper sched)
     (if (null? sched)
-        (list (list) 0)
-        (let ((res (helper (cdr sched))) ; This will be called recursively first.
-              (newunits (get-class-total-units (car sched))))
-          (if (< (+ newunits (cadr res)) limit)
-            (list (add-class (car sched) (car res)) ; \Theta(1)
-                  (+ newunits (cadr res)))
-            res))))
+      (list (list) 0)
+      (let ((res (helper (cdr sched))) ; This will be called recursively first.
+            (newunits (get-class-total-units (car sched))))
+        (if (< (+ newunits (cadr res)) limit)
+          (list (add-class (car sched) (car res)) ; \Theta(1)
+                (+ newunits (cadr res)))
+          res))))
   (car (helper sched)))

@@ -101,6 +101,8 @@ It seems to only have video lectures
 ~~I~~ ~~don't have time to find that difference and also the lecture is old.~~ ~~will only do the~~ [recitations](https://people.csail.mit.edu/jastr/6001/fall07/) which is based on the video lecture.
 Better read this if possible because this course is [taught by Gerald Jay Sussman](https://web.archive.org/web/20160415061035/http://sicp.csail.mit.edu/Fall-2007/staff.txt).
 > Lectures are the primary vehicle for introducing and motivating new material, some of which is *not in the book*. It is essential that you *listen to the lectures* (whether live – which we prefer – or online), as the *recitations will assume you have already heard the material*, and will *build upon it*. ... Recitations *expand* upon the material currently being introduced in lecture, as well as introducing supplementary material that is *not directly covered in lecture*. ... your attendance at recitation is *essential to good performance* in this class.
+
+I can't find those recitations corresponding to "Out of Town" by '6.001 Fall 2007 Recitation "Local State"'.
 #### problem set
 I can't find by "6.001 fall 2007 Problem set site:mit.edu" which may be implied by
 > Problem sets are released, typically on a weekly basis, onto the 6.001 *online tutor* system
@@ -1231,6 +1233,19 @@ It says about `list` which has not been said up to the book corresponding chapte
   - Also see lec p2 and p4.
 - > Error Checking is Your Friend
   See lec p6 and p7 Testing.
+### 7 (no corresponding SP lec with the related name. But Lec07 may be appropriate here)
+- `fold-right` See SP Lec07.
+- [ ] 3 calls 3 `map`.
+  - See sol. The above is not general.
+- [ ] 4
+  1. `map`
+  2. `filter`
+  3. `map`
+  4. `filter` then iter.
+  5. I don't know. Probably `fold-right` since it is one number.
+  6. `(fold-right (lambda (a b) (if (= (length b) 1) b)) 0 x)`
+  7. sol `append` has $\Theta(n)$, so totally $\Theta(n^2)$.
+  8. See sol.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
