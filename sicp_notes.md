@@ -775,6 +775,16 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   8 is Exercise 1.18.
   4. > Space: Θ(log n)
       approximately $\log n/2$ due to `else`.
+### 7 (~~I don't know why~~ it is put after Lecture 5 Data abstractions since it uses `map`, etc.)
+- p2 `pi-sum` is a bit different from the book one.
+  [proof](https://math.stackexchange.com/a/2348996/1059606)
+- `((incrementby 3) 4)` ~~-> `(incrementby 7)`~~
+```scheme
+(define incrementby (lambda (n) (lambda (x) (+ x n))))
+((incrementby 3) 4)
+```
+- Quick Quiz is trivial.
+- `(compose < square 5)` works by `<` [definition](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX189).
 ## book reading
 ### 1.1
 - > an integration of the motion of the Solar System
