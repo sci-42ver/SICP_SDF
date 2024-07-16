@@ -144,11 +144,12 @@ TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki
     - [cookbook](https://cookbook.scheme.org/)
     - [man](https://man.scheme.org/)
   - If using Racket, then [R5RS may be better](https://stackoverflow.com/a/3358638)
-### what to do
+### **what to do**
 - From 
   > 6 units of P/D/F credit are available; *only the projects* are graded.
   only "projects" need to be done after reading the lectures.
   But as the above says, I will skip that.
+  So I will only read lectures and recitations which are not contained in its reference course 6.001 SP/Fall 2007.
 ### comparison
 - > which Spring 2007 6.001 lectures we've drawn the material from, in case you *want to delve deeper, get a second opinion*, read ahead, etc.
   > we are mostly *tracking the 6.001 lectures*
@@ -263,7 +264,7 @@ recommended since the course general information shows (more detailed see 1.md)
 [lab solutions](https://people.eecs.berkeley.edu/~bh/61a-pages/)
 - Also [see](https://github.com/nirvanarsc/CS-61A/blob/master/mt1/mt1.scm) (TODO mt -> meeting?)
 ### update [Course Reader vol 1](https://people.eecs.berkeley.edu/~bh/61a-pages/)
-### what to learn
+### **what to learn**
 - [lecture and lab](https://www.reddit.com/r/learnprogramming/comments/1daa41z/comment/l7nwqbp/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
   since we drop the others
   1. > all book exercises which cover the homework
@@ -1204,6 +1205,15 @@ It says about `list` which has not been said up to the book corresponding chapte
   - `(lambda (x) (if x 1 0))`: any -> number.
 - p5~7 as the title says they are reviews and have much overlap with the former lec.
 - > f the operands have the specified types, the procedure will result in a value of the specified type
+#### 6.037 lec 5 (almost same as the above but uses Drracket)
+- Differences start from "Dealing with bugs in your code" until "Documenting code".
+  Then 
+  - See "Choosing good test cases", “What will this change break?” to "How to write tests".
+- "Questions to ask" is almost same as GitHub issue request templates.
+- "Make no assumptions?" is wrong.
+- > You can keep maybe about 50k LOC in your head at once
+  crazy (LOC: line of codes).
+- ["continue to this point"](https://docs.racket-lang.org/drracket/debugger.html#(part._.Definitions_.Window_.Actions))
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
