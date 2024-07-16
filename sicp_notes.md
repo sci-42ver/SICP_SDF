@@ -630,7 +630,45 @@ or more specifically they are easy after having done exercises.
   - sol
     > match *a small amount of money with a large coin* ... When the coins are tried in the book's order, by the time we are thinking about four cents, we have already *abandoned the idea of using nickels*
 - [x] 3
-- [ ] 
+# CS 61A notes
+## Week 4
+Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
+I think these functions are almost covered by "6.001_fall_2007_recitation/r07.pdf".
+
+It is really hard to understand these codes since we don't know the detailed implementation of `accumulate`, `reduce`, etc.
+- [`nth`](https://stackoverflow.com/a/50332810/21294350)
+- > when you’re dealing with lots of data types, but don’t get religious about it
+  i.e. don't know about their detailed implementation.
+- > You’ll see that this is a little tricky using cons, car, and cdr as the problem asks, but it’s easy for sentences:
+  See schemewiki sicp-ex-2.18 which uses iter.
+- > Only after you’ve drawn the backbone should you worry about making the cars of your three pairs point to the three elements of the top-level list.
+  i.e.
+  ```
+  ->[inst_1,p_1]->[inst_2,p_2]->[inst_3,nil]
+      |                 |         |
+     [a,p_1_1]->[b,nil] |         |
+                       [c,nil]   [d,p_3_1]...
+  ```
+- `(groupreduce (lambda (new old) (+ 1 old)) 0`
+  This is very similar to `fold-right`, etc.
+- > We could combine these in the obvious way to get the average score per student, for exams actually taken
+  just divide the 2 lists already got.
+- 
+```scheme
+(define (file->linelist file)
+  (map (lambda (line) (make-kv-pair (filename file) line))
+      (lines file)))
+
+(define (wordcounts files)
+        ; Almost same as `(groupreduce + 0 (sort-into-buckets (append mt1 mt2 mt3)))`
+        (groupreduce + 0 (sort-into-buckets
+                          ; flatmap: https://stackoverflow.com/a/63732689/21294350
+                          (flatmap (lambda (kv-pair)
+                                    (map (lambda (wd) (make-kv-pair wd 1))
+                                          (kv-value kv-pair)))
+                                    files))))
+```
+- Here `reducer` manipulates with "value" in kv pairs.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 ## 6.037 ~~(dropped for future reading except this one already read)~~ (may read as one quick review after reading the book)

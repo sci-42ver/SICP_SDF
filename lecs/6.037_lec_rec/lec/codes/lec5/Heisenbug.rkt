@@ -7,7 +7,7 @@
  (let loop ()
    (if (< foo 10)
      (begin
-      ;  (display (new-foo))(newline)
+       ;  (display (new-foo))(newline)
        (set! sum (+ sum (new-foo)))
        (loop))
      sum)))

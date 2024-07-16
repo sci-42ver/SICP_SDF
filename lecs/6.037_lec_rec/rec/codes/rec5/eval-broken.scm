@@ -37,8 +37,8 @@
   (if (symbol? (cadr exp))   (cadr exp)   (caadr exp)))
 (define (definition-value exp)
   (if (symbol? (cadr exp))
-      (caddr exp)
-      (make-lambda (cdadr exp) (cddr exp))))  ; formal params, body
+    (caddr exp)
+    (make-lambda (cdadr exp) (cddr exp))))  ; formal params, body
 (define (make-define var expr)
   (list 'define var expr))
 
@@ -115,7 +115,7 @@
         ((let? exp) (m-eval (let->application exp) env))
         ((application? exp)
          (m-apply (m-eval (operator exp) env)
-                (list-of-values (operands exp) env)))
+                  (list-of-values (operands exp) env)))
         (else (error "Unknown expression type -- EVAL" exp))))
 
 (define (m-apply procedure arguments)
@@ -123,10 +123,10 @@
          (apply-primitive-procedure procedure arguments))
         ((compound-procedure? procedure)
          (eval-sequence
-          (procedure-body procedure)
-          (extend-environment (procedure-parameters procedure)
-                              arguments
-                              (procedure-environment procedure))))
+           (procedure-body procedure)
+           (extend-environment (procedure-parameters procedure)
+                               arguments
+                               (procedure-environment procedure))))
         (else (error "Unknown procedure type -- APPLY" procedure))))
 
 (define (list-of-values exps env)
@@ -136,9 +136,9 @@
 
 (define (eval-if exp env)
   (if (m-eval (if-predicate exp) env)
-      (m-eval (if-consequent exp) env)
-      (m-eval (if-alternative exp) env)
-      ))
+    (m-eval (if-consequent exp) env)
+    (m-eval (if-alternative exp) env)
+    ))
 
 (define (eval-sequence exps env)
   (cond ((last-exp? exps) (m-eval (first-exp exps) env))
@@ -165,21 +165,21 @@
 (define (cond->if expr)
   (let ((clauses (cond-clauses expr)))
     (if (null? clauses)
-        #f
-        (if (eq? (car (first-cond-clause clauses)) 'else)
-            (make-begin (cdr (first-cond-clause clauses)))
-            (make-if (car (first-cond-clause clauses))
-                     (make-begin (cdr (first-cond-clause clauses)))
-                     (make-cond (rest-cond-clauses clauses)))))))
+      #f
+      (if (eq? (car (first-cond-clause clauses)) 'else)
+        (make-begin (cdr (first-cond-clause clauses)))
+        (make-if (car (first-cond-clause clauses))
+                 (make-begin (cdr (first-cond-clause clauses)))
+                 (make-cond (rest-cond-clauses clauses)))))))
 
 
 (define (eval-or exp env)
   (define (or-helper clauses)
     (if (null? clauses)
-        #t
-        (if (car clauses)
-            (car clauses)
-            (or-helper (cdr clauses)))))
+      #t
+      (if (car clauses)
+        (car clauses)
+        (or-helper (cdr clauses)))))
   (or-helper (or-exprs exp)))
 
 
@@ -190,11 +190,11 @@
   (prompt-for-input input-prompt)
   (let ((input (read)))
     (if (eq? input '**quit**)
-        'meval-done
-        (let ((output (m-eval input the-global-environment)))
-          (announce-output output-prompt)
-          (pretty-display output)
-          (driver-loop)))))
+      'meval-done
+      (let ((output (m-eval input the-global-environment)))
+        (announce-output output-prompt)
+        (pretty-display output)
+        (driver-loop)))))
 
 (define (prompt-for-input string)
   (newline) (newline) (display string) (newline))
@@ -228,10 +228,10 @@
 (define binding-value cadr)
 (define (binding-search var frame)
   (if (null? frame)
-      #f
-      (if (eq? var (first (first frame)))
-          (first frame)
-          (binding-search var (rest frame)))))
+    #f
+    (if (eq? var (first (first frame)))
+      (first frame)
+      (binding-search var (rest frame)))))
 (define (set-binding-value! binding val)
   (set-car! (cdr binding) val))
 
@@ -252,40 +252,40 @@
 
 (define (find-in-environment var env)
   (if (eq? env the-empty-environment)
-      #f
-      (let* ((frame (first-frame env))
-             (binding (find-in-frame var frame)))
-        (if binding
-            binding
-            (find-in-environment var (enclosing-environment env))))))
+    #f
+    (let* ((frame (first-frame env))
+           (binding (find-in-frame var frame)))
+      (if binding
+        binding
+        (find-in-environment var (enclosing-environment env))))))
 
 ; drop a frame
 (define (extend-environment vars vals base-env)
   (if (= (length vars) (length vals))
-      (append base-env (list (make-frame vars vals)))
-      (if (< (length vars) (length vals))
-          (error "Too many args supplied" vars vals)
-          (error "Too few args supplied" vars vals))))
+    (append base-env (list (make-frame vars vals)))
+    (if (< (length vars) (length vals))
+      (error "Too many args supplied" vars vals)
+      (error "Too few args supplied" vars vals))))
 
 ; name rule
 (define (lookup-variable-value var env)
   (let ((binding (find-in-environment var env)))
     (if binding
-        (binding-value binding)
-        (error "Unbound variable -- LOOKUP" var))))
+      (binding-value binding)
+      (error "Unbound variable -- LOOKUP" var))))
 
 (define (set-variable-value! var val env)
   (let ((binding ((find-in-environment var env))))
     (if binding
-        (set-binding-value! binding val)
-        (error "Unbound variable -- SET" var))))
+      (set-binding-value! binding val)
+      (error "Unbound variable -- SET" var))))
 
 (define (define-variable! var val env)
   (let* ((frame (first-frame env))
          (binding (find-in-frame var frame)))
     (if binding
-        (set-binding-value! binding val)
-        (add-binding-to-frame! var val frame))))
+      (set-binding-value! binding val)
+      (add-binding-to-frame! var val frame))))
 
 ; primitives procedures - hooks to underlying Scheme procs
 (define (make-primitive-procedure implementation)
@@ -341,95 +341,95 @@
 ;;;; Tests
 (define exercise-1
   '( "Exercise 1: Figure out why m-eval errors out"
-    (define x 5)
-    (set! x 10)
-    ))
+     (define x 5)
+     (set! x 10)
+     ))
 
 (define exercise-2
   '( "Exercise 2: Some bugs aren't discovered until code is vigorously tested.
-There are two bugs with the implementation of \"or\" in this version of the
-evaluator.
+     There are two bugs with the implementation of \"or\" in this version of the
+     evaluator.
 
-Without looking at the code for \"or\", come up with test cases that test all
-the ways \"or\" should work.
+     Without looking at the code for \"or\", come up with test cases that test all
+     the ways \"or\" should work.
 
-Once you've found the bugs, fix them.
-"))
+     Once you've found the bugs, fix them.
+     "))
 
 (define exercise-3
   '( "Exercise 3: Louis Reasoner complains that the evaluator
-\"broke\" when he did \"something\" with DeMorgan's rule while trying
-to work-around the fact that this evaluator does not implement
-\"and\". DeMorgan's rule states that (and (not a) (not b)) is
-equivalent to (not (or a b)).  Fresh from your success debugging
-\"or\", write up a number of tests to try to determine what Louis
-might be complaining about, and come up with a more concise
-explanation of the symptoms of the bug.
+     \"broke\" when he did \"something\" with DeMorgan's rule while trying
+     to work-around the fact that this evaluator does not implement
+     \"and\". DeMorgan's rule states that (and (not a) (not b)) is
+     equivalent to (not (or a b)).  Fresh from your success debugging
+     \"or\", write up a number of tests to try to determine what Louis
+     might be complaining about, and come up with a more concise
+     explanation of the symptoms of the bug.
 
-Next, solve the bug.  Practice writing out the commit message that would
-accompany the fix: it should consisely describe what the observable bugs
-were, and explain your reasoning behind why the fix is the correct one.
-"))
+     Next, solve the bug.  Practice writing out the commit message that would
+     accompany the fix: it should consisely describe what the observable bugs
+     were, and explain your reasoning behind why the fix is the correct one.
+     "))
 
 (define exercise-4
 
   '( "Exercise 4: Why does the following code error out? (if it it
-does not produce an error, you may have already resolved the error
-while working on an earlier problem). What value should this code
-produce, and does it do so?"
+                                                           does not produce an error, you may have already resolved the error
+                                                           while working on an earlier problem). What value should this code
+  produce, and does it do so?"
 
-     (define sum 0)
-     
-     (define (make-stack lst)
-       (cons 'stack lst))
-       
-     (define (pop! stack)
-        (if (empty-stack? stack)
-            (error "Cannot pop! from an empty stack!")
-	    #f)
-        (let ((answer (cadr stack)))
-         (set-cdr! stack (cddr stack))
-         answer))
-       
-     (define (empty-stack? stack)
-       (null? (cdr stack)))
-     
-     (define (pop-and-add! stack)
-       (set! sum (+ sum (pop! stack)))
-       (empty-stack? stack))
+  (define sum 0)
 
-       
-     (define test-stack (make-stack '(1 2 3 4 5 6 7 8)))
+  (define (make-stack lst)
+    (cons 'stack lst))
 
-     (define (loop)
-       (or (pop-and-add! test-stack) (loop)))
-     
-     (loop)
-     sum))
+  (define (pop! stack)
+    (if (empty-stack? stack)
+      (error "Cannot pop! from an empty stack!")
+      #f)
+    (let ((answer (cadr stack)))
+      (set-cdr! stack (cddr stack))
+      answer))
+
+  (define (empty-stack? stack)
+    (null? (cdr stack)))
+
+  (define (pop-and-add! stack)
+    (set! sum (+ sum (pop! stack)))
+    (empty-stack? stack))
+
+
+  (define test-stack (make-stack '(1 2 3 4 5 6 7 8)))
+
+  (define (loop)
+    (or (pop-and-add! test-stack) (loop)))
+
+  (loop)
+  sum))
 
 (define exercise-5
   '( "Exercise 5: Figure out what is wrong with the evaluator to cause the following code to not work properly."
-    (define x 5)
-    (define (foo y)
-      (set! x y)
-      x)
-    (foo 1)
-    x
-    (define (map proc x)
-      (if (null? x)
-          '()
-          (cons (proc (car x)) (map proc (cdr x)))))
-    (map (lambda (x) x) '(1 2 3)) ;; error on this line
-    ))
+     (define x 5)
+     (define (foo y)
+       (set! x y)
+       x)
+     (foo 1)
+     x
+     (define (map proc x)
+       (if (null? x)
+         '()
+         (cons (proc (car x)) (map proc (cdr x)))))
+     (map (lambda (x) x) '(1 2 3)) ;; error on this line
+     ))
 
 (define (run test)
   (display (car test)) (newline) (newline)
   (if (null? (cdr test))
-      (driver-loop)
-      (for-each (lambda (exp) 
-                  (display input-prompt) (display " ")
-                  (display exp) (newline) 
-                  (display output-prompt)
-                  (display "    ")
-                  (pretty-display  (m-eval exp the-global-environment)))
-                (cdr test))))
+    (driver-loop)
+    (for-each (lambda (exp) 
+                (display input-prompt) (display " ")
+                (display exp) (newline) 
+                (display output-prompt)
+                (display "    ")
+                (pretty-display  (m-eval exp the-global-environment)))
+              (cdr test))))

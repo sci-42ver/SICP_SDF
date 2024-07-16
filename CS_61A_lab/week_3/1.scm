@@ -112,3 +112,20 @@
                   1))))
        (count-change 100)
        ))
+
+(define (mostfreq files)
+  (accumulate (lambda (new old)
+                (cond ((> (kv-value new) (kv-value (car old)))
+                       (list new))
+                      ((= (kv-value new) (kv-value (car old)))
+                       (cons new old))
+                      ; In case of tie, remember both.
+                      (else old)))
+              (list (make-kv-pair ’foo 0))
+              ; Starting value.
+              (groupreduce + 0 (sort-into-buckets
+                                 (flatmap (lambda (kv-pair)
+                                            (map (lambda (wd)
+                                                   (make-kv-pair wd 1))
+                                                 (kv-value kv-pair)))
+                                          files)))))
