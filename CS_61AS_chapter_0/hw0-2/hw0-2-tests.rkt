@@ -82,8 +82,8 @@
    (check sent-equal? (describe-time 150) '(2.5 minutes))
    (check sent-equal? (describe-time 63000) '(17.5 hours))
    (check sent-equal? (describe-time 518400) '(6 days)))
-  (define/test
-   superlative-tests
-   (check-equal? (superlative 'dumb 'exercise) '(dumbest exercise))
-   (check-equal? (superlative 'smart 'student) '(smartest student)))
-  all-names)
+(define/test
+ superlative-tests
+ (check-equal? (superlative 'dumb 'exercise) '(dumbest exercise))
+ (check-equal? (superlative 'smart 'student) '(smartest student)))
+all-names)

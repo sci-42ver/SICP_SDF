@@ -274,6 +274,8 @@ recommended since the course general information shows (more detailed see 1.md)
 ## cs61as
 The latest should be CS "61AS" spring 2016 since 'CS "61AS" fall 2016' has nothing.
 I only check labs without checking Homework, Quizzes and Retakes
+
+I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since this is not the main part to learn for SICP.
 - Syllabus
   - uses Racket
   - > Lessons also link to external readings drawn from *SICP and old CS 61A lecture notes*'
@@ -630,6 +632,10 @@ or more specifically they are easy after having done exercises.
   - sol
     > match *a small amount of money with a large coin* ... When the coins are tried in the book's order, by the time we are thinking about four cents, we have already *abandoned the idea of using nickels*
 - [x] 3
+## Week 4
+https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week5
+- [x] 5 trivial which has been stated in the book `add-rat`.
+- [x] 6,8 See `sicp_exercise.md`. 
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.

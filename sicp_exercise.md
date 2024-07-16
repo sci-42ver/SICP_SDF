@@ -847,6 +847,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       This is about the 1st solution
     - `(* n (/ d abs-d))` just uses `(/ d abs-d)` as the sign
 - [x] 2.2
+  - CS61A lab shares the same idea.
 - [x] 2.3
   - probably trivial as 2.2. Here I give one brief implementation description
     `(make-rectangle tl_pnt br_pnt)` or `(make-rectangle tr_pnt bl_pnt)` where tl means top left and similar for others.
@@ -867,10 +868,21 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       ```
       I checked 2 cases (p1,p2: 1. bl,tr 2. tl,br) and here due to geometry (I won't give one strict proof. I lastly learned about pure geometry is when in middle high school) it can be probably generalized.
     - https://en.wikipedia.org/wiki/Domain-driven_design
+  - CS61A lab Week 4
+    - The 1st is same as ~~"Alternate implementation of rectangle"~~ ~~"Alternative Implementation II"~~ ~~but doesn't decide the rectangle uniquely~~ "As an alternative to this alternative".
+    - kw
+      > it includes the common point twice, and it doesn't take into account that the angle between the two legs must be 90 degrees
+    - the 2nd is same as "Here's another one".
+      - > Specifically, we need to know that if the slope of the base segment is Dy/Dx (using D for delta) then the slope of a perpendicular height should be -Dx/Dy.
+        Since Dx=0 or Dy=0 is possible, here the instructor just *rotates the scaled* side.
+      - > Alternatively, you might find it easier to redefine perimeter and area in terms of the new representation, and then to make them work for the old representation you'll have to define base-rectangle and height-rectangle in terms of first-leg and second-leg
+        Since it is easier for `seg->length` but not vice versa.
 - [x] 2.4 trivial `(z (lambda (p q) q))`.
   - wiki
     > That inner function will be passed p and q in that order, so just return the first arg, p. 
     IMHO it is better to state that "passed a and b ... the first arg, a".
+  - CS61A lab Week 4
+    trivial by the substitution rule.
 - [x] 2.5
   - This is proved using *the fundamental theorem of arithmetic*.
   - `cons` is trivial
@@ -1022,6 +1034,16 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 2.18
   - concatenate the `last-pair` recursively.
   - repo same as wiki jz's.
+  - CS61A lab same as my last comment.
+    - kw
+      > However, + is commutative; it doesn't matter whether you add a series front-to-back or back-to-front.  Cons is NOT commutative, and the pair-diagram representation of a list is NOT left-right symmetric.
+    - > the first invocation adds the first term to the result and then does the second invocation.
+      while recursive will do that in the most inner block by adding *the last term*. Then I read
+      > it keeps doing recursive invocations, keeping pending the addition of the partial result into the larger result.
+      - See the trace.
+    - > but this will be really slow, O(n^2).
+      This is also said in "6.001_fall_2007_recitation/r07sol".
+    - DAV -> data abstraction violation.
 - [x] 2.19
   - `car`, `cdr`, `null?`
   - wiki
