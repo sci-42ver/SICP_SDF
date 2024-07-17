@@ -107,6 +107,7 @@ I use MIT/GNU Scheme.
 - ~~[community-wiki](http://community.schemewiki.org/?sicp-ex-1.18)~~
 - how to make vim maybe [directly running the code](https://www.neilvandyke.org/sicp-texi/) in the texinfo/info ("the Info hypertext format that can be viewed in Emacs").
 # SDF
+> This book is built on the *lectures and problem sets* that are now used in our class.
 ## TODO
 - https://lobste.rs/s/m6gnaq/review_software_design_for_flexibility from https://www.reddit.com/r/scheme/comments/t4bbrq/have_you_read_the_book_software_design_for/
 ## course 6.5151 (6.905)

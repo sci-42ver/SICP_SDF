@@ -15,6 +15,15 @@ review history comments.
     like 2.1, etc.
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
+# What we should achieve
+- > ey should know *what not to read*, and what they need not understand at any moment.
+- > different approaches to dealing with time in *computational models*: objects with state, concurrent programming, functional programming, lazy evaluation, and nondeterministic programming.
+- > including *static scoping for variable binding* and permiing functions to yield functions as values.
+- > e simple structure and natural applicability of lists are reflected in functions that are amazingly *nonidiosyncratic*
+## skip
+- Due to that they are related with Pascal
+  > In Pascal the plethora of declarable data structures in-duces a specialization within functions that inhibits and penalizes ca-sual cooperation.
+  > To illustrate this difference, compare the treatment of material and exercises within this book with that in any first-course text using Pascal.
 # reading order recommendation with other books
 - better read *pure* "Computer Architecture" (So not csapp) before SICP if having learnt other programming languages like C.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
@@ -22,7 +31,9 @@ review history comments.
     1. Figure 1.5
 # book reading order
 - The reading order:
-  book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*.
+  book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether underlined words in the *chapter and section prefaces* have been understood.
+
+  After reading the book, check "What we should achieve".
 ## em tracking when reading the book (Read before doing the related exercises)
 - up to "Mapping over lists" (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
@@ -54,6 +65,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 ### 4
+- > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
 - > We will return to this issue in section 4.1.6, after we learn more about evaluation.
 - > *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.
@@ -363,6 +375,8 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
   From [this](https://ell.stackexchange.com/a/133661), "those gathered around" (i.e. "the communicating coin" of Lisp and Pascal) may mean their shared components in Algol60.
 - > e discretionary exportable functionality entrusted to the individual Lisp programmer is more than an order of magnitude greater than that to be found within Pascal enterprises
   i.e. Lisp can [generate languages](https://www.reddit.com/r/learnprogramming/comments/vluzqf/comment/idxrcoe/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+- > ese languages tend to become less primitive as one approaches the boundaries of the system where we humans interact most oen. As a result, such systems contain complex language-processing functions replicated many times
+  may mean some primitives are called by multiple other funcs.
 ## TODO (Foreword may need some background knowledge)
 - read after finishing the book
   > Lisp changes. ...
@@ -376,6 +390,7 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
   by multiplication principle, the component number is small.
 - > All of the formal properties can be covered in an hour, like the rules of chess.
   This is also said in [ucb_sicp_review] (Also see Discrete_Mathematics_and_Algorithm repo).
+- > Underlying our approach to this subject is our conviction that “com- puter science” is not a science and that its significance has lile to do with computers. e computer revolution is a *revolution in the way we think* and in the way we express what we think.
 ## TODO
 - check "Our goal ..." after reading the book.
 - > we can use higher-order functions to capture common paerns of usage, ...
@@ -383,6 +398,9 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
   [1](https://news.ycombinator.com/item?id=40056166) [2](https://users.cs.utah.edu/~mflatt/past-courses/cs7520/public_html/s06/notes.pdf)
 # Preface to the Second Edition
 - http://mitpress.mit.edu/sicp is [invalid now](https://web.archive.org/web/20230916001533/http://mitpress.mit.edu/9780262510875/structure-and-interpretation-of-computer-programs/#tab-5)
+- [supplementary material](https://web.archive.org/web/20000817004328/http://mitpress.mit.edu/sicp/) is contained in Instructor's Manual
+  But there is [no pdf](https://www.yumpu.com/en/document/read/67770071/download-instructors-manual-t-a-structure-and-interpretation-of-computer-programs-2nd-edition-full) by '"Instructor"'s Manual t/a Structure and Interpretation of Computer Programs pdf'.
+- 
 # [A note on our course at MIT][course_note]
 - > to separate specification from implementation
   similar to [ucb_sicp_review]
@@ -677,6 +695,8 @@ It is really hard to understand these codes since we don't know the detailed imp
 - Here `reducer` manipulates with "value" in kv pairs.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
+
+No underlined words in the chapter and section prefaces.
 ## 6.037 ~~(dropped for future reading except this one already read)~~ (may read as one quick review after reading the book)
 - [web.mit.edu/alexmv/6.037/](https://web.archive.org/web/20200113183359/http://web.mit.edu/alexmv/6.037/)
 - [Graduate P/D/F](https://registrar.mit.edu/classes-grades-evaluations/grades/grading-policies/graduate-pdf-option) is *not one standard* option
