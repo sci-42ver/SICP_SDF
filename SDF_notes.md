@@ -24,6 +24,15 @@ Interestingly this chapter compares the computer system with many other systems 
 - > There is a constructor vector that can be used to make vectors and a selector vector-ref for accessing the elements of a vector.
 - [`define-record-type`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/define_002drecord_002dtype-_0028SRFI-9_0029.html)
 - TODO how `*:binary`, etc. are implemented.
+  - https://groups.csail.mit.edu/mac/users/gjs/6.5150/dont-panic/#orgf57d50a
+    `(pp *)` seems to only give one brief description since `(pp complex:*)` throws errors.
+    ```scheme
+    (case number-of-arguments
+      ((0) (named-lambda (nullary-*) 1))
+      ((1) (named-lambda (unary-* z) (if (not (complex:complex? z)) (error:wrong-type-argument z "number" '*)) z))
+      ((2) (named-lambda (binary-* z1 z2) (&* z1 z2)))
+      (else (named-lambda (* self . zs) (reduce complex:* 1 zs))))
+    ```
 - > A symbol may not normally contain whitespace or delimiter characters, such as parentheses, brackets, quotation marks, comma, or #
 - Here all quotation is implicitly list, so [`pair?` returns `#t`](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX271).
 - > Lisp systems provide a mechanism called quasiquotation that makes this easy.
@@ -51,7 +60,6 @@ Interestingly this chapter compares the computer system with many other systems 
   > This sections introduces parameter objects, which can be *bound to new values* for the duration of a dynamic extent.
 - > A bundle is sometimes called a message-accepting procedure, where the message type is the delegate name and the message body is the arguments
   This is not recorded in [R7RS]
-- 
 
 ---
 

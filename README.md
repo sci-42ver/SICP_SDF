@@ -1,3 +1,4 @@
+1. Sorry for not saying "... is the same as the `make-counter` function you also show" in advance. 2. IMHO the key words "lexical *environment*", "*garbage* collected" have relations with the future chapters in SICP. I will check them in the future. 3. Currently with my limited knowledge, the problem can be understood as that "*new* function" makes the mere `((count))` unable to increment. Is it that case?
 # SICP
 Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.
 
@@ -158,3 +159,36 @@ I use MIT/GNU Scheme.
   [summary](https://docs.google.com/document/d/1vs9ep6A9VLvtn6QLMalYgxQSMXvfPdZA0vdVT6POoJs/edit#)
   - The above seems to have no solutions for Assignment by searching "Assignment".
   - I [can't join its slack](https://compositional-cb63110.slack.com/) room and this course has finished
+### Don't Panic!
+> Sections 2, 3, 4, 6, and 7 are essential. Please follow these *thoroughly*.
+#### 3.1
+- advantages of edwin
+  > offers a *better* integrated scheme *debugger* than emacs
+  disadvantages (i.e. advantages of emacs)
+  > based on an *older* version of emacs (version 19) and has not been developed much since.
+  > *no online presence or community*
+  > fairly anemic *library*
+  - disadvantages of emacs
+    > uses elisp, a fairly *kludgy dialect* of lisp, as an extension language
+    > not as much integration with mit-scheme than edwin
+  - I will just use vscode and `drracket` as the 6.001/6.037 course does.
+  - So I will skip
+    > To view the tutorial, execute:
+    > For a tour of what you can do, go here:
+    > You should read all the key bindings of *both the scheme source code mode and the scheme REPL mode*
+- TODO
+  > how do you figure out that C-M-x will evaluate the scheme form at your cursor if you don't already know that
+  `C-h k` -> `C-M-x` will output "... is undefined".
+- kw
+  > LISP is almost as old as programming itself, having been created just *a year after Fortran*, the first "high-level" computer language.
+  - REPL (similar to python)
+    > The most important thing about programming using scheme, and any LISP for that matter, is to use the *REPL*.
+    > Generally, as you are programming in scheme, you will have one window which contains the code you are writing, and one window which serves as your REPL.
+    > You write some code (perhaps a single function), evaluate that code, then *move over to the repl* and experiment with the code you just wrote. Based on your repl interaction, you *go back to your code* and make changes, and then the cycle repeats. 
+    > You can also run some tests in the REPL and then *copy the results of those tests into your main source file*, to use as documentation of what the function is supposed to do for certain inputs. This will be an effective way to prepare psets – you write code, then copy the answers to the problem from the REPL back to your source file.
+  - > If this were a C or Java program you would have to write a small *test-harness*, re-compile and then run the program again to do what you have just done.
+- TODO I don't know how to copy in emacs. [The top 2 answers by Daniel and Steven D](https://unix.stackexchange.com/q/6640/568529) fail.
+- > You can always start the debugger at a *scheme REPL* by evaluating
+  i.e. it is inside MIT-Scheme. So it may have less functions than `drracket`.
+- > If you start the debugger in this way, then you will get a very nice looking window that constantly displays many of the things you could otherwise access through the commands you *have just been shown*. Try it out; it's neat!
+  In a summary the key useful feature is `v`. TODO how to do that in `drracket`?

@@ -34,14 +34,3 @@
     (make-segment
       (make-point 0 0)
       (make-point 2 2))))
-
-(do ((vec (make-vector 5))
-     (i 0 (+ i 1)))
-    ((= i 5) vec)
-  (vector-set! vec i i))
-
-(define (make-counter)
-        (let ((count 0))
-            (lambda ()
-              (set! count (+ count 1))
-              count)))

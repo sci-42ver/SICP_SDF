@@ -1,3 +1,6 @@
 [submodule "SICP"]
 	path = SICP
 	url = git@github.com:sci-42ver/SICP.git
+[submodule "6.945_assignment_solution"]
+	path = 6.945_assignment_solution
+	url = git@github.com:sci-42ver/6.945_assignment_solution.git

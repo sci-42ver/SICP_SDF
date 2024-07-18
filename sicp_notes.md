@@ -34,6 +34,7 @@ review history comments.
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether underlined words in the *chapter and section prefaces* have been understood.
 
   After reading the book, check "What we should achieve".
+- Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
 ## em tracking when reading the book (Read before doing the related exercises)
 - up to "Mapping over lists" (not included)
 ## to reread after reading later chapters (strikethrough to mark already read)
