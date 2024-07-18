@@ -117,6 +117,8 @@ I use MIT/GNU Scheme.
    - By seeing their pdf's, they are mainly directly book exercises.
 - [old ~~project~~ assignment implementation 2009 (partial)](https://buffer.rajpatil.dev/%2F20240410114903-mit_ocw_6_945_aiasp.html) and [2019 (only have the project solution)](https://github.com/bmitc/mit-6.945-project) (weird still [can't find its fork](https://github.com/bmitc/mit-6.945-project/forks?include=active&page=1&period=&sort_by=stargazer_counts))
   TODO [project](https://groups.csail.mit.edu/mac/users/gjs/6.945/final-project.pdf) needs team and is a bit general about "symbolic-manipulation software".
+  - It doesn't say what "some ideas" are (also for https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf, FAQ and Overview).
+    > If you don’t come up with a great IDEA yourself, we *have some ideas that you might pursue*. You will be expected to write elegant code that can be easily read and understood by us
 - I only find one 2009 [video lectues](https://archive.org/details/adventures-in-advanced-symbolic-programming)
   - https://news.ycombinator.com/item?id=23599794
     > but the entire class is centered around psets
@@ -125,6 +127,11 @@ I use MIT/GNU Scheme.
 - [AI_preq_sicp]
   > if you want to do Sussman's more recent books like SDF you're going to have to use the latest mit-scheme anyway
 - pset / PS09 -> assignment.
+### what to learn
+- https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf
+  - > The grades for this subject will be determined by a combination of classroom participation, *homework, and project work*
+    > To receive an “A” in this subject you will have to work *all of the problem sets and prepare a good final project*. We expect you to be at every class and to work every problem set.
+    So do "problem sets" and the "final project".
 ### SDF
 - "course using Software Design for Flexibility" has no candidates while "course using SICP" has.
 - [This](https://www.reddit.com/r/scheme/comments/zmfwjb/the_book_software_design_for_flexibility_lukewarm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) is not helpful up to [this](https://www.reddit.com/r/scheme/comments/zmfwjb/comment/j0iq1d3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) sorted by Best when giving one brief reading.
