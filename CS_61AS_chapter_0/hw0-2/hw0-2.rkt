@@ -130,7 +130,7 @@
   (define days (/ (/ (/ secs 24.0) 60.0) 60.0))
   (if (number? secs)
     (cond ((and (>= secs 0) (< secs 60)) (sentence secs 'seconds))
-;; Here I follow the test using only one unit.
+      ;; Here I follow the test using only one unit.
       ((< minutes 60) (sentence minutes 'minutes))
       ((< hours 24) (sentence hours 'hours))
       ((< days 365.25) (sentence days 'days))

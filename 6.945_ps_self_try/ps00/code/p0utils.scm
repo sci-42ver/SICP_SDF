@@ -39,7 +39,7 @@
 ;;;  has two components, x=a^T(mod p) and y=m*P^T(mod p).  The
 ;;;  Diffie-Hellman shared secret is x^S(mod p)=P^T(mod p).  So the
 ;;;  receiver decrypts the message by computing m=(y/x^S)(mod p).
-
+
 (define (eg-receiver dh-system)         ;ElGamal receiver
   (let ((k (dh-system-size dh-system)) (p (dh-system-prime dh-system)))
     (let ((my-secret (random-k-digit-number k))
@@ -60,7 +60,7 @@
 
 (define (eg-send-message message receiver)
   YOUR CODE HERE)
-
+
 ;;; Data abstractions supporting the ElGamal system
 
 (define (public-dh-system k)
@@ -108,7 +108,7 @@
 (eg-send-message "Hi there." Alyssa)
 ;Value: "Hi there."
 |#
-
+
 (define (Eve receiver)
   (let ((receiver-public-key
           (eg-receiver-public-key receiver))
@@ -121,12 +121,13 @@
               (receiver-decryption-procedure ciphertext))))
       (eg-make-receiver receiver-public-key
                         my-spying-procedure))))
-
+
 ;;; The rest of this file is code you may find useful.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Problem 2: Raising a Number to a Power 
+;;; Problem 2: Raising a Number to a Power
+;;; both \Theta(n). recursive. 
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -142,6 +143,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Problem 4: Prime Numbers
+;;; \Theta(n), \Theta(1), iterative
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -156,7 +158,7 @@
     (if (< n 2)
       #f
       (test-factors n 2))))
-
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Useful routines for converting message 
@@ -213,7 +215,7 @@
       (iota (length digits)) digits)))
 ;;; Test cases are similar to above except that they don't have
 ;;; leading ones.
-
+
 (define chars->bytes
   ;; Takes a list of 16-bit Unicode characters (or 8-bit ASCII
   ;; characters) and returns a list of bytes (numbers in the range
@@ -261,7 +263,8 @@
 ;;;(bytes->chars '(104 101 108 108 111)) ; -> (#\h #\e #\l #\l #\o)
 ;;;(bytes->chars '(255 147 50 255 83 89 255 171 171))
 ;;;        -> (#\u3293 #\u5953 #\uabab)
-
+
+;; just radix 256 number.
 (define (string->integer string)
   ;; returns an integer representation of an arbitrary string. 
   (join-numbers (chars->bytes (string->list string)) 256))
@@ -282,6 +285,6 @@
 ;;;(integer->string (string->integer "hello, world"))
 ;;;(integer->string (string->integer ""))
 ;;;(integer->string (string->integer "April is the cruelest month"))
-;;;(integer->string (string->integer "\u0000\u0000\u0000"))
-;;;(integer->string (string->integer "\u3293\u5953\uabab"))
+(integer->string (string->integer "\u0000\u0000\u0000"))
+(integer->string (string->integer "\u3293\u5953\uabab"))
 ;;;(integer->string (string->integer "   lol   "))

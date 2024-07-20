@@ -1,3 +1,10 @@
+SICP says "One key idea in dealing with compound data is the notion of
+closure —that the glue we use for combining data objects should allow
+us to combine not only primitive data objects, but *compound data ob-jects* as well." and "The use of the word “closure” here comes from *abstract algebra*". So you are right SICP uses https://en.wikipedia.org/wiki/Closure_(mathematics) instead of https://en.wikipedia.org/wiki/Closure_(computer_programming).
+
+@adabsurdum Thanks. I understand now.
+# Notice
+- I won't read many reference papers except when they are *specifically about programming*.
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -60,6 +67,43 @@ Interestingly this chapter compares the computer system with many other systems 
   > This sections introduces parameter objects, which can be *bound to new values* for the duration of a dynamic extent.
 - > A bundle is sometimes called a message-accepting procedure, where the message type is the delegate name and the message body is the arguments
   This is not recorded in [R7RS]
+# [ps](https://github.com/sci-42ver/6.945_assignment_solution) (It doesn't have solutions for SDF exercises)
+## ps00
+- I won't dig into the reasons of implementation shown in https://ee.stanford.edu/%7Ehellman/publications/24.pdf.
+  I also skipped the paper in footnote 4.
+- ` Pb Sa (modp) = aSb Sa (modp)` is [due to](https://testbook.com/maths/modular-multiplication#:~:text=for%20modular%20multiplication%3F-,In%20modular%20arithmetic%2C%20the%20rule%20for%20multiplication%20is%3A%20(a,took%20the%20product%20modulo%20c.)
+  > In modular arithmetic, the rule for multiplication is:
+- For "Problem ...", I only give one brief reading of the 1st sentence of each paragraph and the bold texts.
+- > binary modular operators
+  See https://www.aleksandrhovhannisyan.com/blog/modular-arithmetic-and-diffie-hellman/#:~:text=In%20number%20theory%2C%20the%20binary,or%20base%20of%20the%20operation.
+- > The following definitions are equivalent:
+  This is shown in Appendix B.
+- > The converse of the theorem doesn’t hold, unfortunately; if p is composite (not prime), then it isn’t always true that ap 6= a (mod p).
+  The latter is [Inverse](https://en.wikipedia.org/wiki/Inverse_(logic)).
+- > Some composite numbers p, called Carmichael numbers, pass the test for almost all a
+  [See](https://mathworld.wolfram.com/CarmichaelNumber.html). Here we should not use "almost".
+- I skipped https://sci-hub.se/https://doi.org/10.1007/3-540-39568-7_2 since this is one programming course.
+- > xS (modp) = aST (modp) = P T (modp)
+  See https://en.wikipedia.org/wiki/Modular_arithmetic "compatibility with multiplication"
+  So
+  $$
+  \begin{align*}
+    x^S\pmod{p}&=(a^T)^S\pmod{p}=a^{ST}\pmod{p}\\
+               &=(a^{S}\pmod{p})^T\pmod{p}=P^T\pmod{p}\\
+    y(x^S)^{-1}\pmod{p}&=mP^T(x^S)^{-1}\pmod{p}\\
+                       &=mx^S(x^S)^{-1}\pmod{p}\\
+                       &=m\pmod{p}\\
+                       &\overbrace{=}^{\text{Here p have 100 digits, so probably m << p}}m
+  \end{align*}
+  $$
+### `p0utils.scm`
+- > discrete logarithm problem
+  https://en.wikipedia.org/wiki/Discrete_logarithm
+  It only considers the integer solution.
+- ~~Notice "y=m*P^T(mod p)" is different from the original Diffie-Hellman algorithm.~~
+- IMHO for `m=(y/x^S)(mod p)`, `y` and $x^S$ should not take `(mod p)` to make it work.
+- "leading zeros" may mean "leading ones".
+# [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 
 ---
 
