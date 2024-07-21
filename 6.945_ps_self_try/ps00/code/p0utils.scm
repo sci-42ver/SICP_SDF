@@ -127,7 +127,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Problem 2: Raising a Number to a Power
-;;; both \Theta(n). recursive. 
+;;; both \Theta(n). recursive.
+;;; Better use the notation here -> \Theta(b). See 6.945_assignment_solution.
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -137,6 +138,7 @@
       (if (= b 0)
         1
         (*mod a (em a (- b 1)))))
+    (trace em)
     em))
 
 

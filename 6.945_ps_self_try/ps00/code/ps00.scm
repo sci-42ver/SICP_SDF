@@ -12,6 +12,10 @@
 ; -> ?
 (remainder -13 -8) ; -> ?
 
+;; > What is the difference between remainder and modulo?
+;; See https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX212
+;; From now on, all >> in the code means reference in the link instead of the pdf.
+;; >> n_m has the same sign as n2. 
 ; modulo is better.
 
 (define +mod
@@ -51,6 +55,8 @@
 (= ((modular 17 *) 13 11) 7)
 
 ;;; 2
+(trace slow-exptmod)
+((slow-exptmod 10) 2 14)
 ;; both \Theta(log n). recursive
 (define (exptmod p)
   (let ((mod* (modular p *)))
@@ -94,6 +100,7 @@
 ;; \Theta(log n)
 (define (big-random max)
   (define digit (count-digits max))
+  ;; This is a bit unnecessarily complexer. See 6.945_assignment_solution which uses func parameter to ensure only one call of `random-k-digit-number`.
   (define (try)
     (let ((random_num (random-k-digit-number digit)))
       (if (< random_num max) ; ensure "[0, p − 1]".
@@ -120,7 +127,7 @@
 (map (lambda (num) (= ((exptmod num) a num) ((exptmod num) a 1))) prime_lst)
 
 ;; from SICP
-;; depends on `exptmod, big-random`. So \Theta(log n).
+;; depends on `exptmod`, i.e. `big-random`. So \Theta(log n).
 (define (fermat-test n)
   ;; https://stackoverflow.com/q/78767596/21294350
   (define (expmod a exp base)
@@ -150,11 +157,14 @@
 (eq? (prime? 199) #t) ; -> ?
 
 ;;; 5
+
 ;; > In what ways can your random-prime procedure fail?
 ;; As "; Not always 100." implies since the range starts from 0.
+;; See 6.945_assignment_solution for the more serious error.
 (define random-k-digit-prime
   (lambda (k)
     (define max_num (expt radix k))
+    ;; here giving one function without parameter may be unnecessary. See 6.945_assignment_solution.
     (define (try)
       (let ((cand (big-random max_num)))
         (if (prime? cand)
@@ -216,7 +226,7 @@
         (public-key (eg-receiver-public-key receiver))
         (decryption-procedure (eg-receiver-decryption-procedure receiver))
         )
-    (let ((dh-system (car public-key))
+    (let ((dh-system (car public-key)) ; See 6.945_assignment_solution. Here abstraction is better.
           (advertised-number (cdr public-key)) ; P
           )
       (let* ((root (dh-system-primitive-root dh-system)) ; same as `p0utils.scm`
@@ -232,7 +242,7 @@
                 (m_num (string->integer message))
                 (y (mod-* m_num (mod-expt advertised-number my-secret)))
                 
-                (encrypt_msg (cons x y))
+                (encrypt_msg (cons x y)) ; better eg-make-ciphertext
               )
               (decryption-procedure encrypt_msg))))))
 
@@ -253,7 +263,7 @@
 
 ;; > What is the longest string you can send that will be correctly decrypted with a 100 digit system?
 ;; \lceil \log_{256}(10^{100}-1)\rceil
-(ceiling (/ (log (- (expt 10 100) 1)) (log 256)))
+(floor (/ (log (- (expt 10 100) 1)) (log 256)))
 
 (define (Eve receiver)
   (let ((receiver-public-key
@@ -272,8 +282,13 @@
               ;; > Modify the Eve program to make it possible for Eve to make trouble in the relationship.
               ;; just change the integer
               ;; The simple method is to drop some numbers
+
+              ;; better use `eg-send-message` to select the receiver so that Eve can act as one 
               (receiver-decryption-procedure (cons (mod_num (car ciphertext)) (mod_num (cdr ciphertext)))))))
       (eg-make-receiver receiver-public-key
                         my-spying-procedure))))
 (define Alyssa (Eve Alyssa))
 (eg-send-message "Hi there." Alyssa)
+; > Explain and demonstrate your nasty trick.
+; very weird output like ".¯\x9e;éªÄØs \x9e;ÈBrÐ%çªÛd\x12;MeX&·©z\x19;ãôWUß\x93;;/\x11;軧e\x1;" 
+; Here I won't dig into the reason since it depends on `random` and terminal output cfg.

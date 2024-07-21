@@ -5,6 +5,9 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 @adabsurdum Thanks. I understand now.
 # Notice
 - I won't read many reference papers except when they are *specifically about programming*.
+- I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
+  Any review of this repo is appreciated.
+- I won't dig into the complexity of internal functions like `remainder` since by modularity this is unnecessary.
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -103,6 +106,8 @@ Interestingly this chapter compares the computer system with many other systems 
 - ~~Notice "y=m*P^T(mod p)" is different from the original Diffie-Hellman algorithm.~~
 - IMHO for `m=(y/x^S)(mod p)`, `y` and $x^S$ should not take `(mod p)` to make it work.
 - "leading zeros" may mean "leading ones".
+### 6.945_assignment_solution
+- I lacks "(d) Test Fermat's Little Theorem:".
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 
 ---
