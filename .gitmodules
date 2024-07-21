@@ -4,3 +4,6 @@
 [submodule "6.945_assignment_solution"]
 	path = 6.945_assignment_solution
 	url = git@github.com:sci-42ver/6.945_assignment_solution.git
+[submodule "SDF_exercises"]
+	path = SDF_exercises
+	url = git@github.com:sci-42ver/SDF_exercise_solution.git

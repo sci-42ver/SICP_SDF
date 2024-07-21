@@ -8,6 +8,9 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 - I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
   Any review of this repo is appreciated.
 - I won't dig into the complexity of internal functions like `remainder` since by modularity this is unnecessary.
+# How to learn
+- Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) after reading each chapter.
+  Check the preface of each chapter and section same as SICP.
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -21,8 +24,22 @@ Interestingly this chapter compares the computer system with many other systems 
 - [Hox complex](https://en.wikipedia.org/wiki/Hox_gene)
 - > To the optimist, the glass is half full. To the pessimist, the glass is half empty. To the engineer, the glass is twice as big as it needs to be.
   [See](https://qr.ae/psfaJy)
+# Chapter 2
+- > A program that implements this idea is straightforward:
+  See [R5RS](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX360) for why we use `apply` here.
+- > The result of ((iterate n) f) is a new function, of the same type as f.
+  Same domain and codomain.
+- `(((iterate 3) square) 5)` same as python `((5**2)**2)**2`.
+- > so it does not have a well-defined numerical arity, and thus it cannot be passed to another combinator that needs its arity.
+  I didn't dig into the arity implementation `(hash-table-ref/default arity-table proc #f)` since it is related with data structure which should be learnt in CRLS, i.e. [`procedure-arity`][MIT_Scheme_Reference].
+- > In the mathematical tensor product, f and g are linear functions of their inputs, and h is a trace over some shared indices
+  TODO IMHO it is more related with ["direct sum"](https://www.math3ma.com/blog/the-tensor-product-demystified).
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
+## SDF code base
+- `#!default`
+## TODO after algorithm
+- `make-key-weak-eqv-hash-table`.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
@@ -109,7 +126,13 @@ Interestingly this chapter compares the computer system with many other systems 
 ### 6.945_assignment_solution
 - I lacks "(d) Test Fermat's Little Theorem:".
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
+- Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
+  - kw: free software
+  - See Suggestions for Projects
+  - TODO
+    interchangeable parts, proposal.
 
 ---
 
 [R7RS]:https://standards.scheme.org/unofficial/errata-corrected-r7rs.pdf
+[MIT_Scheme_Reference]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref.pdf
