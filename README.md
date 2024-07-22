@@ -146,19 +146,6 @@ I use MIT/GNU Scheme.
   > by a combination of classroom participation, homework, and project work
 - Collaborative work
   > *involve themselves in all aspects* of the work. ... you should indicate the names of any collaborators for *each part* of the assignment
-### sdf solutions (by "Software Design for Flexibility exercise solution github")
-"Software Design for Flexibility exercise solution" and "Software Design for Flexibility exercise solution gitlab" both doesn't have more related links with exercises.
-- partial
-  [this having ~~the most~~ partial solutions although with full chapter dir's ...](https://github.com/compclub/exercises/blob/main/chapter-2-dsl/rmoehn/README.md) uses Clojure
-  [this](https://github.com/compclub/projects) uses *Rust*...
-  [This](https://github.com/chebert/software-design-for-flexibility) I *can't find the relation* with the exercises
-  [This](https://github.com/nbardiuk/software-design-for-flexibility) too *less*
-  [This](https://github.com/mbillingr/sdf) and [this](https://github.com/jeffhhk/SoftwareDesignForFlexibility) has *no* solutions
-  https://github.com/bishwa-poudel/Software-Design-and-Architecture-Specialization-Coursera weirdly use Java.
-- See [this with annotations](https://docs.google.com/document/d/1oyk2EHiTfSe1t0Wbr-HJtfVVvLvulonckpOWaD5KD3E/edit) from [this](https://docs.google.com/document/d/1daYgzQX6Wuxy-iEA9jqpu8b50a_Zbd0FxvKswxAV478/edit)
-  [summary](https://docs.google.com/document/d/1vs9ep6A9VLvtn6QLMalYgxQSMXvfPdZA0vdVT6POoJs/edit#)
-  - The above seems to have no solutions for Assignment by searching "Assignment".
-  - I [can't join its slack](https://compositional-cb63110.slack.com/) room and this course has finished
 ### Don't Panic!
 > Sections 2, 3, 4, 6, and 7 are essential. Please follow these *thoroughly*.
 #### 3.1

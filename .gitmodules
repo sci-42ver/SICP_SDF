@@ -7,3 +7,9 @@
 [submodule "SDF_exercises"]
 	path = SDF_exercises
 	url = git@github.com:sci-42ver/SDF_exercise_solution.git
+[submodule "sdf_mbillingr"]
+	path = sdf_mbillingr
+	url = git@github.com:sci-42ver/sdf_mbillingr.git
+[submodule "chebert_software-design-for-flexibility"]
+	path = chebert_software-design-for-flexibility
+	url = git@github.com:sci-42ver/chebert_software-design-for-flexibility.git
