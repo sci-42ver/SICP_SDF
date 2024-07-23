@@ -230,21 +230,21 @@
           (advertised-number (cdr public-key)) ; P
           )
       (let* ((root (dh-system-primitive-root dh-system)) ; same as `p0utils.scm`
-            ;; borrowed from `p0utils.scm`
-            (k (dh-system-size dh-system))
-            (p (dh-system-prime dh-system))
-            (my-secret (random-k-digit-number k)) ; T
-            (mod-expt (exptmod p))
-            (mod-* (modular p *))
-            )
+             ;; borrowed from `p0utils.scm`
+             (k (dh-system-size dh-system))
+             (p (dh-system-prime dh-system))
+             (my-secret (random-k-digit-number k)) ; T
+             (mod-expt (exptmod p))
+             (mod-* (modular p *))
+             )
         (let* ((x (mod-expt root my-secret))
-              
-                (m_num (string->integer message))
-                (y (mod-* m_num (mod-expt advertised-number my-secret)))
-                
-                (encrypt_msg (cons x y)) ; better eg-make-ciphertext
-              )
-              (decryption-procedure encrypt_msg))))))
+
+               (m_num (string->integer message))
+               (y (mod-* m_num (mod-expt advertised-number my-secret)))
+
+               (encrypt_msg (cons x y)) ; better eg-make-ciphertext
+               )
+          (decryption-procedure encrypt_msg))))))
 
 (define dh-system
   (public-dh-system 100))

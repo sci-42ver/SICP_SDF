@@ -34,6 +34,8 @@ Interestingly this chapter compares the computer system with many other systems 
   I didn't dig into the arity implementation `(hash-table-ref/default arity-table proc #f)` since it is related with data structure which should be learnt in CRLS, i.e. [`procedure-arity`][MIT_Scheme_Reference].
 - > In the mathematical tensor product, f and g are linear functions of their inputs, and h is a trace over some shared indices
   TODO IMHO it is more related with ["direct sum"](https://www.math3ma.com/blog/the-tensor-product-demystified).
+- > Note that here we do not need to use restrict-arity because the returned procedure has exactly one argument.
+  The main difference here is that here the func parameter is *not variant*.
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
@@ -125,6 +127,7 @@ Interestingly this chapter compares the computer system with many other systems 
 - "leading zeros" may mean "leading ones".
 ### 6.945_assignment_solution
 - I lacks "(d) Test Fermat's Little Theorem:".
+## ps01 (unfortunately ps01 when 6.945_assignment_solution isn't same as 2024 version.)
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 - Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
   - kw: free software
