@@ -8,6 +8,7 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 - I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
   Any review of this repo is appreciated.
 - I won't dig into the complexity of internal functions like `remainder` since by modularity this is unnecessary.
+- I skipped digging into the details of `testing.scm` since it is not covered
 # How to learn
 - Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) after reading each chapter.
   Check the preface of each chapter and section same as SICP.
@@ -36,10 +37,27 @@ Interestingly this chapter compares the computer system with many other systems 
   TODO IMHO it is more related with ["direct sum"](https://www.math3ma.com/blog/the-tensor-product-demystified).
 - > Note that here we do not need to use restrict-arity because the returned procedure has exactly one argument.
   The main difference here is that here the func parameter is *not variant*.
+## regular expression (Here only give one translator from Scheme `r:...` to normal regex but not give one interpreter to *match* regex.)
+- > the quotation conventions are baroquen
+  [See](https://www.merriam-webster.com/dictionary/baroque#:~:text=Baroque%20came%20to%20English%20from,lines%2C%20gilt%2C%20and%20gold.)
+  TODO how is regex related with quotation?
+- > the parenthesis characters are treated as self-quoting characters
+  i.e. mere parenthesis
+### TODO related with regex syntax (no relation with programming)
+- > There is also a special case for a set containing only caret and hyphen
+- > most regular expressions are *not composable* to make larger regular expressions
+  IMHO regex is easy to be nested.
+- > protect a pattern beginning with “-”
+  in `man grep`.
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
 - `#!default`
+- `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
+  >  The instructions for which files to load
+### after reading related chapters
+- generic-procedure
+  - `equal*?`
 ## TODO after algorithm
 - `make-key-weak-eqv-hash-table`.
 # Appendix B
