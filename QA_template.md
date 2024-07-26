@@ -45,3 +45,7 @@ But as the above code shows, these procedures can be applicable. So why are thes
   [1]: https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps00/dh.pdf
   [2]: https://people.eecs.berkeley.edu/~bh/61a-pages/Volume2/notes.pdf
   [3]: https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/27
+
+---
+
+@Shawn I tried to follow https://small.r7rs.org/attachment/r7rs.pdf "5.6.2. Library example" `(example grid)` since I have more than one functions in the lib. But it doesn't export `grid` and even doesn't define it. I tried your 2nd comment for `(common displayln)` but failed. I updated my post with the more detailed description about my code env. Could you give one more simple example to show how to use this feature?
