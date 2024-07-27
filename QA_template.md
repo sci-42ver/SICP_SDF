@@ -48,4 +48,6 @@ But as the above code shows, these procedures can be applicable. So why are thes
 
 ---
 
-@Shawn I tried to follow https://small.r7rs.org/attachment/r7rs.pdf "5.6.2. Library example" `(example grid)` since I have more than one functions in the lib. But it doesn't export `grid` and even doesn't define it. I tried your 2nd comment for `(common displayln)` but failed. I updated my post with the more detailed description about my code env. Could you give one more simple example to show how to use this feature?
+1. The 2nd link is not archived by wayback machine. 2. Do your NOTE mean something like [`s/([0-9])[ ]([0-9])/\1,\2/g`](https://stackoverflow.com/a/66882016/21294350) for "sub-patterns in substitution text" although sed also supports something same as "back-references in REs" like [`/^(.)o\1$/p`](https://www.gnu.org/software/sed/manual/html_node/Back_002dreferences-and-Subexpressions.html)? ([some `sed` implementation doesn't support](https://stackoverflow.com/a/70838821/21294350) back-reference)
+
+Both sed and RE have the back-reference number limit https://stackoverflow.com/a/4318157/21294350.
