@@ -15,6 +15,7 @@ review history comments.
     like 2.1, etc.
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
+- https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.
 # What we should achieve
 - > ey should know *what not to read*, and what they need not understand at any moment.
 - > different approaches to dealing with time in *computational models*: objects with state, concurrent programming, functional programming, lazy evaluation, and nondeterministic programming.
