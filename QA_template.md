@@ -104,8 +104,8 @@ Then is there some internal MIT Scheme function similar to the above `fold` (bot
 
 ---
 
-In MIT Scheme, it have one `make-list` defined by SRFI 1 https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/SRFI-1.html#index-make_002dlist-2.
+I haven't learnt data structure. I am learning SICP and SDF as the preparation for CRLS recommended by https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/ (I didn't choose the python related book as https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/syllabus/ requires since many say SICP is better). I have self-learnt discrete mathematics by reading Discrete Mathematics and Its Applications and mcs which covers a bit about tree although not detailed about "weight-balanced tree".
 
-@EricPostpischil Thanks. 1. Could you give one example for "crude routines that attempt to determine whether a number that has been computed with *floating-point rounding* is a result that would have equaled another number if it had been computed with *real-number arithmetic instead*."? 2. I updated my post with one testing file.
+1. Thanks for your implementation of `alistq-update` which "returns a new structure" as "immutable data structures" requires. *Then* `fold` assigns the whole new data to `alist` (So the above problem due to immutablity doesn't exist. These 2 cases are almost same as 2 examples in https://www.cronj.com/blog/immutable-mutable-data-structures-functional-javascript/ "Mutable Data Structure" and "Immutable ..." from https://medium.com/@livajorge7/immutable-data-structure-enhancing-performance-and-data-integrity-97cf07e1cb1). This func combines `list-set!` and `list-index` together.
 
-@EricPostpischil Thanks for your detailed description. I have read your answer link and understood the reasons behind. Numerical analysis is beyond what the book I am reading intends to teach, so I won't dig into it.
+2. ";;; No idea why these aren't provided by MIT Scheme already" may be due to the doc https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Advanced-Operations-on-Weight_002dBalanced-Trees.html#index-wt_002dtree_002ffold already has this func as one reference.
