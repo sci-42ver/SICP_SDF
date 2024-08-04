@@ -16,18 +16,20 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 - contract meaning. See SICP
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
-# How to learn
+# *How to learn
 - Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
-## Check the preface of each chapter and section same as SICP.
-- done up to section 2.5 not included.
-## To check
-Up to section 2.4.
+## *Check the preface of each chapter and section same as SICP.
+- done up to section 2.5 included.
+## *Chapters to check
+Updated up to section 2.5.
 ### chapter 2
-- > In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.
+- ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
 - > but they have limitations, which we will discuss in section 3.1.5.
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
+### chapter 5
+- > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
 # Acknowledgment
@@ -98,6 +100,7 @@ Interestingly this chapter compares the computer system with many other systems 
   > The domain model we will use has *three abstract types*.
   > The domain model's implementation is fairly complex, providing implementations of pieces, coordinates, and the board.
   > in which the *nouns* and verbs of the language are directly related to the problem domain
+  > The domain model provides a set of primitives that are combined to make the rules, giving us a language for *expressing the rules*.
   The rest are defined in `board.scm` and `coords.scm`.
   > This is an informal description of a domain model for a class of board games.
   So *without codes*, it is just one definition of how we play one board game.
@@ -114,6 +117,26 @@ Interestingly this chapter compares the computer system with many other systems 
   > the pawns cannot move
   i.e. "Blocked positions can arise" in wikipedia.
 ## summary
+- > using mix-and-match *interchangeable* parts
+  ~~means combined by~~
+  ~~> we used the terms jumping and capturing interchangeably.~~
+  means "a family of" by 
+  > defines a set of interchangeable incrementers.
+- TODO
+  - How "lexical scoping" is related with "combinators".
+- > C that do not have lexically scoped higher-order procedures.
+  "lexically scoped" implies [no env propogation](https://qr.ae/p2pjwk) different from "Dynamic Scoping".
+  Notice C uses ["Static scoping is also called lexical scoping"](https://www.geeksforgeeks.org/static-and-dynamic-scoping/#)
+- > When we are confronted with a system based on parts that *do not compose cleanly*, such as regular expressions, it is often possible to ameliorate the difficulties by *metaprogramming*
+  - the 1st part is due to regex expr is just one str which needs manual inspection to find its  structure, i.e. composition.
+    So "domain-specific intermediate language"
+    > but it is not so nice as a scripting language for a user to type.
+  - TODO how is it related with [Metaprogramming](https://en.wikipedia.org/wiki/Metaprogramming#:~:text=Metaprogramming%20is%20a%20computer%20programming,even%20modify%20itself%2C%20while%20running.) since it doesn't read programs?
+- > For that purpose we would want to design a clean and more concise syntax for matching strings that can be compiled to a combinator-based intermediate language.
+  maybe [str --> intermediate (e.g. `regexp-replace`)](https://srfi.schemers.org/srfi-115/srfi-115.html) -> regex --(regex matching program)> result (--> means not covered by SDF). 
+- > Scheme's powerful means of combination and abstraction
+  i.e. some lib func like `fold` etc. for combination and "higher-order procedures" for abstraction.
+## self summary
 - > It provides a general framework for the construction of a variety of related programs that share the domain of discourse.
   See the referee system.
 - > In this chapter we first introduce systems of combinators, a powerful organizational strategy for the erection of domain-specific language layers.
