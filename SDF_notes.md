@@ -95,8 +95,9 @@ Interestingly this chapter compares the computer system with many other systems 
 - > We redefine should-be-crowned? and crown-piece to use the piece type, so they behave the same as before, but they are no longer part of the core domain model.
   > we will abstract away the checkers-specific parts and hide many of the details of the domain model.
   IMHO so "the core domain model" is all defined in `game-interpreter.scm`. The details are defined in *rules*.
-  > > The domain model we will use has three abstract types.
+  > The domain model we will use has *three abstract types*.
   > The domain model's implementation is fairly complex, providing implementations of pieces, coordinates, and the board.
+  > in which the *nouns* and verbs of the language are directly related to the problem domain
   The rest are defined in `board.scm` and `coords.scm`.
   > This is an informal description of a domain model for a class of board games.
   So *without codes*, it is just one definition of how we play one board game.
@@ -125,6 +126,8 @@ Interestingly this chapter compares the computer system with many other systems 
     `r:char-not-from`, `r:char-from` based on `bracket` and `quote-bracketed-contents`.
     `r:*`, `r:+` based on *merely* `r:repeat`.
     - exercise 2.7 (see `sdf-regex.rkt`), 2.8 (see 6.945_assignment_solution), 2.9, 2.10 (see 6.945_assignment_solution) all have no relations with "combinators".
+- > We illustrate this with a domain-specific language for making unit-conversion wrappers for procedures
+  i.e. `unit:*` etc. which redefines `*`, etc.
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
