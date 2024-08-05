@@ -261,6 +261,13 @@ Interestingly this chapter compares the computer system with many other systems 
 ### 6.945_assignment_solution
 - I lacks "(d) Test Fermat's Little Theorem:".
 ## ps01 (unfortunately ps01 when 6.945_assignment_solution isn't same as 2024 version.)
+- TODO `index-fixnum?` implementation which is not documented in [MIT_Scheme_Reference].
+  ```scheme
+  (pp index-fixnum?)
+  (named-lambda (non-negative-fixnum? a1)
+    (index-fixnum? a1))
+  ```
+- 2.b See Exercise 2.2.
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 - Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
   - kw: free software
