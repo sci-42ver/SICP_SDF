@@ -1,111 +1,66 @@
 Recently when I self-learnt MIT 6.5151 course, I first read CS 61AS Unit 0 as the preparation. Then I have read SICP 1 to 2.1 (with related lecture notes) as [ps0][1] requires (also read 2.2.1 as [CS 61A notes][2] requires) and then [Software Design for Flexibility (SDF)][3] Prologue, chapter 1 and partly Appendix on Scheme. I use MIT-Scheme as the course recommends.
 
-Currently I am reading SDF chapter 2 and doing exercise 2.11 (f).
-> f. Another big extension is to build make-converter so that it
-can derive compound conversions, as required, from previously
-registered conversions. This will require *a graph search*.
+The course [problem set 1][4] has the following problem:
+> Exercise 2.a: (Not in SDF)
+ Most modern languages, such as *Python* and Javascript provide
+ facilities to write and use combinators like COMPOSE. Pick your
+ favorite language and write implementations, in your favorite
+ language, of three of the combinators that that we show in section 2.1
+ of SDF. Can you deal with *multiple arguments*? To what extent can you
+ make them *work with multiple returned values*? To what extent can you
+ put in checking for correct arity? Do these requirements conflict.
+ Demonstrate that your combinators work correctly with a few examples.
 
-I want to make `unit-conversion-key-graph` constructed from `unit-conversion-pairs` equal to `(((quote tonne) ((quote kg) (quote g))) ((quote celsius) ((quote kelvin) (quote fahrenheit))))` in the following code.
+My implementation:
+```python
+import inspect
+def compose(f, g):
+  g_arity=len(inspect.signature(g).parameters)
+  def compose_composition(*arguments):
+    # https://stackoverflow.com/a/18994347/21294350
+    try:
+      if len(arguments) != g_arity:
+        print("compose Arg number error")
+      # print("g return:",g(*arguments))
+      
+      # https://stackoverflow.com/a/691274/21294350
+      # very inconvenient.
+      g_result=g(*arguments)
+      if type(g_result) is list:
+        print("g_result",g_result) 
+        return f(*g_result)
+      else:
+        return f(*[g_result])
+    except:
+      pass
+  return compose_composition
 
-But using `set-car!` in `fold` will throw errors since `res` may be used like the *state* variable in `fold` (This is similar to `for i in range(10): i=i+1; print(i)` in python but the latter doesn't throw errors and `i=i+1` does nothing at all.). This is one restriction. It will throw error ";The object #!unspecific, passed as the first argument to car, is not the correct type." sometime after `set-car!`.
-
-The following `unit-conversion-list` is to be consistent with [this code block in the code base][4] where each unit pair is paired with some conversion procedure.
-
-```scheme
-(define (displayln x)
-      (newline)
-      (display x))
-
-(define unit-conversion-list '((('celsius . 'kelvin) . 1) (('tonne . 'kg) . 2)
-                                (('tonne . 'g) . 3) (('celsius . 'fahrenheit) . 4)))
-(define unit-conversion-pairs (map car unit-conversion-list))
-(displayln unit-conversion-pairs)
-; display:
-; (((quote celsius) quote kelvin) ((quote tonne) quote kg) ((quote tonne) quote g) ((quote celsius) quote fahrenheit))
-
-;; https://stackoverflow.com/a/7382392/21294350
-(define (list-set! lst k val)
-    (if (zero? k)
-        (begin
-          (displayln "set to")
-          (displayln val)
-          (set-car! lst val))
-        (list-set! (cdr lst) (- k 1) val)))
-
-;; https://cookbook.scheme.org/find-index-of-element-in-list/
-(define (list-index fn lst)
-  (displayln lst)
-  (let iter ((lst lst) (index 0))
-    (if (null? lst)
-        -1
-        (let ((item (car lst)))
-          (if (fn item)
-              index
-              (iter (cdr lst) (+ index 1)))))))
-
-(define (adjacency-pairs-to-adjacency-list adjacency-pairs)
-  (fold 
-    (lambda (adjacency-pair res) 
-      (let* ((from (car adjacency-pair))
-            (to (cdr adjacency-pair))
-            (from-idx 
-              (list-index 
-                (lambda (adjacent-list-elem) (equal? from (car adjacent-list-elem))) 
-                res)))
-        (if (>= from-idx 0)
-          (begin 
-            (displayln from-idx) 
-            (list-set! res from-idx (list from (list (cadr (list-ref res from-idx)) to)))
-            (displayln res)
-            (displayln "ending"))
-          (cons (list from to) res))))
-    '()
-    adjacency-pairs))
-
-(define unit-conversion-key-graph (adjacency-pairs-to-adjacency-list unit-conversion-pairs))
-(displayln unit-conversion-key-graph)
+print("compose test_1",compose(lambda x:x+2, lambda x:x*x)(2))
+print("compose test_2",compose(lambda x:x+2, lambda x:x*x)(2,2))
+print("compose test_3",compose(lambda x:["foo",x], lambda x:["bar",x])(2))
 ```
+
+The key problem is due to my assumption of passing "multiple returned values" using *`list`*. But this will have problems if we just pass *one single list, i.e. one type of single-parameter cases*. Then we can't differentiate it from "multiple returned values".
 
 ---
 
-We can define one iterative function to *solve with the above problem* with the same underlying basic ideas:
+[The book Scheme implementation][5] solves the above problem by using `values` which is probably not returned normally as one single data. It is always used as one container of multiple arguments.
 ```scheme
-(define (adjacency-pairs-to-adjacency-list adjacency-pairs)
-  (let iter ((rest-adjacency-pairs adjacency-pairs)
-              (res '()))
-    (if (null? rest-adjacency-pairs)
-      res
-      (let* ((adjacency-pair (car rest-adjacency-pairs)))
-        (let* ((from (car adjacency-pair))
-              (to (cdr adjacency-pair))
-              (from-idx 
-                (list-index 
-                  (lambda (adjacent-list-elem) (equal? from (car adjacent-list-elem))) 
-                  res)))
-          (let ((rest-adjacency-pairs (cdr rest-adjacency-pairs)))
-            (if (>= from-idx 0)
-              (begin 
-                (displayln from-idx) 
-                (list-set! res from-idx (list from (list (cadr (list-ref res from-idx)) to)))
-                (displayln res)
-                (displayln "ending")
-                (iter rest-adjacency-pairs res))
-              (iter rest-adjacency-pairs (cons (list from to) res))))))))
-)
+(define (compose f g)
+  (define (the-composition . args)
+    (call-with-values (lambda () (apply g args))
+      f))
+  (restrict-arity the-composition (get-arity g)))
 ```
 
-Then is there some internal MIT Scheme function similar to the above `fold` (both books recommends functional programming) but without the above restriction to make `unit-conversion-key-graph` right?
-
+Is there one way to solve with the above tricky problem using python?
 
   [1]: https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps00/dh.pdf
   [2]: https://people.eecs.berkeley.edu/~bh/61a-pages/Volume2/notes.pdf
   [3]: https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/27
-  [4]: https://github.com/sci-42ver/SDF_exercise_solution/blob/1673ef69165bb83232c38f4d9292819949e1ef22/software/sdf/wrappers/units.scm#L77-L83
+  [4]: https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps01/ps.pdf
+  [5]: https://github.com/sci-42ver/SDF_exercise_solution/blob/ea5c53e090c23245d89b9963e1a238e5cd1bfb03/software/sdf/combinators/function-combinators.scm#L41-L47
 
 ---
 
-I haven't learnt data structure. I am learning SICP and SDF as the preparation for CRLS recommended by https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/ (I didn't choose the python related book as https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/syllabus/ requires since many say SICP is better). I have self-learnt discrete mathematics by reading Discrete Mathematics and Its Applications and mcs which covers a bit about tree although not detailed about "weight-balanced tree".
-
-1. Thanks for your implementation of `alistq-update` which "returns a new structure" as "immutable data structures" requires. *Then* `fold` assigns the whole new data to `alist` (So the above problem due to immutablity doesn't exist. These 2 cases are almost same as 2 examples in https://www.cronj.com/blog/immutable-mutable-data-structures-functional-javascript/ "Mutable Data Structure" and "Immutable ..." from https://medium.com/@livajorge7/immutable-data-structure-enhancing-performance-and-data-integrity-97cf07e1cb1). This func combines `list-set!` and `list-index` together.
-
-2. ";;; No idea why these aren't provided by MIT Scheme already" may be due to the doc https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Advanced-Operations-on-Weight_002dBalanced-Trees.html#index-wt_002dtree_002ffold already has this func as one reference.
+@Shawn Thanks for your reply. I haven't learnt python systematically but just learnt it by reading the doc and other tutorials while using it. As https://www.geeksforgeeks.org/g-fact-41-multiple-return-values-in-python/# shows, it is ok to use list although it may be not conventional. Both can be unpacked.
