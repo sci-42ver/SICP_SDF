@@ -1,4 +1,17 @@
-1. Sorry for not saying "... is the same as the `make-counter` function you also show" in advance. 2. IMHO the key words "lexical *environment*", "*garbage* collected" have relations with the future chapters in SICP. I will check them in the future. 3. Currently with my limited knowledge, the problem can be understood as that "*new* function" makes the mere `((count))` unable to increment. Is it that case?
+# How long I have taken to read these books
+## SICP
+- From Jun 2 to Jul 2, chapter 1 is finished.
+  to Jul 11, up to chapter 2.1.
+  to Jul 13, review history chapter recitations, etc.
+  to Jul 15, up to chapter 2.2.1.
+  to Jul 16, finish related history labs, lecs, recs.
+  - Up to now, the main time is spent on reading the book and *schemewiki*.
+## SDF
+- From Jul 16 to Jul 18, read ps00 prerequisite contents.
+  to Jul 21, finish ps00.
+  to Aug 4, finish chapter 2.
+  to Aug 5, finish ps01.
+  - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
 Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.
 

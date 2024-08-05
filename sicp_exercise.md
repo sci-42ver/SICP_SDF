@@ -2,8 +2,8 @@
 - I didn't prove those theorems which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
   Then I read this repo codes.
-  - repo read up to
-    I have read repo solution chapter 1,2.1~23 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+  - *repo read up to*
+    I have read repo solution chapter 1,2.1~27 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1072,6 +1072,31 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       - See sritchie's comment for the improvement.
     - > so it can arbitrarily be the list of items in the list applied to the given procedure.
       it should be "the list of items which is got by applying the given procedure to the list".
+- [ ] 24 just `(list 1 2 3 4)`
+  - See wiki. Here `(list 2 (list 3 4))` is stored as one pointer instead of beginning with 2.
+    - See wiki 25 solution "(cons 5 (cons (cons 6 (cons 7 nil)) nil))" for how these `list`'s work.
+- [ ] 25
+  - `(car (cdar (cddr '(1 3 (5 7) 9))))`
+  - `(caar '((7)))`
+  - `(car (cddr (cddr (cddr '(1 (2 (3 (4 (5 (6 7))))))))))` wrong.
+    `(cadr (cadr (cadr (cadr (cadr (cadr '(1 (2 (3 (4 (5 (6 7))))))))))))` call `cadr` ~~7~~ 6 times.
+  - wiki
+    - timo do the solution from inside to outside instead of from outside to inside.
+    - `(error "Just cAr or cDr - -  Char Not recognized" (car oper))`
+      Here `(car oper)` [can't be too large](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Error-Messages.html#index-format_002derror_002dmessage).
+  - repo
+    - After translating into `cons` seq also as jz shows, all is intuitive.
+- [ ] 26
+  - `(1 2 3 4 5 6)`, `((1 2 3) . (4 5 6))`, `((1 2 3) (4 5 6))`
+    the 2nd is wrong.
+  - wiki
+- [ ] 27
+  - wiki
+    - jz
+      - `(append (deep-reverse (cdr x)) ...` is based on `cdr` is always one list.
+    - > A solution that uses reverse to do the work:
+      most straightforward translating
+      > the list with its ele-ments reversed and with all sublists deep-reversed as well
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

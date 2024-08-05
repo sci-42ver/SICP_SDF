@@ -36,8 +36,11 @@ review history comments.
 
   After reading the book, check "What we should achieve".
 - Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
+## check whether *underlined* words in the *chapter and section prefaces*
+Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
+- up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to "Mapping over lists" (not included)
+- up to "Mapping over lists" (included)
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### 1.2
@@ -67,6 +70,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 ### 4
+- > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
 - > We will return to this issue in section 4.1.6, after we learn more about evaluation.
@@ -82,7 +86,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 > Examples include an event-driven object-oriented simulation game, a conversational program that uses rules and pattern matching, symbolic algebra of polynomials and rational functions, interpreters for various languages, and a compiler with register optimization.
 I skipped [Problem Sets](https://github.com/abrantesasf/sicp-abrantes-study-guide?tab=readme-ov-file), Exam, homework and Quizzes because IMHO those numerous exercises in the book is enough and most of courses pay more attention for projects when grading. Also 
 - see [this](https://github.com/junqi-xie-learning/SICP-Projects?tab=readme-ov-file) (Here [one fork](https://github.com/junqi-xie-learning/SICP-Projects/forks) may be itself)
-- I will only does 6.5151 skipping
+- I will only does 6.5151 ps and projects skipping
   1. [sample projects](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/psets/index.html)
   2. 6.037 IAP
   3. 6.001 fall 2007
@@ -340,6 +344,9 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
       > share information regarding an event the professor *might want to know* about or pass on an article from your news feed that is *relevant to the course*
   - 2
     - correct grammar and spelling
+- https://qr.ae/p2IvyZ
+  - > In the case you described, I would be *formal in the first e-mail*.
+  - > If I plan for this relationship to be *short* and entirely professional or businesslike, I would sign *both my personal and family name* at the end of the e-mail.
 - [more general](https://sparkmailapp.com/formal-email-template)
 - [should I add period at the end in the brackets](https://proofed.com/writing-tips/punctuate-brackets/#:~:text=However%2C%20we%20have%20a%20few,case%20the%20period%20goes%20inside.)
   > I ate the whole cake. (And now I am full.)
@@ -469,7 +476,7 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
 - When learning OSTEP, I read almost the book word by word since there is not many formulae or programs in it. But when reviewing briefly what I have got from this learning method now, I found there is not much.
   So I will read SICP cover to cover by reading the 1st sentence for each paragraph and decide whether to read more about that paragraph by whether that paragraph matters and I can get the idea merely from the 1st sentence.
   But I will read footnote and quotes word by word since they may imply something important.
-- For SICP book, I didn't revisit the book back for something like
+- For SICP book, I *didn't revisit the book back* for something like
   > who explained it in terms of the “message-passing” model of computation that we *shall discuss in Chapter 3*
 # CS 61AS chapter 0
 ## 0.1
@@ -860,6 +867,7 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   [See](https://en.wikipedia.org/wiki/Stability_of_the_Solar_System)
 - > A second advantage of prefix notation is that it extends in a straight-forward way to allow combinations to be nested
   i.e. enforced parentheses which has much less ambiguity.
+- > Expressions such as these, formed by *delimiting* a list of expressions within *parentheses* in order to denote *procedure application*, are called combinations
 - > paraphrasing Oscar Wilde
   [See](https://www.edge.org/response-detail/10765#:~:text=What%20is%20value%3F,and%20the%20value%20of%20nothing%22.)
 - > operators are themselves compound expressions

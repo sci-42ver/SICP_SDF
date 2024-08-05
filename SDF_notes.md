@@ -17,11 +17,12 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
 # *How to learn
-- Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+## Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+- chapter 2 checked.
 ## *Check the preface of each chapter and section same as SICP.
 - done up to section 2.5 included.
 ## *Chapters to check
-Updated up to section 2.5.
+Updated up to section 2.5 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
@@ -122,6 +123,7 @@ Interestingly this chapter compares the computer system with many other systems 
   ~~> we used the terms jumping and capturing interchangeably.~~
   means "a family of" by 
   > defines a set of interchangeable incrementers.
+  - mix-and-match just means use the *appropriate interfaces*.
 - TODO
   - How "lexical scoping" is related with "combinators".
 - > C that do not have lexically scoped higher-order procedures.
