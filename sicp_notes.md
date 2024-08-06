@@ -7,7 +7,8 @@ Please deactivate this account since I won't use it anymore. If it is finished, 
 ```
 ----
 <<<LisScheSic
-Review history comments.
+Review history comments:
+
 >>>
 review history comments.
 ```
@@ -30,7 +31,7 @@ review history comments.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
   - maths will help understand something like 
     1. Figure 1.5
-# book reading order
+# *book reading order
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether *underlined* words in the *chapter and section prefaces* have been understood.
 
@@ -1227,6 +1228,8 @@ different length sentence. The range is from 0 to N − 1.
   See [this](https://www.iwriteiam.nl/HaCAR_CDR.html) and [wikipedia](https://en.wikipedia.org/wiki/CAR_and_CDR) "does not quite match the IBM 704 architecture"
   - [manual](https://www.softwarepreservation.org/projects/LISP/book/LISP%201.5%20Programmers%20Manual.pdf)
     TODO "as parts of trees"
+- > wishful thinking
+  i.e. as CS61AS says we also use this in induction for hypothesis.
 #### 2.1.3
 The key is "procedures plus *conditions*".
 > is use of procedures corresponds to nothing like our intuitive notion of what data should be.
