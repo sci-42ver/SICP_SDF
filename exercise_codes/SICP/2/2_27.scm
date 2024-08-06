@@ -1,17 +1,13 @@
 (load "2_18.scm")
 
-(define (count-leaves x)
-  (cond ((null? x) 0)  
-        ((not (pair? x)) 1)
-        (else (+ (count-leaves (car x))
-                 (count-leaves (cdr x))))))
+(load "tree_lib.scm")
 
 ;; This is very similar to jz's last `deep-reverse` which moves `(null? lst)` and `(else ...` to `(not (pair? x))`.
 (define (deep-reverse lst)
   (cond 
     ;; the 1st is hinted by wiki jz
     ((not (pair? lst)) lst)
-    ((= (count-leaves lst) (length lst)) (reverse lst))
+    ((all-leave-tree? lst) (reverse lst))
     ;; notice "the list with its ele-ments reversed".
     ;; corrected based on jz
     ; (else (list (deep-reverse (cdr lst)) (deep-reverse (car lst))))))
