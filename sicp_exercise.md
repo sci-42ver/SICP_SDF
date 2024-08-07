@@ -1113,6 +1113,14 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       This implies the subset number doubles when increasing the element number by 1.
       - Also see "evolve the process manually"
 - [ ] 33
+  - `(cons (p x) y)`
+  - `seq2 seq1`
+  - `(lambda (x y) (+ y 1))`
+- [ ] 34
+  - > Horner’s rule evaluates the polynomial using fewer additions and multipli-cations than
+    Horner’s: n multipli-cations and n additions
+    th original: n additions but with $n+\ldots+1$.
+  - `(+ this-coeff (* x higher-terms))`
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

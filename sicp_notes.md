@@ -41,26 +41,28 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to "Mapping over lists" (included)
+- up to 2.2.3 exclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
-### 1.2
+### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
-### 1.3
+### ~~1.3~~
 - ~~chapter 1 footnote 12~~
   > to create procedures without naming them, and to give names to procedures that have already been created. We will see how to do this in Section 1.3.2.
   ~~footnote 21~~
   > In Section 1.3.4 we will see how to implement Newton’s method in general
 - ~~> Notice that we have used *block structure (Section 1.1.8) to embed* the definitions of pi-next and pi-term within pi-sum, since these procedures are unlikely to be useful for any other purpose. We will see how to *get rid of them altogether* in Section 1.3.2.~~
 ### 2
-- > In Chapter 2, when we investigate how to implement rational-number arithmetic, we will need to be able to compute s in order to reduce rational numbers to lowest terms.
+- ~~> In Chapter 2, when we investigate how to implement rational-number arithmetic, we will need to be able to compute s in order to reduce rational numbers to lowest terms.~~
 - chapter 1 footnote 23.
   ~~> We will learn how to implement arithmetic on rational numbers in Section 2.1.1~~
-- > We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces
+- ~~> We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces for *combining filters and accumulators* to build even more powerful abstrac-tions.~~
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
   i.e. func in data structures
-- > In *Section 2.2* we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.
-- > *Section 2.2.3* expands on this use of sequences as a framework for organizing programs
+- ~~> In *Section 2.2* we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.~~
+  e.g. list and then tree.
+- ~~> *Section 2.2.3* expands on this use of sequences as a framework for organizing programs~~
+  i.e. transform sequences to sequences.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -70,6 +72,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > In particular, when we address in Chapter 3 the use of procedures with “mutable data,”
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
+- > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1212,7 +1215,7 @@ different length sentence. The range is from 0 to N − 1.
   It's about ["the design of programming languages and the implementation of translators"](https://web.archive.org/web/20200129153230/https://inst.eecs.berkeley.edu/~cs164/sp11/)
 # chapter 2
 TODO up to 2.3.3 as CS 61A notes require.
-6.001 Spring-2007 lec8 needs 2.4 to be finished.
+6.001 Spring-2007 lec8 needs 2.2.4 to be finished.
 ## book
 ### 2.1
 - > We now come to the decisive step of mathematical abstraction: we forget about what the symbols stand for. ...[The mathematician] need not be idle; there are many operations which he may carry out with these symbols, *without ever having to look at the things they stand for*.
@@ -1249,6 +1252,14 @@ The key is "procedures plus *conditions*".
 - `null? items` is one wrapper of `(equal? items '())`.
 - > In effect, map helps establish an abstraction barrier that isolates the implementation of procedures that transform lists from the details of how the elements of the list are extracted and combined
   i.e. `proc` and `cons, car`, etc.
+#### 2.2.3
+- > higher-order procedures, can capture common paerns in programs
+  See `(sum term a next b)`.
+- > the accumulation is found partly in the tests
+  more appropriately: tests are done first to filter then we do "the accumulation".
+  - > mingling it with the map, the filter, and the accumulation
+  i.e. `(square tree)`, `(odd? tree)`, `+ ...`.
+- 
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
