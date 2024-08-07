@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~27 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~32 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1098,7 +1098,21 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       most straightforward translating
       > the list with its ele-ments reversed and with all sublists deep-reversed as well
 - [ ] 28
-  - 
+- [x] 29
+  - [mobile](https://ell.stackexchange.com/a/234182)
+- [x] 30 just similar to `scale-tree` (i.e. as wiki bishboria or meteorgan's 2nd says. Also see master's and "The map solutions implicitly handles nil trees, though.")
+  - wiki
+    > you're simply specifying a transformation to apply to elements of an input
+    ~~IMHO both are manipulating with "elements of an input". But master ~~
+    i.e. without `if` but just `square-tree` transformation.
+- [x] 31 almost same as 30 (see wiki bishboria).
+  - jwc's doesn't use `map` ...
+- [ ] 32 why no `car`?
+  - see wiki
+    - > the set of all subsets excluding the first number, with the first number re-inserted into each subset.
+      This implies the subset number doubles when increasing the element number by 1.
+      - Also see "evolve the process manually"
+- [ ] 33
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

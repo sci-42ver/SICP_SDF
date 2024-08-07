@@ -1211,6 +1211,8 @@ different length sentence. The range is from 0 to N − 1.
 - > you’ll learn more about this in CS 164.
   It's about ["the design of programming languages and the implementation of translators"](https://web.archive.org/web/20200129153230/https://inst.eecs.berkeley.edu/~cs164/sp11/)
 # chapter 2
+TODO up to 2.3.3 as CS 61A notes require.
+6.001 Spring-2007 lec8 needs 2.4 to be finished.
 ## book
 ### 2.1
 - > We now come to the decisive step of mathematical abstraction: we forget about what the symbols stand for. ...[The mathematician] need not be idle; there are many operations which he may carry out with these symbols, *without ever having to look at the things they stand for*.
