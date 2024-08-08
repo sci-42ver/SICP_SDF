@@ -31,6 +31,7 @@ review history comments.
   Also read maths before SICP although not needed to be as deep as mcs.pdf.
   - maths will help understand something like 
     1. Figure 1.5
+  - It may be better to have learnt *abstract algebra* since exercise 2.38 needs it.
 # *book reading order
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether *underlined* words in the *chapter and section prefaces* have been understood.

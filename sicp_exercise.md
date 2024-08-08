@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~35 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~36 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -11,6 +11,7 @@
 # book lib locations
 - `reverse`: Exercise 2.18
 - `map`: Mapping over lists.
+- `accumulate` is [almost same as ~~`reduce`~~ `fold-right`](http://community.schemewiki.org/?sicp-ex-2.33)
 # exercises
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
@@ -1131,6 +1132,48 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 36
   - `(map car seqs)`
     `(map cdr seqs)`
+- [ ] 37
+  ```scheme
+  (lambda (w) (dot-product v w))
+  (accumulate-n cons '() mat)
+  (lambda (row) (map (dot-product v w) cols)) ; row-vector*matrix.
+  ```
+  - See wiki, here row or column vectors are assumed with the same form, i.e. list.
+    So the above 3rd is *wrong* and can be better.
+- [ ] 38
+  - Here `(op result (car rest))` corresponds to [`(lambda (acc elt) ...)` in `fold`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Folding-of-Lists.html#index-fold_002dleft).
+    - Here `fold-left` does `(kons (kons (kons knil e1) e2) … en)` which is different from `fold`.
+      This is also different from MIT-Scheme `fold-left` since it does `(proc elt acc)` instead of `(op result (car rest))`.
+    - Notice if mimicking
+      > because it combines the first element of the se-quence with the result of combining all the elements to the right.
+      `fold-left` should be defined almost same as `fold-right`
+      ```scheme
+      (define (fold-left op initial sequence) 
+        (if (null? sequence) 
+            initial 
+            ;; only swap the following order.
+            (op 
+              (fold-left op initial (cdr sequence))
+              (car sequence)))) 
+      ``` 
+      But that can be achieved easily by modifying `op` argument order.
+      So maybe due to this `fold-left` is not defined as the above shows.
+  - `(/ 1 (/ 2 (/ 3 1)))` where the last 1 is knil.
+  - `(/ (/ (/ 1 1) 2) 3)`
+  - property: `(kons (kons (kons knil e1) e2) … en)` (`fold-left`) is same as `(kons e1 (kons e2 … (kons en knil)))`.
+    which can be done based on 3-ary Commutative property (make `e1` of the former at the most outside) and 2-ary Commutative property to swap, e.g. for `knil en` of the transformed former.
+    - ~~following wiki woofy~~
+      ~~`(kons (kons (kons knil e1) e2) … en)` -> `(kons (kons (kons e1 (kons e2 knil)) … en)`~~
+  - wiki with the *correct detailed* description about the property the but the repo doesn't.
+- [ ] 39
+  - based on the above "property:"
+    `fold-left` is more straightforward: `(cons x y)`
+    `fold-right`: `(append y x)`
+  - wiki
+    - the above should use `(list x)`.
+    - Liskov
+      `(list x)` as each new `knil` does same as `reverse` (See the above "property:").
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
