@@ -41,7 +41,7 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.2.3 exclusive.
+- up to Exercise 2.33 exclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### ~~1.2~~

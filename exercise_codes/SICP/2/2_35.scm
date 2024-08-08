@@ -1,0 +1,26 @@
+(load "conventional_interfaces_lib.scm")
+(define (count-leaves t) 
+   (accumulate + 0  
+               (map (lambda (x) 1)  
+                    (((lambda (x) (x x)) 
+                      (lambda (func) 
+                        (lambda (e) 
+                          (if (null? (cdr e)) 
+                              (if (pair? (car e)) 
+                                  ((func func) (car e)) 
+                                  (cons (car e) '())) 
+                              (if (pair? (car e)) 
+                                  (append ((func func) (car e)) ((func func) (cdr e))) 
+                                  (cons (car e) ((func func) (cdr e)))))))) t))) 
+   )
+
+(define tree (list 1 2 3 (list 4 5 (list 6 7)))) 
+(count-leaves tree)
+
+(define (count-leaves t)
+  (accumulate (lambda (x y) (+ 1 y)) 0 (map (lambda (x) x) (enumerate-tree t))))
+(count-leaves tree)
+
+(define (count-leaves t)
+  (accumulate (lambda (x y) (+ (length x) y)) 0 (map enumerate-tree t)))
+(count-leaves tree)

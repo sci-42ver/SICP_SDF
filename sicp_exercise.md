@@ -3,11 +3,14 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~32 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~35 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
+# book lib locations
+- `reverse`: Exercise 2.18
+- `map`: Mapping over lists.
 # exercises
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
@@ -1112,15 +1115,22 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - > the set of all subsets excluding the first number, with the first number re-inserted into each subset.
       This implies the subset number doubles when increasing the element number by 1.
       - Also see "evolve the process manually"
-- [ ] 33
+- [x] 33
   - `(cons (p x) y)`
   - `seq2 seq1`
   - `(lambda (x y) (+ y 1))`
-- [ ] 34
+- [x] 34
   - > Horner’s rule evaluates the polynomial using fewer additions and multipli-cations than
     Horner’s: n multipli-cations and n additions
     th original: n additions but with $n+\ldots+1$.
   - `(+ this-coeff (* x higher-terms))`
+- [ ] 35
+  - ~~`(map enumerate-tree t)` although~~ we can directly `(enumerate-tree t)`, then do as Exercise 2.33 `(length sequence)`. (Using identity is hinted by wiki `(lambda (x) 1)`)
+    - See wiki top solution for how to use iterative in `map`.
+      It just incorporates "iterative" of `(enumerate-tree t)` into the map.
+- [x] 36
+  - `(map car seqs)`
+    `(map cdr seqs)`
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
