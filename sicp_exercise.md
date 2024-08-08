@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~36 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~38 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1138,8 +1138,20 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   (accumulate-n cons '() mat)
   (lambda (row) (map (dot-product v w) cols)) ; row-vector*matrix.
   ```
-  - See wiki, here row or column vectors are assumed with the same form, i.e. list.
-    So the above 3rd is *wrong* and can be better.
+  - See wiki, here row or column vectors are assumed with the same form, i.e. list, since (column) vectors and *rows* of matrices are both lists.
+   ~~ So the first form returns a list which is ~~
+  - ~~So~~ the above 3rd is *wrong* and can be better.
+  - repo
+    - https://www.3blue1brown.com/lessons/dot-products
+      - > This linear transformation function is a 1x2 matrix.
+        just think of matrix as cols which are *maps* of corresponding coordinates.
+        See
+        > feels just like taking the dot product of two vectors.
+      - > Why on earth does this *numerical process of matching coordinates*, multiplying pairs, and adding them together *have anything to do with projection*?
+        what this video intends to convey.
+      - Then based on *"Linear transformation"*, we first checks how Linear transformation $unit(w')*v$ works (then scale it by $|w'|/|unit(w')|$ we get the result by *scaling the basis* "each of its components gets multiplied by 3"). Then we check $unit(w')*v_x$ and $unit(w')*v_y$ (then use Linear transformation to get $unit(w')*v$). Then we check $unit(w')*unit(v_x)$ (Again we use Linear transformation to get $unit(w')*v_x$. Similar for $v_y$). This just means $\hat{u}*\hat{i}$.
+        So the above just does the unit projection and then scale. But since projection meets the properties of Linear transformation, so we can just project.
+        Then projection by "Linear transformation" is implied by *matrix multiplication* (i.e. dot product by *duality*).
 - [ ] 38
   - Here `(op result (car rest))` corresponds to [`(lambda (acc elt) ...)` in `fold`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Folding-of-Lists.html#index-fold_002dleft).
     - Here `fold-left` does `(kons (kons (kons knil e1) e2) … en)` which is different from `fold`.
@@ -1173,7 +1185,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - the above should use `(list x)`.
     - Liskov
       `(list x)` as each new `knil` does same as `reverse` (See the above "property:").
-- [ ] 
+- [ ] 40
+  - 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
