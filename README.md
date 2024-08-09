@@ -7,6 +7,7 @@
   to Jul 16, finish related history labs, lecs, recs.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
 ## SDF
+From Jul 17 to Aug 9, my efficiency is low.
 - From Jul 16 to Jul 18, read ps00 prerequisite contents.
   to Jul 21, finish ps00.
   to Aug 4, finish chapter 2.

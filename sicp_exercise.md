@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~38 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~40 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1179,14 +1179,16 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki with the *correct detailed* description about the property the but the repo doesn't.
 - [ ] 39
   - based on the above "property:"
-    `fold-left` is more straightforward: `(cons x y)`
+    `fold-left` is more straightforward: `(cons x y)` (wrong order)
     `fold-right`: `(append y x)`
   - wiki
     - the above should use `(list x)`.
     - Liskov
       `(list x)` as each new `knil` does same as `reverse` (See the above "property:").
-- [ ] 40
-  - 
+- [x] 40
+  - shouldn't it just be `(flatmap ...)`?
+- [ ] 41
+  - generate all triples and then filter.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

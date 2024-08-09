@@ -1,5 +1,3 @@
-Please deactivate this account since I won't use it anymore. If it is finished, please send email to qppq-czg@tutanota.com. Thanks in advance.
-
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -74,6 +72,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 - > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
+- > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1260,7 +1259,10 @@ The key is "procedures plus *conditions*".
   more appropriately: tests are done first to filter then we do "the accumulation".
   - > mingling it with the map, the filter, and the accumulation
   i.e. `(square tree)`, `(odd? tree)`, `+ ...`.
-- 
+- > for each pair (i, j) that passes through the filter, produce the triple (i, j, i + j).
+  IMHO it is ok to be still pair.
+- > We’re representing a pair here as a list of two elements rather than as a Lisp pair.
+  Since this is more convenient for `accumulate`, etc.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
