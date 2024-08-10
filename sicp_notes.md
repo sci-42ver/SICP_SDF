@@ -12,6 +12,8 @@ review history comments.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
+  - [When to use quote in plural](https://english.stackexchange.com/a/36048)
+    > The marking as plural of written items that are *not words established in English orthography*
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.

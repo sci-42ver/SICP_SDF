@@ -36,5 +36,6 @@
 
 ;; not use MIT scheme remove
 (define (remove item sequence)
-  (filter (lambda (x) (not (= x item)))
+  ;; not use =.
+  (filter (lambda (x) (not (equal? x item)))
           sequence))
