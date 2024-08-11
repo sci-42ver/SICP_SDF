@@ -60,6 +60,8 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - ~~> We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces for *combining filters and accumulators* to build even more powerful abstrac-tions.~~
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
   i.e. func in data structures
+  See
+  > Section 2.1.3 also showed how pairs could be implemented as *procedures*. Painters are our second example of a procedural representation for data.
 - ~~> In *Section 2.2* we will see how this ability to combine pairs means that pairs can be used as general-purpose building blocks to create all sorts of complex data structures.~~
   e.g. list and then tree.
 - ~~> *Section 2.2.3* expands on this use of sequences as a framework for organizing programs~~
@@ -1265,6 +1267,17 @@ The key is "procedures plus *conditions*".
   IMHO it is ok to be still pair.
 - > We’re representing a pair here as a list of two elements rather than as a Lisp pair.
   Since this is more convenient for `accumulate`, etc.
+#### 2.2.4
+- Here `frame` defines where we are allowed to draw (see Figure 2.15).
+  And `painter` defines ~~what~~ how to draw (see `segments->painter`).
+  We should call ~~`((painter frame) segment-list)`~~ `((segments->painter segment-list) frame)` based on definitions here.
+- > new end of edge1
+  See Figure 2.15
+- > Observe how the painter data abstraction, and in particular the repre-sentation of painters as procedures, makes beside easy to implement.
+  i.e. we don't need to care about the detailed implementation (if using pure data structure, we at least needs constructor and selectors for further complexer manipulation).
+- > We could work at the lowest level to change the detailed appearance of the wave element; we could work at the middle level to change the way corner-split replicates the wave; we could work at the highest level to change how square-limit arranges the four copies of the corner.
+  So it just means using *nested* function calls.
+- 
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
