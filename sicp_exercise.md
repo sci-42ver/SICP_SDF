@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to*
-    I have read repo solution chapter 1,2.1~42 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~45 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 # racket notes
@@ -1195,7 +1195,12 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     - jpath's assumes `enumerate-interval` has O(1) time.
     - I didn't dig into https://wernerdegroot.wordpress.com/2015/08/01/sicp-exercise-2-43/ since maths is not the main point to learn for SICP.
-- 
+    - repo doesn't consider `map` count in the modified case.
+- [x] 44
+  - trivial since exercise already gives the solution.
+  - wiki I only checked jz and aQuaYi.com.
+- [ ] 45
+  - trivial based on 44. See jz's.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

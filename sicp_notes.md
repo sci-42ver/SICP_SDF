@@ -42,7 +42,7 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to Exercise 2.33 exclusive.
+- up to 2.2.4 exclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### ~~1.2~~
@@ -55,7 +55,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - ~~> Notice that we have used *block structure (Section 1.1.8) to embed* the definitions of pi-next and pi-term within pi-sum, since these procedures are unlikely to be useful for any other purpose. We will see how to *get rid of them altogether* in Section 1.3.2.~~
 ### 2
 - ~~> In Chapter 2, when we investigate how to implement rational-number arithmetic, we will need to be able to compute s in order to reduce rational numbers to lowest terms.~~
-- chapter 1 footnote 23.
+- ~~chapter 1 footnote 23.~~
   ~~> We will learn how to implement arithmetic on rational numbers in Section 2.1.1~~
 - ~~> We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces for *combining filters and accumulators* to build even more powerful abstrac-tions.~~
 - > We’ll see examples of this aer we introduce data structures in Chapter 2.
