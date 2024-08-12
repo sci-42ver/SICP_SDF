@@ -1,12 +1,13 @@
 # notice
-- I didn't prove those theorems which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
+- I *didn't prove those theorems* which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~60 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~63 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
-- Comment style I follow [this](http://community.schemewiki.org/?comment-style)
-- I always give tests but sometimes I didn't since tests actually don't ensure the correctness.
+- *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
+- I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
+- I won't dig into complexity analysis like exercise 2.64.
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
 # book lib locations
@@ -1264,7 +1265,19 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - a. IMHO they are same using [In-order](https://en.wikipedia.org/wiki/Tree_traversal#In-order,_LNR).
   - b. still same since call right first -> entry -> left.
     - See wiki meteorgan's.
-- [ ] 
+  - repo doesn't consider `append` complexity.
+- [x] 64
+  - based on wishful thinking where leaves are all branches with 2 `'()` child branches with leaf got by `(this-entry (car non-left-elts)`.
+  - complexity same as `tree->list-2`.
+    - wiki
+      > both of which take constant time
+      I didn't check which solution is right but just follows the top.
+- [x] 65
+  - ~~Similar to Exercise 2.62, the former 2 cases are same.~~
+    tree -> ordered lists -(2.62 etc.)> transformed lists -> tree.
+    - same as hp's but use different transformation. (also see emj's)
+      same as repo.
+- [ ]
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
