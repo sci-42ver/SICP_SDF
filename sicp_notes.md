@@ -42,7 +42,7 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.2.4 exclusive.
+- up to 2.2.4 inclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.1 (included) by searching "chapter" and "section".
 ### ~~1.2~~
@@ -58,7 +58,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - ~~chapter 1 footnote 23.~~
   ~~> We will learn how to implement arithmetic on rational numbers in Section 2.1.1~~
 - ~~> We will return to these ideas in *Section 2.2.3* when we show how to use sequences as interfaces for *combining filters and accumulators* to build even more powerful abstrac-tions.~~
-- > We’ll see examples of this aer we introduce data structures in Chapter 2.
+- ~~> We’ll see examples of this aer we introduce data structures in Chapter 2.~~
   i.e. func in data structures
   See
   > Section 2.1.3 also showed how pairs could be implemented as *procedures*. Painters are our second example of a procedural representation for data.
@@ -77,6 +77,7 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 - > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
 - > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
+- > Section 3.3.4 describes one such language.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1322,6 +1323,10 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > You can keep maybe about 50k LOC in your head at once
   crazy (LOC: line of codes).
 - ["continue to this point"](https://docs.racket-lang.org/drracket/debugger.html#(part._.Definitions_.Window_.Actions))
+## lec08
+- > creating a new task-specific language
+  i.e. "Levels of language for robust design"
+- `(y-axis rect)` in `(rotate90 pict)` ~~seems to be wrong. (see `(make-vect 1.0 1.0)` in book `rotate90`).~~ is correct since `make-frame` calculates the relative coordinates based on origin.
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
