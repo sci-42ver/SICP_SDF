@@ -8,6 +8,7 @@
 Review history comments:
 
 >>>
+Review of the solution at the top:
 review history comments.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
@@ -1282,7 +1283,11 @@ The key is "procedures plus *conditions*".
   i.e. we don't need to care about the detailed implementation (if using pure data structure, we at least needs constructor and selectors for further complexer manipulation).
 - > We could work at the lowest level to change the detailed appearance of the wave element; we could work at the middle level to change the way corner-split replicates the wave; we could work at the highest level to change how square-limit arranges the four copies of the corner.
   So it just means using *nested* function calls.
-- 
+### 2.3
+This is more appropriate to be put in one data structure course especially for 2.3.3.
+- > as a way of isolating the *abstraction* of a “binary tree” from the particular way we might wish to *represent* such a tree in terms of list structure.
+  See
+  > isolate how a compound data object is *used* from the details of how it is *constructed* from more primitive data objects.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.

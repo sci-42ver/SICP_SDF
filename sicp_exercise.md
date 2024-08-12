@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~56 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~60 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give tests but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1227,7 +1227,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     "in terms of beside and suitable rotation operations": `(rotate90 (beside painter1 painter2))`
   - wiki
     we needs `(rotate270 painter1)`, etc.
-- [ ] 52
+- [x] 52
   - I skipped a. since it is just adding some segments although the values depends on how we view "smile".
   - b. `(beside up up)` -> `up`.
   - c. `(square-of-four flip-horiz identity rotate180 flip-vert)` -> `(square-of-four identity flip-horiz flip-vert rotate180)`
@@ -1236,14 +1236,35 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - trivial
 - [ ] 54
   - base case is `'()` and symbols.
-  - wiki `'()` is just one special symbol.
+  - wiki `'()` is just one special symbol, so we can *simplify* the above.
 - [x] 55
   - trivial
-- [ ] 56 See codes.
+- [ ] 56 See codes "lacks".
 - [ ] 57
-  - `(define (augend s) (list '+ (caddr s)))` (lacks `singleton?`. see wiki)
+  - `(define (augend s) (list '+ (caddr s)))` (*lacks* `singleton?`. see wiki)
     "products" is similar.
-- [ ] 58
+- [ ] 58 See codes "The above is wrong".
+- [x] 59
+  - just mimicking `intersection-set`.
+- [x] 60
+  - `element-of-set?` and `intersection-set` same
+    `adjoin-set` just `cons`
+    `union-set` just `append`
+  - for efficiency where we use the latter 2 much more frequently.
+    - See partj's.
+- [ ] 61
+  - trivial since it is just constant complexity plus `element-of-set?` complexity.
+    - See wiki 
+      the above is wrong since we needs to keep the increasing order.
+- [ ] 62
+  - `(or (null? set1) (null? set2))` changed to the similar forms in exercise 59
+    when `(= x1 x2)` is false, `(cons x1 (cons x2 (intersection-set (cdr set1) (cdr set2))))`
+  - See wiki shyam's we needs to ensure the order afterwards.
+- [ ] 63
+  - a. IMHO they are same using [In-order](https://en.wikipedia.org/wiki/Tree_traversal#In-order,_LNR).
+  - b. still same since call right first -> entry -> left.
+    - See wiki meteorgan's.
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

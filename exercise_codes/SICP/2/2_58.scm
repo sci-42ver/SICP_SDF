@@ -2,6 +2,8 @@
 ;; a
 ;; input: '(x + (3 * (x + (y + 2))))
 ;; for simplification, here I assume "parenthesized" is implied and we drop parentheses, so we just 
+
+;; The following is same as AA's.
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
