@@ -3,15 +3,21 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~52 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~56 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - Comment style I follow [this](http://community.schemewiki.org/?comment-style)
+- I always give tests but sometimes I didn't since tests actually don't ensure the correctness.
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
 # book lib locations
 - `reverse`: Exercise 2.18
 - `map`: Mapping over lists.
 - `accumulate` is [almost same as ~~`reduce`~~ `fold-right`](http://community.schemewiki.org/?sicp-ex-2.33)
+# scheme func description
+- `error`
+  - > is can be accomplished using error, which takes as arguments a number of items that are printed as error messages.
+    [i.e.](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Condition-Signalling.html#index-error-2)
+    > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the irritants field containing the arguments.
 # exercises
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
@@ -1226,8 +1232,18 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - b. `(beside up up)` -> `up`.
   - c. `(square-of-four flip-horiz identity rotate180 flip-vert)` -> `(square-of-four identity flip-horiz flip-vert rotate180)`
     - wiki uses one different modification but both are fine here since we only need "in a different paern".
-- [ ] 53
-  - 
+- [x] 53
+  - trivial
+- [ ] 54
+  - base case is `'()` and symbols.
+  - wiki `'()` is just one special symbol.
+- [x] 55
+  - trivial
+- [ ] 56 See codes.
+- [ ] 57
+  - `(define (augend s) (list '+ (caddr s)))` (lacks `singleton?`. see wiki)
+    "products" is similar.
+- [ ] 58
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

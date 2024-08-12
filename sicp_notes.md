@@ -44,7 +44,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
 ## em tracking when reading the book (Read before doing the related exercises)
 - up to 2.2.4 inclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.1 (included) by searching "chapter" and "section".
+tracked up to section 2.2 (included) by searching "chapter" and "section".
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~
@@ -78,12 +78,16 @@ tracked up to section 2.1 (included) by searching "chapter" and "section".
 - > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
 - > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
 - > Section 3.3.4 describes one such language.
+- >  Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
 - > We will return to this issue in section 4.1.6, after we learn more about evaluation.
 - > *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.
+- > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
+- >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works.
+  > is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -1323,7 +1327,7 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > You can keep maybe about 50k LOC in your head at once
   crazy (LOC: line of codes).
 - ["continue to this point"](https://docs.racket-lang.org/drracket/debugger.html#(part._.Definitions_.Window_.Actions))
-## lec08
+## lec08 (no corresponding rec)
 - > creating a new task-specific language
   i.e. "Levels of language for robust design"
 - `(y-axis rect)` in `(rotate90 pict)` ~~seems to be wrong. (see `(make-vect 1.0 1.0)` in book `rotate90`).~~ is correct since `make-frame` calculates the relative coordinates based on origin.
