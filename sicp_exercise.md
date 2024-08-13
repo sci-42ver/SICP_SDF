@@ -1,9 +1,9 @@
 # notice
 - I *didn't prove those theorems* which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I mainly follow the wiki.
-  Then I read this repo codes.
+  Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~71 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~72 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -16,6 +16,8 @@ sci-42ver/SICP_SDF
 - `reverse`: Exercise 2.18
 - `map`: Mapping over lists.
 - `accumulate` is [almost same as ~~`reduce`~~ `fold-right`](http://community.schemewiki.org/?sicp-ex-2.33)
+- `append`: p139
+- `memq`: p195
 # scheme func description
 - `error`
   - > is can be accomplished using error, which takes as arguments a number of items that are printed as error messages.
@@ -1289,12 +1291,20 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 71
   - trivial by duplicating
     ```
-    / \
-      / \
+        /   \
+    2^{n-1} ...
+            / \
+        2^{n-2}   
       ...
     ```
     1,n-1
 - [ ] 72
+  - $O(tree-depth)$ for `encode-symbol` due to ~~`append`~~
+    so $O(n)$ for "least frequent" and $O(1)$ for "the most frequent" for 2.71.
+  - see wiki jirf's "searching for the symbols in left-branch" and my comments based on repo.
+- [ ] 
+
+
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
