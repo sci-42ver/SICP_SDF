@@ -7,6 +7,7 @@
 <<<LisScheSic
 Review history comments:
 
+My implementation shares the same basic ideas with x3v's. This is better than the  solution at the top location since it will throw error earlier.
 >>>
 Review of the solution at the top:
 review history comments.
@@ -67,6 +68,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
   e.g. list and then tree.
 - ~~> *Section 2.2.3* expands on this use of sequences as a framework for organizing programs~~
   i.e. transform sequences to sequences.
+- > ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -1288,6 +1290,12 @@ This is more appropriate to be put in one data structure course especially for 2
 - > as a way of isolating the *abstraction* of a “binary tree” from the particular way we might wish to *represent* such a tree in terms of list structure.
   See
   > isolate how a compound data object is *used* from the details of how it is *constructed* from more primitive data objects.
+- Huffman trees
+  - See DMIA 11.2.4 Prefix Codes although it doesn't say in detail.
+- > We will not prove this optimality of Huffman codes here
+  See DMIA 11.2 Exercise 32 for proof.
+- > and the element being added to the set is never already in it.
+  This is already ensured in Exercise 2.61.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.

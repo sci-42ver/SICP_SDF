@@ -3,11 +3,13 @@
 - I mainly follow the wiki.
   Then I read this repo codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~65 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~71 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
 - I won't dig into complexity analysis like exercise 2.64.
+# misc clipboard
+sci-42ver/SICP_SDF
 # racket notes
 - [cond](https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29) uses `[]`
 # book lib locations
@@ -1257,6 +1259,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - trivial since it is just constant complexity plus `element-of-set?` complexity.
     - See wiki 
       the above is wrong since we needs to keep the increasing order.
+    - Also see book "and the element being added to the set is never already in it."
 - [ ] 62
   - `(or (null? set1) (null? set2))` changed to the similar forms in exercise 59
     when `(= x1 x2)` is false, `(cons x1 (cons x2 (intersection-set (cdr set1) (cdr set2))))`
@@ -1278,6 +1281,20 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - same as hp's but use different transformation. (also see emj's)
       same as repo.
 - [x] 66
+- [x] 67 trivial
+- [x] 68 See codes
+- [ ] 69 See codes
+- [ ] 70 trivial by `(encode '(Get a job) (generate-huffman-tree '((A 2) (GET 2) ...)))`
+  - $\log 8*8$ using "fixed-length" "for the eight-symbol *alphabet*".
+- [x] 71
+  - trivial by duplicating
+    ```
+    / \
+      / \
+      ...
+    ```
+    1,n-1
+- [ ] 72
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
