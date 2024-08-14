@@ -32,11 +32,11 @@
         (tr (make-vect 1 1))
         (br (make-vect 1 0)))
     (list 
-      (make-segment bl tl)
-      (make-segment tl tr)
-      (make-segment tr br)
-      (make-segment br bl)
-      )))
+        (make-segment bl tl)
+        (make-segment tl tr)
+        (make-segment tr br)
+        (make-segment br bl)
+        )))
 
 (define outline-painter (segments->painter segment-list))
 

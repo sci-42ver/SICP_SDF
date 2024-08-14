@@ -20,7 +20,7 @@
   (if (number? mobile)
     mobile
     (+ (total-weight (branch-structure (left-branch mobile))) 
-      (total-weight (branch-structure (right-branch mobile))))))
+       (total-weight (branch-structure (right-branch mobile))))))
 
 ;; Test from wiki
 (define a (make-mobile (make-branch 2 3) (make-branch 2 3))) 
@@ -33,7 +33,7 @@
   (if (number? mobile)
     #t
     (let ((lbr (left-branch mobile))
-        (rbr (right-branch mobile)))
+          (rbr (right-branch mobile)))
       (and
         (= (torque rbr) (torque lbr))
         (mobile-balanced? (branch-structure lbr))

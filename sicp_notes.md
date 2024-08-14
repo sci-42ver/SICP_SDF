@@ -1360,7 +1360,6 @@ not use
   i.e. give one interface to modify data.
 - > Isolating changes to improve performance
   Here `make-sum` can be simplified at least to the book one which contains the former 4 cases of `simplify-sum`.
-- > 
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
@@ -1403,6 +1402,12 @@ not use
   6. `(fold-right (lambda (a b) (if (= (length b) 1) b)) 0 x)`
   7. sol `append` has $\Theta(n)$, so totally $\Theta(n^2)$.
   8. See sol.
+### 8
+- > like eq? except it “works on” numbers as well.
+  I won't dig into details in [R7RS](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_314)
+- [x] 4 trivial by mimicking
+- [ ] 5
+- [ ] 6 see ans
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

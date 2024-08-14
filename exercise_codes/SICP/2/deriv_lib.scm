@@ -12,7 +12,7 @@
            (make-product (deriv (multiplier exp) var)
                          (multiplicand exp))))
         (else
-         (error "unknown expression type -- DERIV" exp))))
+          (error "unknown expression type -- DERIV" exp))))
 
 (define (variable? x) (symbol? x))
 

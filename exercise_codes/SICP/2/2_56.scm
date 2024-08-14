@@ -12,15 +12,15 @@
            (make-product (deriv (multiplier exp) var)
                          (multiplicand exp))))
         ((exponentiation? exp) ; See wiki. This lacks checking of `(=number? (deriv (exponent expr) var) 0)` which allows exp to be number or variable different from var.
-          (let ((exponentiation-base (base exp))
-                (exponentiation-exp (exponent exp)))
-            (make-product 
-              exponentiation-exp 
-              (make-product 
-                (make-exponentiation base (- exponent 1))
-                (deriv base var)))))
+         (let ((exponentiation-base (base exp))
+               (exponentiation-exp (exponent exp)))
+           (make-product 
+             exponentiation-exp 
+             (make-product 
+               (make-exponentiation base (- exponent 1))
+               (deriv base var)))))
         (else
-         (error "unknown expression type -- DERIV" exp))))
+          (error "unknown expression type -- DERIV" exp))))
 
 ;; just mimicking
 (define (exponentiation? exp)
@@ -29,8 +29,8 @@
 (define (make-exponentiation base exponent)
   ;; See wiki we can add `((=number? base 1) 1)` and otakutyrant's.
   (cond ((= exponent 0) 1)
-    ((= exponent 1) base)
-    (else (list '** base exponent))))
+        ((= exponent 1) base)
+        (else (list '** base exponent))))
 
 (define (base exponentiation)
   (cadr exponentiation))

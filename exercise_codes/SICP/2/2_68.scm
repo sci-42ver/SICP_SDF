@@ -3,9 +3,9 @@
 
 (define (encode message tree)
   (if (null? message)
-      '()
-      (append (encode-symbol (car message) tree)
-              (encode (cdr message) tree))))
+    '()
+    (append (encode-symbol (car message) tree)
+            (encode (cdr message) tree))))
 
 ;; almost same as x3v's.
 (define (encode-symbol symbol tree)

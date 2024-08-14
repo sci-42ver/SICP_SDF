@@ -58,11 +58,11 @@
   ;   (lst->elem prefix-lst))
   (lst->elem 
     (let loop ((res '())
-                (rest-expr expr))
+               (rest-expr expr))
       (if (eq? symbol (car expr))
         res
         (append res (list (car expr))))))
-)
+  )
 ; (trace prefix)
 ; (trace addend)
 
@@ -93,8 +93,8 @@
 (define (multiplicand expr) 
   (let ((result (cdr (memq '* expr)))) 
     (if (= (length result) 1) 
-        (car result) 
-        result))) 
+      (car result) 
+      result))) 
 
 (trace deriv)
 (define (test)
@@ -124,8 +124,8 @@
                 ;; base case: the rightmost number is passed upwards and then the adjacent operator is passed upwards by `a`.
                 ;; Then we just 
                 (if (operator? b) 
-                    (min-precedence a b) 
-                    a)) 
+                  (min-precedence a b) 
+                  a)) 
               'maxop 
               expr))
 
@@ -155,11 +155,11 @@
 (define (precedence op) 
   (define (loop op-pair) 
     (cond ((null? op-pair) 
-          (error "Operator not defined -- PRECEDENCE:" op)) 
+           (error "Operator not defined -- PRECEDENCE:" op)) 
           ((eq? op (caar op-pair)) 
-          (cdar op-pair)) 
+           (cdar op-pair)) 
           (else 
-          (loop (cdr op-pair))))) 
+            (loop (cdr op-pair))))) 
   (loop *precedence-table*))
 
 (define (singleton? lst)
@@ -168,45 +168,45 @@
 (define (augend expr) 
   (let ((a (cdr (memq '+ expr)))) 
     (if (singleton? a) 
-        (car a) 
-        a))) 
+      (car a) 
+      a))) 
 
 (define (prefix sym list) 
   (if (or (null? list) (eq? sym (car list))) 
-      '() 
-      (cons (car list) (prefix sym (cdr list))))) 
+    '() 
+    (cons (car list) (prefix sym (cdr list))))) 
 
 (define (addend expr) 
   (let ((a (prefix '+ expr))) 
     (if (singleton? a) 
-        (car a) 
-        a)))
+      (car a) 
+      a)))
 
 (define (make-sum a1 a2) 
   (cond ((=number? a1 0) a2) 
         ((=number? a2 0) a1) 
         ((and (number? a1) (number? a2)) 
-        (+ a1 a2)) 
+         (+ a1 a2)) 
         (else (list a1 '+ a2)))) 
 
 (define (multiplier expr) 
   (let ((m (prefix '* expr))) 
     (if (singleton? m) 
-        (car m) 
-        m))) 
+      (car m) 
+      m))) 
 
 (define (multiplicand expr) 
   (let ((m (cdr (memq '* expr)))) 
     (if (singleton? m) 
-        (car m) 
-        m))) 
+      (car m) 
+      m))) 
 
 (define (make-product m1 m2) 
   (cond ((=number? m1 1)  m2) 
         ((=number? m2 1)  m1) 
         ((or (=number? m1 0) (=number? m2 0))  0) 
         ((and (number? m1) (number? m2)) 
-        (* m1 m2)) 
+         (* m1 m2)) 
         (else (list m1 '* m2))))
 
 (deriv '(x + 3 * (x + y + 2)) 'x)

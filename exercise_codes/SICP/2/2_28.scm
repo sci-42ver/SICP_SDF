@@ -7,11 +7,11 @@
   (if (pair? lst)
     (let* ((first_elem (car lst))
            (to_append_first_elem
-            ;; first_elem may be nil hinted by Nico de Vreeze
-            ; (if (pair? first_elem)
-            (if (list? first_elem)
-              (fringe first_elem)
-              (list first_elem))))
+             ;; first_elem may be nil hinted by Nico de Vreeze
+             ; (if (pair? first_elem)
+             (if (list? first_elem)
+               (fringe first_elem)
+               (list first_elem))))
       (append to_append_first_elem (fringe (cdr lst))))
     lst))
 
@@ -36,14 +36,14 @@
 (define (fringe x) 
   (define (fringe-recur x result) 
     (cond ((null? x) 
-          result) 
+           result) 
           ;; fails for `(fringe (list 1 (list 2 3)))`
           ; ((not (pair?  (car x)))
           ((not (pair? x))
            (list x))
           (else 
-          ;; append from left to right.
-          (fringe-recur (cdr x) (append result (fringe-recur (car x) (list ))))) )) 
+            ;; append from left to right.
+            (fringe-recur (cdr x) (append result (fringe-recur (car x) (list ))))) )) 
   (fringe-recur x (list )))
 (fringe x)
 (fringe (list 1 (list 2 3)))
@@ -64,26 +64,26 @@
 (define (fringe x) 
   (define (collect stack acc) 
     (if (null? stack) 
-        acc 
-        (let ((top (car stack))) 
-          (cond 
-            ((null? top) 
-              ; (newline)
-              ; (display stack)
-              (collect (cdr stack) acc))
-            ((not (pair? top)) (collect (cdr stack) (cons top acc))) 
-            (else 
-              (if (null? (car top))
-                ; (begin
-                ;   (newline)
-                ;   (display "weird top:")
-                ;   (display top)
-                ;   )
-                (display ""))
-              (collect (cons (car top) 
-                          ;; here `(cdr top)` may be nil.
-                          (cons (cdr top) (cdr stack))) 
-                          acc))))))
+      acc 
+      (let ((top (car stack))) 
+        (cond 
+          ((null? top) 
+           ; (newline)
+           ; (display stack)
+           (collect (cdr stack) acc))
+          ((not (pair? top)) (collect (cdr stack) (cons top acc))) 
+          (else 
+            (if (null? (car top))
+              ; (begin
+              ;   (newline)
+              ;   (display "weird top:")
+              ;   (display top)
+              ;   )
+              (display ""))
+            (collect (cons (car top) 
+                           ;; here `(cdr top)` may be nil.
+                           (cons (cdr top) (cdr stack))) 
+                     acc))))))
   ; (trace collect)
   (reverse (collect (list x) nil)))
 (test)
@@ -92,30 +92,30 @@
 (define (fringe lst) 
   ; iter succesively reduces the inputted list by cdr ing it 
   (define (iter lst f is-outer-list?)  
-  ; f keeps record of the leaves using cons and succesive application of itself 
-  ; list of leaves is formed by applying f to nil when finally original list has  
-  ; been cdr ed into empty. 
-  ; is-outer-list? ensures nil is applied only once to make final list, is #t for  
-  ; outermost list and #f for any sub-lists found within the original list  
+    ; f keeps record of the leaves using cons and succesive application of itself 
+    ; list of leaves is formed by applying f to nil when finally original list has  
+    ; been cdr ed into empty. 
+    ; is-outer-list? ensures nil is applied only once to make final list, is #t for  
+    ; outermost list and #f for any sub-lists found within the original list  
     (cond ((null? lst) (if is-outer-list? 
-                          (f lst) 
-                          f)) 
+                         (f lst) 
+                         f)) 
           ; edge case
           ((null? (car lst))
-            (iter (cdr lst)  
-                  f
-                  is-outer-list?))
+           (iter (cdr lst)  
+                 f
+                 is-outer-list?))
           ; ((not (pair? lst)) lst) 
           ; if first element is a leaf, add it to the function
           ((not (pair? (car lst)))
-            (iter (cdr lst)  
-                  (lambda (x) (f (cons (car lst) x)))  
-                  is-outer-list?)) 
+           (iter (cdr lst)  
+                 (lambda (x) (f (cons (car lst) x)))  
+                 is-outer-list?)) 
           ; otherwise add all the leaves of first element to the function 
           (else (iter (cdr lst)  
                       (iter (car lst) f #f)  
                       is-outer-list?)) 
-  )) 
+          )) 
   (iter lst (lambda (x) x) #t))
 (test)
 ; (assert (equal? fringed-test-lst (fringe test-lst)))
