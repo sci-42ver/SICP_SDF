@@ -20,6 +20,8 @@ review history comments.
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.
+# Some abbr's used by CS 61A and MIT 6.001
+- abstract data type -> ADT
 # What we should achieve
 - > ey should know *what not to read*, and what they need not understand at any moment.
 - > different approaches to dealing with time in *computational models*: objects with state, concurrent programming, functional programming, lazy evaluation, and nondeterministic programming.
@@ -719,6 +721,44 @@ It is really hard to understand these codes since we don't know the detailed imp
                                     files))))
 ```
 - Here `reducer` manipulates with "value" in kv pairs.
+## Week 5
+- > Notice that read and print are not functional programming; read returns a *different* value each time it’s called, and print *changes something* in the world instead of just returning a value.
+  See https://en.wikipedia.org/wiki/Pure_function and https://stackoverflow.com/a/903126/21294350.
+- > In functional programming, it doesn’t make sense to have more than one expression in a procedure body, since a function can *return only one value*.
+  This is implied in Scheme. [Advantages](https://stackoverflow.com/a/36724/21294350).
+- > I’ve said that the calculator language doesn’t have variables, and yet in calc-eval we’re using a variable named exp.
+  i.e. "the calculator language" -> `(calc)`.
+  - > get confused about whether some expression you’re looking at is *part of the interpreter, and therefore an STk expression*, or data given to the interpreter
+    i.e. part of `calc.scm` here.
+- > But in calculator language, the first sub-“expression” is always the name of the function, and there are only four possibilities: +, -, *, and /.
+  i.e. we can't redefine `+`, etc.
+- > I put “expression” in quotes because these symbols are not expressions in calculator language.
+  i.e. it doesn't know the value of `+` which can be verified by inputting `+` and have errors thrown.
+- > By contrast, apply works entirely in the world of values;
+  since all are evaled.
+- > Mapping over trees
+  This is different from the book "Mapping over trees" since they are using different basic data types (See "Figure 2.6").
+  > SICP does not define a Tree abstract data type; they use the term “tree” to describe what I’m calling a deep list
+- > Since a forest is just a list, we can use map (not treemap!) to generate the new children.
+  i.e. `(map treemap forest)`.
+- > Mutual recursion is what makes it possible to explore the *two-dimensional* tree data structure fully
+  i.e. children of tree are one forest which consists of many trees.
+- > One advantage of this approach is that it works even for improper lists:
+  since `(list? lol)` fails for pair.
+- two-dimensional meaning
+  > This is what makes the difference between a sequential, one-dimensional process and the two-dimensional process used for deep lists and for the Tree abstraction.
+- **Notice**
+  > The program is a little more complicated because the order in which we want to visit nodes *isn’t the order* in which they’re connected together.
+  > To solve this, we use an *extra* data structure, called a queue
+- > For binary trees, within the general category of depth-first traversals, there are three possible variants:
+  already learnt in DMIA. [See](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order,_NLR)
+- TODO
+  - I didn't find `scheme1.scm` in https://people.eecs.berkeley.edu/~bh/61a-pages/Lectures/ 2.1, 2.2, 2.4.
+- > It illustrates a big idea: universality.
+  [See](https://introtcs.org/public/lec_08_uncomputability.html) or DMIA universal Turing machine.
+  > One of the most significant results we showed for Boolean circuits (or equivalently, straight-line programs) is the notion of universality: there is a single circuit that can evaluate all other circuits
+- [tail recursion elimination (2nd paragraph and `function_tail_optimized`)](https://stackoverflow.com/a/1240613/21294350)
+- 
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
