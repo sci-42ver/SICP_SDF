@@ -1,7 +1,5 @@
 ;; Run `scheme --eval '(load "calc.scm")' "(calc)"`.
-(define accumulate fold)
-(define flush flush-output-port)
-(define (print x) (display x) (newline))
+(load "../compatibility-lib.scm")
 ;; Scheme calculator -- evaluate simple expressions
 
 ; The read-eval-print loop:
