@@ -1,0 +1,6 @@
+(define x 20)
+(+ x 3)                
+'(+ x 3)               
+(list (quote +) x '3)  
+(list '+ x 3)          
+(list + x 3)           

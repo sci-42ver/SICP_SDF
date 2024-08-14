@@ -1,3 +1,4 @@
+Currently we can see https://en.wikipedia.org/wiki/First-class_function#cite_ref-1 which uses SICP as the reference.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -1340,10 +1341,26 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > You can keep maybe about 50k LOC in your head at once
   crazy (LOC: line of codes).
 - ["continue to this point"](https://docs.racket-lang.org/drracket/debugger.html#(part._.Definitions_.Window_.Actions))
-## lec08 (no corresponding rec)
+### lec08 (no corresponding rec)
 - > creating a new task-specific language
   i.e. "Levels of language for robust design"
 - `(y-axis rect)` in `(rotate90 pict)` ~~seems to be wrong. (see `(make-vect 1.0 1.0)` in book `rotate90`).~~ is correct since `make-frame` calculates the relative coordinates based on origin.
+### lec09
+Not said in SICP book ("A better implementation" same as the book)
+> The direct implementation works, but...
+not use
+> nested if expressions
+- > The object pi, passed as the first argument to integer->flonum, is not the correct type.
+  it seems that the interpreter manipulates data from right to left.
+- > Clues about “guts” of Scheme
+  i.e. details
+- > We say that the new binding for y “shadows” the previous one
+  [See](https://docs.racket-lang.org/rebellion/Association_Lists.html#:~:text=Duplicate%20keys%20are%20allowed%2C%20and,are%20in%20the%20same%20order.)
+- > Do not allow rest of program to use list operations
+  i.e. give one interface to modify data.
+- > Isolating changes to improve performance
+  Here `make-sum` can be simplified at least to the book one which contains the former 4 cases of `simplify-sum`.
+- > 
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
