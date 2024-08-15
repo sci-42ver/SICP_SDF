@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~72 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~74 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1285,8 +1285,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 66
 - [x] 67 trivial
 - [x] 68 See codes
-- [ ] 69 See codes
-- [ ] 70 trivial by `(encode '(Get a job) (generate-huffman-tree '((A 2) (GET 2) ...)))`
+- [ ] 69 See codes "more general"
+- [x] 70 trivial by `(encode '(Get a job) (generate-huffman-tree '((A 2) (GET 2) ...)))`
   - $\log 8*8$ using "fixed-length" "for the eight-symbol *alphabet*".
 - [x] 71
   - trivial by duplicating
@@ -1298,12 +1298,20 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       ...
     ```
     1,n-1
-- [ ] 72
+- [x] 72
   - $O(tree-depth)$ for `encode-symbol` due to ~~`append`~~
     so $O(n)$ for "least frequent" and $O(1)$ for "the most frequent" for 2.71.
   - see wiki jirf's "searching for the symbols in left-branch" and my comments based on repo.
-- [ ] 
-
+- [x] 73
+  - a.
+    `((get 'deriv (operator exp)) (operands exp) var)`
+    make-??? -> get ...
+    addend, etc. -> operands
+    - since no related operators for "number? and variable?".
+- [x] 74
+  - See repo for one complete implementation.
+  - IMHO this exercise is open, so any reasonable solutions are accepted.
+- [ ] 75
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html

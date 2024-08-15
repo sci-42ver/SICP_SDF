@@ -77,7 +77,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 - > ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.
 - > In Section 2.5 we will show how to use type tags and data-directed style to develop a generic arithmetic package.
   > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs symbolic algebra.
-- > Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.
+- ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -91,6 +91,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 - > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
 - > Section 3.3.4 describes one such language.
 - >  Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).
+- > In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1360,6 +1361,11 @@ This is more appropriate to be put in one data structure course especially for 2
 ### 2.4
 - [principle of least commitment](https://pages.cs.wisc.edu/~dyer/cs540/notes/pop.html#:~:text=The%20principle%20of%20least%20commitment,later%2C%20hence%20avoiding%20wasted%20work.)
   >  never making a choice *unless required* to do so
+- >  these definitions are now internal to different procedures (see Section 1.1.8),
+  See "Local names"
+- `(get op type-tags)` implies using `list` for `type-tags`.
+  ~~so what if type is `'polar`?~~
+  so we need to separately manipulate cases of `'polar` by `(get 'make-from-real-imag 'rectangular)`, etc.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
