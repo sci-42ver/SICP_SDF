@@ -20,6 +20,9 @@ review history comments.
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.
+# Scheme func notices
+- `atan`
+  > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).
 # Some abbr's used by CS 61A and MIT 6.001
 - abstract data type -> ADT
 # What we should achieve
@@ -72,6 +75,9 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 - ~~> *Section 2.2.3* expands on this use of sequences as a framework for organizing programs~~
   i.e. transform sequences to sequences.
 - > ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.
+- > In Section 2.5 we will show how to use type tags and data-directed style to develop a generic arithmetic package.
+  > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs symbolic algebra.
+- > Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -1351,6 +1357,9 @@ This is more appropriate to be put in one data structure course especially for 2
   See DMIA 11.2 Exercise 32 for proof.
 - > and the element being added to the set is never already in it.
   This is already ensured in Exercise 2.61.
+### 2.4
+- [principle of least commitment](https://pages.cs.wisc.edu/~dyer/cs540/notes/pop.html#:~:text=The%20principle%20of%20least%20commitment,later%2C%20hence%20avoiding%20wasted%20work.)
+  >  never making a choice *unless required* to do so
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
