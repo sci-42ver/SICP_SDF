@@ -681,7 +681,21 @@ or more specifically they are easy after having done exercises.
 ## Week 4
 https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week5
 - [x] 5 trivial which has been stated in the book `add-rat`.
-- [x] 6,8 See `sicp_exercise.md`. 
+- [x] 6,8 See `sicp_exercise.md`.
+## Week 5
+- 2.27 same as wiki
+  > A solution that uses reverse to do the work:
+  and the other one solution is almost same as tf3's.
+  - > But the deep-reversal of the sublists is an inherently recursive problem
+    i.e. we need to keep recursion until we get the base case.
+  - time and space depends one how the tree is constructed
+    IMHO
+    space is the worst when totally unbalanced binary tree (see exercise 2.71)
+    TODO time complexity is skipped.
+- [ ] 4
+  - > what test cases were most and least helpful in revealing the definitions.
+    not same and same.
+  - I skipped trying different implementations and guess ... since that is not closely related with programming.
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
