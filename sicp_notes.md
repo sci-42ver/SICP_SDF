@@ -81,8 +81,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
-- 
-  > We will discuss this more fully in Chapter 3 and *Chapter 4* when we examine the implementation of an interpreter in detail.
+- > We will discuss this more fully in Chapter 3 and *Chapter 4* when we examine the implementation of an interpreter in detail.
   > we will investigate some of its implications in Chapter 3 and *Chapter 4*
 - > In particular, when we address in Chapter 3 the use of procedures with “mutable data,”
 - > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
@@ -92,6 +91,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 - > Section 3.3.4 describes one such language.
 - >  Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).
 - > In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.
+- > In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.

@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~74 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~76 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1311,7 +1311,31 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 74
   - See repo for one complete implementation.
   - IMHO this exercise is open, so any reasonable solutions are accepted.
-- [ ] 75
+- [x] 75 trivial.
+- [ ] 76
+  - generic opera-tions with explicit dispatch
+    new type: new constructor, selector with new `cond` case, new predicates like `rectangular?`.
+    new op: probably new selector, just writing this proc is enough.
+  - data-directed style
+    new type: all in one `install-foo-package` with no predicate.
+    new op: add one func in all corresponding `install-foo-package`
+  - Message passing
+    new type: one new `make-from-foo-bar`
+    new op: add one `cond` case for each `make-from-foo-bar`.
+  - > new types must oen be added
+    data-directed style / Message passing
+    > new operations must oen be added
+    generic opera-tions with explicit dispatch
+    - same as jirf's.
+  - wiki
+    - > by adding new entries in the dispatch table
+      i.e. `put`, etc.
+    - jirf
+      - > Might have to jump around to make sure you include each data type in the dispatch table.
+        i.e. ensure we have `(rectangular? z)` etc. all included.
+      - notice
+        > Creating a new data type requires *only* the creation of the constructor. 
+- [ ] 
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
