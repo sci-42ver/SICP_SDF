@@ -57,16 +57,22 @@
 
 (define (eval-1 exp)
   (cond ((constant? exp) exp)
+        ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Operations.html#index-eval
+        ;; TODO
+        ; ((symbol? exp) (eval exp (the-environment)))	; use underlying Scheme's EVAL
         ((symbol? exp) (eval exp))	; use underlying Scheme's EVAL
         ((quote-exp? exp) (cadr exp))
         ((if-exp? exp)
          (if (eval-1 (cadr exp))
            (eval-1 (caddr exp))
            (eval-1 (cadddr exp))))
-        ((lambda-exp? exp) exp)
+        ((lambda-exp? exp) exp) ; TODO "This won't be true"
+        ;; TODO why "there is no DEFINE"?
         ((define-exp? exp)
+        ;  (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp)))) (the-environment)))
          (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp))))))
-        ((pair? exp) (apply-1 (eval-1 (car exp))      ; eval the operator
+        ; eval the operator
+        ((pair? exp) (apply-1 (eval-1 (car exp))
                               (map eval-1 (cdr exp))))
         (else (error "bad expr: " exp))))
 
@@ -102,7 +108,7 @@
 ;; Some trivial helper procedures:
 
 (define (constant? exp)
-  (or (number? exp) (boolean? exp) (string? exp) (procedure? exp)))
+  (or (number? exp) (boolean? exp) (string? exp) (procedure? exp))) ; notice (PROCEDURE? EXP) as the above says.
 
 (define (exp-checker type)
   (lambda (exp) (and (pair? exp) (eq? (car exp) type))))
@@ -112,6 +118,9 @@
 (define lambda-exp? (exp-checker 'lambda))
 (define define-exp? (exp-checker 'define))
 
+; (lambda (x y)
+; 	   ((lambda (x) (+ x y))
+; 	    (* x y)))
 
 ;; SUBSTITUTE substitutes actual arguments for *free* references to the
 ;; corresponding formal parameters.  For example, given the expression
@@ -166,6 +175,7 @@
 ;; case of a primitive procedure as the actual argument value; these
 ;; procedures shouldn't be quoted.
 
+;; "bound reference" just means the variable already has one value in the current env.
 (define (substitute exp params args bound)
   (cond ((constant? exp) exp)
         ((symbol? exp)
@@ -177,6 +187,7 @@
          (list 'lambda
                (cadr exp)
                (substitute (caddr exp) params args (append bound (cadr exp)))))
+        ;; `((lambda (x) (+ x y)) (* x y))` will be this case.
         (else (map (lambda (subexp) (substitute subexp params args bound))
                    exp))))
 
@@ -206,12 +217,13 @@
 
 ;; Sample evaluation, using a primitive as argument to MAP:
 
-; Scheme-1: ((lambda (f n)
-;	       ((lambda (map) (map map f n))
-;		   (lambda (map f n)
-;		     (if (null? n)
-;		         '()
-;			 (cons (f (car n)) (map map f (cdr n))) )) ))
-;	      first
-;	      '(the rain in spain))
+; Scheme-1: 
+((lambda (f n)
+   ((lambda (map) (map map f n))
+    (lambda (map f n)
+      (if (null? n)
+        '()
+        (cons (f (car n)) (map map f (cdr n))) )) ))
+ (lambda (x) (first (string->list (symbol->string x))))
+ '(the rain in spain))
 ; (t r i s)
