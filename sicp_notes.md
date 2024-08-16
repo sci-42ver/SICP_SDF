@@ -50,7 +50,7 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.4 inclusive.
+- up to 2.5.1 inclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.4 (included) by searching "chapter" and "section".
 ### ~~1.2~~
@@ -1378,6 +1378,14 @@ This is more appropriate to be put in one data structure course especially for 2
 - > Notice how the underlying procedures, originally defined in the rectangular and polar packages, are exported to the complex package
   ~~i.e. just put them in `install-complex-package`.~~ See `(get 'make-from-real-imag 'rectangular)`.
   - notice here it restrict `make-from-real-imag` to use the convenient type.
+- > we can have it search the “graph” of relations among types and automatically generate those coercion procedures that can be inferred from the ones that are supplied explicitly.
+  See SDF Exercise 2.11
+- knowledge representation
+  [see](https://en.wikipedia.org/wiki/Knowledge_representation_and_reasoning#:~:text=%22A%20knowledge%20representation%20(KR),than%20taking%20action%20in%20it.%22)
+  > determine consequences by thinking rather than acting
+- TODO
+  > we need to write only one procedure for each pair of types rather than a different procedure
+  shouldn't 2 for 2 directions?
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
