@@ -3,7 +3,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~81 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~83 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1377,7 +1377,27 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     2bdkid's just implements the book "One strategy" (same for repo).
   - IMHO here we have $n^n$ combinations for n args, so one straightforward but not good solution is to try all *available* combinations.
     TODO how to solve this elegantly not using "One strategy"?
-- [ ] 83
+- [x] 83
+  - repo is better based on coercion and with `(install-real-package)`.
+- [x] 84
+  - if as 83 repo does, raise is based on coercion. Then just change `(t1->t2 a1)` to `(raise a1)`
+    - > will not lead to problems in adding new levels to the tower.
+      just let `raise` manipulate with "new levels".
+    - all these are contained in `try-raise` which avoids keeping recursively calling `apply-generic`.
+    - > need to devise a way to test which of two types is higher in the tower.
+      repo solves this similar to Exercise 2.82. 
+  - wiki
+    - meteorgan's
+      `(equal? s-type t-type)` won't occur since `(proc (get op type-tags))` may probably already return one value.
+      `(raise-into a1 a2)` don't need 2 args since where to raise is already defined.
+      - sam's is right for the unnecessary `((equal? s-type t-type) s)`.
+    - I skipped Rptx's implementation since `level` is not necessary.
+- [ ] 85
+- [x] 86
+  - > De-scribe and implement the changes to the system needed to accommodate this.
+    all related operations like `(+ (real-part z1) (real-part z2))` needs to be generic.
+    See YZ's for the detailed list.
+- 
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
