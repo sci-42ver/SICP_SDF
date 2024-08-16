@@ -3,7 +3,7 @@
 - I mainly follow the wiki.
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~76 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~78 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -18,6 +18,7 @@ sci-42ver/SICP_SDF
 - `accumulate` is [almost same as ~~`reduce`~~ `fold-right`](http://community.schemewiki.org/?sicp-ex-2.33)
 - `append`: p139
 - `memq`: p195
+- `apply-generic`: p247
 # scheme func description
 - `error`
   - > is can be accomplished using error, which takes as arguments a number of items that are printed as error messages.
@@ -1312,7 +1313,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - See repo for one complete implementation.
   - IMHO this exercise is open, so any reasonable solutions are accepted.
 - [x] 75 trivial.
-- [ ] 76
+- [x] 76
   - generic opera-tions with explicit dispatch
     new type: new constructor, selector with new `cond` case, new predicates like `rectangular?`.
     new op: probably new selector, just writing this proc is enough.
@@ -1335,8 +1336,30 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         i.e. ensure we have `(rectangular? z)` etc. all included.
       - notice
         > Creating a new data type requires *only* the creation of the constructor. 
-- [ ] 
-
+- [ ] 77
+  - IMHO we also need `(define (magnitude x y) (apply-generic 'magnitude x y))`
+    then we first get this func from polar, then put it. Then at the outside we again get it from `(complex)`.
+    > how many times is apply-generic invoked?
+    1 (*Wrong*. See the following)
+    > What procedure is dispatched to in each case?
+    trace back from "get it from `(complex)`".
+  - See wiki jirf's for why the original fails.
+    as his second to last paragraph says, we installs `(define (magnitude z) (apply-generic 'magnitude z))` by `(put 'magnitude '(complex) magnitude)`
+    so `(apply-generic 'magnitude z)` -> `(apply proc (map contents args)` where proc is *still* `(apply-generic 'magnitude z)` -> `(apply-generic 'magnitude ('rectangular . (3 . 4)))` then call the primitive `magnitude`.
+- [ ] 78
+  - just add `number?` etc. predicates (*lacking details* like `((number? datum) 'scheme-number)`)
+  - wiki IMHO top one is fine for "simply as Scheme numbers" with `(number? contents) contents`.
+    `((number? datum) 'scheme-number)` is to make `get` work.
+- [ ] 79
+  - wiki
+    > I think it's best to define equ? in each implementation of complex:
+    unnecessary since `real-part` etc. are already generic.
+    - This is similar to 2.77 with 2 calls for `apply-generic`.
+    - > The above solution for defining equality for polar terms is incorrect.
+      This is related with maths instead of how to program.
+  - repo
+    better with one `(install-equality-package)` combining `eqn?` together and considering  comparing different types.
+- [x] 80
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

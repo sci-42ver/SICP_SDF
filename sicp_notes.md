@@ -50,9 +50,9 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.2.4 inclusive.
+- up to 2.4 inclusive.
 ## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.2 (included) by searching "chapter" and "section".
+tracked up to section 2.4 (included) by searching "chapter" and "section".
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~
@@ -77,6 +77,7 @@ tracked up to section 2.2 (included) by searching "chapter" and "section".
 - > ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.
 - > In Section 2.5 we will show how to use type tags and data-directed style to develop a generic arithmetic package.
   > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs symbolic algebra.
+- > Nevertheless, it provides a *clear illustration* of the design of a system using generic operations and a good introduction to the *more substantial systems* to be developed later in this chapter.
 - ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
@@ -1366,6 +1367,17 @@ This is more appropriate to be put in one data structure course especially for 2
 - `(get op type-tags)` implies using `list` for `type-tags`.
   ~~so what if type is `'polar`?~~
   so we need to separately manipulate cases of `'polar` by `(get 'make-from-real-imag 'rectangular)`, etc.
+- > To design such a system, we can follow the same data-abstraction strategy we followed in designing the rational-number package in Section 2.1.1
+  i.e. constructor and selector.
+  > using the “abstract data” specified by the constructors and selectors, just as we did for rational numbers in Sec-tion 2.1.1
+- > by having each operation take care of its own dispatching.
+  i.e. `cond` in `real-part`, etc.
+- > We have already seen an example of message passing in Section 2.1.3
+  See `dispatch`.
+### 2.5
+- > Notice how the underlying procedures, originally defined in the rectangular and polar packages, are exported to the complex package
+  ~~i.e. just put them in `install-complex-package`.~~ See `(get 'make-from-real-imag 'rectangular)`.
+  - notice here it restrict `make-from-real-imag` to use the convenient type.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
@@ -1494,6 +1506,8 @@ not use
 - SICP 2.16
 ## See TODO in exercise
 - 1.45
+# TODO after algorithm
+- > There are also other ways to solve this problem, most of which involve designing new data structures for which searching and insertion both can be done in (log n) steps.
 
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
