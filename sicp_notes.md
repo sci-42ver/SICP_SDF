@@ -12,6 +12,7 @@ My implementation shares the same basic ideas with x3v's. This is better than th
 >>>
 Review of the solution at the top:
 review history comments.
+Review one history comment
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -50,7 +51,7 @@ review history comments.
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
 ## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.5.1 inclusive.
+- up to 2.5.2 inclusive up to "called a poly".
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.4 (included) by searching "chapter" and "section".
 ### ~~1.2~~
@@ -79,6 +80,7 @@ tracked up to section 2.4 (included) by searching "chapter" and "section".
   > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs symbolic algebra.
 - > Nevertheless, it provides a *clear illustration* of the design of a system using generic operations and a good introduction to the *more substantial systems* to be developed later in this chapter.
 - ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
+- > although it does lead to coercion problems, as discussed below
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -386,6 +388,7 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
 - select by the specific emphasized text
   [XPath](https://scrapfly.io/blog/how-to-select-elements-by-text-in-xpath/) ([no corresponding CSS selector](https://stackoverflow.com/a/4561376/21294350))
   - better use `//em` instead of `em` to avoid mere text searching.
+  - [CSS](https://www.freecodecamp.org/news/css-selectors-cheat-sheet/)
 - following-sibling
   [XPath -> selector](https://devhints.io/xpath#using-axes)
 # scheme style
@@ -1374,6 +1377,8 @@ This is more appropriate to be put in one data structure course especially for 2
   i.e. `cond` in `real-part`, etc.
 - > We have already seen an example of message passing in Section 2.1.3
   See `dispatch`.
+- `(put 'make-from-real-imag 'rectangular (lambda (x y) (tag (make-from-real-imag x y))))`
+  Here type doesn't means arg types, so we can't use `apply-generic`. We should use `((get 'make-from-real-imag 'rectangular) x y)`.
 ### 2.5
 - > Notice how the underlying procedures, originally defined in the rectangular and polar packages, are exported to the complex package
   ~~i.e. just put them in `install-complex-package`.~~ See `(get 'make-from-real-imag 'rectangular)`.
@@ -1385,7 +1390,11 @@ This is more appropriate to be put in one data structure course especially for 2
   > determine consequences by thinking rather than acting
 - TODO
   > we need to write only one procedure for each pair of types rather than a different procedure
-  shouldn't 2 for 2 directions?
+  ~~shouldn't 2 for 2 directions?~~
+  Here it may mean we shouldn't write all in one func with multiple cond cases.
+- [syntactic form](https://cs.brown.edu/courses/csci1730/2008/Manual/reference/syntax.html#:~:text=Each%20syntactic%20form%20is%20described,%2Dform%20id%20...)) -> BNF for example.
+- `(adjoin-term term term-list)` assumes join one higher-order term at the head of the list.
+  > so long as we guarantee that the procedures (such as add-terms) that use ad-join-term always call it with a *higher-order term than appears in the list*
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.

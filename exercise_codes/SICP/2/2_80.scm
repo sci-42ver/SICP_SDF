@@ -1,7 +1,7 @@
 ;; mimicking repo 2.79
 ;; combination of meteorgan's and parital Reimu's
 ;; same as repo.
-(define (install-equality-package)
+(define (install-=zero?-package)
   (define (numer x) (car x))
   (define (denom x) (cdr x))
   (define (=zero-ordinary? x)

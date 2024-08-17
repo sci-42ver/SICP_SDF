@@ -3,7 +3,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~83 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~86 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -25,6 +25,7 @@ sci-42ver/SICP_SDF
     [i.e.](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Condition-Signalling.html#index-error-2)
     > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the irritants field containing the arguments.
 # exercises
+Same as my former exercise solution repos, `- [ ]` means my solution is at least partly wrong. It doesn't mean I skipped this exercise except when I explicitly say that.
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
 To compare them, I only give one *brief* comparison after inspecting they are mostly similar in  exercise 1.6. And I skip comparing all pages "Last modified" before 20220522214709.
@@ -600,7 +601,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - I use MIT-Scheme so `(import (scheme small))` doesn't work.
 - [x] 1.29
   - [Simpson’s Rule](https://en.wikipedia.org/wiki/Simpson%27s_rule#Quadratic_interpolation)
-    - Lagrange polynomial interpolation is trivial by finding several *shared points*
+    - [Lagrange polynomial](https://en.wikipedia.org/wiki/Lagrange_polynomial) interpolation is trivial by finding several *shared points*
+      - Here k+1 nodes -> degree<=k due to the form of $l_j(x)$.
     - How to use integration by substitution here -> [See](https://personal.math.ubc.ca/~CLP/CLP2/clp_2_ic/sec_Simpson.html). Then we do $\int_{-k}^k P(t+m)dt,k=m-a,t=x-m$
       Then $y_{-1}=P(-k+m)=P(a)=f(a)$, the rest is similar.
     - The book uses [Composite Simpson's 1/3 rule][Composite_Simpson_rule]
@@ -1397,7 +1399,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - > De-scribe and implement the changes to the system needed to accommodate this.
     all related operations like `(+ (real-part z1) (real-part z2))` needs to be generic.
     See YZ's for the detailed list.
-- 
+- [x] 87
+- [ ] 88
+- [ ] 89
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
