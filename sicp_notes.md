@@ -50,8 +50,8 @@ Review one history comment
 ## check whether *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
-## em tracking when reading the book (Read before doing the related exercises)
-- up to 2.5.2 inclusive up to "called a poly".
+## em tracking when reading the book (Read *before doing the related exercises*)
+- up to 2.5.2 inclusive up to "Hierarchies of types in symbolic algebra".
 ## to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.4 (included) by searching "chapter" and "section".
 ### ~~1.2~~
@@ -1398,6 +1398,8 @@ This is more appropriate to be put in one data structure course especially for 2
 - [syntactic form](https://cs.brown.edu/courses/csci1730/2008/Manual/reference/syntax.html#:~:text=Each%20syntactic%20form%20is%20described,%2Dform%20id%20...)) -> BNF for example.
 - `(adjoin-term term term-list)` assumes join one higher-order term at the head of the list.
   > so long as we guarantee that the procedures (such as add-terms) that use ad-join-term always call it with a *higher-order term than appears in the list*
+- > Neither of these types is “above” the other in any natural way,
+  since one polynomial like `y^2*x` may be thought as both types.
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.

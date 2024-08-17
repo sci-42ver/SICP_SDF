@@ -3,7 +3,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~86 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~90 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1400,9 +1400,15 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     all related operations like `(+ (real-part z1) (real-part z2))` needs to be generic.
     See YZ's for the detailed list.
 - [x] 87
-- [ ] 88
-- [ ] 89
-- [ ] 90
+- [ ] 88 See codes "; wrong type"
+- [ ] 89 See codes `adjoin-term`
+- [x] 90
+- [ ] 91
+- [ ] *92
+  - IMHO here what we needs to do is just make 2 poly share the same order of var's.
+  - wiki
+    > So everything will be "raised" to a polynomial in x.
+    this doesn't ensure the ordering by reading the paragraph (The codes are too long, I didn't dig into it.)
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
