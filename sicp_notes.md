@@ -1370,6 +1370,9 @@ This is more appropriate to be put in one data structure course especially for 2
 - `(get op type-tags)` implies using `list` for `type-tags`.
   ~~so what if type is `'polar`?~~
   so we need to separately manipulate cases of `'polar` by `(get 'make-from-real-imag 'rectangular)`, etc.
+  - we don't use list similar to `(put 'angle '(polar) angle)` for make-from-real-imag since the latter can accept ~~merely scheme internal data~~ many arg types like `(real real)` or `(rat rat)`.
+  - For section 2.5, `(put 'make 'polynomial (lambda (var terms) (tag (make-poly var terms))))`
+    considers *many term types*, so which is similar. ~~different from the above.~~
 - > To design such a system, we can follow the same data-abstraction strategy we followed in designing the rational-number package in Section 2.1.1
   i.e. constructor and selector.
   > using the “abstract data” specified by the constructors and selectors, just as we did for rational numbers in Sec-tion 2.1.1

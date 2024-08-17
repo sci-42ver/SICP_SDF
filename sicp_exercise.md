@@ -1402,6 +1402,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 87
 - [ ] 88
 - [ ] 89
+- [ ] 90
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
