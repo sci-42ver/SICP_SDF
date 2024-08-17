@@ -5,8 +5,8 @@
 
 (define (adjoin-unordered-set x set)
   (if (element-of-unordered-set? x set)
-      set
-      (cons x set)))
+    set
+    (cons x set)))
 
 (define (intersection-unordered-set set1 set2)
   (cond ((or (null? set1) (null? set2)) '())

@@ -20,9 +20,9 @@
   (define (expt operands var)
     (if (=number? (deriv (exponent expr) var) 0)
       (let ((b (car expr)) (e (cadr expr))) 
-            (make-product (deriv b var) 
-                          ;; better than (- (exponent operands) 1) since exp may be `y` when var is `x`.
-                          (make-product e (make-exponentiation b (make-sum e -1)))))
+        (make-product (deriv b var) 
+                      ;; better than (- (exponent operands) 1) since exp may be `y` when var is `x`.
+                      (make-product e (make-exponentiation b (make-sum e -1)))))
       (error "not implemented")))
   (put 'deriv '** expt))
 

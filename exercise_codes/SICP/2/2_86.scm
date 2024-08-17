@@ -5,17 +5,17 @@
 
 (define (install-square-package)
   (put 'square '(rational) 
-    ;; Here I not use internal square to avoid unnecessary possible mess.
-    (lambda (x) 
-      (attach-tag 'rational 
-        ;; contents will be done by apply-generic.
-        (make-rat 
-          (* (numer x) (numer x)) 
-          (* (denom x) (denom x))))))
+       ;; Here I not use internal square to avoid unnecessary possible mess.
+       (lambda (x) 
+         (attach-tag 'rational 
+                     ;; contents will be done by apply-generic.
+                     (make-rat 
+                       (* (numer x) (numer x)) 
+                       (* (denom x) (denom x))))))
   (put 'square '(scheme-number)
-    (lambda (x) 
-      (attach-tag 'scheme-number 
-        (* x x))))
+       (lambda (x) 
+         (attach-tag 'scheme-number 
+                     (* x x))))
   )
 
 (define (square x)
@@ -33,17 +33,17 @@
 
 (define (install-sin-package)
   (put 'sin-generic '(rational) 
-    (lambda (x) 
-      (attach-tag 'rational 
-        ;; use repo but use the following `real->rational`.
-        ; (define (real->rational x)
-        ;   (rationalize (exact x) 1/10))
-        
-        ;; IGNORE: see wiki, since we use `(* r (sin a))` it is better to just keep real.
-        ;; mul will make `(mul r (sin a))` work for rat.
-        ((get-coercion 'real 'rational) (sin (contents ((get-coercion 'rational 'real) x)))))))
+       (lambda (x) 
+         (attach-tag 'rational 
+                     ;; use repo but use the following `real->rational`.
+                     ; (define (real->rational x)
+                     ;   (rationalize (exact x) 1/10))
+
+                     ;; IGNORE: see wiki, since we use `(* r (sin a))` it is better to just keep real.
+                     ;; mul will make `(mul r (sin a))` work for rat.
+                     ((get-coercion 'real 'rational) (sin (contents ((get-coercion 'rational 'real) x)))))))
   (put 'sin-generic '(scheme-number)
-    sin)
+       sin)
   )
 
 ;; should define sine as the exercise requests.

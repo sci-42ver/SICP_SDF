@@ -69,7 +69,7 @@
         ((lambda-exp? exp) exp) ; TODO "This won't be true"
         ;; TODO why "there is no DEFINE"?
         ((define-exp? exp)
-        ;  (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp)))) (the-environment)))
+         ;  (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp)))) (the-environment)))
          (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp))))))
         ; eval the operator
         ((pair? exp) (apply-1 (eval-1 (car exp))

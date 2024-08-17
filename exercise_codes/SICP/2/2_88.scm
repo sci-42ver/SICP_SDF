@@ -21,7 +21,7 @@
 (install-negation-package)
 
 (define (install-polynomial-package)
-; ...
+  ; ...
   (define (negation-poly x)
     (make-polynomial 
       (variable x)
@@ -34,4 +34,4 @@
     (add-poly p1 (negation p2)))
   (put 'negation '(polynomial) negation-poly)
   (put 'subtract '(polynomial) subtract-poly) ; wrong type
-)
+  )
