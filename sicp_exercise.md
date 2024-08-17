@@ -26,6 +26,9 @@ sci-42ver/SICP_SDF
     > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the irritants field containing the arguments.
 # exercises
 Same as my former exercise solution repos, `- [ ]` means my solution is at least partly wrong. It doesn't mean I skipped this exercise except when I explicitly say that.
+## skipped exercises (also see exercises with * before the number possibly)
+Also see https://gitlab.com/Lockywolf/chibi-sicp/-/blob/master/Experience_Report.org for what exercises are very hard.
+- 2.92
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
 To compare them, I only give one *brief* comparison after inspecting they are mostly similar in  exercise 1.6. And I skip comparing all pages "Last modified" before 20220522214709.
@@ -1409,6 +1412,28 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     > So everything will be "raised" to a polynomial in x.
     this doesn't ensure the ordering by reading the paragraph (The codes are too long, I didn't dig into it.)
+  - > Well, the sketch of the idea was to rearrange the polynomials to a canonical form, so that the variables are *ordered sequentially*.
+    lockywolf may be right but I won't dig into it due to the complexity of "the net amount of hours spent is about 10" ...
+- [x] 2.93
+  - just change `+` etc. to `add` etc. and check tag in `make-rat`.
+  - see repo which incorporates `gcd-terms`.
+- [x] 94
+  - `remainder-terms` trivial by `cadr`
+    `gcd-poly` trivial by using `gcd-terms`
+    `greatest-common-divisor` uses `apply-generic`.
+  - > A Euclidean ring is a domain that admits addition, subtraction, and commutative multiplication
+    [See](https://en.wikipedia.org/wiki/Ring_(mathematics))
+    > satisfying properties analogous to those of addition and multiplication of *integers*.
+    - ~~TODO~~ why define such a measure?
+      maybe due to `y = qx + r` have the greater degree than `x` for polynomial case.
+- [ ] 95
+  - 
+    $$
+    Q_1=11x^4\ldots\\
+    Q_2=13x^3\ldots
+    $$
+    so $Q_1/Q_2=\frac{11}{13}x\ldots$
+- [ ] 96
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html

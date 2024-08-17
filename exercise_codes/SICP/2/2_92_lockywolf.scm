@@ -683,6 +683,7 @@
                         ((not (variable_1-order<variable_2-order
                                 outer-var
                                 (variable (contents (coeff (first-term terms)))))) (begin #;(show #t "wrong variable order \n") #f))
+                                                                                          ;; TODO why no if here to use else?
                                                                                           ((not (normal-polynomial? (coeff (first-term terms)))) (begin #;(show #t "not normal poly\n") #f))
                                                                                                                                                         (else (loop (rest-terms terms)))))
                                                                                           ))))

@@ -1530,6 +1530,8 @@ not use
 - 1.45
 # TODO after algorithm
 - > There are also other ways to solve this problem, most of which involve designing new data structures for which searching and insertion both can be done in (log n) steps.
+# TODO after abstract algebra
+- exercise 2.93 footnote.
 
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
