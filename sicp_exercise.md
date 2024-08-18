@@ -3,7 +3,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2.1~90 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2.1~97 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
@@ -1433,8 +1433,18 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     Q_2=13x^3\ldots
     $$
     so $Q_1/Q_2=\frac{11}{13}x\ldots$
-- [ ] 96
-
+  - >  try tracing gcd-terms while comput-ing the 
+  - TODO (maths)
+    why `c 1+O 1 −O 2` where ~~dividend will have the greatest order $2O_1-O_2$~~ the 1st quotient term will be $(cx)^{O_1-O_2}$.
+    - > Our answer will thus differ from the actual  by an integer constant factor
+      why must remainder also scale?
+- [x] 96
+  - a. trivial by `(div-terms (* a factor) b)`
+  - b. use `fold` with `gcd`.
+    - wiki scheme internal `gcd` can accept multiple arguments. 
+  - > When you obtain the , multiply both numerator and denomi-nator by the same integerizing factor before dividing through by the , so that division by the  will not introduce any nonin-teger coefficients
+    maybe this is based on "Our answer will thus differ from ...".
+- [ ] 97
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

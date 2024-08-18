@@ -123,7 +123,7 @@ Interestingly this chapter compares the computer system with many other systems 
   ~~> we used the terms jumping and capturing interchangeably.~~
   means "a family of" by 
   > defines a set of interchangeable incrementers.
-  - mix-and-match just means use the *appropriate interfaces*.
+  - mix-and-match just means use the *appropriate interfaces* (i.e. match).
 - TODO
   - How "lexical scoping" is related with "combinators".
 - > C that do not have lexically scoped higher-order procedures.

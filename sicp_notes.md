@@ -49,11 +49,11 @@ Review one history comment
 - Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
 ## check whether *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to chapter 1 included and 2.1~2.2 (chapter 2 TODO).
+- up to chapter 2 included.
 ## em tracking when reading the book (Read *before doing the related exercises*)
-- up to 2.5.2 inclusive up to "Hierarchies of types in symbolic algebra".
+- up to chapter 2 included.
 ## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.4 (included) by searching "chapter" and "section".
+tracked up to section 2.5 (included) by searching "chapter" and "section".
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~
@@ -75,12 +75,13 @@ tracked up to section 2.4 (included) by searching "chapter" and "section".
   e.g. list and then tree.
 - ~~> *Section 2.2.3* expands on this use of sequences as a framework for organizing programs~~
   i.e. transform sequences to sequences.
-- > ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.
-- > In Section 2.5 we will show how to use type tags and data-directed style to develop a generic arithmetic package.
-  > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs symbolic algebra.
-- > Nevertheless, it provides a *clear illustration* of the design of a system using generic operations and a good introduction to the *more substantial systems* to be developed later in this chapter.
+- ~~> ese are simple examples of generic procedures (procedures that can handle more than one kind of data), which we will have much more to say about in Section 2.4 and Section 2.5.~~
+- ~~> In Section 2.5 we will show how to use *type tags and data-directed style* to develop a generic arithmetic package.~~
+  > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs *symbolic algebra*.
+- ~~> Nevertheless, it provides a *clear illustration* of the design of a system using generic operations and a good *introduction* to the *more substantial systems* to be developed later in this chapter.~~
 - ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
 - > although it does lead to coercion problems, as discussed below
+  See exercise 2.92.
 ### 3
 - chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
 - > As we shall see in Chapter 3, the general notion of the environment
@@ -1295,6 +1296,12 @@ different length sentence. The range is from 0 to N − 1.
 TODO up to 2.3.3 as CS 61A notes require.
 6.001 Spring-2007 lec8 needs 2.2.4 to be finished.
 ## book
+- > Another key idea is that compound data objects can serve as conventional interfaces for combining program modules in mix-and-match ways
+  Also see SDF, here "mix-and-match" IMHO means using appropriate procedures to construct one signal-flow (see Figure 2.7).
+  - > We illustrate some of these ideas by presenting a simple graphics language that exploits closure.
+    See Levels of language for robust design and Exercise 2.52 for hierarchy.
+- > We will investigate *these ideas* in the context of symbolic differentiation, the representation of sets, and the encoding of information.
+  IMHO it mainly talks about "time" complexity for "the representation of sets".
 ### 2.1
 - > We now come to the decisive step of mathematical abstraction: we forget about what the symbols stand for. ...[The mathematician] need not be idle; there are many operations which he may carry out with these symbols, *without ever having to look at the things they stand for*.
   [original paper](https://sci-hub.se/https://www.jstor.org/stable/1666589). 
@@ -1400,6 +1407,8 @@ This is more appropriate to be put in one data structure course especially for 2
   > so long as we guarantee that the procedures (such as add-terms) that use ad-join-term always call it with a *higher-order term than appears in the list*
 - > Neither of these types is “above” the other in any natural way,
   since one polynomial like `y^2*x` may be thought as both types.
+- > Our own discussion of computational objects in Chap-ter 3 avoids these issues entirely. Readers familiar with object-oriented programming will notice that we have much to say in chapter 3 about local state, but we do not even mention “classes” or “inheritance.”
+  inheritance -> "interrelated types".
 ## lec
 ### lec05
 It says about `list` which has not been said up to the book corresponding chapter.
