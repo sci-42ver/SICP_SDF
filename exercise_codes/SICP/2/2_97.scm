@@ -74,3 +74,18 @@
 ;; wrong one is list the other is cons
 (define (make-rat n d)
   (reduce n d))
+
+(define (poly-add p1 p2)
+(if (and (poly? p1) (poly? p2))
+(if (variable=? (poly-get-var p1)
+(poly-get-var p2))
+(make-poly
+(poly-get-var p1)
+(add-terms (poly-get-terms p1)
+(poly-get-terms p2)))
+(make-poly
+(poly-get-var p1)
+(cons (add (car (poly-get-terms p1))
+p2)
+(cdr (poly-get-terms p1)))))
+(error "not given two polys")))

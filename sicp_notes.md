@@ -1483,7 +1483,6 @@ not use
   - `range-add-2` seems to be learned somewhere in the book.
 - notice
   > when checking types, use the else branch *only for errors*
-- 
 ### lec12
 - 
 ## recitation
@@ -1534,6 +1533,18 @@ not use
 - [x] 4 trivial by mimicking
 - [ ] 5
 - [ ] 6 see ans
+### 11
+- `poly-get-terms` is better to be similar to `poly-get-var`.
+- [x] 2 it is better to check types and throw errors appropriately.
+- [x] 3 trivial
+- [x] 4 (here the answer assumes using "represented as lists of the coefficients")
+- [ ] 5 see book
+  - Here it still uses the assumption in 4. So it is different from the book but easier.
+  - `(cons (add (car (poly-get-terms p1))` may assume `p2` must be constant.
+- [x] 6 trivial
+- [x] 7 just 4 `cond` cases.
+- [x] 8 all to `(->poly (find-var e1 e2) exp)`, then `add-poly`.
+  - sol avoid const->poly when both exp's are const.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
