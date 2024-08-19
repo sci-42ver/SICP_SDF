@@ -57,27 +57,28 @@
 
 (define (eval-1 exp)
   (cond ((constant? exp) exp)
-        ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Operations.html#index-eval
-        ;; TODO
-        ; ((symbol? exp) (eval exp (the-environment)))	; use underlying Scheme's EVAL
-        ((symbol? exp) (eval exp))	; use underlying Scheme's EVAL
-        ((quote-exp? exp) (cadr exp)) ; Here read will transform '() to (quote ()).
-        ((if-exp? exp)
-         (if (eval-1 (cadr exp))
-           (eval-1 (caddr exp))
-           (eval-1 (cadddr exp))))
-        ((lambda-exp? exp) exp) ; TODO "This won't be true"
-        ;; TODO why "there is no DEFINE"?
-        ((define-exp? exp)
-         ;  (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp)))) (the-environment)))
-         ;; > you don’t have define.
-         ;; IMHO this means we can't define named-lambda function 
-         (eval (list 'define (cadr exp) (maybe-quote (eval-1 (caddr exp))))))
-        ; eval the operator
-        ((pair? exp) (apply-1 (eval-1 (car exp))
-                              (map eval-1 (cdr exp))))
-        (else (error "bad expr: " exp))))
+	((symbol? exp) (error "Free variable: " exp))
+	((quote-exp? exp) (cadr exp))
+	((if-exp? exp)
+	 (if (eval-1 (cadr exp))
+	     (eval-1 (caddr exp))
+	     (eval-1 (cadddr exp))))
+	((lambda-exp? exp) exp)
+	((AND-EXP? EXP) (EVAL-AND (CDR EXP)))	;; added
+	((pair? exp) (apply-1 (car exp)
+			      (map eval-1 (cdr exp))))
+	(else (error "bad expr: " exp))))
 
+(define and-exp? (exp-checker 'and))
+
+(define (eval-and subexps)
+  (if (null? subexps)				; Trivial case: (AND)
+      #T					;  returns #T
+      (let ((result (eval-1 (car subexps))))	; else eval first one.
+        ;; > we'd leave out the second NULL? test, and the first one *would* be the base case of the recursion.
+        (cond ((null? (cdr subexps)) result)	; Last one, return its value.
+              ((equal? result #F) #F)		; False, end early.
+              (else (eval-and (cdr subexps))))))) ; else do the next one.
 
 ;; Comments on APPLY-1:
 

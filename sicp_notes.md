@@ -263,7 +263,7 @@ interestingly inst.eecs.berkeley.edu [doesn't need one account before](https://w
   - Simply Scheme by "Brian Harvey and Matthew Wright" online is like [the prerequisite of sicp](https://people.eecs.berkeley.edu/~bh/ssch26/preview.html) although as mit course says it is *not necessary*.
     > The *next step* is to read Structure and Interpretation of Computer Programs
   - Discussion group is piazzza which only university students can access.
-  - STk seems to be one derivative of Scheme which can be ignored.
+  - ~~STk seems to be one derivative of Scheme which can be ignored.~~
 - [Course Reader, Volume 2](http://wla.berkeley.edu/~cs61a/reader/vol2.html)
   - [online lectures](https://web.archive.org/web/20120104011702/http://wla.berkeley.edu/main.php?course=cs61a) only have videos
 - See [lecture notes](http://wla.berkeley.edu/~cs61a/reader/notes.pdf) for project schedule time and corresponding book Section.
@@ -711,6 +711,31 @@ https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week5
   - > what test cases were most and least helpful in revealing the definitions.
     not same and same.
   - I skipped trying different implementations and guess ... since that is not closely related with programming.
+## Week 6
+See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
+- [x] 1a. `(pair? exp)` -> `(eval-1 (car exp))` -> keep lambda
+                   |-> `(constant? exp)`
+      -> `apply-1` -> `substitute` -> `(map (lambda (subexp) (substitute subexp params args bound)) exp)` -> `(symbol? exp)` (for + and x) and `(lookup exp params args)` -> `(+ 5 3)`
+  - sol
+    > APPLY-1 recognizes that the addition procedure is primitive
+    i.e. `(procedure? proc)`
+- [x] 1b the example is just one "higher-order procedure".
+  - sol
+    to have consistent changes, we should use `((lambda (pred seq)`.
+- [ ] 1c TODO I can't run due to incompatible `eval` due to `(the-environment)`.
+  - > STk's MAP function requires an *STk* procedure as its argument, not a Scheme-1 procedure!
+  - Here we needs STk but although I can [extract rpm in Arch Linux](https://unix.stackexchange.com/a/125703/568529), I can't [install it](https://unix.stackexchange.com/a/598074/568529).
+- [x] 1d
+  See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week6
+  - similar to 1a `(+ 5 3)`, so `(symbol? exp)` gets the internal `and` proc.
+  - sol
+    - TODO
+      - why
+        > (symbol? exp) (error "Free variable: " exp)
+    - IMHO if trying to implement `add` manually, then just loop until encountering one `#f` or having iterated through the arg list.
+- [x] 2 trivial
+- [x] 3
+  > the constraint is that each node must be added before any node below it.
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
