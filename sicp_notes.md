@@ -124,6 +124,9 @@ I skipped [Problem Sets](https://github.com/abrantesasf/sicp-abrantes-study-guid
 # ~~6.001,037~~ courses (6.9550 Structure and Interpretation of Computer Programs newer without one website) (better read [6.945](http://computationalculture.net/a-matter-of-interpretation-a-review-of-structure-and-interpretation-of-computer-programs-javascript-edition/) whose [project uses sicp as the reference][AI_preq_sicp])
 [6.001 fall 2007](https://web.archive.org/web/20160306110531/http://sicp.csail.mit.edu/Fall-2007/) which seems to be the last 6.001 course based on sicp as [this][mit_End_of_an_Era_comment] and 6.037 reference imply. (But 6.037 uses 6.001 spring 2007 ~~which~~ ~~may be preferable~~ because fall 2007 lecture notes aren't public)
 ## 6.001 spring 2007
+- ~~From Lect 10 (excluded),~~ ~~I won't read lecs and recs in this course if it is *just rephrasing* of the book contents although it actually doesn't take much time to read these (at most one day each for lec and rec). ~~ ~~I will read lec by viewing its structure without detailed reading since it  probably is the duplicate of the book contents.~~
+  lec: This is because from the former reading experience it is just duplicate without anything new except "Lecture 6 *Programming methodology*" which doesn't have the corresponding section with the same name. And it is enough to read CS 61A notes which has *something new* based on the book.
+  rec: these are always *easier* than book exercises.
 Also see [this TA's site](https://people.csail.mit.edu/dalleyg/6.001/SP2007/) besides sicp.csail.mit.edu.
 - > You can use the lecture based "text book" by going to the tutor
   I can't access tutor since I am not one MIT student.
@@ -1472,6 +1475,17 @@ not use
   i.e. give one interface to modify data.
 - > Isolating changes to improve performance
   Here `make-sum` can be simplified at least to the book one which contains the former 4 cases of `simplify-sum`.
+### lec10
+- > 1. Eval for sums of numbers
+  based on section 2.3 but will eval.
+  - It also gives one *step-by-step process* of how we get one good implementation.
+- TODO
+  - `range-add-2` seems to be learned somewhere in the book.
+- notice
+  > when checking types, use the else branch *only for errors*
+- 
+### lec12
+- 
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).

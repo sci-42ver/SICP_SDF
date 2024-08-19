@@ -5,9 +5,17 @@
   to Jul 13, review history chapter recitations, etc.
   to Jul 15, up to chapter 2.2.1.
   to Jul 16, finish related history labs, lecs, recs.
+  From Aug 5 to Aug 7, finish chapter 2.2.2.
+  to Aug 10, 2.2.3.
+  to Aug 11, 2.2.
+  to Aug 12, 2.3.2.
+  to Aug 13, 2.3.
+  to Aug 15, related lec, rec and labs.
+  to Aug 16, 2.5.2 and 2.5.3.
+  to Aug 18, finish chapter 2.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
 ## SDF
-From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up to Aug 14 where I sometimes may think about weird things... ).
+From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up to Aug 14 where I sometimes may think about weird things (still up to Aug 19)... ).
 - From Jul 16 to Jul 18, read ps00 prerequisite contents.
   to Jul 21, finish ps00.
   to Aug 4, finish chapter 2.
