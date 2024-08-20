@@ -16,6 +16,8 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 - contract meaning. See SICP
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
+# miscs
+- cph: Competitive Programming Helper
 # *How to learn
 ## Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 - chapter 2 checked.
@@ -29,15 +31,21 @@ Updated up to section 2.5 included.
 - > but they have limitations, which we will discuss in section 3.1.5.
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
+- > (We will explore algebraic simplification in section 4.2.)
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
+# code base func description
+- [`n:...`](https://stackoverflow.com/questions/78815439/weird-definition-of-close-enuf-in-software-design-for-flexibility)
+- `(default-object)`
+  - ~~maybe just returns `#t` for `default-object?` implied by `(remove default-object? ...)`.~~
+    > The procedure default-object produces an object that is *different from any possible constant*. The procedure default-object? *identifies* that value.
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
 - [PPA](https://ell.stackexchange.com/a/325015)
-# Chapter 1
+# chapter 1
 Interestingly this chapter compares the computer system with many other systems like biology and physics, etc. (I only read the footnotes about biology detailedly possibly.)
 - > Thus a designer may design a compound function and later choose the family for implementation.
   > The families differ in such characteristics as speed and power dissipation, but *not in function*.
@@ -46,7 +54,7 @@ Interestingly this chapter compares the computer system with many other systems 
 - [Hox complex](https://en.wikipedia.org/wiki/Hox_gene)
 - > To the optimist, the glass is half full. To the pessimist, the glass is half empty. To the engineer, the glass is twice as big as it needs to be.
   [See](https://qr.ae/psfaJy)
-# Chapter 2
+# chapter 2
 - > A program that implements this idea is straightforward:
   See [R5RS](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX360) for why we use `apply` here.
 - > The result of ((iterate n) f) is a new function, of the same type as f.
@@ -153,12 +161,36 @@ Interestingly this chapter compares the computer system with many other systems 
     - exercise 2.7 (see `sdf-regex.rkt`), 2.8 (see 6.945_assignment_solution), 2.9, 2.10 (see 6.945_assignment_solution) all have no relations with "combinators".
 - > We illustrate this with a domain-specific language for making unit-conversion wrappers for procedures
   i.e. `unit:*` etc. which redefines `*`, etc.
+# chapter 3
+IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the preface.
+- > a well-specified and coherent entity.
+  IMHO "coherent" -> closely related.
+- > the use of combinators to build complex structures by combining simpler ones
+  i.e. `bases` in `make-arithmetic`
+  or `(extend-arithmetic extender base-arithmetic)`, etc.
+- > add-arithmetics prioritized its arguments, such that their order can matter
+  See `constant-union`
+- > means that it's impossible to augment the codomain arithmetic after the function arithmetic has been constructed.
+  implied in `(arithmetic-domain-predicate codomain-arithmetic)` in `function-extender`.
+- > we might wish to define an arithmetic for functions that return functions.
+  IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.
+  - The key problem may be "self reference" implying nested recursion.
+- > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
+  IMHO this is due to that they don't need global variables.
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
-- `#!default`
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
   >  The instructions for which files to load
+### not in MIT_Scheme_Reference, saved-total-index and the book
+- `#!default`
+- `bundle?`
+### skipped due to small relations with where it is referred to.
+- ~~`package-installer`~~
+- temporarily
+  - ~~`arithmetic->package`~~
+  - ~~`combined-arithmetic`~~
+  - ~~`get-constant` in `make-arithmetic`~~
 ### after reading related chapters
 - generic-procedure
   - `equal*?`

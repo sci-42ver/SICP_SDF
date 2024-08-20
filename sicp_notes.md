@@ -24,6 +24,7 @@ Review one history comment
 # Scheme func notices
 - `atan`
   > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).
+- comparison of `eq?,eqv?` etc: see ~/SICP_SDF/lecs/6.001_fall_2007_recitation/r08.pdf.
 # Some abbr's used by CS 61A and MIT 6.001
 - abstract data type -> ADT
 # What we should achieve

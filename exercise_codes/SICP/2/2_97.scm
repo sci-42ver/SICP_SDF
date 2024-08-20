@@ -2,10 +2,10 @@
 ;; a 
 (define (pseudoremainder-terms a b) 
   (let* ((o1 (order (first-term a))) 
-        (o2 (order (first-term b))) 
-        (c (coeff (first-term b))) 
-        (divident (mul-terms (list (make-term 0  
-                                        (expt c (+ 1 (- o1 o2))))) 
+         (o2 (order (first-term b))) 
+         (c (coeff (first-term b))) 
+         (divident (mul-terms (list (make-term 0  
+                                               (expt c (+ 1 (- o1 o2))))) 
                               a))) 
     (cadr (div-terms divident b)))) 
 
@@ -18,7 +18,7 @@
 (define (gcd-terms a b) 
   (if (empty-termlist? b) 
     (let* ((coeff-list (map cadr a)) 
-          (gcd-coeff (apply gcd coeff-list))) 
+           (gcd-coeff (apply gcd coeff-list))) 
       (div-terms a (list (make-term 0  gcd-coeff))))
     (gcd-terms b (pseudoremainder-terms a b)))) 
 
@@ -26,40 +26,40 @@
 ;; See wiki Sphinxsky's.
 (define (integerizing-factor-term a b)
   (let* ((o1 (order (first-term a))) 
-        (o2 (order (first-term b))) 
-        (c (coeff (first-term b))))
-        ;; see wiki better to use generic operations.
-        (make-term 0 (expt c (+ 1 (- o1 o2))))))
+         (o2 (order (first-term b))) 
+         (c (coeff (first-term b))))
+    ;; see wiki better to use generic operations.
+    (make-term 0 (expt c (+ 1 (- o1 o2))))))
 (define (reduce-terms a b)
   (let* ((gcd-term-list (gcd-terms a b))
-        ; integerizing factor
-        (factor (integerizing-factor-term a b))
-        (num-denom (list a b))
-        (intermediate-a-b 
-          (map 
-            ;; wiki: lacks car to get quotient.
-            (lambda (term-list) (div-terms (mul-term-by-all-terms factor term-list) gcd-term-list))
-            num-denom))
-        (final-factor 
-          (apply gcd 
-            (apply append 
-              (map 
-                (lambda (term-list) 
-                  (map coeff term-list))
-                intermediate-a-b)))))
+         ; integerizing factor
+         (factor (integerizing-factor-term a b))
+         (num-denom (list a b))
+         (intermediate-a-b 
+           (map 
+             ;; wiki: lacks car to get quotient.
+             (lambda (term-list) (div-terms (mul-term-by-all-terms factor term-list) gcd-term-list))
+             num-denom))
+         (final-factor 
+           (apply gcd 
+                  (apply append 
+                         (map 
+                           (lambda (term-list) 
+                             (map coeff term-list))
+                           intermediate-a-b)))))
     (map (lambda (termlist) (div-terms termlist (list (make-term 0 final-factor)))) num-denom)
     ))
 
 (define (reduce-poly p1 p2)
   (if (same-variable? (variable p1) (variable p2))
-      (map 
-        (lambda (termlist) 
-          (make-poly 
-            (variable p1)
-            termlist))
-        (reduce-terms (term-list p1) (term-list p2)))
-      (error "Polys not in same var -- REDUCE-POLY"
-             (list p1 p2))))
+    (map 
+      (lambda (termlist) 
+        (make-poly 
+          (variable p1)
+          termlist))
+      (reduce-terms (term-list p1) (term-list p2)))
+    (error "Polys not in same var -- REDUCE-POLY"
+           (list p1 p2))))
 
 ;; b
 (define (reduce-integers n d)
@@ -76,16 +76,16 @@
   (reduce n d))
 
 (define (poly-add p1 p2)
-(if (and (poly? p1) (poly? p2))
-(if (variable=? (poly-get-var p1)
-(poly-get-var p2))
-(make-poly
-(poly-get-var p1)
-(add-terms (poly-get-terms p1)
-(poly-get-terms p2)))
-(make-poly
-(poly-get-var p1)
-(cons (add (car (poly-get-terms p1))
-p2)
-(cdr (poly-get-terms p1)))))
-(error "not given two polys")))
+  (if (and (poly? p1) (poly? p2))
+    (if (variable=? (poly-get-var p1)
+                    (poly-get-var p2))
+      (make-poly
+        (poly-get-var p1)
+        (add-terms (poly-get-terms p1)
+                   (poly-get-terms p2)))
+      (make-poly
+        (poly-get-var p1)
+        (cons (add (car (poly-get-terms p1))
+                   p2)
+              (cdr (poly-get-terms p1)))))
+    (error "not given two polys")))
