@@ -177,6 +177,12 @@ IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the 
   - The key problem may be "self reference" implying nested recursion.
 - > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
   IMHO this is due to that they don't need global variables.
+## 3.1
+- It introduces arithmetic
+  1. symbolic-arithmetic-1
+  2. combined-arithmetic
+  3. pure-function-extender
+  4. function-extender
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
