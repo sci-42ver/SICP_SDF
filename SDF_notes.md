@@ -24,11 +24,12 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 ## *Check the preface of each chapter and section same as SICP.
 - done up to section 2.5 included.
 ## *Chapters to check
-Updated up to section 2.5 included.
+Updated up to section 3.1 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
 - > but they have limitations, which we will discuss in section 3.1.5.
+- > In section 3.2 we will see how to add new kinds of arithmetic incrementally
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - > (We will explore algebraic simplification in section 4.2.)
@@ -36,11 +37,14 @@ Updated up to section 2.5 included.
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
-# code base func description
+# func description
+## code base
 - [`n:...`](https://stackoverflow.com/questions/78815439/weird-definition-of-close-enuf-in-software-design-for-flexibility)
 - `(default-object)`
   - ~~maybe just returns `#t` for `default-object?` implied by `(remove default-object? ...)`.~~
     > The procedure default-object produces an object that is *different from any possible constant*. The procedure default-object? *identifies* that value.
+## scheme internal
+- `make-parameter` see https://srfi.schemers.org/srfi-39/srfi-39.html and common/predicate-counter.scm
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -162,27 +166,84 @@ Interestingly this chapter compares the computer system with many other systems 
 - > We illustrate this with a domain-specific language for making unit-conversion wrappers for procedures
   i.e. `unit:*` etc. which redefines `*`, etc.
 # chapter 3
-IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the preface.
-- > a well-specified and coherent entity.
-  IMHO "coherent" -> closely related.
-- > the use of combinators to build complex structures by combining simpler ones
-  i.e. `bases` in `make-arithmetic`
-  or `(extend-arithmetic extender base-arithmetic)`, etc.
-- > add-arithmetics prioritized its arguments, such that their order can matter
-  See `constant-union`
-- > means that it's impossible to augment the codomain arithmetic after the function arithmetic has been constructed.
-  implied in `(arithmetic-domain-predicate codomain-arithmetic)` in `function-extender`.
-- > we might wish to define an arithmetic for functions that return functions.
-  IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.
-  - The key problem may be "self reference" implying nested recursion.
-- > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
-  IMHO this is due to that they don't need global variables.
+## comparison with SICP
+Here I is mainly based on SICP "Data-Directed Programming" since that is more structural than explicit dispatch and based on data instead of proc dispatching (similar to `operation-applicability` dispatching in `operation-union-dispatch` here).
+- 3.1
+  - it mainly uses `make-arithmetic` (* means they are largely different.)
+    1. `name` is only for debugging or `arithmetic->package`.
+    2. `bases` is related with `base-operations` which helps defining primitive operations.
+      In SICP `install-polynomial-package` just uses one *generic* procedure like `add` to *combine all bases*. Here we can do this step by step with `add-arithmetics`.
+    3. `domain-predicate` is used when functioning as the base of another arithmetic.
+      In SICP this is done by tag.
+      Here it is done by record primitive data type.
+    4. * `get-constant` is mainly used for `get-identity`.
+      In SICP it only considers argument >=2 (see Exercise 2.82).
+    5. `get-operation` uses `operation-applicability` to choose the correct operation procedure and selects the *first* available operation by `operation-union-dispatch`.
+      In SICP, it uses hash table to store procedures with `type` and uses `(get ⟨op ⟩ ⟨type ⟩)` to find the *unique* entry.
+  - Then it uses `add-arithmetics` to increment (`operation-union` *may overload* if not carefully used, see exercise 3.3).
+    In SICP it just does many `install-...` since it won't overload due to *no type conflicts*.
 ## 3.1
+IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the preface.
 - It introduces arithmetic
   1. symbolic-arithmetic-1
   2. combined-arithmetic
   3. pure-function-extender
   4. function-extender
+- > a well-specified and coherent entity.
+  IMHO "coherent" -> closely related.
+- > the use of combinators to build complex structures by combining simpler ones
+  i.e. `bases` in `make-arithmetic`
+  or `(extend-arithmetic extender base-arithmetic)`, etc.
+- > A program that depends on the exactness of operations on integers may not work correctly for inexact floating-point numbers.
+  TODO IMHO it means we need to check whether we manipulate with "integers" or "floating-point numbers"?
+### 3.1.1 A simple ODE integrator
+- what arithmetic operations are used in `evolver`?
+  1. `stormer-2`: `+,*,/,expt,` and what is used in `F`.
+  2. `stepper`: `+`
+  3. `make-initial-history`: `-,*`.
+### 3.1.5
+Problems with combinators:
+1. > add-arithmetics prioritized its arguments, such that their order can matter
+  See `constant-union` from `add-arithmetics`
+1. > means that it's impossible to augment the codomain arithmetic after the function arithmetic has been constructed.
+  implied in `(arithmetic-domain-predicate codomain-arithmetic)` in `function-extender` by `extend-arithmetic` which calls `add-arithmetics`.
+1. > we might wish to define an arithmetic for functions that return functions.
+  IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.
+  - The key problem may be "self reference" implying nested recursion.
+1. TODO
+  > One problem is that *the shapes of the parts* must be worked out ahead of time
+1. > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
+  IMHO this is due to that they don't need global variables.
+  This is also shown in `add-arithmetics`.
+## 3.2
+- > The problems we indicated in section 3.1.5 are the result of using the combinator add-arithmetics.
+  See the above.
+- [CLOS](https://en.wikipedia.org/wiki/Common_Lisp_Object_System) and [tinyCLOS](http://community.schemewiki.org/?tiny-clos)
+  - [SOS](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-sos.html)
+- > where both the vectors and the components of a vector are manipulated by the *same generic procedures*. We could not build such a structure using just add-arithmetics introduced earlier.
+  since `add-arithmetics` is based on *base* arithmetic.
+  But actually they are all done by `operation-union-dispatch` which selects the appropriate operation.
+- > We also added function arithmetic *over numeric arithmetic*, so if functions are numerically combined (here by +) their outputs may be combined only if the outputs are numbers.
+  see `(apply-operation codomain-operation ...)`.
+- > because the functions are defined over the generic arithmetic:
+  see `codomain-operation` in `function-extender` which is *`generic` operation* here which can "add new kinds of arithmetic *incrementally*".
+  - call order of `(+ ’c cos sin)`:
+    generic -> `get-handler` to choose `function-extender` -> call `(cos (+ 3 ’a))`
+    - then call order of `(+ 3 ’a)`:
+      generic -> `symbolic-extender` -> return `(+ 3 a)` by `(cons operator args)`.
+    - then call order of `(cos (+ 3 a))`:
+      almost same as `(+ 3 ’a)`
+    -> call `(+ c (cos (+ 3 a)))` -> `symbolic-extender` ...
+    - The key here is "defined over the generic arithmetic"
+      so operation always works but let possible errors thrown in "handler" (**Abstraction**).
+  - > We can even use functions that return functions:
+    This is due to `(make-generic-arithmetic make-simple-dispatch-store)` has one generic-procedure. Then we only change `generic-procedure-handler` by (`add-to-generic-arithmetic!` -> `add-generic-arith-operations!` -> `define-generic-procedure-handler`) without changing the procedure.
+    - notice when calling the generic *operation*
+      it always work due to `any-object?`.
+      Then it calls `generic-procedure` which then calls `generic-procedure-dispatch` -> `get-generic-procedure-handler` -> `generic-metadata-getter` if possible (otherwise `generic-metadata-default-getter` to throw errors here since `default-handler` is `#f`) -> `get-handler` -> `predicates-match?`
+      notice here predicates are `(operation-applicability operation)` of base `arithmetic` which is probably not `any-object?`.
+    - call order:
+      generic -> `function-extender` to `(+ (lambda (y) (cons 3 y)) (lambda (y) (cons y 3)))` -> *generic* (see SDF_exercises `3_3.scm` where `+` in `codomain-operation` doesn't support the currently defined func arithmetic) -> again similarly `(+ (cons 3 4) (cons 4 3))`.
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
