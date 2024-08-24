@@ -16,6 +16,7 @@ us to combine not only primitive data objects, but *compound data ob-jects* as w
 - contract meaning. See SICP
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
+- Sometimes I use yellow mark to show I have read some footnotes.
 # miscs
 - cph: Competitive Programming Helper
 # *How to learn
@@ -196,6 +197,7 @@ IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the 
   or `(extend-arithmetic extender base-arithmetic)`, etc.
 - > A program that depends on the exactness of operations on integers may not work correctly for inexact floating-point numbers.
   TODO IMHO it means we need to check whether we manipulate with "integers" or "floating-point numbers"?
+- Stormer's integrator of order 2 See p102.
 ### 3.1.1 A simple ODE integrator
 - what arithmetic operations are used in `evolver`?
   1. `stormer-2`: `+,*,/,expt,` and what is used in `F`.
@@ -210,12 +212,16 @@ Problems with combinators:
 1. > we might wish to define an arithmetic for functions that return functions.
   IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.
   - The key problem may be "self reference" implying nested recursion.
+  - See exercise 3.4.
 1. TODO
   > One problem is that *the shapes of the parts* must be worked out ahead of time
 1. > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
   IMHO this is due to that they don't need global variables.
   This is also shown in `add-arithmetics`.
 ## 3.2
+- The power of extensible generics
+  I only read the context of "generic".
+### 3.2.1
 - > The problems we indicated in section 3.1.5 are the result of using the combinator add-arithmetics.
   See the above.
 - [CLOS](https://en.wikipedia.org/wiki/Common_Lisp_Object_System) and [tinyCLOS](http://community.schemewiki.org/?tiny-clos)
@@ -244,6 +250,20 @@ Problems with combinators:
       notice here predicates are `(operation-applicability operation)` of base `arithmetic` which is probably not `any-object?`.
     - call order:
       generic -> `function-extender` to `(+ (lambda (y) (cons 3 y)) (lambda (y) (cons y 3)))` -> *generic* (see SDF_exercises `3_3.scm` where `+` in `codomain-operation` doesn't support the currently defined func arithmetic) -> again similarly `(+ (cons 3 4) (cons 4 3))`.
+### 3.2.2
+- > which worked in the previous arithmetic, fails because the symbolic arithmetic captures (+ ’c cos sin) to produce a symbolic expression
+  - This is a bit like overload in `3_3.scm` due to *too general* `any-object?` sometimes.
+  - See `add-handler!` which prioritizes the latter added `handler` based on `find` in `get-handler`.
+    so `(symbolic? any-object?)` is prioritized over `(any-object? function?)`.
+    Here it just have "ambiguity"
+    > because there is no ambiguity in the choice of rules.
+- TODO
+  > With this mechanism we are now in a position to evaluate the Stormer integrator with a literal function: ...
+  What does these want to say?
+  just to say:
+  > Though each integration step in the basic integrator makes three calls to f, the two steps *overlap* on two intermediate calls.
+  ?
+- 
 # TODO
 - > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
