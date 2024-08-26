@@ -1,8 +1,8 @@
-SICP says "One key idea in dealing with compound data is the notion of
-closure —that the glue we use for combining data objects should allow
-us to combine not only primitive data objects, but *compound data ob-jects* as well." and "The use of the word “closure” here comes from *abstract algebra*". So you are right SICP uses https://en.wikipedia.org/wiki/Closure_(mathematics) instead of https://en.wikipedia.org/wiki/Closure_(computer_programming).
+Thanks for your explanation of why the design for "parent env and the child env" about inheritance is what it is. I am learning SICP and Software Design for Flexibility (SDF), so I don't have much programming background and don't know much about some jargons. For reference, "introspection" means https://en.wikipedia.org/wiki/Type_introspection#:~:text=In%20computing%2C%20type%20introspection%20is,programming%20languages%20possess%20this%20capability. This is why we say "No, of course not." since dynamic variable scoping is implicitly banned.
 
-@adabsurdum Thanks. I understand now.
+"A context belonging to an uninvoked function cannot ever make sense in any language with reentrancy.": by reading "Similarly, code shared by two processors accessing shared data should be reentrant." in https://en.wikipedia.org/wiki/Reentrancy_(computing), func A may be interrupted by func B where both shares data C. Then "A context belonging to an uninvoked function" which will be run immediately may make sense. Maybe I misunderstood what you mean and what you want to say may be "an uninvoked function" until the program is finished.
+
+Sorry if ambiguity. I didn't mean no "dynamic scope" implies no "introspection". I means the other direction: If "barring introspection capabilities", then as wikipedia says we can't "examine the type or properties of an object at runtime". Then this means we can't know "how a program executes", so no "dynamic scope". Is it that case?
 # Notice
 - I won't read many reference papers except when they are *specifically about programming*.
 - I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
@@ -140,7 +140,11 @@ Interestingly this chapter compares the computer system with many other systems 
 - TODO
   - How "lexical scoping" is related with "combinators".
 - > C that do not have lexically scoped higher-order procedures.
-  "lexically scoped" implies [no env propogation](https://qr.ae/p2pjwk) different from "Dynamic Scoping".
+  "lexically scoped" implies [no env propogation](https://qr.ae/p2pjwk) different from ["Dynamic Scoping"](https://www.geeksforgeeks.org/static-and-dynamic-scoping/#) (better [see](https://prl.khoury.northeastern.edu/blog/2019/09/05/lexical-and-dynamic-scope/) or [same](https://langdev.stackexchange.com/q/253)) ~~("calling functions" means ancestor. See "the value returned by f() is not dependent on who is calling it")~~.
+  ~~> In simpler terms, in dynamic scoping, the compiler first searches the current block and then *successively all the calling functions*.~~
+  > Under dynamic scoping, a variable is bound to the *most recent* value assigned to that variable
+  - [dynamic binding in Scheme](https://stackoverflow.com/a/3787068/21294350) from https://stackoverflow.com/questions/78908635/what-is-the-relation-of-parent-env-and-the-child-env-in-mit-scheme#comment139125389_78908764.
+    [shadow](https://stackoverflow.com/a/59447655/21294350)
   Notice C uses ["Static scoping is also called lexical scoping"](https://www.geeksforgeeks.org/static-and-dynamic-scoping/#)
 - > When we are confronted with a system based on parts that *do not compose cleanly*, such as regular expressions, it is often possible to ameliorate the difficulties by *metaprogramming*
   - the 1st part is due to regex expr is just one str which needs manual inspection to find its  structure, i.e. composition.
@@ -190,6 +194,7 @@ IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the 
   2. combined-arithmetic
   3. pure-function-extender
   4. function-extender
+  - vector-extender in exercise 3.2.
 - > a well-specified and coherent entity.
   IMHO "coherent" -> closely related.
 - > the use of combinators to build complex structures by combining simpler ones

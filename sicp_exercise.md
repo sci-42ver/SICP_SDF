@@ -1427,8 +1427,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - ~~TODO~~ why define such a measure?
       maybe due to `y = qx + r` have the greater degree than `x` for polynomial case.
 - [ ] 95
-  - 
-    $$
+  - $$
     Q_1=11x^4\ldots\\
     Q_2=13x^3\ldots
     $$

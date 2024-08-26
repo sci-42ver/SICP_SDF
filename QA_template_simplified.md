@@ -1,44 +1,39 @@
 Recently I self-learnt MIT 6.5151 course to learn SICP and [Software Design for Flexibility (SDF)][1] book. I am reading SDF chapter 3 which will redefine  Scheme primitive arithmetic after having read SICP chapter 2.
 
-Its uses [`(install-package! (arithmetic->package arithmetic))`][2] to do this. This actually did `package-installer` in some environment returned by [`(the-environment)`][3] in "common/package.scm" which then uses `(environment-define environment name value)` to redefine arithmetic primitive procedures. "common/package.scm" is loaded by `(manage 'new 'combining-arithmetics)` where [`manage` is defined in one top-level-environment `manager-env`][4].
+I am trying to understand what [`(the-environment)`][2] is when one file is loaded. I run these in one file ([load.scm][3]):
 ```scheme
-;; these funcs are from different files.
-(define (install-arithmetic! arithmetic)
-  (set! *current-arithmetic* arithmetic)
-  (install-package! (arithmetic->package arithmetic)))
+(load "sdf/manager/load.scm")
+(manage 'new 'generic-procedures)
+(pp (pe))
 
-(define install-package! (package-installer (the-environment)))
-
+;; load.scm
 (environment-define system-global-environment
                     'manage
                     (access manage-software manager-env))
 ```
 
-I tried to use [`(pp (pe))`][5] in "common/package.scm" to show the environment info but it throws error ";Ill-formed syntax: (define install-package! (pp (pe)) (package-installer (the-environment)))".
+`(manage 'new 'generic-procedures)` (I didn't dig into the implementation of `manage-software` since this is beyond what SDF intends to teach) will do ";Loading ".../sdf/common/package.scm"... done" without calling [`ge`][4] (I changed the path by using ... to avoid leaking some sensitive information). 
+
+IMHO [`manage` is defined in one top-level-environment `manager-env`][3], so what "common/package.scm" does including [`(package-installer (the-environment))`][2] is also in that env, i.e. `(the-environment)` here is `manager-env`. Is it that case?
+
+---
+
+The following is wrong since we are defining one variable instead of one lambda function. So the value [should be expression][5].
 ```scheme
 (define install-package! 
   (pp (pe))
   (package-installer (the-environment)))
 ```
 
-By reading [the doc of `access`][6], here `manage` is in `manager-env`. 
+After adding `(pp (pe))` in `package-installer` and in the file run, I  found the env is  actually changed when calling `new-environment` command (see [SDF Software Manager documentation][6] p4). This is  probably done by [`force-top-level-repl!`][7] (but the 3 functions used like [`abort->top-level`][8] are not defined in code base and internal Scheme. I don't know how it works actually).
 
-Q1: Does this mean [all what `manage` does][7] (I didn't dig into this part of codes since this is beyond what SDF intends to teach) without calling `ge` is also in that env (including loading "common/package.scm")? So `(environment-define environment name value)` should also be done in `manager-env`.
-
-Q2: Then when we call `(environment-lookup system-global-environment name)` where `system-global-environment` is [the parent of top-level-environment `manager-env`][8], will it also look up in its child env?
-
-From [the doc][9], it seems that they are separate. If so, why we define parent env here?
-> The operations in this section reveal the frame-like structure of environments by permitting you to examine the bindings of a particular environment *separately from those of its parent*.
-
-P.s. Is there some appropriate tag like `env` for this question in SO? (The recommendations like `environment-variables` are inappropriate here.)
-
+So `(the-environment)` returns the env changed by `(manage 'new 'generic-procedures)` instead of
 
   [1]: https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/27
-  [2]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/common/arith.scm#L166
-  [3]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/common/package.scm#L79
-  [4]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/manager/load.scm#L46
-  [5]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/The-Current-REPL-Environment.html
-  [6]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Assignments.html#index-access
-  [7]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/manager/software-manager.scm#L24-L44
-  [8]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Top_002dlevel-Environments.html#index-the_002denvironment
-  [9]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Operations.html
+  [2]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/common/package.scm#L79
+  [3]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/manager/load.scm#L46
+  [4]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/The-Current-REPL-Environment.html
+  [5]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Definitions.html#index-define-1
+  [6]: https://SDF%20Software%20Manager%20documentation
+  [7]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/manager/software-manager.scm#L194-L198
+  [8]: https://github.com/sci-42ver/SDF_exercise_solution/blob/9959cb5bdb2c9b51765a3c250cd70020ad228035/software/sdf/manager/utils.scm#L82-L85
