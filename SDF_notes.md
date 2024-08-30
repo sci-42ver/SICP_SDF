@@ -1,8 +1,3 @@
-Thanks for your explanation of why the design for "parent env and the child env" about inheritance is what it is. I am learning SICP and Software Design for Flexibility (SDF), so I don't have much programming background and don't know much about some jargons. For reference, "introspection" means https://en.wikipedia.org/wiki/Type_introspection#:~:text=In%20computing%2C%20type%20introspection%20is,programming%20languages%20possess%20this%20capability. This is why we say "No, of course not." since dynamic variable scoping is implicitly banned.
-
-"A context belonging to an uninvoked function cannot ever make sense in any language with reentrancy.": by reading "Similarly, code shared by two processors accessing shared data should be reentrant." in https://en.wikipedia.org/wiki/Reentrancy_(computing), func A may be interrupted by func B where both shares data C. Then "A context belonging to an uninvoked function" which will be run immediately may make sense. Maybe I misunderstood what you mean and what you want to say may be "an uninvoked function" until the program is finished.
-
-Sorry if ambiguity. I didn't mean no "dynamic scope" implies no "introspection". I means the other direction: If "barring introspection capabilities", then as wikipedia says we can't "examine the type or properties of an object at runtime". Then this means we can't know "how a program executes", so no "dynamic scope". Is it that case?
 # Notice
 - I won't read many reference papers except when they are *specifically about programming*.
 - I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
@@ -23,14 +18,28 @@ Sorry if ambiguity. I didn't mean no "dynamic scope" implies no "introspection".
 ## Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 - chapter 2 checked.
 ## *Check the preface of each chapter and section same as SICP.
-- done up to section 2.5 included.
+- done up to section 3.3 included (chapter 3 excluded).
 ## *Chapters to check
-Updated up to section 3.1 included.
+Updated up to section 3.3 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
-- > but they have limitations, which we will discuss in section 3.1.5.
-- > In section 3.2 we will see how to add new kinds of arithmetic incrementally
+- ~~> but they have limitations, which we will discuss in section 3.1.5.~~
+- ~~> In section 3.2 we will see how to add new kinds of arithmetic incrementally, without having to decide where they go in a hierarchy, and without having to change the existing parts that already work.~~
+  Since all are dispatched by "generic procedure" if using `extend-generic-arithmetic!`.
+- ~~> And functional differentiation can be viewed as a generic extension of arithmetic to a compound data type (see section 3.3).~~
+  i.e. differential type.
+  - See [this](https://en.wikipedia.org/wiki/Functional_(mathematics))
+    - > it refers to a mapping from a space X ${\displaystyle X}$ into the field of real or complex numbers
+      i.e. multi variable calculus.
+    - > it is synonymous with a higher-order function
+      see `extract-dx-function`.
+- ~~> We will extend to n-ary functions in section 3.3.2~~
+- ~~> For an alternative strategy, see exercise 3.8 on page 113.~~
+- ~~> The details will be explained in section 3.3.3.~~
+  ~~> special addition and multiplication procedures d:+ and d:* for differential objects, to be explained in section 3.3.3.~~
+  ~~> We will explain this technical detail and fix it in section 3.3.3,~~
+  ~~> It will be fully explained in section 3.3.3.~~
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - > (We will explore algebraic simplification in section 4.2.)
@@ -38,6 +47,9 @@ Updated up to section 3.1 included.
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
+### chapter 7
+- > We will examine a very nice example of this optimization in chapter 7
+  in chapter 1 footnote 17.
 # func description
 ## code base
 - [`n:...`](https://stackoverflow.com/questions/78815439/weird-definition-of-close-enuf-in-software-design-for-flexibility)
@@ -195,6 +207,7 @@ IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the 
   3. pure-function-extender
   4. function-extender
   - vector-extender in exercise 3.2.
+  - matrix-extender in exercise 3.6.
 - > a well-specified and coherent entity.
   IMHO "coherent" -> closely related.
 - > the use of combinators to build complex structures by combining simpler ones
@@ -268,15 +281,49 @@ Problems with combinators:
   just to say:
   > Though each integration step in the basic integrator makes three calls to f, the two steps *overlap* on two intermediate calls.
   ?
-- 
+## 3.3
+- > Its relation to an expression derivative is: ...
+  Here $\frac{d}{dx}f(x)$ is "the derivative Df".
+- equation (3.5):
+  it means $f([x,\delta x])=f(x+\delta x)=f(x)+Df(x)\delta x=[f(x),Df(x)\delta x]$
+  - So
+    > we obtain the chain-rule answer we would hope for:
+    where we just substitute 
+    1. $f$ with $g$
+    2. $x$ with $f(x)$
+    3. $\delta x$ with $Df(x)\delta x$
+  - (3.6) is similar.
+- > The handler for exponentiation f (x, y) = x is a bit more
+  see [SDF_original_book].
+- > Here we are extracting the coefficient of the infinitesimal dx in the result of applying f to the arguments supplied with the ith argument incremented by dx.
+  This is based on $f(x_0,x_1,\ldots,x_i+\delta x_i,\ldots,x_n)=f(x_0,x_1,\ldots,x_i,\ldots,x_n)+f'_{i}(x_0,x_1,\ldots,x_i,\ldots,x_n)\delta x_i$ (In my review of calculus, this should be right by thinking of we move delta in each direction until we get $f(x_0+\delta x_0,x_1+\delta x_1,\ldots,x_i+\delta x_i,\ldots,x_n+\delta x_n)$. I won't verify it since I am learning programming and I have learnt calculus at least 3 times, one in class, one to prepare for one contest and another to prepare for the graduate entrance exam. I am a bit ambiguous about calculus now due to forgetting.)
+- `general-derivative` just calculates $Dg(args)\cdot \Delta(args)$.
+- > If the result of applying a function to a differential object is a function
+  i.e. the 1st `derivative` calls `(f (d:+ x (make-infinitesimal dx)))` where `f` is the 1st `lambda`. This returns the 2nd `derivative` which is func.
+  So we need to call `extract-dx-function`.
+### TODO
+- >  we define an algebra of differential objects in “infinitesimal space.” The objects are multivariate power series in which no infinitesimal increment has exponent greater than one.
+  I won't dig into [Multivariable calculus](https://en.wikipedia.org/wiki/Multivariable_calculus#Theorems_regarding_multivariate_limits_and_continuity) (also [see](https://math.stackexchange.com/q/485731/1059606))
+  also for [infinitesimal space](https://ncatlab.org/nlab/show/infinitesimal+object)
+- I won't dig into [bug fix [87]](https://arxiv.org/pdf/1211.4892) since I am to learn programming *general strategies* (skip-due-to-general-strategy-target).
+- ~~active-tag related funcs like `with-active-tag`, `tag-active?`.~~
+- ""maximal factor" in differential analysis" doesn't have anything related with
+  > with any one of the maximal factors (here δx or δy) being primary.
+## 3.4
+- > This is a simple example of the use of delegation to extend an interface, as opposed to the better-known inheritance idea
+  i.e. change one passed init arg instead of ...
 # TODO
-- > We will examine a very nice example of this optimization in chapter 7.
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
   >  The instructions for which files to load
 ### not in MIT_Scheme_Reference, saved-total-index and the book
 - `#!default`
 - `bundle?`
+- `uninterned-symbol?` (but works in mere MIT/GNU Scheme.)
+  - Also for `symbol>?`
+- `(declare (ignore fail))` works
+  but directly `(ignore fail)` won't.
+  It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
 ### skipped due to small relations with where it is referred to.
 - ~~`package-installer`~~
 - temporarily
@@ -405,3 +452,4 @@ Problems with combinators:
 
 [R7RS]:https://standards.scheme.org/unofficial/errata-corrected-r7rs.pdf
 [MIT_Scheme_Reference]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref.pdf
+[SDF_original_book]:https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/110
