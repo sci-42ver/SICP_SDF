@@ -18,7 +18,7 @@
 ## Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 - chapter 2 checked.
 ## *Check the preface of each chapter and section same as SICP.
-- done up to section 3.3 included (chapter 3 excluded).
+- done up to section 3.4 included (chapter 3 excluded).
 ## *Chapters to check
 Updated up to section 3.3 included.
 ### chapter 2
@@ -26,7 +26,7 @@ Updated up to section 3.3 included.
 ### chapter 3
 - ~~> but they have limitations, which we will discuss in section 3.1.5.~~
 - ~~> In section 3.2 we will see how to add new kinds of arithmetic incrementally, without having to decide where they go in a hierarchy, and without having to change the existing parts that already work.~~
-  Since all are dispatched by "generic procedure" if using `extend-generic-arithmetic!`.
+  Since all are dispatched by "generic procedure" if using `add-to-generic-arithmetic!`.
 - ~~> And functional differentiation can be viewed as a generic extension of arithmetic to a compound data type (see section 3.3).~~
   i.e. differential type.
   - See [this](https://en.wikipedia.org/wiki/Functional_(mathematics))
@@ -40,6 +40,7 @@ Updated up to section 3.3 included.
   ~~> special addition and multiplication procedures d:+ and d:* for differential objects, to be explained in section 3.3.3.~~
   ~~> We will explain this technical detail and fix it in section 3.3.3,~~
   ~~> It will be fully explained in section 3.3.3.~~
+- > We will return to the problem of explicit tagging in section 3.5
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - > (We will explore algebraic simplification in section 4.2.)
