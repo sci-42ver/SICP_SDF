@@ -312,6 +312,10 @@ Problems with combinators:
 ## 3.4
 - > This is a simple example of the use of delegation to extend an interface, as opposed to the better-known inheritance idea
   i.e. change one passed init arg instead of ...
+- > the results of different handlers can be combined to provide better information.
+  For "numerical interval", we may get the intersection of all these numerical intervals.
+- > The call to simple-list-memoizer wraps a cache around its last argument
+  i.e. only needs `args` (see `make-simple-list-memoizer` the inner lambda).
 # TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
@@ -320,7 +324,11 @@ Problems with combinators:
 - `#!default`
 - `bundle?`
 - `uninterned-symbol?` (but works in mere MIT/GNU Scheme.)
-  - Also for `symbol>?`
+  - Also for 
+    1. `symbol>?`
+    2. `make-bundle-predicate`
+    3. `->environment`
+    4. `object-type`
 - `(declare (ignore fail))` works
   but directly `(ignore fail)` won't.
   It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
