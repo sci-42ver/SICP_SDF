@@ -20,7 +20,7 @@
 ## *Check the preface of each chapter and section same as SICP.
 - done up to section 3.4 included (chapter 3 excluded).
 ## *Chapters to check
-Updated up to section 3.3 included.
+Updated up to section 3.4 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
