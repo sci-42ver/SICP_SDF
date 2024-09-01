@@ -450,6 +450,11 @@ Problems with combinators:
     (index-fixnum? a1))
   ```
 - 2.b See Exercise 2.2.
+## ps03
+- > To allow use of assign-handler ! do the following :
+  Since we need to rebind original procedures to generic procedures.
+  - > This makes the default top-level arithmetic
+    it may mean `*current-arithmetic*` or the above.
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 - Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
   - kw: free software
