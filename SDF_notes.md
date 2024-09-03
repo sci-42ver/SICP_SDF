@@ -59,6 +59,11 @@ Updated up to section 3.4 included.
     > The procedure default-object produces an object that is *different from any possible constant*. The procedure default-object? *identifies* that value.
 ## scheme internal
 - `make-parameter` see https://srfi.schemers.org/srfi-39/srfi-39.html and common/predicate-counter.scm
+- [`fresh-line`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Output-Procedures.html#index-fresh_002dline)
+  > If port is such a port, this procedure writes an *end-of-line* to the port only if the port is *not already at the beginning of a line*. If port is not such a port, this procedure is identical to newline.
+  `newline` -> "Writes *an end of line* to textual output port."
+- checked
+  - `lset-adjoin`
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -317,7 +322,42 @@ Problems with combinators:
   For "numerical interval", we may get the intersection of all these numerical intervals.
 - > The call to simple-list-memoizer wraps a cache around its last argument
   i.e. only needs `args` (see `make-simple-list-memoizer` the inner lambda).
-# TODO
+## 3.5
+- > The tags were implementation-specific symbols, such as pair, vector, or procedure.
+  `efficient-generic-procedures/cached-generics.scm` uses `implementation-type-name`.
+  ```scheme
+  (define microcode-type/code->name
+    (access microcode-type/code->name (->environment '(runtime))))
+  (microcode-type/code->name (object-type symbol?))
+  ;Value: compiled-entry
+  (microcode-type/code->name (object-type pair?))
+  ;Value: compiled-entry
+  ```
+- > We could not have rules that distinguish between integers that satisfy even-integer? and integers that satisfy odd-integer?, for example.
+  TODO maybe due to only having `integer?`?
+- > but adding an associative lookup to get the metadata of a predicate, as we did with the arity of a function (on page 28)
+  "arity" uses hash-table.
+  > chasing these references must be efficient.
+  i.e. efficient search.
+- > Since the subset relation is a partial order, it may not be clear which handler is most specific
+  [due to](https://en.wikipedia.org/wiki/Partially_ordered_set) 
+  > The word partial is used to indicate that not every pair of elements needs to be comparable
+- > In this implementation, the property objects are specified by themselves, and two properties with the same name are distinct.
+### type relations
+- (troll? student? house-master?) <= autonomous-agent? <= person? <= mobile-thing? <= thing? <= object?
+  - Here I assume `(set-predicate<=! student? autonomous-agent?)` won't do duplicate actions like doing this after doing `(set-predicate<=! student? person?)` (See `uncached-tag<=` comments).
+- exit? <= object?
+- (place? bag?) <= container? <= object?
+### code review (this project code is much heavier than before).
+- [x] The game
+- > In this implementation, the property objects are specified by themselves, and two properties with the same name are distinct.
+  See `make-type` which calls `%set-type-properties!`
+  and `(type-properties type)` called by `type-instantiator`.
+  Here `make-type` always has one `prefix:...`. So "distinct".
+  - Notice `(lookup-value property)` is based on search indexed by `property-name`.
+    So mammal may have `(mammal:forelimb mammal-forelimb-inst)`
+    while bat may have `(bat:forelimb bat-forelimb-inst)` and `(mammal:forelimb bat-forelimb-inst)`
+# *TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
   >  The instructions for which files to load
@@ -330,18 +370,28 @@ Problems with combinators:
     2. `make-bundle-predicate`
     3. `->environment`
     4. `object-type`
+    5. `symbol`
+  - not knowing how to use
+    - `define-pp-describer`
+    - `(conjoin)`
 - `(declare (ignore fail))` works
   but directly `(ignore fail)` won't.
   It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
-### skipped due to small relations with where it is referred to.
+### *skipped due to small relations with where it is referred to.
 - ~~`package-installer`~~
 - temporarily
   - ~~`arithmetic->package`~~
   - ~~`combined-arithmetic`~~
   - ~~`get-constant` in `make-arithmetic`~~
+- `simple-function` in `is-generic-handler-applicable?`.
+- ~~`parse-plist`~~
+- ~~`autonomous-agent?`~~
 ### after reading related chapters
 - generic-procedure
-  - `equal*?`
+  - `equal*?` used by `tagged-data=`.
+- tag
+  - ~~`simple-abstract-predicate`~~
+  - ~~`predicate-constructor`~~
 ## TODO after algorithm
 - `make-key-weak-eqv-hash-table`.
 - https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html from https://en.wikipedia.org/wiki/Depth-first_search#Pseudocode.
@@ -357,6 +407,11 @@ Problems with combinators:
   > For example, if you are sorting numbers in a list or other data structure, you should not use any tolerance for comparison.
   - kw
     > Similarly, comparing for inequality or order is a discontinuous function: A slight change in inputs can change the answer completely.
+## TODO after OOP like C++
+- > choose one of the arguments to be the principal dispatch center
+  - > It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.”
+    the former may mean "the types of all of the arguments"
+    while the latter may mean sometimes "thing being moved" is "the principal dispatch center" while sometimes "the source location" is.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
