@@ -55,6 +55,7 @@ Updated up to section 3.4 included.
 ## code base
 - [`n:...`](https://stackoverflow.com/questions/78815439/weird-definition-of-close-enuf-in-software-design-for-flexibility)
 - `(default-object)`
+  see [default-object?](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Lambda-Expressions.html#index-_0023_0021optional-1)
   - ~~maybe just returns `#t` for `default-object?` implied by `(remove default-object? ...)`.~~
     > The procedure default-object produces an object that is *different from any possible constant*. The procedure default-object? *identifies* that value.
 ## scheme internal
@@ -62,6 +63,9 @@ Updated up to section 3.4 included.
 - [`fresh-line`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Output-Procedures.html#index-fresh_002dline)
   > If port is such a port, this procedure writes an *end-of-line* to the port only if the port is *not already at the beginning of a line*. If port is not such a port, this procedure is identical to newline.
   `newline` -> "Writes *an end of line* to textual output port."
+- > `define-record-type <property>`
+  Here it may be just used when debugging due to "bound".
+  > `<type name>` is bound to a representation of the record type itself.
 - checked
   - `lset-adjoin`
 # Acknowledgment
@@ -371,6 +375,7 @@ Problems with combinators:
     3. `->environment`
     4. `object-type`
     5. `symbol`
+    6. `list-of-type?`
   - not knowing how to use
     - `define-pp-describer`
     - `(conjoin)`
