@@ -376,6 +376,7 @@ Problems with combinators:
     4. `object-type`
     5. `symbol`
     6. `list-of-type?`
+    7. `list-of-unique-symbols?`
   - not knowing how to use
     - `define-pp-describer`
     - `(conjoin)`
