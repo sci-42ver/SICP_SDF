@@ -14,13 +14,13 @@
 - Sometimes I use yellow mark to show I have read some footnotes.
 # miscs
 - cph: Competitive Programming Helper
-# *How to learn
-## Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
-- chapter 2 checked.
-## *Check the preface of each chapter and section same as SICP.
-- done up to section 3.4 included (chapter 3 excluded).
-## *Chapters to check
-Updated up to section 3.4 included.
+# @How to learn
+## @Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+- chapter 2, 3 checked.
+## @Check the preface of each chapter and section same as SICP.
+- done up to section 3.5 included (chapter 3 excluded).
+## @Chapters to check
+Updated up to section 3.5 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
@@ -40,7 +40,10 @@ Updated up to section 3.4 included.
   ~~> special addition and multiplication procedures d:+ and d:* for differential objects, to be explained in section 3.3.3.~~
   ~~> We will explain this technical detail and fix it in section 3.3.3,~~
   ~~> It will be fully explained in section 3.3.3.~~
-- > We will return to the problem of explicit tagging in section 3.5
+- ~~> We will return to the problem of explicit tagging in section 3.5~~
+  See `tagging-strategy:always` where `tag` only has data `simple-tag-shared` got by `%make-tag-shared` for `make-simple-tag`.
+- ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
+  IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
 ### chapter 4
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - > (We will explore algebraic simplification in section 4.2.)
@@ -68,6 +71,125 @@ Updated up to section 3.4 included.
   > `<type name>` is bound to a representation of the record type itself.
 - checked
   - `lset-adjoin`
+# @TODO
+## @SDF code base
+- `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
+  >  The instructions for which files to load
+### not in MIT_Scheme_Reference, saved-total-index and the book
+- `#!default`
+- `bundle?`
+- `uninterned-symbol?` (but works in mere MIT/GNU Scheme.)
+  - Also for 
+    1. `symbol>?`
+    2. `make-bundle-predicate`
+    3. `->environment`
+    4. `object-type`
+    5. `symbol`
+    6. `list-of-type?`
+    7. `list-of-unique-symbols?`
+    8. `unspecific`
+  - not knowing how to use
+    - `define-pp-describer`
+    - `(conjoin)`
+- `(declare (ignore fail))` works
+  but directly `(ignore fail)` won't.
+  It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
+### @skipped due to small relations with where it is referred to.
+- ~~`package-installer`~~
+- temporarily
+  - ~~`arithmetic->package`~~
+  - ~~`combined-arithmetic`~~
+  - ~~`get-constant` in `make-arithmetic`~~
+- `simple-function` in `is-generic-handler-applicable?`.
+- ~~`parse-plist`~~
+- ~~`autonomous-agent?`~~
+### @after reading related chapters
+- generic-procedure
+  - `equal*?` used by `tagged-data=`.
+  - not used by chapter 3.
+- tag
+  - ~~`simple-abstract-predicate`~~
+  - ~~`predicate-constructor`~~
+## TODO after algorithm
+- `make-key-weak-eqv-hash-table`.
+- https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html from https://en.wikipedia.org/wiki/Depth-first_search#Pseudocode.
+  > Alternatively
+  same as wikipedia 1st iterative implementation.
+  - TODO 
+    > These two variations of DFS visit the neighbors of each vertex in the opposite order from each other
+    IMHO we can use queue keeping DFS.
+  - > it delays checking ...
+    to emulate "discovered" behavior when recursion.
+## TODO after numerical analysis
+- https://stackoverflow.com/q/78815439/21294350 -> https://stackoverflow.com/a/21261885/21294350
+  > For example, if you are sorting numbers in a list or other data structure, you should not use any tolerance for comparison.
+  - kw
+    > Similarly, comparing for inequality or order is a discontinuous function: A slight change in inputs can change the answer completely.
+## TODO after OOP like C++
+- > choose one of the arguments to be the principal dispatch center
+  - > It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.”
+    the former may mean "the types of all of the arguments"
+    while the latter may mean sometimes "thing being moved" is "the principal dispatch center" while sometimes "the source location" is.
+# [ps](https://github.com/sci-42ver/6.945_assignment_solution) (It doesn't have solutions for all SDF exercises)
+## ps00
+- I won't dig into the reasons of implementation shown in https://ee.stanford.edu/%7Ehellman/publications/24.pdf.
+  I also skipped the paper in footnote 4.
+- ` Pb Sa (modp) = aSb Sa (modp)` is [due to](https://testbook.com/maths/modular-multiplication#:~:text=for%20modular%20multiplication%3F-,In%20modular%20arithmetic%2C%20the%20rule%20for%20multiplication%20is%3A%20(a,took%20the%20product%20modulo%20c.)
+  > In modular arithmetic, the rule for multiplication is:
+- For "Problem ...", I only give one brief reading of the 1st sentence of each paragraph and the bold texts.
+- > binary modular operators
+  See https://www.aleksandrhovhannisyan.com/blog/modular-arithmetic-and-diffie-hellman/#:~:text=In%20number%20theory%2C%20the%20binary,or%20base%20of%20the%20operation.
+- > The following definitions are equivalent:
+  This is shown in Appendix B.
+- > The converse of the theorem doesn’t hold, unfortunately; if p is composite (not prime), then it isn’t always true that ap 6= a (mod p).
+  The latter is [Inverse](https://en.wikipedia.org/wiki/Inverse_(logic)).
+- > Some composite numbers p, called Carmichael numbers, pass the test for almost all a
+  [See](https://mathworld.wolfram.com/CarmichaelNumber.html). Here we should not use "almost".
+- I skipped https://sci-hub.se/https://doi.org/10.1007/3-540-39568-7_2 since this is one programming course.
+- > xS (modp) = aST (modp) = P T (modp)
+  See https://en.wikipedia.org/wiki/Modular_arithmetic "compatibility with multiplication"
+  So
+  $$
+  \begin{align*}
+    x^S\pmod{p}&=(a^T)^S\pmod{p}=a^{ST}\pmod{p}\\
+               &=(a^{S}\pmod{p})^T\pmod{p}=P^T\pmod{p}\\
+    y(x^S)^{-1}\pmod{p}&=mP^T(x^S)^{-1}\pmod{p}\\
+                       &=mx^S(x^S)^{-1}\pmod{p}\\
+                       &=m\pmod{p}\\
+                       &\overbrace{=}^{\text{Here p have 100 digits, so probably m << p}}m
+  \end{align*}
+  $$
+### `p0utils.scm`
+- > discrete logarithm problem
+  https://en.wikipedia.org/wiki/Discrete_logarithm
+  It only considers the integer solution.
+- ~~Notice "y=m*P^T(mod p)" is different from the original Diffie-Hellman algorithm.~~
+- IMHO for `m=(y/x^S)(mod p)`, `y` and $x^S$ should not take `(mod p)` to make it work.
+- "leading zeros" may mean "leading ones".
+### 6.945_assignment_solution
+- I lacks "(d) Test Fermat's Little Theorem:".
+## ps01 (unfortunately ps01 when 6.945_assignment_solution isn't same as 2024 version.)
+- TODO `index-fixnum?` implementation which is not documented in [MIT_Scheme_Reference].
+  ```scheme
+  (pp index-fixnum?)
+  (named-lambda (non-negative-fixnum? a1)
+    (index-fixnum? a1))
+  ```
+- 2.b See Exercise 2.2.
+## ps03
+- > To allow use of assign-handler ! do the following :
+  Since we need to rebind original procedures to generic procedures.
+  - > This makes the default top-level arithmetic
+    it may mean `*current-arithmetic*` or the above.
+# [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
+- Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
+  - kw: free software
+  - See Suggestions for Projects
+  - TODO
+    interchangeable parts, proposal.
+
+---
+
 # Acknowledgment
 - > the lambda papers
   [See](https://research.scheme.org/lambda-papers/)
@@ -432,64 +554,6 @@ Problems with combinators and possible solutions using generic procedure:
   See `type-instantiator` where "information" is something like `tag-supersets` to be used for `rule<` used by `make-subsetting-dispatch-store-maker` -> `get-handler`.
   > Such audit trails may be useful for access control, for tracing the use of sensitive data, or for debugging complex systems
   After all it can do anything if possible since it is *data*.
-# *TODO
-## SDF code base
-- `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
-  >  The instructions for which files to load
-### not in MIT_Scheme_Reference, saved-total-index and the book
-- `#!default`
-- `bundle?`
-- `uninterned-symbol?` (but works in mere MIT/GNU Scheme.)
-  - Also for 
-    1. `symbol>?`
-    2. `make-bundle-predicate`
-    3. `->environment`
-    4. `object-type`
-    5. `symbol`
-    6. `list-of-type?`
-    7. `list-of-unique-symbols?`
-    8. `unspecific`
-  - not knowing how to use
-    - `define-pp-describer`
-    - `(conjoin)`
-- `(declare (ignore fail))` works
-  but directly `(ignore fail)` won't.
-  It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
-### *skipped due to small relations with where it is referred to.
-- ~~`package-installer`~~
-- temporarily
-  - ~~`arithmetic->package`~~
-  - ~~`combined-arithmetic`~~
-  - ~~`get-constant` in `make-arithmetic`~~
-- `simple-function` in `is-generic-handler-applicable?`.
-- ~~`parse-plist`~~
-- ~~`autonomous-agent?`~~
-### after reading related chapters
-- generic-procedure
-  - `equal*?` used by `tagged-data=`.
-- tag
-  - ~~`simple-abstract-predicate`~~
-  - ~~`predicate-constructor`~~
-## TODO after algorithm
-- `make-key-weak-eqv-hash-table`.
-- https://11011110.github.io/blog/2013/12/17/stack-based-graph-traversal.html from https://en.wikipedia.org/wiki/Depth-first_search#Pseudocode.
-  > Alternatively
-  same as wikipedia 1st iterative implementation.
-  - TODO 
-    > These two variations of DFS visit the neighbors of each vertex in the opposite order from each other
-    IMHO we can use queue keeping DFS.
-  - > it delays checking ...
-    to emulate "discovered" behavior when recursion.
-## TODO after numerical analysis
-- https://stackoverflow.com/q/78815439/21294350 -> https://stackoverflow.com/a/21261885/21294350
-  > For example, if you are sorting numbers in a list or other data structure, you should not use any tolerance for comparison.
-  - kw
-    > Similarly, comparing for inequality or order is a discontinuous function: A slight change in inputs can change the answer completely.
-## TODO after OOP like C++
-- > choose one of the arguments to be the principal dispatch center
-  - > It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.”
-    the former may mean "the types of all of the arguments"
-    while the latter may mean sometimes "thing being moved" is "the principal dispatch center" while sometimes "the source location" is.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
@@ -537,63 +601,6 @@ Problems with combinators and possible solutions using generic procedure:
   > This sections introduces parameter objects, which can be *bound to new values* for the duration of a dynamic extent.
 - > A bundle is sometimes called a message-accepting procedure, where the message type is the delegate name and the message body is the arguments
   This is not recorded in [R7RS]
-# [ps](https://github.com/sci-42ver/6.945_assignment_solution) (It doesn't have solutions for all SDF exercises)
-## ps00
-- I won't dig into the reasons of implementation shown in https://ee.stanford.edu/%7Ehellman/publications/24.pdf.
-  I also skipped the paper in footnote 4.
-- ` Pb Sa (modp) = aSb Sa (modp)` is [due to](https://testbook.com/maths/modular-multiplication#:~:text=for%20modular%20multiplication%3F-,In%20modular%20arithmetic%2C%20the%20rule%20for%20multiplication%20is%3A%20(a,took%20the%20product%20modulo%20c.)
-  > In modular arithmetic, the rule for multiplication is:
-- For "Problem ...", I only give one brief reading of the 1st sentence of each paragraph and the bold texts.
-- > binary modular operators
-  See https://www.aleksandrhovhannisyan.com/blog/modular-arithmetic-and-diffie-hellman/#:~:text=In%20number%20theory%2C%20the%20binary,or%20base%20of%20the%20operation.
-- > The following definitions are equivalent:
-  This is shown in Appendix B.
-- > The converse of the theorem doesn’t hold, unfortunately; if p is composite (not prime), then it isn’t always true that ap 6= a (mod p).
-  The latter is [Inverse](https://en.wikipedia.org/wiki/Inverse_(logic)).
-- > Some composite numbers p, called Carmichael numbers, pass the test for almost all a
-  [See](https://mathworld.wolfram.com/CarmichaelNumber.html). Here we should not use "almost".
-- I skipped https://sci-hub.se/https://doi.org/10.1007/3-540-39568-7_2 since this is one programming course.
-- > xS (modp) = aST (modp) = P T (modp)
-  See https://en.wikipedia.org/wiki/Modular_arithmetic "compatibility with multiplication"
-  So
-  $$
-  \begin{align*}
-    x^S\pmod{p}&=(a^T)^S\pmod{p}=a^{ST}\pmod{p}\\
-               &=(a^{S}\pmod{p})^T\pmod{p}=P^T\pmod{p}\\
-    y(x^S)^{-1}\pmod{p}&=mP^T(x^S)^{-1}\pmod{p}\\
-                       &=mx^S(x^S)^{-1}\pmod{p}\\
-                       &=m\pmod{p}\\
-                       &\overbrace{=}^{\text{Here p have 100 digits, so probably m << p}}m
-  \end{align*}
-  $$
-### `p0utils.scm`
-- > discrete logarithm problem
-  https://en.wikipedia.org/wiki/Discrete_logarithm
-  It only considers the integer solution.
-- ~~Notice "y=m*P^T(mod p)" is different from the original Diffie-Hellman algorithm.~~
-- IMHO for `m=(y/x^S)(mod p)`, `y` and $x^S$ should not take `(mod p)` to make it work.
-- "leading zeros" may mean "leading ones".
-### 6.945_assignment_solution
-- I lacks "(d) Test Fermat's Little Theorem:".
-## ps01 (unfortunately ps01 when 6.945_assignment_solution isn't same as 2024 version.)
-- TODO `index-fixnum?` implementation which is not documented in [MIT_Scheme_Reference].
-  ```scheme
-  (pp index-fixnum?)
-  (named-lambda (non-negative-fixnum? a1)
-    (index-fixnum? a1))
-  ```
-- 2.b See Exercise 2.2.
-## ps03
-- > To allow use of assign-handler ! do the following :
-  Since we need to rebind original procedures to generic procedures.
-  - > This makes the default top-level arithmetic
-    it may mean `*current-arithmetic*` or the above.
-# [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
-- Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
-  - kw: free software
-  - See Suggestions for Projects
-  - TODO
-    interchangeable parts, proposal.
 
 ---
 

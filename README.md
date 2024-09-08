@@ -156,10 +156,10 @@ I use MIT/GNU Scheme.
     > To receive an “A” in this subject you will have to work *all of the problem sets and prepare a good final project*. We expect you to be at every class and to work every problem set.
     So do "problem sets" and the "final project".
 ### SDF
-- "course using Software Design for Flexibility" has no candidates while "course using SICP" has.
-- [This](https://www.reddit.com/r/scheme/comments/zmfwjb/the_book_software_design_for_flexibility_lukewarm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) is not helpful up to [this](https://www.reddit.com/r/scheme/comments/zmfwjb/comment/j0iq1d3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) sorted by Best when giving one brief reading.
+- "course using Software Design for Flexibility" has *no candidates* while "course using SICP" has.
+- [This](https://www.reddit.com/r/scheme/comments/zmfwjb/the_book_software_design_for_flexibility_lukewarm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) is *not helpful* up to [this](https://www.reddit.com/r/scheme/comments/zmfwjb/comment/j0iq1d3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) sorted by Best when giving one brief reading.
 ### [overview](https://groups.csail.mit.edu/mac/users/gjs/6.945/overview.pdf)
-- >  Substantial *weekly programming assignments and a final project* are an *integral* part of the subject.
+- > Substantial *weekly programming assignments and a final project* are an *integral* part of the subject.
 ### [red-tape](https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf)
 - Assignments
 - project
