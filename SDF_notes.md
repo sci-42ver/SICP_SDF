@@ -232,20 +232,30 @@ IMHO this is almost duplicate of SICP chapter 2, especially 2.5, by reading the 
   2. `stepper`: `+`
   3. `make-initial-history`: `-,*`.
 ### 3.1.5
-Problems with combinators:
-1. > add-arithmetics prioritized its arguments, such that their order can matter
+Problems with combinators and possible solutions using generic procedure:
+1. > add-arithmetics prioritized its arguments, such that *their order can matter*
   See `constant-union` from `add-arithmetics`
-1. > means that it's impossible to augment the codomain arithmetic after the function arithmetic has been constructed.
+  - ~~sol~~: See `add-generic-arith-constants!` which still uses `constant-union`, so the above problem is not solved.
+    See 3.2.2 Construction depends on order! where `add-handler!` *may* overload handlers so "order" matters.
+1. > means that it's impossible to *augment the codomain arithmetic* after the function arithmetic has been constructed.
   implied in `(arithmetic-domain-predicate codomain-arithmetic)` in `function-extender` by `extend-arithmetic` which calls `add-arithmetics`.
+  - sol: solved by `extend-generic-arithmetic!` and `add-generic-arith-operations!`
+    since we delayed func addition until `add-generic-arith-operations!` and "generic" have no restriction for dispatch.
 1. > we might wish to define an arithmetic for functions that return functions.
-  IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.
+  ~~IMHO `pure-function-extender` has done this by `(lambda args (apply-operation ...))`.~~
+  (the above is wrong since `codomain-operation` doesn't support func type supported by `pure-function-extender`. So `(apply-operation codomain-operation '(func-1 func-2))` will fail.)
   - The key problem may be "self reference" implying nested recursion.
-  - See exercise 3.4.
+    See exercise 3.4.
+  - sol: same as the above point
+    since generic will always dispatch, ~~after ((* num func-1) arg) -> (* num func-2), ~~ the above `codomain-operation` must work if inner handler supports that.
 1. TODO
-  > One problem is that *the shapes of the parts* must be worked out ahead of time
-1. > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context.
+  > One problem is that *the shapes of the parts* must be worked out *ahead of time* ... This is not a problem for a well-understood domain, such as arithmetic
+  IMHO See exercise 3.4, i.e. what types do each func allow decides the order of arithmetics.
+  - sol: again all are *delayed* until `add-generic-arith-operations!`.
+1. > Other problems with combinators are that the behavior of any part of a combinator system must be independent of its context. A powerful source of flexibility that is available to a designer is to *build systems that do depend upon their context*.
   IMHO this is due to that they don't need global variables.
   This is also shown in `add-arithmetics`.
+  - sol: Maybe again due to `add-generic-arith-operations!` since handler is that context and for outside we just uses *generic*?
 ## 3.2
 - The power of extensible generics
   I only read the context of "generic".
@@ -311,6 +321,7 @@ Problems with combinators:
 - > If the result of applying a function to a differential object is a function
   i.e. the 1st `derivative` calls `(f (d:+ x (make-infinitesimal dx)))` where `f` is the 1st `lambda`. This returns the 2nd `derivative` which is func.
   So we need to call `extract-dx-function`.
+  - Let $g(x,y)=x*y$, then the inner func does `(lambda (x) g_y(x,y))`, so this func does [$g_{yx}(x,y)$](https://economics.uwo.ca/math/resources/calculus-multivariable-functions/3-second-order-partial-derivatives/content/)
 ### TODO
 - >  we define an algebra of differential objects in “infinitesimal space.” The objects are multivariate power series in which no infinitesimal increment has exponent greater than one.
   I won't dig into [Multivariable calculus](https://en.wikipedia.org/wiki/Multivariable_calculus#Theorems_regarding_multivariate_limits_and_continuity) (also [see](https://math.stackexchange.com/q/485731/1059606))
@@ -339,6 +350,12 @@ Problems with combinators:
   ```
 - > We could not have rules that distinguish between integers that satisfy even-integer? and integers that satisfy odd-integer?, for example.
   TODO maybe due to only having `integer?`?
+  - IMHO the code base only defines "superset" and `tag<=` but doesn't define `set=?` and `combinartion-sets` etc.
+- > The tag will be easy to attach to objects that are accepted by the predicate.
+  TODO IMHO this may be "attach to" "predicate". See `tag->predicate` and `predicate->tag`.
+- > Consequently the tagged object can be tested for the property defined by the expensive predicate by using the *fast abstract predicate* (or, equivalently, by dispatching on its tag).
+  See `tagging-strategy:always` -> `predicate` in `tagging.scm`
+  It is only fast for those not registered by `predicate-constructor` since `(tagged-data? object)` is #f.
 - > but adding an associative lookup to get the metadata of a predicate, as we did with the arity of a function (on page 28)
   "arity" uses hash-table.
   > chasing these references must be efficient.
@@ -347,12 +364,12 @@ Problems with combinators:
   [due to](https://en.wikipedia.org/wiki/Partially_ordered_set) 
   > The word partial is used to indicate that not every pair of elements needs to be comparable
 - > In this implementation, the property objects are specified by themselves, and two properties with the same name are distinct.
-### type relations
+### adventure game type relations
 - (troll? student? house-master?) <= autonomous-agent? <= person? <= mobile-thing? <= thing? <= object?
   - Here I assume `(set-predicate<=! student? autonomous-agent?)` won't do duplicate actions like doing this after doing `(set-predicate<=! student? person?)` (See `uncached-tag<=` comments).
 - exit? <= object?
 - (place? bag?) <= container? <= object?
-### code review (this project code is much heavier than before).
+### adventure game code review (this project code is much heavier than before).
 - [x] The game
 - > In this implementation, the property objects are specified by themselves, and two properties with the same name are distinct.
   See `make-type` which calls `%set-type-properties!`
@@ -361,6 +378,60 @@ Problems with combinators:
   - Notice `(lookup-value property)` is based on search indexed by `property-name`.
     So mammal may have `(mammal:forelimb mammal-forelimb-inst)`
     while bat may have `(bat:forelimb bat-forelimb-inst)` and `(mammal:forelimb bat-forelimb-inst)`
+## summary
+- > Extensions of arithmetic are pretty tame
+  ~~See `add-arithmetics` in `arith.scm` where `operation-union` just chooses *one* possible func implementation for each type predicate list by `find`.~~
+  ~~It doesn't have generic, ~~ See 3.1.5
+- > addition of floating-point numbers is not associative
+  i.e. applicability matters, so also holds for generic.
+  [See](https://stackoverflow.com/a/10371890/21294350) 
+  - TODO the reference is said in one QA comment of [this user](https://stackoverflow.com/users/21294350/an5drama) with one paper *pdf* link.
+- > On the good side, it is straightforward to extend arithmetic to *symbolic expressions* containing literal numbers as well as purely numerical quantities
+  [literal numbers](https://www.ibm.com/docs/en/informix-servers/12.10?topic=dte-literal-number)
+  > as an *integer*, as a fixed-point *decimal* number, or in *exponential notation*
+  - TODO what is [purely numerical quantities](https://en.wikipedia.org/wiki/Physical_quantity#:~:text=Purely%20numerical%20quantities%2C%20even%20those,%CE%B1%2C%20sinh%20%CE%B3%2C%20log%20x)
+    maybe [without unit](https://media.physicsisbeautiful.com/resources/2019/02/09/MasteringPhysics__Dimensions_of_Physical_Quantities.pdf) (also [see](https://blog.ansi.org/iso-80000-1-2022-quantities-and-units/))
+  - > For symbolic arithmetic, the operation is implemented as a procedure that creates a symbolic expression by *consing* the operator the operator name onto the list of its arguments
+    so straightforward.
+- > symbolic vectors are not the same as vectors with symbolic coordinates
+  ~~For `(+ (vector 'a) (vector 'b))` the former ~~
+  - > However, we eventually run into real problems with the ordering of extensions—symbolic vectors are not the same as vectors with symbolic coordinates
+    See "3.2.2 Construction depends on order!"
+    - TODO I don't know how ordering influences "vectors with symbolic coordinates" since `vector` in `(vector 'a 'b)` isn't changed by the code base implementation of `vector-extender` and `symbolic-extender` due to that it is not in `%arithmetic-operator-alist`.
+      The former may probably not mean [this](https://www.mathworks.com/help/symbolic/sym.html#bu1rqzj-1) since that is "vectors with symbolic coordinates". It may mean literal vector (see Exercise 3.7).
+- > We also can get into complications with the typing of symbolic functions.
+  TODO symbolic functions = literal function (see 3.3.4)?
+- > *forward-mode* automatic differentiation
+  See
+  > we obtain the chain-rule answer we would hope for:
+  where $Dg(f(x))\delta f(x)\mapsto Dg(f(x))Df(x)\delta x$ is similar to ["Forward accumulation computes the recursive relation"](https://en.wikipedia.org/wiki/Automatic_differentiation#Forward_and_reverse_accumulation)
+  This is done by `(g (f (d:+ x (make-infinitesimal dx))))` (see `derivative`) where `d:+` returns one `differential` object and all `+,-,*` etc can work for `differential` (see `diff:binary-proc`). (See the above "equation (3.5)").
+- > However, making this work correctly with higher-order functions that return functions as values was difficult
+  See `extract-dx-function` (trivially due to generic procedure, this works for higher-order functions which returns one higher-order function which returns one normal func or even more levels. see `extract-dx-function-deep-level-test.scm`)
+  > most programmers writing applications that need automatic differentiation do not need to worry about this complication.
+  maybe means using "automatic differentiation" lib so no "worry".
+- > introduced a predicate registration and tagging system that allowed us to add declarations of relationships among the types.
+  See `simple-abstract-predicate` for "a predicate registration and tagging system" and `tag<=` using hash table `tag<=-cache` and base pred `generic-tag<=`. The latter uses `get-tag-supersets` for inheritance.
+  - `generic-tag<=` uses `bottom-tag?` #f and `top-tag?` #t.
+    i.e. if something is `any-object?` then all objects are in its subset.
+  - See `tag-supersets` etc.
+    Here tag can do many things including the above "relationships".
+    > For example, we may tag data with its provenance, or how it was derived, or the assumptions it was based on.
+    So we *don't directly* set predicate relations.
+    And this tag can work for other data types like complex number, etc.
+- > We demonstrated this with a simple but elegantly extensible adventure game.
+  See `make-chaining-dispatch-store`.
+- > if we dispatched on the first argument to produce a procedure that dispatched on the second argument, and so on
+  See "because in such a design one must choose one of the arguments to be the *principal* dispatch center" and footnote 31.
+  Notice this is different from trie since that *only* has actual data (i.e. handler here) at *leaf*.
+  > single-dispatch
+  i.e. "dispatched on the first argument".
+  > So modeling these behaviors in a typical single-dispatch objectoriented system would be more complicated.
+  since that will have *much more* generic procedures.
+- > We used tagged data to efficiently implement extensible generic procedures. The data was tagged with the information required to *decide which procedures* to use to implement the indicated operations.
+  See `type-instantiator` where "information" is something like `tag-supersets` to be used for `rule<` used by `make-subsetting-dispatch-store-maker` -> `get-handler`.
+  > Such audit trails may be useful for access control, for tracing the use of sensitive data, or for debugging complex systems
+  After all it can do anything if possible since it is *data*.
 # *TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
@@ -377,6 +448,7 @@ Problems with combinators:
     5. `symbol`
     6. `list-of-type?`
     7. `list-of-unique-symbols?`
+    8. `unspecific`
   - not knowing how to use
     - `define-pp-describer`
     - `(conjoin)`
