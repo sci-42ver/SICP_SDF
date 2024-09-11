@@ -1,17 +1,18 @@
 # Notice
+I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
 - I don't have time to test all possible *types* of inputs. I will only give some types of inputs which IMHO are all possible types without the review from others.
-  Any review of this repo is appreciated.
+  **Any review of this repo is appreciated.**
 - I skipped digging into
-  - the complexity of internal functions like `remainder` since by modularity this is unnecessary. 
+  - the complexity of *internal functions* like `remainder` since by modularity this is unnecessary. 
   - the details of `testing.scm` since it is not covered in the book.
-  - mathematical formulae unknown when reading SDF since it is off-topic.
-  - `make-unit-conversion` implementation since it uses functions not covered when  introducing this function.
-    - similar for `register-predicate!`.
-- contract meaning. See SICP
+  - *mathematical formulae* unknown when reading SDF since it is off-topic.
+  - ~~`make-unit-conversion` implementation since it uses functions not covered when  introducing this function.~~
+    - ~~similar for `register-predicate!`.~~
+- *contract* meaning. See SICP
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
-- Sometimes I use yellow mark to show I have read some footnotes.
+- Sometimes I use *yellow mark* to show I have read some footnotes.
 # miscs
 - cph: Competitive Programming Helper
 # @How to learn
@@ -181,8 +182,19 @@ Updated up to section 3.5 included.
   Since we need to rebind original procedures to generic procedures.
   - > This makes the default top-level arithmetic
     it may mean `*current-arithmetic*` or the above.
+## ps04
+- reader/writer bugs
+  - See my notes for former books learnt.
+  - csapp3e
+    > Writers must have *exclusive* access to the object, but readers may *share* the object with an unlimited number of other readers.
+    It shows [first and second](https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem#First_readers%E2%80%93writers_problem) readers-writers problem. In a nutshell, this just decides how the *waiting order* is based on the *arrival order*.
+    - See exercise 12.19~12.21.
+      - Gosh! After the review I found many of my implementations at that time are so weird and also wrong. I took some time to review this (about 6 hours).
+  - OSTEP
+    since csapp has already contained 3 types. I won't review it.
+- "video interface" and "distributed game" are beyond the intention of following this course and reading this book. So I won't do these.
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
-- Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/
+- Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/ and https://groups.csail.mit.edu/mac/users/gjs/6.945/rfp.pdf.
   - kw: free software
   - See Suggestions for Projects
   - TODO
@@ -500,6 +512,8 @@ Problems with combinators and possible solutions using generic procedure:
   - Notice `(lookup-value property)` is based on search indexed by `property-name`.
     So mammal may have `(mammal:forelimb mammal-forelimb-inst)`
     while bat may have `(bat:forelimb bat-forelimb-inst)` and `(mammal:forelimb bat-forelimb-inst)`
+- `property-setter` will at last use the `(lambda (#!optional new-value) ... (set-cdr! p new-value)...)` in `make-instance-data`
+  So we use `set-holder!` implying that the modification is *in-place*.
 ## summary
 - > Extensions of arithmetic are pretty tame
   ~~See `add-arithmetics` in `arith.scm` where `operation-union` just chooses *one* possible func implementation for each type predicate list by `find`.~~
