@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.6 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.8 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1454,7 +1454,18 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     reset: `(set! base ...)`
   - See wiki using self-defined `rand-update`
     the above can't ensure "*starting* from a given value".
-- [ ] 
+- [x] 7
+  - we first check the old password
+    and then checks the new one by adding one new `dispatch` wrapper based on `peter-acc`.
+- [x] 8
+  - for simplicity, let `f` be binary func.
+    so we does (`v` is the local variable)
+    from left to right: `(+ (f-op v 0) (f-op (f-op v 0) 1))`
+    from right to left: `(+ (f-op v 1) (f-op (f-op v 1) 0))`
+    By trial we can let `v` be inited with `1` and `f-op` be `*`.
+  - wiki 
+    the above is same as chm's.
+  - repo is based on passing arguments as one contrived sequence.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

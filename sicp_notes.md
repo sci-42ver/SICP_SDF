@@ -52,7 +52,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 2 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to exercise 3.1.2 (included).
+- up to exercise 3.1 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -110,6 +110,10 @@ checked up to Exercise 3.6
 - > substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)
 - > In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.
 - > since formal parameters are already local. is will be clearer aer the discussion of the environment model of evaluation in Section 3.2. (See also *Exercise 3.10*.)
+- > In Section 3.2 we will see how environments play this role of “place” in our computational model.
+- > e complexity of imperative programs becomes even worse if we consider applications in which several processes execute concurrently. We will return to this in Section 3.4
+- > In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts
+- > execute concurrently. We will return to this in Section 3.4.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1592,6 +1596,15 @@ not use
 - > We have already used begin implicitly in our programs
   [See](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Sequencing.html#index-begin)
 - `make-account` uses "message-passing style" since adding op will be so easy (see exercise 2.76)
+- > Our pro-gramming language can no longer be interpreted in terms of the sub-stitution model of procedure application that we introduced in Section 1.1.5.
+  Since value is time-variant.
+  - See `((make-simplified-withdraw 25) 20)` example.
+- > e issue surfacing here is more profound than the mere breakdown of a particular model of computation.
+  i.e. the issue in the preface of section 3.1.3.
+- > A language that supports the concept that “equals can be substituted for equals” in an expression without changing the value of the expres-sion is said to be referentially transparent.
+  IMHO i.e. not use `set!` etc. here -> `(make-decrementer 25)`
+- TODO
+  > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
