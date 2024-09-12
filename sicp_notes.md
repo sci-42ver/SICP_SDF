@@ -42,19 +42,19 @@ Review one history comment
   - maths will help understand something like 
     1. Figure 1.5
   - It may be better to have learnt *abstract algebra* since exercise 2.38 needs it.
-# *book reading order
+# @book reading order
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether *underlined* words in the *chapter and section prefaces* have been understood.
 
   After reading the book, check "What we should achieve".
-- Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
-## check whether *underlined* words in the *chapter and section prefaces*
+## @Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
+## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 2 included.
-## em tracking when reading the book (Read *before doing the related exercises*)
-- up to chapter 2 included.
-## to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.5 (included) by searching "chapter" and "section".
+## @@*em* tracking when reading the book (Read *before doing the related exercises*)
+- up to exercise 3.1.2 (included).
+## @@to reread after reading later chapters (strikethrough to mark already read)
+tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~
@@ -84,7 +84,16 @@ tracked up to section 2.5 (included) by searching "chapter" and "section".
 - > although it does lead to coercion problems, as discussed below
   See exercise 2.92.
 ### 3
-- chapter 1 footnote 9, 16(also with *Chapter 4*), 27, 31
+checked up to Exercise 3.6
+- chapter 1 footnote 9
+  > Chapter 3 will show that this notion of environment is crucial
+  16(also with *Chapter 4*)
+  > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
+  > In Chapter 3 we will introduce stream processing, which is a way of handling *appar-ently “infinite” data structures* by incorporating a *limited form* of normal-order evalu-ation. In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
+  27
+  > that is, they are looked up in *the environment in which the procedure was defined*. We will see how this works in detail in chapter 3 when we study environments and the detailed behavior of the interpreter.
+  31
+  > who explained it in terms of the *“message-passing” model* of computation that we shall discuss in Chapter 3.
 - > As we shall see in Chapter 3, the general notion of the environment
 - > We will discuss this more fully in Chapter 3 and *Chapter 4* when we examine the implementation of an interpreter in detail.
   > we will investigate some of its implications in Chapter 3 and *Chapter 4*
@@ -97,6 +106,10 @@ tracked up to section 2.5 (included) by searching "chapter" and "section".
 - >  Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).
 - > In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.
 - > In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.
+- > or that change data structures, as we will see in Section 3.3
+- > substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)
+- > In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.
+- > since formal parameters are already local. is will be clearer aer the discussion of the environment model of evaluation in Section 3.2. (See also *Exercise 3.10*.)
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1571,6 +1584,14 @@ not use
 - [x] 7 just 4 `cond` cases.
 - [x] 8 all to `(->poly (find-var e1 e2) exp)`, then `add-poly`.
   - sol avoid const->poly when both exp's are const.
+# chapter 3
+## book
+### 3.1
+- > Until now, all our procedures could be viewed as specifications for comput-ing mathematical functions.
+  By searching "!" backwards, it is true at least for procedures the book taught.
+- > We have already used begin implicitly in our programs
+  [See](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Sequencing.html#index-begin)
+- `make-account` uses "message-passing style" since adding op will be so easy (see exercise 2.76)
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

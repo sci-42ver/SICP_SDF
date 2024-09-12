@@ -19,9 +19,9 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 ## @Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 - chapter 2, 3 checked.
 ## @Check the preface of each chapter and section same as SICP.
-- done up to section 3.5 included (chapter 3 excluded).
+- done up to section 3.6 included.
 ## @Chapters to check
-Updated up to section 3.5 included.
+Updated up to section 3.6 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
@@ -107,7 +107,7 @@ Updated up to section 3.5 included.
 ### @after reading related chapters
 - generic-procedure
   - `equal*?` used by `tagged-data=`.
-  - not used by chapter 3.
+    - not used by chapter 3.
 - tag
   - ~~`simple-abstract-predicate`~~
   - ~~`predicate-constructor`~~
@@ -327,6 +327,8 @@ Interestingly this chapter compares the computer system with many other systems 
 - > We illustrate this with a domain-specific language for making unit-conversion wrappers for procedures
   i.e. `unit:*` etc. which redefines `*`, etc.
 # chapter 3
+- > We first generalize arithmetic to deal with symbolic algebraic expressions, and then to functions
+  See `extract-dx-part`
 ## comparison with SICP
 Here I is mainly based on SICP "Data-Directed Programming" since that is more structural than explicit dispatch and based on data instead of proc dispatching (similar to `operation-applicability` dispatching in `operation-union-dispatch` here).
 - 3.1

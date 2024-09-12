@@ -19,7 +19,11 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
 - From Jul 16 to Jul 18, read ps00 prerequisite contents.
   to Jul 21, finish ps00.
   to Aug 4, finish chapter 2.
-  to Aug 5, finish ps01.
+  to Aug 5, finish ps01 (14 Feb to 23 Feb) (recommended to use 10 days. So exceed 4 days).
+  From Aug 19 to Aug 22, finish ps02 (21 Feb to 1 Mar) (recommended to use 10 days).
+  From Aug 22 to Sep 1 (11 days), finish ps03 (28 February to 8 March) (recommended to use 10 days).
+  From Sep 2 to Sep 11 (10 days), finish ps04 (6 March to 15 March) (recommended to use 10 days).
+  - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
 Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.

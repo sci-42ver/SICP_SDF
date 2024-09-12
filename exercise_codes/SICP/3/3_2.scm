@@ -1,0 +1,60 @@
+(load "3_1.scm")
+;; similar to repo but uses make-accumulator.
+(define (make-monitored f)
+  (let ((count (make-accumulator 0)))
+    (define (mf input)
+      (case input
+        ((how-many-calls?) (count 0))
+        ((reset-count) 
+          (set! count (make-accumulator 0))
+          (count 0))
+        (else 
+          (count 1)
+          (f input))
+        ))
+    mf))
+
+(define s (make-monitored sqrt))
+(define (test s)
+  (assert (= (s 100) 10))
+  (assert (= (s 'how-many-calls?) 1))
+  (assert (= (s 'reset-count) 0))
+  (s 100)
+  (assert (= (s 'how-many-calls?) 1)))
+(test s)
+
+;; wiki Igor Saprykin
+(define (make-monitored f) 
+  (let ((count 0))
+          (lambda (arg) 
+                (cond ((eq? arg 'how-many-calls?) count) 
+                          ((eq? arg 'reset-count) 
+                          (set! count 0) 
+                          count) 
+                          (else (set! count (+ count 1)) 
+                                        (f arg))))))
+(define s (make-monitored sqrt)) 
+(assert (= (s 100) 10))
+(assert (= (s 'how-many-calls?) 1))
+(define s1 (make-monitored (lambda (x) (* x x)))) 
+(assert (= (s1 4) 16))
+(assert (= (s1 'how-many-calls?) 1))
+
+;; wiki
+(define (make-accumulator acc) 
+  (lambda (x)  
+    (set! acc (+ acc x)) 
+    acc)) 
+
+
+(define (make-monitored f) 
+  (define calls (make-accumulator 0)) 
+  (define (reset) (calls (- (calls 0))))
+  (define (mf a) 
+    (cond ((equal? a 'how-many-calls?) (calls 0)) 
+          ((equal? a 'reset-count) (reset)) 
+          (else (calls 1) (f a)))) 
+  mf) 
+
+(define s (make-monitored sqrt))
+(test s)
