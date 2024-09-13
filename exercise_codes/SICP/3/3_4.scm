@@ -57,3 +57,11 @@
                                     m)))))) 
       dispatch))
 (test)
+
+(define (test-1 x)
+  (define (test-2)
+    (define x 2)
+    (display (list "inner" x)))
+  (test-2)
+  (display (list "outer" x)))
+(test-1 1)

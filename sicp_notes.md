@@ -47,12 +47,19 @@ Review one history comment
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether *underlined* words in the *chapter and section prefaces* have been understood.
 
   After reading the book, check "What we should achieve".
-## @Recheck https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
+## @Recheck 
+- https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962
+  > "*streams* of decimal digits"
+- https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
+  > "lexical *environment*", "*garbage* collected"
+  - > "lexical *environment*"
+    Here `cont` is just one local variable.
+    See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
 ## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 2 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to exercise 3.1 (included).
+- up to exercise 3.2 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -84,7 +91,7 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "exer
 - > although it does lead to coercion problems, as discussed below
   See exercise 2.92.
 ### 3
-checked up to Exercise 3.6
+checked up to section 3.3 (excluded)
 - chapter 1 footnote 9
   > Chapter 3 will show that this notion of environment is crucial
   16(also with *Chapter 4*)
@@ -108,12 +115,16 @@ checked up to Exercise 3.6
 - > In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.
 - > or that change data structures, as we will see in Section 3.3
 - > substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)
-- > In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.
-- > since formal parameters are already local. is will be clearer aer the discussion of the environment model of evaluation in Section 3.2. (See also *Exercise 3.10*.)
-- > In Section 3.2 we will see how environments play this role of “place” in our computational model.
+- ~~> develop a new model of *procedure ap-plication*. In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.~~
+  See Figure 3.7~9 where 7 creates "local variables" and 8~9 do `set!`.
+- ~~> since formal parameters are already local. is will be clearer aer the discussion of the environment model of evaluation in Section 3.2. (See also *Exercise 3.10*.)~~
+  Exercise 3.10 has `initial-amount`, `balance` and `amount` "formal parameters".
+- ~~> Now a variable somehow refers to a *place where a value can be stored*, and the value stored at this place can change. In Section 3.2 we will see how environments play this role of “place” in our computational model.~~
+  i.e. frame -> bindings.
 - > e complexity of imperative programs becomes even worse if we consider applications in which several processes execute concurrently. We will return to this in Section 3.4
 - > In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts
 - > execute concurrently. We will return to this in Section 3.4.
+- > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -123,10 +134,15 @@ checked up to Exercise 3.6
 - > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
 - >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works.
   > is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
+- > For the interpreter we implement in Chapter 4, the code is in fact shared
+- > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
+- > For the interpreter we implement in Chapter 4, the code is in fact shared.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
 - > e imple- mentation of Scheme we shall consider in Chapter 5 does not share this defect.
+- > We will discuss tail recursion when we deal with the control structure of the interpreter in Section 5.4.
+- > we will not dwell on how these *returned values are passed from call to call*; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -1605,6 +1621,37 @@ not use
   IMHO i.e. not use `set!` etc. here -> `(make-decrementer 25)`
 - TODO
   > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
+### 3.2
+- Figure 3.3:
+  "the text of the lambda expression" -> "parameters" and "body".
+  "a pointer to the environment" -> the right dot circle.
+  "binding the formal parameters of the procedure to the arguments of the call" -> "x:5".
+- > is is convenient because it allows redefinition of symbols;
+  For racket this doesn't hold.
+  > Because of this, some people prefer redefinitions of existing symbols to signal errors or warnings.
+- Compare Figure 3.8 with Exercise 3.9, ~~the former will use `set!` to *set* local variable but the latter just *passes* the result of `(- n 1)`. So the former will make `E2` be based on `E1` while the  latter doesn't.~~
+  > because this is the envi-ronment that is specified by the W1 procedure object.
+  The former ~~has `W1` as one new procedure.~~ `(W1 50)` is actually `((lambda (amount) ...) 50)` which is in `(make-withdraw balance)`, i.e. `E1`.
+  But the latter does `(factorial (- n 1))` which is just creating one new `factorial` and the caller is also `factorial`. So all of them are in "the global environment".
+- `(define (make-withdraw initial-amount) (let ((balance initial-amount)) ...))` is similar to `(define new-withdraw ...)`.
+- > simply by using parameter names as free variables.
+  i.e. they are [*defined externally*](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#Formal_explanation)
+  > In computer programming, the term free variable refers to variables used in a function that are *neither local variables nor parameters* of that function.
+  parameters:
+  > In the lambda calculus, x is a bound variable in the term M = λx. T and a free variable in the term T. We say x is bound in M and free in T.
+  [local variables](https://en.wikipedia.org/wiki/Local_variable#Local_variables_in_Perl)
+  - Here `x` is not "parameters" of `good-enough?`.
+    There is no `(define x ...)` in `good-enough?` so it is also not "local variables".
+    See how "local variables" work:
+    ```scheme
+    (define (test-1 x)
+      (define (test-2)
+        (define x 2)
+        (display (list "inner" x)))
+      (test-2)
+      (display (list "outer" x)))
+    (test-1 1)
+    ```
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

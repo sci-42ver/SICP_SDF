@@ -2,13 +2,13 @@
 - I *didn't prove those theorems* which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
-- I won't dig into complexity analysis like exercise 2.64.
+- I won't dig into *complexity analysis* like exercise 2.64.
 ## @wiki and repo solutions checking state
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.8 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
-    - I assumed the solution is either in the code or README but splitted into 2 parts where one is in the code and the other is in README.
+    I have read repo solution chapter 1,2,3.1~3.11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
 # racket notes
@@ -1466,6 +1466,60 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki 
     the above is same as chm's.
   - repo is based on passing arguments as one contrived sequence.
+- [ ] 9
+  - recursive
+    create E1~E6.
+    similarly for iterative but with the different bindings and body.
+  - wiki
+    - Notice as Figure 3.5 shows, here E1~E6 all have GLOBAL as "the enclosing environment".
+    - The above "iterative" is *wrong*.
+    - repo is same.
+  - > e environment model will not clarify our claim in Section 1.2.1 that the inter-preter can execute a procedure such as fact-iter in a constant amount of space using tail recursion
+    See wiki where the *relations between calls* are not shown explicitly.
+- [ ] 10
+  - For `(define W1 (make-withdraw 100))`,
+    here `((lambda (⟨var⟩) ⟨body⟩) ⟨exp⟩)` will create one `E1'` in `E1`.
+  - So `(W1 50)` will create one `E1''` in `E1'`.
+  - > Show that the two versions of make-withdraw create ob-jects with the same behavior.
+    trivial since `balance` is "alias" of `initial-amount`.
+    - wiki
+      See `(W1 50)` behaviors for details.
+      So "alias" is *wrong*.
+  - wiki
+    ~~Here `E1''` is "body: (if (>= balance amount) ... )"~~
+    ~~`E1'` ~~
+    Here `E0` is the above `E1`.
+    And `E1` is the above `E1'`
+    - In a summary each new `lambda` will create one new env
+      > A procedure object is applied to a set of arguments by constructing a frame
+      Here actually we have 3 lambda's `(make-withdraw initial-amount)`, `(let ((balance initial-amount))` and `(lambda (amount)`.
+    - ~~Compared with Figure 3.8~~
+      ~~here it combines "..." and `(if (>= balance amount) ...)`.~~
+      ~~And it just relocates the "a pointer to the environment" (the internal ideas are same.)~~
+      `body: (if (>= balance amount) ... )` has no relations with `amount: 50 ...` in Figure 3.8 since that is related with `(W1 50)` which creates *one new env* due to "A procedure object is applied to a set of arguments" (see Figure 3.3 `E1`).
+    - > How do the environment struc-tures differ for the two versions?
+      See Amy's comment.
+  - repo no solution.
+- [ ] 11
+  - `(define acc (make-account 50))`:
+    `make-account` has one *pair* in global.
+    when applied with arg `50`, `E1` is created.
+    Similarly `withdraw-E` etc. *pairs* are created in `E1`.
+  - `((acc 'deposit) 40)`
+    `(acc 'deposit)` will create `E2` under `E1`, similarly `E3` for `(deposit 40)`.
+  The above is similar to Figure 3.11.
+  - `(set! balance (+ balance amount))` will do similarly as Figure 3.8~9.
+  - `((acc 'withdraw) 60)` is similar to the `'deposit` one.
+  - > Where is the local state for acc kept
+    i.e. `balance` etc. in `E1`
+  - > How are the local states for the two accounts kept distinct?
+    one totally new `E1'`.
+  - > Which parts of the environment structure are shared be-tween acc and acc2?
+    The code parts of `withdraw` etc. (see Figure 3.11).
+    - See wiki for what is *lacked*, i.e. "global environment".
+  - wiki shares the same basic ideas as the above.
+  - repo no solution.
+- [ ] 12
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
