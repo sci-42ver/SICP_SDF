@@ -1,0 +1,10 @@
+(define-class (person name)
+  (instance-vars (old-stuff '()))
+  (method (say stuff) stuff)
+  (method (ask stuff) (ask self 'say (se '(would you please) stuff)))
+  ;; others are similar.
+  (method (greet) 
+    (let ((contents (se '(hello my name is) name)))
+      (set! old-stuff contents)
+      (ask self 'say contents)))
+  )

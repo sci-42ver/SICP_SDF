@@ -772,6 +772,25 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - [x] 2 trivial
 - [x] 3
   > the constraint is that each node must be added before any node below it.
+## Week 7
+- [ ] 1 wrong
+  - notice here all functions will call `say` at last.
+    So we should just change `say` instead of `greet`.
+- [ ] 2
+  - TODO I didn't find [`double-talker.scm`][CS61A_lib].
+  - > Determine which of these definitions work as intended.
+    the 1st
+    - The 2nd won't work if parent changes its implementation.
+      The 3rd is with the same reasons. If `say` of `person` does `(se say stuff)`, then this will only have one "say".
+    - sol
+      kw
+      > One is that it *assumes* that the two arguments to SE are evaluated *left-to-right*
+      > But if we ask this double-talker to REPEAT, it won't say anything at all,
+      - > therefore, if we ask this double-talker to repeat, it'll only say the thing once.
+        i.e. only "OLD-TEXT".
+      - > This one works as desired.
+        i.e. `(ask mike ’say ’(hello))` -> `(hello hello)`
+        then `(ask mike 'repeat)` -> `(hello hello)`
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
@@ -1710,3 +1729,5 @@ TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which 
 
 [Banach_fixed_point_proof]:https://en.wikipedia.org/wiki/Banach_fixed-point_theorem#Proof
 [First_class_citizen]:https://en.wikipedia.org/wiki/First-class_citizen#History
+
+[CS61A_lib]:https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/
