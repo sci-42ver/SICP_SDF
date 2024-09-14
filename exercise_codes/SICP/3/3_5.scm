@@ -5,7 +5,7 @@
           ((experiment)
            (iter (- trials-remaining 1) (+ trials-passed 1)))
           (else
-           (iter (- trials-remaining 1) trials-passed))))
+            (iter (- trials-remaining 1) trials-passed))))
   (iter trials 0))
 
 (cd "~/SICP_SDF/exercise_codes/SICP/2")
@@ -23,7 +23,7 @@
     (P (random-point x1 x2 y1 y2)))
   (let ((rect 
           (make-rect (make-point x2 y2) 
-                    (make-point x1 y1))))
+                     (make-point x1 y1))))
     (* (area-rect rect) (monte-carlo trials experiment))))
 
 (define x2 0.0)

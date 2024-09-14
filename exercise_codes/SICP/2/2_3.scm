@@ -38,6 +38,6 @@
 
 ;; Usage: 
 (define r (make-rect (make-point 1 1) 
-                    (make-point 3 7))) 
+                     (make-point 3 7))) 
 (area-rect r) 
 (perimeter-rect r) 

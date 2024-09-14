@@ -61,7 +61,7 @@
 
     ; Deal!
     ; anonymous bought honey-bread and his bag has (#[food #[instance-data #[compound-procedure 16]] honey-bread] #[food #[instance-data #[compound-procedure 15]] pork-steak])
-    
+
     ;; > can be purchased with “money”
     (buy! my-avatar vending-machine-0 'honey-bread)
     (what-to-do my-avatar)

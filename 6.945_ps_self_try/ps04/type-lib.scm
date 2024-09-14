@@ -72,26 +72,26 @@
                  'predicate (lambda (x) (bag? x))
                  'default-supplier
                  (lambda () 
-                  (let ((bag 
-                          (make-bag 
-                            'name 'my-wallet)))
-                    (create-money 10 bag)
-                    bag))))
+                   (let ((bag 
+                           (make-bag 
+                             'name 'my-wallet)))
+                     (create-money 10 bag)
+                     bag))))
 (define person?
   (make-type 'person (list person:health person:bag person:wallet)))
 (set-predicate<=! person? mobile-thing?)
 
 ;; the original is still kept for avatar, etc.
 (define-generic-procedure-handler set-up! (match-args person?)
-  (lambda (super person)
-    (super person)
-    (tell-money! person #t)
-    ;; to make increment-wallet-money! work.
-    (register-with-clock! person (get-clock))))
+                                  (lambda (super person)
+                                    (super person)
+                                    (tell-money! person #t)
+                                    ;; to make increment-wallet-money! work.
+                                    (register-with-clock! person (get-clock))))
 (define-generic-procedure-handler set-up!
-  (match-args autonomous-agent?)
-  (lambda (super agent)
-    (super agent)))
+                                  (match-args autonomous-agent?)
+                                  (lambda (super agent)
+                                    (super agent)))
 
 (define get-wallet
   (property-getter person:wallet person?))

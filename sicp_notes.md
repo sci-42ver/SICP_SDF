@@ -59,7 +59,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 2 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to exercise 3.2 (included).
+- up to Exercise 3.14 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -843,12 +843,24 @@ It is really hard to understand these codes since we don't know the detailed imp
 - > For binary trees, within the general category of depth-first traversals, there are three possible variants:
   already learnt in DMIA. [See](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order,_NLR)
 - TODO
-  - I didn't find `scheme1.scm` in https://people.eecs.berkeley.edu/~bh/61a-pages/Lectures/ 2.1, 2.2, 2.4.
+  - ~~I didn't find `scheme1.scm` in https://people.eecs.berkeley.edu/~bh/61a-pages/Lectures/~~ 2.1, 2.2, 2.4.
+- `scheme1.scm` may be similar to [`racket1.rkt`](https://web.archive.org/web/20220915000000*/http://inst.eecs.berkeley.edu/~cs61as/library/racket1.rkt) but the latter can't be accessed now.
 - > It illustrates a big idea: universality.
   [See](https://introtcs.org/public/lec_08_uncomputability.html) or DMIA universal Turing machine.
   > One of the most significant results we showed for Boolean circuits (or equivalently, straight-line programs) is the notion of universality: there is a single circuit that can evaluate all other circuits
 - [tail recursion elimination (2nd paragraph and `function_tail_optimized`)](https://stackoverflow.com/a/1240613/21294350)
-- 
+## Week 7
+There are 10 pages in `aboveline.pdf`, so same as SICP book I will only read the first sentence of each paragraph.
+For `aboveline.pdf` I will just focus on the concepts instead of how the lib `obj.scm` implements that (This is also implied by the pdf contents).
+- > If a class and its parent class both have initialize clauses, the parent's clause is evaluated first
+  See SDF `chaining-generic-procedure`
+  - So in note
+    > Also, when the parent’s ask method says (ask self ’say ...) it uses the say method from the pigger class, not the one from the person class.
+- the note contents are just rephrasing `aboveline.pdf`...
+## Week 8
+- TODO
+  from "Week 7"
+  > We’ll see when we look below the line that there are some complications about making this work.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 

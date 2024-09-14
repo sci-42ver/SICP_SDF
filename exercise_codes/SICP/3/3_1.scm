@@ -3,7 +3,7 @@
 (define (make-accumulator sum)
   (define (add amount)
     (begin (set! sum (+ sum amount))
-          sum))
+           sum))
   add)
 
 (define A (make-accumulator 5))

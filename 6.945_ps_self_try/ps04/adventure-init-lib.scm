@@ -73,9 +73,9 @@
       (let* ((vending-machine-idx (remainder idx (length vending-machine-foods-table)))
              (foods-indices-list (list-ref vending-machine-foods-table vending-machine-idx))
              (cur-vending-machine 
-              (create-vending-machine
-                (symbol 'vending-machine- vending-machine-idx)
-                (find-place-name place-name all-places))))
+               (create-vending-machine
+                 (symbol 'vending-machine- vending-machine-idx)
+                 (find-place-name place-name all-places))))
         (for-each
           (lambda (food-idx) ((list-ref foods-factory-list food-idx) cur-vending-machine))
           foods-indices-list)))
