@@ -143,6 +143,8 @@ checked up to section 3.3 (excluded)
 - > e imple- mentation of Scheme we shall consider in Chapter 5 does not share this defect.
 - > We will discuss tail recursion when we deal with the control structure of the interpreter in Section 5.4.
 - > we will not dwell on how these *returned values are passed from call to call*; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
+- > We will see in Section 5.3.2 that Lisp memory-management systems include a garbage collector
+- > get-new-pair is one of the operations that must be implemented as part of the memory management required by a Lisp implementation. We will discuss this in Sec-tion 5.3.1.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247

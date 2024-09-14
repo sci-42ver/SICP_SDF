@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.14 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1519,7 +1519,31 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - See wiki for what is *lacked*, i.e. "global environment".
   - wiki shares the same basic ideas as the above.
   - repo no solution.
-- [ ] 12
+- [x] 12 trivial `(b)` and `(b c d)`
+  - I will skip all of box-and-pointer diagrams since that is routine.
+- [x] 13 trivial 
+  - the pointer pointing to `c` points back to the 1st pointer (see Figure 3.15 for what this means).
+    - wiki 
+      wrong since we are `set-cdr!` but not `set-car!`.
+  - infinite loop
+- [ ] 14
+  - based no each call we does (I assume `(set-cdr! x y)` sets `x` in `loop` instead of `mystery`)
+    The following `x` are all `x` in `mystery`.
+    `(x y)` -> `((cdr x) ((car x) y))` and `x` -> `((car x) y)`
+    `((cdr x) ((car x) y))` -> `((cddr x) ((cadr x) ((car x) y)))` and `(cdr x)` -> `((cadr x) ((car x) y))` (notice here `x` in `mystery` doesn't change.)
+    - so recursively at last we have `(nil x')` ~~where `(cdr x')` is nil.~~
+      ~~so it is just `last-pair`.~~
+      Then `y'` is `(reverse x)` since we pass `y` as nil in `(loop x '())`.
+      And `x` is only changed in the first `loop` call so it is `(car x)`.
+  - > Draw the box-and-pointer diagram that represents the list to which v is bound
+    trivial
+    > Draw *box-and-pointer* dia-grams that show the structures v and w aer evaluating this expression.
+    > What would be printed as the values of v and w?
+    Let `v` be `(1 2 3)`, ~~then we will do `(1 nil)` -> `(2 1 nil)` -> `(3 2 1 nil)`. Here we already have . ~~
+    Based on the above analysis, `v` becomes `(1)` and `w` is `(3 2 1)`.
+    - See wiki x3v's "box-and-pointer" is not as the pattern of the original `v`.
+    - repo just runs without explanation.
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
