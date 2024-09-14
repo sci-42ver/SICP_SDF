@@ -878,8 +878,51 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - the note contents are just rephrasing `aboveline.pdf`...
 ## Week 8
 - TODO
-  from "Week 7"
-  > We’ll see when we look below the line that there are some complications about making this work.
+  - from "Week 7"
+    > Notice that an object can refer to itself by the name *self*; this is an *automatically-created* instance variable in every object whose value is the object itself. We’ll see when we look below the line that there are some complications about making this work.
+- > Another new thing is that a procedure body can *include more than one expression*. In functional program-ming, the expressions don’t do anything except compute a value, and a function can *only return one value*, so it doesn’t make sense to have more than one expression in it.
+  Emm... IMHO we can since we only return the *last* value.
+- > The secret is to find a way to call let only once, when we create the count function
+  See [LisScheSic's comment](http://community.schemewiki.org/?sicp-ex-3.2)
+- > We now forget about the substitution model and replace it with the environment model:
+  This is same as SICP book p326.
+  - point 2 ~~corresponds to~~ is ~~similar to but it has only one env (See Figure 3.3)~~
+    > e new frame has as its *enclosing* environment the environment part of the procedure object being applied.
+    - ~~same for~~
+      > But in more complicated situations there may be several environments available. For example:
+      See SICP Figure 3.11
+      - See 
+        > We use that frame to extend the global environment (call it G), creating *a new environment E1*
+        so the frame is just what E1 points to without the pointer outwards and the pointer inwards.
+    - > So we’d better make our new environment by extending E1, not by extending G.
+      Even if "The body of g" is just `y`, we should also do as the above.
+    - > applied
+      TODO this may be *not strict*
+      See
+      > Rather, we extend the environment in which the function was *created*,
+      But IMHO `3+` *implicitly* has already in E1.
+      - > Scheme’s rule, in which the procedure’s defining environment is extended, is called lexical scope. The other rule, in which the current environment is extended, is called dynamic scope.
+        So the book is dynamic scope? (also see SDF_notes)
+### belowline
+- > The overall structure of a class de nition looks something like this:
+  See `class-variable-methods` (TODO I won't dig further since the note even just give one abstraction)
+- > Each method is a procedure de ned within the scope of one or the other class procedure, and Scheme's lexical scoping rules restrict each method to the variables whose scope contains it.
+  ~~Based on `make-checking-account-instance` code, `(lambda (message) ...)` can access `MY-ACCOUNT` but only `MY-ACCOUNT` can access ~~
+  TODO Since I didn't check the details of the code implementation, I won't dig into the above.
+  - > The technical distinction between inheritance and delegation is that an inheritance-based OOP system does not have this restriction.
+    At least [C++ can do that](https://stackoverflow.com/a/6187813)
+- > But if an instance is the my-whatever of some child instance, then self should mean that child.
+  i.e. parent should do `initialize` for child instead of itself.
+- > It is provided by the instantiate procedure.
+  TODO I won't dig into it.
+- > If you do this, you will see the complete translation of a define-class, including all the details we've been glossing over.
+  Just see
+  > On the next page we show the *translation* of the banana-holder class de nition into ordinary Scheme.
+  - TODO
+    1. what will be passed as `value-for-self`?
+    2. 
+  - > Each object has a send-usual-to-parent method that essentially duplicates the job of the ask procedure
+    So `'send-usual-to-parent` does `(apply method args)`.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
