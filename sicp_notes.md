@@ -903,6 +903,12 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
       But IMHO `3+` *implicitly* has already in E1.
       - > Scheme’s rule, in which the procedure’s defining environment is extended, is called lexical scope. The other rule, in which the current environment is extended, is called dynamic scope.
         So the book is dynamic scope? (also see SDF_notes)
+- > to the current environment at the time the lambda is seen.
+  i.e. ["created"](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html)
+  > The resulting procedure object is a pair consisting of the text of the lambda expression and a pointer to the environment in which the procedure was created.
+- `(define count-1 (instantiate count))` (see aboveline `(define Hal-Account (instantiate checking-account 1000))`) does the same as `(make-count)`.
+  Then `(ask count-1 'local)` does the same as `((make-count) 'local)`.
+- 
 ### belowline
 - > The overall structure of a class de nition looks something like this:
   See `class-variable-methods` (TODO I won't dig further since the note even just give one abstraction)

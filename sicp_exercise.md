@@ -1535,6 +1535,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       ~~so it is just `last-pair`.~~
       Then `y'` is `(reverse x)` since we pass `y` as nil in `(loop x '())`.
       And `x` is only changed in the first `loop` call so it is `(car x)`.
+    - The above assumption is verified in CS61A notes.pdf p54 I-B.
   - > Draw the box-and-pointer diagram that represents the list to which v is bound
     trivial
     > Draw *box-and-pointer* dia-grams that show the structures v and w aer evaluating this expression.
