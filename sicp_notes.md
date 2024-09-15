@@ -799,7 +799,6 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   - sol
     > substitute into an unevaluated part of a special form.
     i.e. `⟨name ⟩` in SICP p299.
-- 
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
@@ -1632,8 +1631,6 @@ not use
   - `range-add-2` seems to be learned somewhere in the book.
 - notice
   > when checking types, use the else branch *only for errors*
-### lec12
-- 
 ## recitation
 ### 5
 - See Problem 1-(a) and (c).
@@ -1710,7 +1707,10 @@ not use
 - > A language that supports the concept that “equals can be substituted for equals” in an expression without changing the value of the expres-sion is said to be referentially transparent.
   IMHO i.e. not use `set!` etc. here -> `(make-decrementer 25)`
 - TODO
-  > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
+  - > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
+    Also see
+    > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
+    IMHO “identity” just means not decomposable.
 ### 3.2
 - Figure 3.3:
   "the text of the lambda expression" -> "parameters" and "body".
@@ -1742,6 +1742,11 @@ not use
       (display (list "outer" x)))
     (test-1 1)
     ```
+### 3.3
+- IMHO Figure 3.16 is wrong since although `(car z1)` is right, `(cdr z1)` is `(b)`.
+  See xxyzz/SICP Exercise 3.15.
+- > Since Scheme provides no way to mutate a symbol, this sharing is undetectable.
+  TODO we cacn detect this by `(eq? (caar z2) (cadr z2))`.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

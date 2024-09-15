@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.14 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.19 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1526,7 +1526,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - wiki 
       wrong since we are `set-cdr!` but not `set-car!`.
   - infinite loop
-- [ ] 14
+- [x] 14
   - based no each call we does (I assume `(set-cdr! x y)` sets `x` in `loop` instead of `mystery`)
     The following `x` are all `x` in `mystery`.
     `(x y)` -> `((cdr x) ((car x) y))` and `x` -> `((car x) y)`
@@ -1542,9 +1542,34 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     > What would be printed as the values of v and w?
     Let `v` be `(1 2 3)`, ~~then we will do `(1 nil)` -> `(2 1 nil)` -> `(3 2 1 nil)`. Here we already have . ~~
     Based on the above analysis, `v` becomes `(1)` and `w` is `(3 2 1)`.
-    - See wiki x3v's "box-and-pointer" is not as the pattern of the original `v`.
-    - repo just runs without explanation.
-- [ ] 
+    - ~~See wiki x3v's "box-and-pointer" is not as the pattern of the original `v`.~~
+    - repo just runs *without explanation*.
+- [x] 15 trivial
+- [ ] 16
+  - return 3: `(cons (cons 1 2) (cons 1 2))`
+  - return 4: let `x` be `(cons 1 2)`, then `(cons (cons x 2) x)`
+  - return 7: based on 4, we need add 3. So ... I don't know.
+    - ~~based on ~~ wiki have `(cons (cons x x) (cons x x))`
+      ~~we can have `(cons (cons x 2) (cons x 2))`~~
+  - never return at all: ~~both `car` and `cdr` points back to `x`.~~
+    `y=(cons (cons 1 2) (cons y 2))` (I don't know how to do this in Scheme)
+    - wiki use `set-cdr!` after already defining one pair.
+- [ ] 18
+  - wiki
+    - > any of your next boxes will point to the different 'a', but yours will break and claim it's an infinite loop which is not true
+      TODO maybe due to `memq`.
+    - > but all that stuff accumulated in the "local storage" after walking down the sublist is now a garbage and shall not be referenced anymore ... (because it's on lower level and is *finite*, which means it doesn't contain an infinite loop).
+    - > in case of mutating that storage we will have all named garbage in there
+      so no `set!`.
+    - TODO
+      > In other words, we have to throw into our "local storage" *only the pointer* to that sublist
+- [ ] 19
+  since we need to track what *has been* encountered, how to achieve "a constant amount of space"?
+  - https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare
+    - cycle -> $x_i=x_{i+k\lambda},i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large -> $x_i=x_{2i}$.
+      So $v=k\lambda$.
+      Then the first $x_\mu=x_{\mu+v}\leftrightarrow x_\mu=x_{\mu+\lambda}$ based on the definition of $\lambda$.
+- 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

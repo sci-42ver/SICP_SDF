@@ -3,3 +3,4 @@
 (define (displayln x)
   (newline)
   (display x))
+(define nil '())
