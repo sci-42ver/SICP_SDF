@@ -116,30 +116,30 @@
 
 (define (translate form)
   (cond ((null? form) (error "Define-class: empty body"))
-        ((not (null? (obj-filter form (lambda (x) (not (pair? x))))))
-         (error "Each argument to define-class must be a list"))
-        ((not (null? (extra-clauses form)))
-         (error "Unrecognized clause in define-class:" (extra-clauses form)))
-        (else 
-          `(define ,(class-name form)
-             (let ,(class-var-bindings form)
-               (lambda (class-message)
-                 (cond
-                   ,@(class-variable-methods form)
-                   ((eq? class-message 'instantiate)
-                    (lambda ,(instantiation-vars form)
-                      (let ((self '())
-                            ,@(parent-let-list form)
-                            ,@(instance-vars-let-list form))
-                        (define (dispatch message)
-                          (cond
-                            ,(init-clause form)
-                            ,(usual-clause form)
-                            ,@(method-clauses form)
-                            ,@(local-variable-methods form)
-                            ,(else-clause form) ))
-                        dispatch )))
-                   (else (error "Bad message to class" class-message)) )))))))
+    ((not (null? (obj-filter form (lambda (x) (not (pair? x))))))
+     (error "Each argument to define-class must be a list"))
+    ((not (null? (extra-clauses form)))
+     (error "Unrecognized clause in define-class:" (extra-clauses form)))
+    (else 
+        `(define ,(class-name form)
+           (let ,(class-var-bindings form)
+             (lambda (class-message)
+               (cond
+                 ,@(class-variable-methods form)
+                 ((eq? class-message 'instantiate)
+                  (lambda ,(instantiation-vars form)
+                    (let ((self '())
+                          ,@(parent-let-list form)
+                          ,@(instance-vars-let-list form))
+                      (define (dispatch message)
+                        (cond
+                          ,(init-clause form)
+                          ,(usual-clause form)
+                          ,@(method-clauses form)
+                          ,@(local-variable-methods form)
+                          ,(else-clause form) ))
+                      dispatch )))
+                 (else (error "Bad message to class" class-message)) )))))))
 
 (define *legal-clauses*
   '(instance-vars class-vars method default-method parent initialize))
@@ -179,9 +179,9 @@
       (if (null? parent-clause)
         '()
         (map
-          (lambda (parent-and-args)
-            `(ask ,(maknam 'my- (car parent-and-args)) 'initialize self) )
-          (cdr parent-clause) ))))
+         (lambda (parent-and-args)
+           `(ask ,(maknam 'my- (car parent-and-args)) 'initialize self) )
+         (cdr parent-clause) ))))
   (define (my-initialization form)
     (let ((init-clause (find-a-clause 'initialize form)))
       (if (null? init-clause) '()
@@ -217,13 +217,13 @@
 
 (define (method-clauses form)
   (map
-    (lambda (method-defn)
-      (let ((this-message (car (cadr method-defn)))
-            (args (cdr (cadr method-defn)))
-            (body (cddr method-defn)))
-        `((eq? message ',this-message)
-          (lambda ,args ,@body))))
-    (obj-filter (cdr form) (lambda (x) (eq? (car x) 'method))) ))
+   (lambda (method-defn)
+     (let ((this-message (car (cadr method-defn)))
+           (args (cdr (cadr method-defn)))
+           (body (cddr method-defn)))
+       `((eq? message ',this-message)
+         (lambda ,args ,@body))))
+   (obj-filter (cdr form) (lambda (x) (eq? (car x) 'method))) ))
 
 (define (parent-list form)
   (let ((parent-clause (find-a-clause 'parent form)))
@@ -257,26 +257,26 @@
       ((null? default-method)
        `(else (get-method ',(class-name form) message ,@(parent-list form))) )
       (else
-        `(else (let ((method (get-method ',(class-name form)
-                                         message
-                                         ,@(parent-list form))))
-                 (if (method? method)
-                   method
-                   (lambda args ,@(cdr default-method)) )))))))
+       `(else (let ((method (get-method ',(class-name form)
+                                        message
+                                        ,@(parent-list form))))
+                (if (method? method)
+                  method
+                  (lambda args ,@(cdr default-method)) )))))))
 
 (define (find-a-clause clause-name form)
   (let ((clauses (obj-filter (cdr form)
                              (lambda (x) (eq? (car x) clause-name)))))
     (cond ((null? clauses) '())
-          ((null? (cdr clauses)) (car clauses))
-          (else (error "Error in define-class: too many "
-                       clause-name "clauses.")) )))
+      ((null? (cdr clauses)) (car clauses))
+      (else (error "Error in define-class: too many "
+                   clause-name "clauses.")) )))
 
 (define (obj-filter l pred)
   (cond ((null? l) '())
-        ((pred (car l))
-         (cons (car l) (obj-filter (cdr l) pred)))
-        (else (obj-filter (cdr l) pred))))
+    ((pred (car l))
+     (cons (car l) (obj-filter (cdr l) pred)))
+    (else (obj-filter (cdr l) pred))))
 
 ; (provide "obj")
 ; https://docs.racket-lang.org/reference/require.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._provide%29%29

@@ -791,6 +791,15 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
       - > This one works as desired.
         i.e. `(ask mike ’say ’(hello))` -> `(hello hello)`
         then `(ask mike 'repeat)` -> `(hello hello)`
+## Week 8
+- [x] 1 this is same as SICP Exercise 3.10.
+- [x] 2 trivial by using `init-amount` and `balance` correspondingly.
+- [x] 3 trivial by adding one local variable `transactions` and update it when necessary.
+- [ ] 4 trivial
+  - sol
+    > substitute into an unevaluated part of a special form.
+    i.e. `⟨name ⟩` in SICP p299.
+- 
 # CS 61A notes
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
@@ -908,7 +917,6 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   > The resulting procedure object is a pair consisting of the text of the lambda expression and a pointer to the environment in which the procedure was created.
 - `(define count-1 (instantiate count))` (see aboveline `(define Hal-Account (instantiate checking-account 1000))`) does the same as `(make-count)`.
   Then `(ask count-1 'local)` does the same as `((make-count) 'local)`.
-- 
 ### belowline
 - > The overall structure of a class de nition looks something like this:
   See `class-variable-methods` (TODO I won't dig further since the note even just give one abstraction)
