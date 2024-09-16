@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.19 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.20 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1569,7 +1569,21 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - cycle with $k,\lambda,\mu$ definitions <-> $x_i=x_{i+k\lambda},\forall i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large (<- based on "cycle with $k,\lambda,\mu$ definitions") -> $x_i=x_{2i}$ (<- should be based on "$x_i=x_{i+k\lambda},\forall i\ge\mu$").
       So $v=k\lambda$.
       Then the first $x_\mu=x_{\mu+v}\leftrightarrow x_\mu=x_{\mu+\lambda}$ based on the definition of $\lambda$.
-- 
+- [ ] 20
+  - `(define x (cons 1 2))`: binds `cons` in global
+    and then creates `E1` "binding the formal parameters" with "enclosing environment" global.
+    ~~Then `E1'` for `dispatch` application.~~ (see wiki here we doesn't apply, so no new env.)
+    Then binds `x` in global
+  - `(define z (cons x x))` is similar with `E2` and `E2'`.
+  - `(set-car! (cdr z) 17)` binds `set-car!` in global
+    - `(cdr z)`
+      similarly `E3`
+      then `(z 'cdr)` creates 1 new envs binding `m` with "enclosing environment" ~~*`E2'`*~~ (see wiki) since we are calling `dispatch`. (i.e. wiki `E5`)
+    - similarly `E4` for `(z new-value)` parameters "with "enclosing environment" global" (i.e. wiki `E3`).
+      then `((z 'set-car!) new-value)` creates 2 new envs binding `m` with "enclosing environment" ~~*`E1'`*~~ (see wiki *`E1`*) and then `v` with "enclosing environment" *`E1`*.
+  - `(car x)` similar to ~~`set-car!`~~ `(cdr z)`.
+  - repo no solution
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
