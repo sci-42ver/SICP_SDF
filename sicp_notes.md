@@ -1747,6 +1747,7 @@ not use
   See xxyzz/SICP Exercise 3.15.
 - > Since Scheme provides no way to mutate a symbol, this sharing is undetectable.
   TODO we cacn detect this by `(eq? (caar z2) (cadr z2))`.
+- `(define (set-car! z new-value) ...)` defined the returned value as `z` but that is [not necessary](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Pairs.html#index-set_002dcar_0021).
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

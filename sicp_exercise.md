@@ -1566,7 +1566,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 19
   since we need to track what *has been* encountered, how to achieve "a constant amount of space"?
   - https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare
-    - cycle -> $x_i=x_{i+k\lambda},i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large -> $x_i=x_{2i}$.
+    - cycle with $k,\lambda,\mu$ definitions <-> $x_i=x_{i+k\lambda},\forall i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large (<- based on "cycle with $k,\lambda,\mu$ definitions") -> $x_i=x_{2i}$ (<- should be based on "$x_i=x_{i+k\lambda},\forall i\ge\mu$").
       So $v=k\lambda$.
       Then the first $x_\mu=x_{\mu+v}\leftrightarrow x_\mu=x_{\mu+\lambda}$ based on the definition of $\lambda$.
 - 

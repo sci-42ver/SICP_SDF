@@ -48,8 +48,7 @@
 (define t2 (cons t1 t1))
 (contains-cycle? t2)
 
-(define cycle-1 (cons 'a (cons (cons 'a 'b) 'b)))
-(set-car! (cdr cycle-1) cycle-1)
+(load "3_18_19_tests.scm")
 ; (contains-cycle? cycle-1)
 
 (define (contains-cycle? x) 
@@ -80,7 +79,6 @@
 ;     #t))
 
 ;; wiki gws
-(load "lib.scm")
 (define (cycle? x) 
   (define visited nil) 
   (define (iter x) 
@@ -91,13 +89,6 @@
   (iter x))
 (define book-testcase (make-cycle (list 'a 'b 'c)))
 (cycle? book-testcase)
-
-(define x '(a b c)) 
-(define y '(d e f)) 
-(set-car! (cdr x) y) 
-(set-car! x (cdr x)) 
-(set-cdr! (last-pair y) (cdr y))
-(cycle? x)
 
 ;; assume x is nested lists without pairs.
 (define (cycle? x) 
@@ -115,15 +106,6 @@
   (iter x))
 
 ;; all tests
-(define book-testcase (make-cycle (list 'a 'b 'c)))
-(define t1-lst (list 'a 'b))
-(define t2-lst (list t1-lst t1-lst))
-(define normal-list (list 1 1))
-(define (test func)
-  (assert (func x)) ; x from mbndrk's following comment.
-  (assert (func book-testcase))
-  (assert (not (func t2-lst)))
-  (assert (not (func normal-list))))
 (test cycle?)
 
 ;; fail since the loop does cdr->car (here we get back) -> cdr ... This is not cdr-ing down.
