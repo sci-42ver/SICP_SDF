@@ -8,7 +8,7 @@
         (begin 
           (set! encountered (cons (car x) encountered)) 
           (helper (cdr x)))))
-  (helper x)))
+    (helper x)))
 ;; similar to book test
 ; (define cycle (cons 1 2))
 ; (set-cdr! cycle (car cycle))
@@ -35,13 +35,13 @@
           ((not (pair? lat)) (return #f)) 
           (else 
             (if (memq (car lat) C) 
-                (return #t) 
-                (begin 
-                  (set! C (cons (car lat) C)) 
-                  (if(pair? (car lat)) 
-                    (or (contains-cycle? (car lat)) 
-                          (loop (cdr lat))) 
-                    (loop (cdr lat)))))))) 
+              (return #t) 
+              (begin 
+                (set! C (cons (car lat) C)) 
+                (if(pair? (car lat)) 
+                  (or (contains-cycle? (car lat)) 
+                      (loop (cdr lat))) 
+                  (loop (cdr lat)))))))) 
       (loop x))) 
   (call/cc inner))
 (define t1 (cons 'a 'b)) 
@@ -60,13 +60,13 @@
         ((not (pair? lat)) #f) 
         (else 
           (if (memq (car lat) C) 
-              #t
-              (begin 
-                (set! C (cons (car lat) C)) 
-                (if(pair? (car lat)) 
-                  (or (contains-cycle? (car lat)) 
-                        (loop (cdr lat))) 
-                  (loop (cdr lat)))))))) 
+            #t
+            (begin 
+              (set! C (cons (car lat) C)) 
+              (if(pair? (car lat)) 
+                (or (contains-cycle? (car lat)) 
+                    (loop (cdr lat))) 
+                (loop (cdr lat)))))))) 
     (loop x)))
 (contains-cycle? t2)
 
@@ -119,12 +119,12 @@
     (cond ((not (pair? items)) #f) 
           ; ((eq? (cdr items) items) #t) 
           ((eq? (car items) (cdr items)) 
-            (iter (cdr items) trav)) 
+           (iter (cdr items) trav)) 
           ;; notice to use eq?
           ((element-of-set-eq? (car items) trav) #t) 
           ((element-of-set-eq? (cdr items) trav) #t) 
           (else  
-          (if (not (pair? (car items))) 
+            (if (not (pair? (car items))) 
               (iter (cdr items) (cons items trav)) 
               (or (iter (car items) (cons items trav)) 
                   (iter (cdr items) (cons items trav))))))) 

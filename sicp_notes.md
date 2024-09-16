@@ -7,6 +7,7 @@ Currently we can see https://en.wikipedia.org/wiki/First-class_function#cite_ref
 ----
 <<<LisScheSic
 Review history comments:
+LisScheSic's review the top solution based on LisScheSic's implementation.
 
 My implementation shares the same basic ideas with x3v's. This is better than the  solution at the top location since it will throw error earlier.
 >>>
@@ -55,11 +56,17 @@ Review one history comment
   - > "lexical *environment*"
     Here `cont` is just one local variable.
     See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
+- section 3.1
+  - TODO
+    - > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
+      Also see
+      > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
+      IMHO “identity” just means not decomposable.
 ## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to chapter 2 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to Exercise 3.14 (included).
+- up to section 3.3.2 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -1706,11 +1713,6 @@ not use
   i.e. the issue in the preface of section 3.1.3.
 - > A language that supports the concept that “equals can be substituted for equals” in an expression without changing the value of the expres-sion is said to be referentially transparent.
   IMHO i.e. not use `set!` etc. here -> `(make-decrementer 25)`
-- TODO
-  - > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
-    Also see
-    > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
-    IMHO “identity” just means not decomposable.
 ### 3.2
 - Figure 3.3:
   "the text of the lambda expression" -> "parameters" and "body".

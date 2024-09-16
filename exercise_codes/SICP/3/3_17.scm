@@ -8,15 +8,15 @@
   (define (iter visited lst)
     (let ((next-visited (cons lst visited)))
       (if (or (not (pair? lst)) (memq lst visited))
-          (make-visited-cnt-pair next-visited 0) 
-          (let* ((left-iter (iter next-visited (get-visited lst)))
-                 (right-iter (iter (get-visited left-iter) (get-cnt lst))))
-            (make-visited-cnt-pair 
-              (append (get-visited right-iter) (get-visited left-iter))
-              (+ (get-cnt left-iter)
-                (get-cnt right-iter)
-                1)))
-          )))
+        (make-visited-cnt-pair next-visited 0) 
+        (let* ((left-iter (iter next-visited (get-visited lst)))
+               (right-iter (iter (get-visited left-iter) (get-cnt lst))))
+          (make-visited-cnt-pair 
+            (append (get-visited right-iter) (get-visited left-iter))
+            (+ (get-cnt left-iter)
+               (get-cnt right-iter)
+               1)))
+        )))
   (get-cnt (iter '() x))
   ) 
 
@@ -39,7 +39,7 @@
   (assert (= 3 (count-pairs str2))) ; 4 
   (assert (= 3 (count-pairs str3))) ; 7 
   (assert (= 3 (count-pairs str4))) ; maximum recursion depth exceeded
-)
+  )
 (test)
 
 ;; wiki: More elegant since "encountered" is passed between `helper` implicitly.
@@ -51,8 +51,8 @@
         (begin 
           (set! encountered (cons x encountered)) 
           (+ (helper (car x)) 
-            (helper (cdr x)) 
-            1)))) 
-  (helper x))) 
+             (helper (cdr x)) 
+             1)))) 
+    (helper x))) 
 
 (test)

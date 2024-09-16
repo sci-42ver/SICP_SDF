@@ -104,5 +104,5 @@
   (= 
     17
     (let* ((x 10)
-          (f (lambda (y) (+ x y))))
+           (f (lambda (y) (+ x y))))
       (f 7))))

@@ -4,3 +4,6 @@
   (newline)
   (display x))
 (define nil '())
+
+(define (assert-predicate pred x y)
+  (assert (pred x y)))

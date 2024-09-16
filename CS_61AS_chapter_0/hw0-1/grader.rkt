@@ -13,10 +13,10 @@
         (require (planet dyoo/simply-scheme))
         (require rackunit rackunit/text-ui)
         (require (file ,submission-file)))
-#:allow-for-require (list '(planet dyoo/simply-scheme)
-                          'rackunit
-                          'rackunit/text-ui
-                          submission-file)))
+     #:allow-for-require (list '(planet dyoo/simply-scheme)
+                               'rackunit
+                               'rackunit/text-ui
+                               submission-file)))
 
   (e '(define test-map (make-hash)))
   e)
