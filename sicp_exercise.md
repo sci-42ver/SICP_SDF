@@ -1590,6 +1590,11 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - repo just iterates manually and does the same at all.
   - > show why Ben’s examples produce the printed results that they do.
     just 3 cases (2 for `insert-queue!` and else of `delete-queue!`)
+- [ ] 24
+  - define one internal `assoc` using `same-key?` based on "Creating local tables" implementation.
+  - wiki
+    > con-structor make-table that takes as an argument a same-key?
+    The above is wrong for arg location.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

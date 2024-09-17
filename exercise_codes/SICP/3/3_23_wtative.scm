@@ -107,21 +107,14 @@
 ;;; Test 
 (define (newline-display exp) 
   (newline) (display exp)) 
-(define (3_23_test)
-  (define deq (make-deque)) 
+(define deq (make-deque))
+(define (3_23_test) 
   (front-insert-deque! deq 'a) 
   (front-insert-deque! deq 'b) 
   (rear-insert-deque! deq 'z) 
   (rear-insert-deque! deq 'y) 
   ; (#0=((b) . #1=((a . #0#) . #2=((z . #1#) (y . #2#)))) (y . #2#))
   ; (#0=((b) . #1=((a . #0#) . #2=((z . #1#) (y . #2#)))) (y . #2#))
-
-  ; (load "3_19.scm")
-  ; (has-cycle? deq)
-  ; (load "3_18.scm")
-  ; (inf_loop? deq)
-  ; (load "3_19_AntonKolobov_mod.scm")
-  ; (has-cycle? deq)
 
   ; (define old-deq deq)
 
@@ -139,6 +132,13 @@
   ; (equal? deq old-deq) ; #t, so define is shallow copy.
 )
 (3_23_test)
+
+; (load "3_19.scm")
+; (has-cycle? deq)
+; (load "3_18.scm")
+; (inf_loop? deq)
+(load "3_19_AntonKolobov_mod.scm")
+(assert (has-cycle? deq))
 
 ;; cycle
 (define new-deq (make-deque))
