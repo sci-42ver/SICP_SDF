@@ -25,6 +25,8 @@ sci-42ver/SICP_SDF
   - > is can be accomplished using error, which takes as arguments a number of items that are printed as error messages.
     [i.e.](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Condition-Signalling.html#index-error-2)
     > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the irritants field containing the arguments.
+# TODO if wanting to learn how to write tests?
+- ./3_25_nttest.perl
 # exercises
 Same as my former exercise solution repos, `- [ ]` means my solution is at least partly wrong. It doesn't mean I skipped this exercise except when I explicitly say that.
 ## skipped exercises (also see exercises with * before the number possibly)
@@ -1595,6 +1597,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     > con-structor make-table that takes as an argument a same-key?
     The above is wrong for arg location.
+- [ ] 25
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

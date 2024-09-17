@@ -155,3 +155,6 @@
     (display exp)))
 (newline-display (front-deque new-deq))
 (3_23_test)
+
+;; too heavy test and the assumption is different about `empty-deque?` etc.
+(load "deque_test.scm")
