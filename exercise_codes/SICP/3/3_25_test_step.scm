@@ -2,7 +2,8 @@
 (define t2 (make-table))  ; EDIT HERE: the constructor
 
 (insert! t1 '() 'special-case)
-(if (equal? 'special-case (lookup t1 '())) 'match (error "Error: Mismatch special case"))
+(displayln (table-contents t1))
+(if (equal? 'special-case (lookup t1 '())) 'match (error "Error: Mismatch special case" (lookup t1 '())))
 
 (insert!  t2  (list  2 'eel 'fox )  'cat )                   ;klist length= 3
 (assert-lookup   t2  (list  2 'eel 'fox )  'cat )
@@ -34,7 +35,8 @@
 (assert-lookup   t2  (list  'cow 1.618 '(a . b) )  list )
 (insert!  t2  (list  'cat 3.1416 )  'pig )                   ;klist length= 2 
 (assert-lookup   t2  (list  'cat 3.1416 )  'pig )
-(insert!  t1  (list  7 3 6 5 )  '(one) )                     ;klist length= 4 
+(insert!  t1  (list  7 3 6 5 )  '(one) )                     ;klist length= 4
+(display-table-contents t1)
 (assert-lookup   t1  (list  7 3 6 5 )  '(one) )
 (insert!  t1  (list  'dog )  'jay )                          ;klist length= 1 
 (assert-lookup   t1  (list  'dog )  'jay )

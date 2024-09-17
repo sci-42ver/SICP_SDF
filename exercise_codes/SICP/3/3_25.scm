@@ -1,9 +1,9 @@
 (define (remove-last-elem lst)
   (reverse (cdr (reverse lst))))
 (define (subtable? table)
-  (and 
+  (and
     (pair? (cdr table))
-    (pair? (cadr table)) ; either record-or-subtable or subtable.
+    (pair? (cadr table)) ; either record-or-subtable-s or subtable.
     ))
 (define (add-subtable table key-lst value)
   (set-cdr! table
@@ -14,11 +14,23 @@
   (set-cdr! table
             (cons (cons key value)
                   (cdr table))))
+
+;; same behavior with assoc to return #f if failure.
 (define (assoc-all key alist)
-  (filter (lambda (entry) (equal? (car entry) key)) alist))
+  (let ((entries (filter (lambda (entry) (equal? (car entry) key)) alist)))
+    (if (null? entries)
+      #f
+      entries)))
+(define (length<=1? lst)
+  (or (= 0 (length lst)) (= 1 (length lst))))
+(define (safe-key-lst lst)
+  (if (null? lst) lst (car lst)))
+
+(cd "~/SICP_SDF/exercise_codes/SICP/3")
+(load "../lib.scm")
 (define (make-table)
   (let ((local-table (list '*table*)))
-    (define (lookup . keys)
+    (define (lookup-return-pair . keys)
       (let loop 
         ((key-lst keys)
           (table local-table))
@@ -28,60 +40,136 @@
                   (car key-lst)))
                 (find-subtable 
                   (subtable? table))
-                (record-or-subtable 
+                (record-or-subtable-s 
                   ;; See Figure 3.23
                   (if 
-                    ;; to avoid match record-or-subtable `(#t romeo juliet)` as the subtable in test.
+                    ;; to avoid match record-or-subtable-s `(#t romeo juliet)` as the subtable in test.
                     find-subtable
-                    (assoc-all key alist (cdr table))
+                    (assoc-all key (cdr table))
                     ;; i.e. we reach one key-value pair.
-                    ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable value)` instead of keeping calling loop.
+                    ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable-s value)` instead of keeping calling loop.
                     ;; So it is not matched.
                     #f)))
-          ;; the if order can't be changed to ensure `(loop (cdr key-lst) record-or-subtable)` work.
-          (if record-or-subtable
+          ;; the if order can't be changed to ensure `(loop (cdr key-lst) record-or-subtable-s)` work.
+          ; (displayln (list "record-or-subtable-s" record-or-subtable-s))
+          (if record-or-subtable-s
             (if (>= 1 (length key-lst))
-              (cdr record-or-subtable)
-              (loop (cdr key-lst) record-or-subtable))
-            false))))
-    (define (insert! value . keys)
+              (let ((records (filter (lambda (entry) (not (subtable? entry))) record-or-subtable-s)))
+                ; (displayln (list "records" records))
+                (if (= 1 (length records))
+                  (car records)
+                  false ; = 0
+                  )
+                )
+              (fold 
+                (lambda (record-or-subtable res) 
+                  (or (loop (cdr key-lst) record-or-subtable) res))
+                #f
+                record-or-subtable-s))
+            false)))
+      )
+    (define (lookup . keys)
+      (let ((pair (apply lookup-return-pair keys)))
+        (and pair
+          (cdr pair))))
+    ;; return (table key-lst) where `key-lst` is to be looked up in table.
+    (define (common-prefix-lsts . keys)
       (let loop 
         ((key-lst keys)
           (table local-table))
         (let* ((key 
                 (if (null? key-lst)
                   key-lst
-                  (car key-lst))
-                ; (car key-lst)
-                )
+                  (car key-lst)))
                 (find-subtable 
                   (subtable? table))
-                (record-or-subtable 
+                ;; won't search in record
+                (record-or-subtable-s 
                   ;; See Figure 3.23
                   (if 
-                    ;; to avoid match record-or-subtable `(#t romeo juliet)` as the subtable in test.
+                    ;; to avoid match record-or-subtable-s `(#t romeo juliet)` as the subtable in test.
                     find-subtable
-                    (assoc key (cdr table))
+                    (assoc-all key (cdr table))
                     ;; i.e. we reach one key-value pair.
-                    ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable value)` instead of keeping calling loop.
+                    ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable-s value)` instead of keeping calling loop.
                     ;; So it is not matched.
-                    #f)))
-          ;; only this part is changed
-          (if record-or-subtable
-            ;; = 0: only done for the input '() since key-lst with keys will either match or not (i.e. record-or-subtable either with value or #f).
-            (if (or (= 0 (length key-lst)) (= 1 (length key-lst)))
-              (if (subtable? record-or-subtable)
-                (add-record table key value)
-                (set-cdr! record-or-subtable value))
-              (if (subtable? record-or-subtable)
-                (loop (cdr key-lst) record-or-subtable)
-                (add-subtable table key-lst value)))
-            (cond 
-              ((or (= 0 (length key-lst)) (= 1 (length key-lst)))
-                (add-record table key value))
-              (else
-                (add-subtable table key-lst value)))))
-          )
+                    #f))
+                )
+          ;; the if order can't be changed to ensure `(loop (cdr key-lst) record-or-subtable-s)` work.
+          (if record-or-subtable-s
+            (let ((records (filter (lambda (entry) (not (subtable? entry))) record-or-subtable-s))
+                  (subtables (filter (lambda (entry) (subtable? entry)) record-or-subtable-s)))
+              (if (>= 1 (length key-lst))
+                (list (cons table key-lst))
+                (append
+                  (if (null? records)
+                    '()
+                    (list (cons table key-lst)) ; to avoid destroying the current record (see add-record)
+                    )
+                  (append-map
+                    (lambda (subtable) 
+                      (loop (cdr key-lst) subtable))
+                    subtables
+                    ))
+                ))
+            (list (cons table key-lst)))))
+      )
+    (define (find-longest-common-prefix-lst . keys)
+      ; (((*table*))))(*table* (() . special-case)
+      (displayln (list "(apply common-prefix-lsts keys)" keys ":" (apply common-prefix-lsts keys)))
+      (car
+        (sort 
+          (apply common-prefix-lsts keys) 
+          < 
+          (lambda (pair) (length (cdr pair))))))
+    (define (insert! value . keys)
+      (displayln (list "insert!" value keys))
+      (let ((final-record (apply lookup-return-pair keys)))
+        (if final-record
+          (begin
+            (displayln "set final-record")
+            (set-cdr! final-record value))
+          (let loop 
+            ((key-lst keys)
+              (table local-table))
+            (let* ((key 
+                    (safe-key-lst key-lst)
+                    ; (car key-lst)
+                    )
+                    (find-subtable 
+                      (subtable? table))
+                    ; (record-or-subtable-s
+                    ;   ;; See Figure 3.23
+                    ;   (if 
+                    ;     ;; to avoid match record-or-subtable-s `(#t romeo juliet)` as the subtable in test.
+                    ;     find-subtable
+                    ;     (assoc-all key (cdr table))
+                    ;     ;; i.e. we reach one key-value pair.
+                    ;     ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable-s value)` instead of keeping calling loop.
+                    ;     ;; So it is not matched.
+                    ;     #f))
+                    )
+              ; (assert (= 1 (length records)))
+              ;; only this part is changed
+              
+              ;; = 0: only done for the input '() since key-lst with keys will either match or not (i.e. record-or-subtable-s either with value or #f).
+              
+              ;; Based on having checked final-record, here loop must find one record before using all key-lst or doesn't find at all.
+              ;; So it must add-subtable or add-record. We just need to find where to add.
+              (let* ((dest-table-keys (apply find-longest-common-prefix-lst key-lst))
+                    (dest-table (car dest-table-keys))
+                    (rest-key-lst (cdr dest-table-keys))
+                    (cur-key 
+                        (safe-key-lst rest-key-lst)))
+                (if (length<=1? rest-key-lst)
+                  (begin
+                    (displayln (list "add-record" value))
+                    (add-record dest-table cur-key value))
+                  (begin
+                    (displayln (list "add-subtable" dest-table ":" rest-key-lst value))
+                    (add-subtable dest-table rest-key-lst value))))
+              )
+              )))
       'ok)    
     (define (dispatch m)
       (cond ((eq? m 'lookup-proc) lookup)
@@ -118,6 +206,7 @@
 (define (table-contents table)
   (table 'local-table))
 
-(load "3_25_test_step.scm")
+(define (display-table-contents table)
+  (displayln (table-contents table)))
 
-; (*table* (() ("cord" . dog)) ((romeo juliet) (1.4142 (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] (7 (1.618 . "yarn"))))) (1.4142 . pig) ((one) ((larry moe curly) . #[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c])) (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] (1.7321 ("yarn" (cow . #t))) (7 (#[compiled-procedure 15 ("list" #x1) #x1c #xe2d824] (cow . 2))) (#[compiled-procedure 14 ("arith" #x140) #x1c #xb86784] (2.2361 (1.618 (1.4142 . 1))))) ((a . b) (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] . #[compiled-procedure 15 ("list" #x1) #x1c #xe2d824])) (6 (owl (#[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c] ("yarn" . 2)))) (3 (cat (4 . dog))) (4 (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] (jay (#[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c] ("twine" . #[compiled-procedure 12 ("list" #x93) #x1c #xe49a74]))))) (2.2361 (() (4 (#[compiled-procedure 14 ("arith" #x140) #x1c #xb86784] . "twine"))) (eel . #t)) ("rope" (2.2361 (cow (#t . #[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c])))) (#t . 3.1416) (dog (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] (cat (1.618 ((larry moe curly) . 3))))) (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] ((a . b) (2 . 1)) (pig ("cord" . cat) ((1 . 2) (() (2.2361 . 3))))) (pig (eel (3 (1.618 . #[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c])))) (eel (3 . 1.4142)) (3.1416 (4 . pig) (#t . #[compiled-procedure 15 ("list" #x1) #x1c #xe2d824])) (cat . 1.7321) (3 . 3.1416) (jay (6 . 1.7321) ((1 . 2) ((romeo juliet) . #[compiled-procedure 15 ("list" #x1) #x1c #xe2d824])) (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] ((a . b) ((larry moe curly) . 2.2361)))) ("cord" (1.4142 (1.7321 . 1.618)) (6 ((romeo juliet) (1 (4 . #t)))) (2 (1.7321 (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] ("yarn" . 3))))) ((one) . 1) (#[compiled-procedure 14 ("arith" #x140) #x1c #xb86784] . 1.7321) (owl (fox . 4) (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] ("twine" ("rope" . 2.2361))) (cat . 1.7321)) (#t romeo juliet) (eel . "yarn") (3 . "twine") (6 . 1.7321) (#[compiled-procedure 15 ("list" #x1) #x1c #xe2d824] ((romeo juliet) ("cord" (1.4142 (6 . 3)))) (fox 1 . 2)) (#[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c] (fox (dog ((one) . #[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c]))) (1.618 ((larry moe curly) ("rope" (5 . cat))))) (5 . 7) ((1 . 2) . 4) (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] . pig) (pig . #[compiled-procedure 15 ("list" #x1) #x1c #xe2d824]) (1 . #[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c]) (2 (5 (#[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c] . #[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c]))) (1.618 (5 (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] ((romeo juliet) (7 . 4))))) (4 . 6) (jay . "rope") ("twine" (5 . cow) (#[compiled-procedure 16 ("list" #x2) #x1c #xe2d89c] . owl) (dog . "rope")) ((a . b) . 1) (fox (#[compiled-procedure 12 ("list" #x93) #x1c #xe49a74] (1.7321 ((larry moe curly) . 7))) (1 (#t ("cord" ("rope" one))))) (7 (2 (3 (6 (#[compiled-procedure 14 ("arith" #x140) #x1c #xb86784] . jay)))) (3 (6 (5 one))) (1.618 (4 (2 . pig)))) (dog . jay) ("yarn" (cow (#[compiled-procedure 13 ("list" #x9) #x1c #xe2db7c] . 1.7321)) ("cord" . 3)) (2.2361 larry moe curly) (1.7321 . 7) (() . 1.618))
+(load "3_25_test_step.scm")
