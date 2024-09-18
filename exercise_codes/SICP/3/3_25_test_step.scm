@@ -456,7 +456,11 @@
 (assert-lookup-counting   t1  (list  'cat 6 assoc "cord" )  "yarn" )
 (insert!  t1  (list  'cat )  1.7321 )                        ;klist length= 1 
 (assert-lookup   t1  (list  'cat )  1.7321 )
+; (displayln (table-contents t1))
 (assert-lookup-counting   t1  (list  'cat 6 assoc "cord" )  "yarn" )
+; error (89 #[compound-procedure 18 dispatch] (cat 6 #[compiled-procedure 17 ("list" #x93) #x1c #xe49a74] "cord") "yarn")
+; (displayln (table-contents t1))
+
 (insert!  t2  (list  assoc '(romeo juliet) sin 5 )  2 )      ;klist length= 4 
 (assert-lookup   t2  (list  assoc '(romeo juliet) sin 5 )  2 )
 (assert-lookup-counting   t1  (list  'cat 6 assoc "cord" )  "yarn" )

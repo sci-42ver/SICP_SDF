@@ -27,8 +27,8 @@
 (define (safe-key-lst lst)
   (if (null? lst) lst (car lst)))
 
-(cd "~/SICP_SDF/exercise_codes/SICP/3")
-(load "../lib.scm") ; for displayln
+; (cd "~/SICP_SDF/exercise_codes/SICP/3")
+; (load "../lib.scm") ; for displayln
 (define (make-table)
   (let ((local-table (list '*table*)))
     (define (lookup-return-pair . keys)
