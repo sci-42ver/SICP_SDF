@@ -37,6 +37,7 @@
 ;; front, the one before rear, rear
 (define (make-deque) (list '() '() '()))
 (define front-deque front-ptr)
+;; See 3_23_roytobin.scm we can think of this as one internal func.
 (define (second-rear-deque deque) (cadr deque)) ; ... beyond the book specification.
 (define (rear-deque deque) (caddr deque))
 
