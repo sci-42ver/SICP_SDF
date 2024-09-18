@@ -1,3 +1,15 @@
+;; helper
+(define (assert-lookup table keys value)
+  (if (not (equal? (lookup table keys) value))
+    (bkpt "error" (list table keys value))))
+
+(define count 0)
+(define (assert-lookup-counting table keys value) 
+  (set! count (+ 1 count))
+  (if (not (equal? (lookup table keys) value))
+    (error "error" (list count table keys value))))
+
+;; 
 (define t1 (make-table))  ; EDIT HERE: the constructor
 (define t2 (make-table))  ; EDIT HERE: the constructor
 

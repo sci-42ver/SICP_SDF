@@ -27,23 +27,23 @@
     (if (not (pair? root)) ; leaf as the base case.
       false 
       (let* ((clock-cnt-updated (+ 1 clock-cnt)) ; put first to ensure the first set is when clock-cnt-updated=2 instead of clock-cnt=0.
-            (slow-it-updated 
-              ;; Here the minimal step is 2 clock-cnt's.
-              ;; Still work since x_i=x_{2i} -> x_{2i}=x_{4i}, so if x_{2i}!=x_{4i} -> x_i!=x_{2i} -> not have cycle.
-              ;; And trivially x_{2i}=x_{4i} -> have cycle.
-              (if 
-                (and (even? clock-cnt-updated) 
+             (slow-it-updated 
+               ;; Here the minimal step is 2 clock-cnt's.
+               ;; Still work since x_i=x_{2i} -> x_{2i}=x_{4i}, so if x_{2i}!=x_{4i} -> x_i!=x_{2i} -> not have cycle.
+               ;; And trivially x_{2i}=x_{4i} -> have cycle.
+               (if 
+                 (and (even? clock-cnt-updated) 
                       (iterator-same-pos? slow-it fast-it)) 
-                ; (odd? clock-cnt-updated)
-                (begin
-                  (displayln "update slow-it")
-                  (iterator root clock-cnt-updated))
-                slow-it))
-            (fast-it-updated
-              (if (even? clock-cnt-updated) 
-                (iterator root (+ (iterator-id fast-it) 1))
-                fast-it))
-            )
+                 ; (odd? clock-cnt-updated)
+                 (begin
+                   (displayln "update slow-it")
+                   (iterator root clock-cnt-updated))
+                 slow-it))
+             (fast-it-updated
+               (if (even? clock-cnt-updated) 
+                 (iterator root (+ (iterator-id fast-it) 1))
+                 fast-it))
+             )
         (if 
           (iterator-eq? slow-it fast-it) 
           ; (iterator-same-value? slow-it fast-it)

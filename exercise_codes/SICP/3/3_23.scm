@@ -17,18 +17,18 @@
            (set-rear-ptr! deque new-deque-lst)
            deque)
           (else
-           (set-front-ptr! deque new-deque-lst)
-           deque))))
+            (set-front-ptr! deque new-deque-lst)
+            deque))))
 
 (define front-delete-deque! delete-queue!)
 (define (rear-delete-deque! queue)
   (cond ((empty-queue? queue)
          (error "DELETE! called with an empty queue" queue))
         (else
-        ;; > All operations should be accomplished in Θ(1) steps
-        ;; ... there seems no official implementation to car/cdr etc. back.
-         (set-front-ptr! queue (cdr (front-ptr queue)))
-         queue)))
+          ;; > All operations should be accomplished in Θ(1) steps
+          ;; ... there seems no official implementation to car/cdr etc. back.
+          (set-front-ptr! queue (cdr (front-ptr queue)))
+          queue)))
 
 ;; ignore all the above implementations based on the above "...".
 ;; > Show how to represent deques using pairs

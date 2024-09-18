@@ -121,7 +121,7 @@ z ; #0=(1 . #0#)
     (eq? (iterator-id it1) (iterator-id it2))) 
   (define (iterator-eq? it1 it2) 
     (and (iterator-same-pos? it1 it2) 
-        (eq? (iterator-value it1) (iterator-value it2)))) 
+         (eq? (iterator-value it1) (iterator-value it2)))) 
 
   ;; slow-it - tracks each node (1, 2, 3, 4...) 
   ;; fast-it - tracks only even nodes (2, 4...) 
@@ -130,17 +130,17 @@ z ; #0=(1 . #0#)
         (clock-cnt 0)) 
     (define (dfs root) 
       (if (not (pair? root)) 
-          false 
-          (begin 
-            (set! clock-cnt (+ clock-cnt 1)) 
-            (if (and (even? clock-cnt) 
-                    (iterator-same-pos? slow-it fast-it)) 
-                (update-iterator slow-it root clock-cnt)) 
-            (if (even? clock-cnt) 
-                (update-iterator fast-it root 
-                                (+ (iterator-id fast-it) 1))) 
-            (if (iterator-eq? slow-it fast-it) 
-                true 
-                (or (dfs (car root)) 
-                    (dfs (cdr root))))))) 
+        false 
+        (begin 
+          (set! clock-cnt (+ clock-cnt 1)) 
+          (if (and (even? clock-cnt) 
+                   (iterator-same-pos? slow-it fast-it)) 
+            (update-iterator slow-it root clock-cnt)) 
+          (if (even? clock-cnt) 
+            (update-iterator fast-it root 
+                             (+ (iterator-id fast-it) 1))) 
+          (if (iterator-eq? slow-it fast-it) 
+            true 
+            (or (dfs (car root)) 
+                (dfs (cdr root))))))) 
     (dfs tree))) 

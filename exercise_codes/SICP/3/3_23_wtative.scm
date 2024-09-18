@@ -14,13 +14,13 @@
 
 (define (front-deque deque) 
   (if (empty-deque? deque) 
-      (error "FRONT called with an empty deque" deque) 
-      (val-decell (front-dptr deque)))) 
+    (error "FRONT called with an empty deque" deque) 
+    (val-decell (front-dptr deque)))) 
 ;; see below for definition of a decell. 
 (define (rear-deque deque) 
   (if (empty-deque? deque) 
-      (error "REAR called with an empty deque" deque) 
-      (val-decell (rear-dptr deque)))) ; selectors  
+    (error "REAR called with an empty deque" deque) 
+    (val-decell (rear-dptr deque)))) ; selectors  
 
 (define (set-first-deque! deque decell) 
   (set-front-dptr! deque decell) 
@@ -28,46 +28,46 @@
 (define (front-insert-deque! deque item) 
   (let ((decell (make-decell '() item '()))) 
     (cond ((empty-deque? deque) 
-          (set-first-deque! deque decell)) 
+           (set-first-deque! deque decell)) 
           (else 
-          (connect-decell! decell (front-dptr deque)) 
-          (set-front-dptr! deque decell))) 
+            (connect-decell! decell (front-dptr deque)) 
+            (set-front-dptr! deque decell))) 
     deque)) 
 (define (rear-insert-deque! deque item) 
   (let ((decell (make-decell '() item '()))) 
     (cond ((empty-deque? deque) 
-          (set-first-deque! deque decell)) 
+           (set-first-deque! deque decell)) 
           (else 
-          (connect-decell! (rear-dptr deque) decell) 
-          (set-rear-dptr! deque decell))) 
+            (connect-decell! (rear-dptr deque) decell) 
+            (set-rear-dptr! deque decell))) 
     deque)) 
 
 (define (front-delete-deque! deque) 
   (cond ((empty-deque? deque) 
-        (error "FRONT-DELETE called with an empty deque" deque)) 
+         (error "FRONT-DELETE called with an empty deque" deque)) 
         (else 
-        (set-front-dptr! deque (right-decell (front-dptr deque))) 
-        ;; Since we won't do anything for empty-deque, so it is ok to have the wrong "left-decell".
-        (if (not (empty-deque? deque)) 
+          (set-front-dptr! deque (right-decell (front-dptr deque))) 
+          ;; Since we won't do anything for empty-deque, so it is ok to have the wrong "left-decell".
+          (if (not (empty-deque? deque)) 
             (set-left-decell! (front-dptr deque) '())) 
-        deque))) 
+          deque))) 
 (define (rear-delete-deque! deque) 
   (cond ((empty-deque? deque) 
-        (error "REAR-DELETE called with an empty deque" deque)) 
+         (error "REAR-DELETE called with an empty deque" deque)) 
         (else 
-        (set-rear-dptr! deque (left-decell (rear-dptr deque))) 
-        (if (not (empty-deque? deque)) 
+          (set-rear-dptr! deque (left-decell (rear-dptr deque))) 
+          (if (not (empty-deque? deque)) 
             (set-right-decell! (rear-dptr deque) '())) 
-        deque))) ; mutators 
+          deque))) ; mutators 
 
 (define (deque->list deque) 
   (define (iter decell) 
     (if (null? decell) 
-        '() 
-        (cons (val-decell decell) (iter (right-decell decell))))) 
-  (if (empty-deque? deque) 
       '() 
-      (iter (front-dptr deque)))) 
+      (cons (val-decell decell) (iter (right-decell decell))))) 
+  (if (empty-deque? deque) 
+    '() 
+    (iter (front-dptr deque)))) 
 
 
 ;; A dequeue is a pair of front and rear references to the same list, 
@@ -85,12 +85,12 @@
 (define (val-decell decell) (caar decell)) 
 (define (left-decell decell) 
   (if (not (null? (cdr (car decell)))) 
-      ;; delay/force evaluation of this part 
-      ;; prevents the interpreter from printing 
-      ;; cycle of decells. 
-      ; ((cdr (car decell))) 
-      (cdr (car decell))
-      '())) 
+    ;; delay/force evaluation of this part 
+    ;; prevents the interpreter from printing 
+    ;; cycle of decells. 
+    ; ((cdr (car decell))) 
+    (cdr (car decell))
+    '())) 
 (define (right-decell decell) (cdr decell)) 
 (define (set-right-decell! decell right-decell) 
   (set-cdr! decell right-decell)) 
@@ -130,7 +130,7 @@
   ;;Value: z 
 
   ; (equal? deq old-deq) ; #t, so define is shallow copy.
-)
+  )
 (3_23_test)
 
 ; (load "3_19.scm")
@@ -151,8 +151,8 @@
 (load "3_19_AntonKolobov_mod.scm")
 (define (newline-display exp) 
   (and (not (has-cycle? exp))
-    (newline) 
-    (display exp)))
+       (newline) 
+       (display exp)))
 (newline-display (front-deque new-deq))
 (3_23_test)
 

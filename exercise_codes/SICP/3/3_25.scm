@@ -28,29 +28,27 @@
   (if (null? lst) lst (car lst)))
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
-(load "../lib.scm")
+(load "../lib.scm") ; for displayln
 (define (make-table)
   (let ((local-table (list '*table*)))
     (define (lookup-return-pair . keys)
       (let loop 
         ((key-lst keys)
-          (table local-table))
+         (table local-table))
         (let* ((key 
-                (if (null? key-lst)
-                  key-lst
-                  (car key-lst)))
-                (find-subtable 
-                  (subtable? table))
-                (record-or-subtable-s 
-                  ;; See Figure 3.23
-                  (if 
-                    ;; to avoid match record-or-subtable-s `(#t romeo juliet)` as the subtable in test.
-                    find-subtable
-                    (assoc-all key (cdr table))
-                    ;; i.e. we reach one key-value pair.
-                    ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable-s value)` instead of keeping calling loop.
-                    ;; So it is not matched.
-                    #f)))
+                 (safe-key-lst key-lst))
+               (find-subtable 
+                 (subtable? table))
+               (record-or-subtable-s 
+                 ;; See Figure 3.23
+                 (if 
+                   ;; to avoid match record-or-subtable-s `(#t romeo juliet)` as the subtable in test.
+                   find-subtable
+                   (assoc-all key (cdr table))
+                   ;; i.e. we reach one key-value pair.
+                   ;; But if this is matched with key-lst, then we will actually `(set-cdr! record-or-subtable-s value)` instead of keeping calling loop.
+                   ;; So it is not matched.
+                   #f)))
           ;; the if order can't be changed to ensure `(loop (cdr key-lst) record-or-subtable-s)` work.
           ; (displayln (list "record-or-subtable-s" record-or-subtable-s))
           (if record-or-subtable-s
@@ -72,25 +70,23 @@
     (define (lookup . keys)
       (let ((pair (apply lookup-return-pair keys)))
         (and pair
-          (cdr pair))))
+             (cdr pair))))
     ;; return (table key-lst) where `key-lst` is to be looked up in table.
     (define (common-prefix-lsts . keys)
       (let loop 
         ((key-lst keys)
-          (table local-table))
+         (table local-table))
         (let* ((key 
-                (if (null? key-lst)
-                  key-lst
-                  (car key-lst)))
-                (find-subtable 
-                  (subtable? table))
-                ;; won't search in record
-                (record-or-subtable-s 
-                  (if 
-                    find-subtable
-                    (assoc-all key (cdr table))
-                    #f))
-                )
+                 (safe-key-lst key-lst))
+               (find-subtable 
+                 (subtable? table))
+               ;; won't search in record
+               (record-or-subtable-s 
+                 (if 
+                   find-subtable
+                   (assoc-all key (cdr table))
+                   #f))
+               )
           (if record-or-subtable-s
             (let ((records (filter (lambda (entry) (not (subtable? entry))) record-or-subtable-s))
                   (subtables (filter (lambda (entry) (subtable? entry)) record-or-subtable-s)))
@@ -111,11 +107,12 @@
       )
     (define (find-longest-common-prefix-lst . keys)
       ; (displayln (list "(apply common-prefix-lsts keys)" keys ":" (apply common-prefix-lsts keys)))
-      (car
-        (sort 
-          (apply common-prefix-lsts keys) 
-          < 
-          (lambda (pair) (length (cdr pair))))))
+      (let ((cand-common-prefix-lsts (apply common-prefix-lsts keys)))
+        (car
+          (sort 
+            cand-common-prefix-lsts
+            < 
+            (lambda (pair) (length (cdr pair)))))))
     (define (insert! value . keys)
       ; (displayln (list "insert!" value keys))
       (let ((final-record (apply lookup-return-pair keys)))
@@ -125,22 +122,22 @@
             (set-cdr! final-record value))
           (let loop 
             ((key-lst keys)
-              (table local-table))
-              ;; Based on having checked final-record, here loop must find one record before using all key-lst or doesn't find at all.
-              ;; So it must add-subtable or add-record. We just need to find where to add.
-              (let* ((dest-table-keys (apply find-longest-common-prefix-lst key-lst))
-                    (dest-table (car dest-table-keys))
-                    (rest-key-lst (cdr dest-table-keys))
-                    (cur-key 
-                        (safe-key-lst rest-key-lst)))
-                (if (length<=1? rest-key-lst)
-                  (begin
-                    ; (displayln (list "add-record" value))
-                    (add-record dest-table cur-key value))
-                  (begin
-                    ; (displayln (list "add-subtable" dest-table ":" rest-key-lst value))
-                    (add-subtable dest-table rest-key-lst value))))
-              )))
+             (table local-table))
+            ;; Based on having checked final-record, here loop must find one record before using all key-lst or doesn't find at all.
+            ;; So it must add-subtable or add-record. We just need to find where to add.
+            (let* ((dest-table-keys (apply find-longest-common-prefix-lst key-lst))
+                   (dest-table (car dest-table-keys))
+                   (rest-key-lst (cdr dest-table-keys))
+                   (cur-key 
+                     (safe-key-lst rest-key-lst)))
+              (if (length<=1? rest-key-lst)
+                (begin
+                  ; (displayln (list "add-record" value))
+                  (add-record dest-table cur-key value))
+                (begin
+                  ; (displayln (list "add-subtable" dest-table ":" rest-key-lst value))
+                  (add-subtable dest-table rest-key-lst value))))
+            )))
       'ok)    
     (define (dispatch m)
       (cond ((eq? m 'lookup-proc) lookup)
@@ -155,16 +152,6 @@
 
 (define (lookup table keys)
   (apply (table 'lookup-proc) keys))
-
-(define (assert-lookup table keys value)
-  (if (not (equal? (lookup table keys) value))
-    (bkpt "error" (list table keys value))))
-
-(define count 0)
-(define (assert-lookup-counting table keys value) 
-  (set! count (+ 1 count))
-  (if (not (equal? (lookup table keys) value))
-    (error "error" (list count table keys value))))
 
 (define (table-contents table)
   (table 'local-table))
