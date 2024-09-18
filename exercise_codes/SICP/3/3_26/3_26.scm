@@ -13,6 +13,10 @@
   (if (null? lst)
     lst
     (car lst)))
+(define (safe-list lst)
+  (if (list? lst)
+    lst
+    (list lst)))
 (define (make-table)
   (define (make-entry keys value)
     (list keys value))
@@ -64,14 +68,18 @@
       (apply keys<? (map get-key entry-lst))))
   
   (define (lookup keys)
-    (let ((record (lookup-bst keys table leaf-branch get-key keys<? keys=? null?*)))
-      (and record (get-val record))))
+    ;; to be compatible with 3_26_roytobin_tests_normal.scm.
+    (let ((keys (safe-list keys)))
+      (let ((record (lookup-bst keys table leaf-branch get-key keys<? keys=? null?*)))
+        (and record (get-val record)))))
+  ;; not efficient since lookup-bst and adjoin-set will iterate the table two times.
   (define (insert keys value)
-    (let ((record (lookup-bst keys table leaf-branch get-key keys<? keys=? null?*)))
-      (cond (record  
-              (set-entry-value record value))
-            (else    
-              (set! table (adjoin-set (make-entry keys value) table entry-keys<? entry-keys=? entry-vals=? leaf-branch null?*))))))
+    (let ((keys (safe-list keys)))
+      (let ((record (lookup-bst keys table leaf-branch get-key keys<? keys=? null?*)))
+        (cond (record  
+                (set-entry-value record value))
+              (else    
+                (set! table (adjoin-set (make-entry keys value) table entry-keys<? entry-keys=? entry-vals=? leaf-branch null?*)))))))
   (define (dispatch m)
     (cond ((eq? m 'lookup) lookup)
           ((eq? m 'insert) insert)
@@ -84,4 +92,5 @@
   (table 'table-contents))
 
 (load "../lib.scm") ; for displayln
-(load "3_25_test_step.scm")
+(load "3_25/3_25_test_step.scm")
+(load "3_26/3_26_roytobin_tests_normal.scm")

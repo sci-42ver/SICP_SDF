@@ -1597,7 +1597,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     > con-structor make-table that takes as an argument a same-key?
     The above is wrong for arg location.
-- [ ] 25
+- [ ] 25,26
+  - I won't check why repo errors occur.
+  - With roy-tobin's test, I finished these 2 codes by debugging.
+- 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

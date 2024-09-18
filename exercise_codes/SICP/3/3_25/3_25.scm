@@ -159,4 +159,5 @@
 (define (display-table-contents table)
   (displayln (table-contents table)))
 
+(cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "3_25_test_step.scm")

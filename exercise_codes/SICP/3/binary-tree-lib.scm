@@ -6,6 +6,10 @@
   (list entry left right))
 
 ;; modified based on the book
+;; See https://github.com/roytobin/btable/blob/main/Report
+;; > The procedure make-tree is not called once per insertion (to construct
+;; > the new key/value pair) but is instead called *multiple times*, proportional
+;; > to the depth (or height) of the tree.
 (define (adjoin-set x set entry-keys<* entry-keys=* entry-vals=* leaf-branch null?*)
   (cond ((null?* set) (make-tree x leaf-branch leaf-branch))
         ((entry-keys=* x (entry set)) 
