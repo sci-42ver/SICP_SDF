@@ -5,6 +5,7 @@
 (define (make-tree entry left right)
   (list entry left right))
 
+;; modified based on the book
 (define (adjoin-set x set entry-keys<* entry-keys=* entry-vals=* leaf-branch null?*)
   (cond ((null?* set) (make-tree x leaf-branch leaf-branch))
         ((entry-keys=* x (entry set)) 
