@@ -4,6 +4,7 @@
 ; If using racket include a compatability package like this:  racket -p neil/sicp
 ; dqi- (DeQue Internal) is the prefix (name space) for helper procedures.
 
+;; similar to wiki make-decell
 (define (dqi-make-node payload) (list '() payload '()))
 (define (dqi-node-left    node) (car node))
 (define (dqi-node-payload node) (cadr node))
@@ -14,7 +15,8 @@
   (define (mk-list n xs)
     (if (null? n)
       xs
-      (mk-list (dqi-node-left n) (cons (dqi-node-payload n) xs))
+      ; (mk-list (dqi-node-left n) (cons (dqi-node-payload n) xs))
+      (mk-list (dqi-node-right n) (cons (dqi-node-payload n) xs))
       ))
 
   (if (empty-deque? dq)
@@ -23,11 +25,13 @@
   (newline))
 
 ; These are pretty much straight from SICP, global environment pollution and all.
+;; function same as front-ptr etc, see rear-deque.
 (define (left-ptr dq)   (car dq))
 (define (right-ptr dq)  (cdr dq))
 (define (set-left-ptr! dq item)  (set-car! dq item))
 (define (set-right-ptr! dq item) (set-cdr! dq item))
 
+;; same structure as front-insert-deque! and rear-insert-deque!
 (define (dqi-insert dq payload m)
   (define (establish dq node)
     (set-left-ptr! dq node)
@@ -52,6 +56,8 @@
       (establish dq newnode)
       (insert dq m newnode))))
 
+;; similar structure as front-delete-deque! etc. but will reset the dq with only one elem.
+;; And always ensure ptr pointing to the correct thing.
 (define (dqi-delete dq m)
   (define (reset dq)
     (set-left-ptr! dq '())
@@ -59,7 +65,10 @@
 
   (define (delete dq m)
     (cond ((eq? m 'left) 
+            ;; doesn't set right-ptr since right-ptr must be different from left-ptr implied by `(eq? (left-ptr dq) (right-ptr dq))`.
+            ;; So the result dq is not empty.
            (set-left-ptr! dq (dqi-node-right (left-ptr dq)))
+           ;; Compared with wiki wtative, here dq can't be empty, so `(left-ptr dq)` always work.
            (dqi-node-set-left! (left-ptr dq) '()))
           ((eq? m 'right) 
            (set-right-ptr! dq (dqi-node-left (right-ptr dq)))
@@ -67,6 +76,7 @@
           (else  (error "Internal Error: bad message" m))))
 
   ; A delete operation on an empty deque is a NOP, not an error
+  ;; NOP here means have no effects instead of doing nothing.
   (if (eq? (left-ptr dq) (right-ptr dq))
     (reset dq)
     (delete dq m)))
@@ -94,3 +104,5 @@
   (if (empty-deque? dq)
     (error "REAR called with an empty deque" dq)
     (dqi-node-payload (right-ptr dq))))
+
+(load "deque_test.scm")
