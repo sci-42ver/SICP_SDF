@@ -806,7 +806,30 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   - sol
     > substitute into an unevaluated part of a special form.
     i.e. `⟨name ⟩` in SICP p299.
-# CS 61A notes
+# @CS 61A notes
+## skipped underlined words
+- p2
+- p11
+- p41
+- p44
+- p54
+- p58
+## @TODO
+### @underlined words
+- p24 MapReduce
+  > (accumulate reducer base-case (map mapper data))
+- p56
+  > how the Scheme interpreter uses mutable pairs to *implement environments*
+- p60
+  > This idea of using a *non-functional implementation* for something that has functional behavior will be very useful later when we look at *streams*.
+## Week 1
+- > reminder about quoting
+  IMHO this means we first get the value of `hello` and then do `first` on that.
+## Week 2
+- > We haven’t really talked about aggregates yet
+  based on the search results in the following contents, "aggregate" means compound data structure.
+  > except for the special case of sentences
+  i.e. "sentence" is composed of words.
 ## Week 4
 Weirdly, `MapReduce` is used in Week 13 Lab but introduced in Week 4.
 I think these functions are almost covered by "6.001_fall_2007_recitation/r07.pdf".
@@ -845,6 +868,8 @@ It is really hard to understand these codes since we don't know the detailed imp
                                     files))))
 ```
 - Here `reducer` manipulates with "value" in kv pairs.
+- > Therefore, the reducer doesn’t need to look at keys at all; its two arguments are a *value* and the result of the *partial accumulation* of values already done
+  same as `fold`.
 ## Week 5
 - > Notice that read and print are not functional programming; read returns a *different* value each time it’s called, and print *changes something* in the world instead of just returning a value.
   See https://en.wikipedia.org/wiki/Pure_function and https://stackoverflow.com/a/903126/21294350.
@@ -883,6 +908,11 @@ It is really hard to understand these codes since we don't know the detailed imp
   [See](https://introtcs.org/public/lec_08_uncomputability.html) or DMIA universal Turing machine.
   > One of the most significant results we showed for Boolean circuits (or equivalently, straight-line programs) is the notion of universality: there is a single circuit that can evaluate all other circuits
 - [tail recursion elimination (2nd paragraph and `function_tail_optimized`)](https://stackoverflow.com/a/1240613/21294350)
+- > And yet these three procedures exactly parallel the core procedures in a real Scheme interpreter:
+  ~~IMHO~~ "parallel" means "are similar to".
+## Week 6
+- > Don’t get the idea that DDP just means a two-dimensional table of operator and type names!
+  "table of operator and type" implies "Orthogonality of types and operators".
 ## Week 7
 There are 10 pages in `aboveline.pdf`, so same as SICP book I will only read the first sentence of each paragraph.
 For `aboveline.pdf` I will just focus on the concepts instead of how the lib `obj.scm` implements that (This is also implied by the pdf contents).
@@ -943,6 +973,28 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
     2. 
   - > Each object has a send-usual-to-parent method that essentially duplicates the job of the ask procedure
     So `'send-usual-to-parent` does `(apply method args)`.
+## Week 9
+- > They aren’t special forms!
+  IMHO this is due to that they can be defined in `lambda`.
+- > They’re different from set!, which changes the binding of a variable.
+  See book `(define (set-x! v) (set! x v))`, so `set-car!` also "changes the binding of a variable".
+  > the book shows how to use local state variables to simulate mutable pairs
+  i.e. formal parameters as "local state variables"
+  - > Each can be implemented in terms of the other;
+    IMHO to define `set!` in terms of `set-car!`, we can use one temporary pair, i.e. `(set-car! (cons x '()) val)`.
+- "functional programming" definition [see](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html#footnote_Temp_339)
+  > Programming *without any use of assignments*, as we did throughout the first two chapters of this book, is accordingly known as functional programming.
+  So 
+  > If we look inside the box, memo-fib works non-functionally.
+  is right.
+- > (Append a b) shares storage with b but not with a. (Why not? Read the append procedure.)
+  See Exercise 3.12 where we returns one variable whose right subpart is `b`.
+- > The reason is that Scheme implementations are allowed to share storage when the same quoted constant is used twice in your program.
+  See Figure 3.17.
+- > In a subtable, the key-value pair from the top-level table plays that role
+  i.e. `keyI` pair.
+  > That is, the entire subtable is a value of some key-value pair in the main table.
+  see the figure bottom-right part.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -1756,6 +1808,8 @@ not use
   Here "headed list" just means [Linked List](https://www.andrew.cmu.edu/course/15-121/lectures/Linked%20Lists/linked%20lists.html)
 - > In order to have a place that we can change when we add a new record to the table, we build the table as a headed list. A headed list has a special backbone pair at the beginning, which holds a dummy “record”
   See `(insert! key value table)` which inserts at the *head of actual records* for efficiency.
+  and CS61A notes
+  > That is, even in an “empty” table we have a pair to set-cdr!
 - Why use `(list key-1 ...)` for `(insert! key-1 key-2 value table)`: see Figure 3.23 math part.
   - See book p135
     > e entire sequence is constructed by nested cons operations: ...
