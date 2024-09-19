@@ -64,9 +64,9 @@ Review one history comment
       IMHO “identity” just means not decomposable.
 ## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to chapter 2 included.
+- up to section 3.3 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.3.2 (included).
+- up to section 3.3.3 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -98,7 +98,7 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "exer
 - > although it does lead to coercion problems, as discussed below
   See exercise 2.92.
 ### 3
-checked up to section 3.3 (excluded)
+checked up to section 3.3.3 (included)
 - chapter 1 footnote 9
   > Chapter 3 will show that this notion of environment is crucial
   16(also with *Chapter 4*)
@@ -1754,12 +1754,14 @@ not use
   ~~It should be 2.4.3.~~ See "Sets and information retrieval".
 - > we build the table as a headed list
   Here "headed list" just means [Linked List](https://www.andrew.cmu.edu/course/15-121/lectures/Linked%20Lists/linked%20lists.html)
-- > In order to have a place that we can change when we add a new record to the table, we build the table as a headed list.
+- > In order to have a place that we can change when we add a new record to the table, we build the table as a headed list. A headed list has a special backbone pair at the beginning, which holds a dummy “record”
   See `(insert! key value table)` which inserts at the *head of actual records* for efficiency.
 - Why use `(list key-1 ...)` for `(insert! key-1 key-2 value table)`: see Figure 3.23 math part.
   - See book p135
     > e entire sequence is constructed by nested cons operations: ...
     Here we adds the nil at the end to ensure base case `((null? records) false)` in `assoc` work (same for `(list '*table*)` in `(make-table)`).
+- > These gluing pairs are called the backbone of the table
+  For Figure 3.22, i.e. the 1st row.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

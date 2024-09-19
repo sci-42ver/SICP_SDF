@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.23 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.26 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1600,7 +1600,39 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 25,26
   - I won't check why repo errors occur.
   - With roy-tobin's test, I finished these 2 codes by debugging.
-- 
+  - wiki mainly see roy-tobin's.
+- [ ] 27
+  - > When the memoized procedure is asked to compute a value, it first checks the table to see if the value is *already there* and, if so, just returns that value. Otherwise, it computes the new value in the ordinary way and *stores this* in the table.
+    This is same as the behavior of [`hash-table-intern!`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Basic-Hash-Table-Operations.html#index-hash_002dtable_002dintern_0021)
+  - an environment diagram
+    ```
+    memo-fib
+    memoize
+      E1: f
+        E1': table
+          (lambda (x) ...)
+          E2 (by `(memo-fib n)`): x
+            E3: previously-computed-result
+              E4 (since `previously-computed-result` is #f): result
+          E2' (by `(memo-fib (- n 1))`): x
+            ...
+    E1'' (for `make-table`):
+    E3' (lookup): x
+         table
+    E4' (for f in `(result (f x))`): x
+    E5 (insert!): x result table...
+    ```
+    - [See wiki](https://github.com/kana/sicp/blob/master/ex-3.27.md)
+      1. better show pair for `memo-fib` and `memoize` to be more clear.
+      2. Here `(lambda (n) ...)` is one anonymous func with "enclosing environment" global.
+      3. "(for f in `(result (f x))`)" should be `n` to be compatible with the lambda func.
+  - > Explain why memo-fib computes the nth Fibonacci number in *a number of steps* proportional to n.
+    Since each will be calculated only once, ~~then if `lookup` and `insert!` is O(1) we we have ~~ `(result (f x))` will be called only `n-1` times.
+  - > Would the scheme still work if we had simply defined memo-fib to be (memoize fib)?
+    No since that will fail for `(lookup x table)` and then we just calculate `(result (f x))`, i.e. `(fib x)` which is exponential.
+  - The above 2 explanations are *same* as wiki meteorgan's and Manu Halvagal's.
+  - repo doesn't have valuable infos.
+- [ ] 28
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
