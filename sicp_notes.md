@@ -806,6 +806,25 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   - sol
     > substitute into an unevaluated part of a special form.
     i.e. `⟨name ⟩` in SICP p299.
+## Week 9
+- [x] 1
+  - > Append (without the !) makes copies of the two pairs that are part of the list x.
+    "that are part of the list x" should be "including x"
+- [x] 2 
+  - since that means `(set! 3 y)` and 3 [doesn't meet](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Assignments.html#index-set_0021-1)
+    > in the location to which variable is bound
+    see sol
+    > its first argument must be a symbol, not a compound expression.
+  - > The book says, correctly, that the two are *equivalent* in the sense that you can use one to implement the other.
+    So "The semantic explanation" is *not strictly right*.
+- [x] 3a
+  - `(set-cdr! (car list1) (car list2))`
+    `(set-cdr! (car list2) (cdr list1))`
+    IMHO due to ~~using pointers~~ that `(car list2)` is list and changing it later will also influence what points to it, the order is fine by setting `list2` after `list1`.
+- [x] 3b similar to "Figure 3.17", both points to `'y` symbol with garbage `'b`.
+- [x] 4 
+  - 3.13 same as wiki
+  - 3.14 is less detailed.
 # @CS 61A notes
 ## skipped underlined words
 - p2
