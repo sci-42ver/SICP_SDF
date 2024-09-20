@@ -827,7 +827,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   IMHO this means we first get the value of `hello` and then do `first` on that.
 ## Week 2
 - > We haven’t really talked about aggregates yet
-  based on the search results in the following contents, "aggregate" means compound data structure.
+  based on the search results in the following contents, "aggregate" means compound data structure like `pair`.
   > except for the special case of sentences
   i.e. "sentence" is composed of words.
 ## Week 4
@@ -995,6 +995,24 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   i.e. `keyI` pair.
   > That is, the entire subtable is a value of some key-value pair in the main table.
   see the figure bottom-right part.
+- > in many other languages it’s called an array, but it’s the same idea. Finding the nth element of a vector takes Θ(1) time.
+  > But there are no vector analogs to the list constructors cons and append
+  ~~probably~~ due to they are in *consecutive addresses* and the former and latter locations are all occupied by others.
+  > Since a vector is one contiguous block of memory
+- > In STk, vectors are self-evaluating, so you can omit the quotation mark, but this is a nonstandard extension to Scheme.
+  Same for MIT/GNU Scheme.
+- `(vector-cons value vec)` does something like `(cons value vec)`.
+- > Note, though, that if you want to select all the elements of a sequence, one after another, then lists are just as fast as arrays.
+  i.e. `map`.
+  See `vector-map` where if `make-vector` and `vector-length` has complexity better than or same as $O(n)$ (`vector-set!` and `(vector-ref vec n)` have `O(1)`), then both structures "to select all the elements of a sequence" have complexity $O(n)$.
+- > because it takes Θ(n) time to find one element at a randomly chosen position, and we have to do that n times
+  ~~i.e. `(random (length lst))`.~~
+  > But we can improve the constant factor by avoiding the copying of pairs that append does in the first version:
+  Based on `append`, we *avoid doing `index` times `car`* by `((repeated cdr index) lst)`. Then we swap 2 elements by `(set-car! lst (car pair)) (set-car! pair temp)` by just using `O(1)`  operations. Then iter `(shuffle2! (cdr lst))`.
+  "find one element at a randomly chosen position" -> `pair`.
+  > This could be improved still further by calling length only once,
+  i.e. same as what `loop` does.
+  - `shuffle3!` also swaps.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
