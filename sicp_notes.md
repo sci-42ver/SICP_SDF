@@ -22,6 +22,10 @@ Review one history comment
 - Although 6.001 lect06 recommends the comment doc, I don't have time to write that for each function. I will do that when working for one company.
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.
+## whether it is needed to read *course lecs/notes* after reading the SICP book and doing its exercises
+### lacked by the book but included in 6.001 lec
+- lec11
+  - Stack example
 # Scheme func notices
 - `atan`
   > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).
@@ -58,10 +62,23 @@ Review one history comment
     See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
 - section 3.1
   - TODO
-    - > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
+    - > But this view is no longer valid in the presence of change, where a com-pound data object has an “identity” that is something different from the pieces of which it is composed.
+      > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
       Also see
       > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
       IMHO “identity” just means not decomposable.
+      - > we are “solving the problem” of defining the identity of objects by stipulating that a data object “itself ” is the information *stored in some particular set of memory locations* in the computer.
+        is same as CS61A notes
+        > so that mutating one also changes the other
+        and 6.001 lec11
+        > Yes, if we retain the *same pointer* to the object
+        - So
+          > A bank account is still “the same” bank account even if we change the balance by making a withdrawal; con-versely, we could have two different bank accounts with the same state information.
+          means the former one is same as itself, but the latter are 2 objects just with the same contents in *different locations*.
+          - TODO 
+            but how to interpret 
+            > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
+            then?
 ## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.3 included.
@@ -1068,7 +1085,7 @@ No underlined words in the chapter and section prefaces.
   may be "output*s* value".
 - > express in tabular form
   See p57.
-## 6.001 sp07
+## 6.001 sp07 lec
 IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removing many figures.
 *Seriously* 6.037 drops "Proving that our code works" in lec 3 which is important although this will be learned in the future.
 ### 1
@@ -1082,10 +1099,6 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   >  figure the most *important elements to formalize* and how they interact with each other
 - > This creates a loop in our system, can create a complex thing, name it, treat it as primitive
   then one complex thing based on that new primitive ... primitive ...
-### rec2 (naming follows 6.001 fall 2007)
-- > Names may be made of any collection of characters that doesn’t start with a number.
-  [See](https://www.scheme.com/tspl2d/intro.html)
-  > Identifiers normally cannot start with any character that may start a number, i.e., a digit, plus sign ( + ), minus sign ( - ), or decimal point ( . ).
 ### 2
 - Rumplestiltskin effect just means [naming](https://en.wikipedia.org/wiki/Rumpelstiltskin#Rumpelstiltskin_principle).
 - > Next lecture, we will see a formal way of tracing evolution of evaluation process
@@ -1095,6 +1108,51 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
 - > E.g. keep trying, but bring sandwiches and a cot
   This may mean it will take a long time.
   Also see [similar words with the different meaning (3 Hots & A Cot)](https://www.urbandictionary.com/define.php?term=3%20hots%20and%20a%20cot)
+### SP2007 handout2
+- `( " error " )`
+  trivially this is one wrong syntax.
+```scheme
+; Here lambda calculation -> #t which has no argument passed in.
+( cond (( lambda (x) (= 2 x))" two " )
+        (else" not two " ))
+
+; Here lambda calculation -> #f which has one argument passed in.
+( cond ((( lambda (x) (= 2 x)) x)" two " )
+        (else" not two " ))
+```
+### 4 Orders of growth
+- See p3 for estimation of Fibonacci complexity.
+- > A little more math shows that
+  more specifically, it is $2^{\lfloor n/2\rfloor}$
+  - Also approximation for
+    > If n is odd, then 2 steps reduces to n/2 sized problem
+    since
+    > Usually, the order of growth is what we really care about:
+- > O(f(n) means t(n) ≤ k2f(n) “big-O”
+  This is different from [the wikipedia notation](https://en.m.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations).
+- TODO "Orders of growth for towers of Hanoi" move-tower meaning.
+  The tree structure has been learnt for Fib.
+  - See p9
+- > and has at most n deferred operations, which is also linear in space
+  This is based on applicative order where `(fact n)` is calculated first.
+- > why not just do the computation directly?
+  ~~i.e. without one extra call to `ifact`.~~
+  It directly calculates [$n^{\underline{j}}$](https://en.wikipedia.org/wiki/Factorial#Related_sequences_and_functions).
+### 7 (~~I don't know why~~ it is put after Lecture 5 Data abstractions since it uses `map`, etc.)
+- p2 `pi-sum` is a bit different from the book one.
+  [proof](https://math.stackexchange.com/a/2348996/1059606)
+- `((incrementby 3) 4)` ~~-> `(incrementby 7)`~~
+```scheme
+(define incrementby (lambda (n) (lambda (x) (+ x n))))
+((incrementby 3) 4)
+```
+- Quick Quiz is trivial.
+- `(compose < square 5)` works by `<` [definition](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX189).
+## 6.001 sp07 rec
+### rec2 (naming follows 6.001 fall 2007)
+- > Names may be made of any collection of characters that doesn’t start with a number.
+  [See](https://www.scheme.com/tspl2d/intro.html)
+  > Identifiers normally cannot start with any character that may start a number, i.e., a digit, plus sign ( + ), minus sign ( - ), or decimal point ( . ).
 ### rec3 recursion
 1. [ ] count1 from n to 0 and count2 from 0 to n.
   - `0` is not displayed by `our-display`.
@@ -1141,36 +1199,6 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   - sol
     - wrong
       > (cannot multiply two procedures)
-### SP2007 handout2
-- `( " error " )`
-  trivially this is one wrong syntax.
-```scheme
-; Here lambda calculation -> #t which has no argument passed in.
-( cond (( lambda (x) (= 2 x))" two " )
-        (else" not two " ))
-
-; Here lambda calculation -> #f which has one argument passed in.
-( cond ((( lambda (x) (= 2 x)) x)" two " )
-        (else" not two " ))
-```
-### 4 Orders of growth
-- See p3 for estimation of Fibonacci complexity.
-- > A little more math shows that
-  more specifically, it is $2^{\lfloor n/2\rfloor}$
-  - Also approximation for
-    > If n is odd, then 2 steps reduces to n/2 sized problem
-    since
-    > Usually, the order of growth is what we really care about:
-- > O(f(n) means t(n) ≤ k2f(n) “big-O”
-  This is different from [the wikipedia notation](https://en.m.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations).
-- TODO "Orders of growth for towers of Hanoi" move-tower meaning.
-  The tree structure has been learnt for Fib.
-  - See p9
-- > and has at most n deferred operations, which is also linear in space
-  This is based on applicative order where `(fact n)` is calculated first.
-- > why not just do the computation directly?
-  ~~i.e. without one extra call to `ifact`.~~
-  It directly calculates [$n^{\underline{j}}$](https://en.wikipedia.org/wiki/Factorial#Related_sequences_and_functions).
 ### rec4
 - > Searching all possibilities usually results in expo-nential growth
   [See](https://www.reddit.com/r/math/comments/1cg4j6u/comment/l2akaoi/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
@@ -1181,16 +1209,6 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   8 is Exercise 1.18.
   4. > Space: Θ(log n)
       approximately $\log n/2$ due to `else`.
-### 7 (~~I don't know why~~ it is put after Lecture 5 Data abstractions since it uses `map`, etc.)
-- p2 `pi-sum` is a bit different from the book one.
-  [proof](https://math.stackexchange.com/a/2348996/1059606)
-- `((incrementby 3) 4)` ~~-> `(incrementby 7)`~~
-```scheme
-(define incrementby (lambda (n) (lambda (x) (+ x n))))
-((incrementby 3) 4)
-```
-- Quick Quiz is trivial.
-- `(compose < square 5)` works by `<` [definition](https://groups.csail.mit.edu/mac/ftpdir/scheme-reports/r5rs-html/r5rs_8.html#IDX189).
 ## book reading
 ### 1.1
 - > an integration of the motion of the Solar System
@@ -1853,6 +1871,32 @@ not use
     Here we adds the nil at the end to ensure base case `((null? records) false)` in `assoc` work (same for `(list '*table*)` in `(make-table)`).
 - > These gluing pairs are called the backbone of the table
   For Figure 3.22, i.e. the 1st row.
+## lec
+### 11
+- > operations
+  See book
+  > We could imagine an *operation add-rat* that takes two rational numbers and produces their sum.
+- `set!` is special form since as the book says
+  > Each special form has its *own evalu-ation rule*
+  here this means `x` is not evaluated at all.
+- `(define b (list 1 2))` [See](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_616), so `b` is not influenced by changing `a`.
+- > (set-car! x y)
+  `((1 2) 4)`
+  > (set-cdr! y (cdr x))
+  `((1 4) 4)`
+- > Stack does not have identity
+  i.e. have multiple locations.
+  - > Provides an object whose identity remains even as the
+    See "3.3.3  Representing Tables"
+  - > User should know if the object mutates or not in order to use the abstraction correctly.
+    i.e. IMHO it mutates the original stack.
+- > We’ll attach a type tag as a defensive measure
+  ensure doing operations on *the appropriate type*
+  See [Defensive programming](https://en.wikipedia.org/wiki/Defensive_programming)
+  - So this is better than SICP "3.3.2  Representing Queues".
+- 
+## rec
+I will skip rec10 since that is one review for exam probably introducing no new contents.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

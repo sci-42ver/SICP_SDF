@@ -12,6 +12,8 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 - *contract* meaning. See SICP
   > together with specified conditions that these procedures must fulfill in order to be a valid representation
   or https://htdp.org/2003-09-26/Book/curriculum-Z-H-35.html#node_idx_1852 from https://stackoverflow.com/a/9035697/21294350
+  or 6.001 lec11
+  > Stack Contract
 - Sometimes I use *yellow mark* to show I have read some footnotes.
 # miscs
 - cph: Competitive Programming Helper
