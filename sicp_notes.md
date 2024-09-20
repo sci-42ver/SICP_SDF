@@ -1894,9 +1894,19 @@ not use
   ensure doing operations on *the appropriate type*
   See [Defensive programming](https://en.wikipedia.org/wiki/Defensive_programming)
   - So this is better than SICP "3.3.2  Representing Queues".
-- 
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
+### rec15 for lec11
+- [x] 1 trivial. See Exercise 3.13
+  - sol
+    better with `(or (pair? ring-list) (error "cannot ringify ()"))`
+- [x] 2 just cdr
+- [ ] 3 keep the first element and cnt in iter.
+  - sol 
+    the above is wrong since we can have duplicate elements in the ring.
+- [x] 4 do `rotate-left` with times `(- (ring-length ring) 1)`.
+  - sol
+    `repeated` -> Exercise 1.43
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
