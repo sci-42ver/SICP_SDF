@@ -26,12 +26,12 @@
     (make-entry (list nil-elem) nil-elem))
   (define leaf-branch nil-elem)
   (define table (make-tree empty-entry leaf-branch leaf-branch))
-  
+
   (define (get-key entry)
     (car entry))
   (define (get-val entry)
     (cadr entry))
-  
+
   (define (object->str obj)
     (symbol->string (symbol obj)))
   (define (keys-comparison keys1 keys2)
@@ -48,7 +48,7 @@
         ((or (< keys1-len keys2-len) (string<? str1 str2)) '<)
         ((or (> keys1-len keys2-len) (string>? str1 str2)) '>)
         ((string=? str1 str2)
-          (keys-comparison (cdr keys1) (cdr keys2))))))
+         (keys-comparison (cdr keys1) (cdr keys2))))))
   (define (keys<? keys1 keys2)
     (case (keys-comparison keys1 keys2)
       ((<) #t)
@@ -66,7 +66,7 @@
     (let ((entry-lst (list entry1 entry2)))
       ;; no duplicate keys
       (apply keys<? (map get-key entry-lst))))
-  
+
   (define (lookup keys)
     ;; to be compatible with 3_26_roytobin_tests_normal.scm.
     (let ((keys (safe-list keys)))

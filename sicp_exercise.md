@@ -1282,6 +1282,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - repo doesn't consider `append` complexity.
 - [x] 64
   - based on wishful thinking where leaves are all branches with 2 `'()` child branches with leaf got by `(this-entry (car non-left-elts)`.
+  - Also see `~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec9/4.scm`
   - complexity same as `tree->list-2`.
     - wiki
       > both of which take constant time

@@ -65,8 +65,8 @@
 
   (define (delete dq m)
     (cond ((eq? m 'left) 
-            ;; doesn't set right-ptr since right-ptr must be different from left-ptr implied by `(eq? (left-ptr dq) (right-ptr dq))`.
-            ;; So the result dq is not empty.
+           ;; doesn't set right-ptr since right-ptr must be different from left-ptr implied by `(eq? (left-ptr dq) (right-ptr dq))`.
+           ;; So the result dq is not empty.
            (set-left-ptr! dq (dqi-node-right (left-ptr dq)))
            ;; Compared with wiki wtative, here dq can't be empty, so `(left-ptr dq)` always work.
            (dqi-node-set-left! (left-ptr dq) '()))

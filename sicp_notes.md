@@ -1934,6 +1934,17 @@ I will skip rec10 since that is one review for exam probably introducing no new 
 - [x] 4 do `rotate-left` with times `(- (ring-length ring) 1)`.
   - sol
     `repeated` -> Exercise 1.43
+### rec09 for lec12
+- [x] 1 see SICP Exercise 2.66.
+- [x] 2 see SICP p212 `adjoin-set`.
+  - sol assumes no duplicate nodes are inserted.
+- [ ] 3 trivial
+  - > there are never any left children,
+    Since we inserts n,n-1... it should be "never any *right* children".
+- [ ] 4
+  - > ;return the last k elements of l
+    should be `(- (length l) k)`
+- [ ] 5
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
@@ -1953,6 +1964,7 @@ I will skip rec10 since that is one review for exam probably introducing no new 
 - 1.45
 # TODO after algorithm
 - > There are also other ways to solve this problem, most of which involve designing new data structures for which searching and insertion both can be done in (log n) steps.
+- AVL Tree in `~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec9`.
 # TODO after abstract algebra
 - exercise 2.93 footnote.
 
