@@ -834,6 +834,8 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
     > its first argument must be a symbol, not a compound expression.
   - > The book says, correctly, that the two are *equivalent* in the sense that you can use one to implement the other.
     So "The semantic explanation" is *not strictly right*.
+  - kw
+    > SET! is about the *bindings* of variables in an environment.  SET-CDR! is about pointers within *pairs*.
 - [x] 3a
   - `(set-cdr! (car list1) (car list2))`
     `(set-cdr! (car list2) (cdr list1))`
@@ -1930,7 +1932,7 @@ I will skip rec10 since that is one review for exam probably introducing no new 
 - [x] 2 just cdr
 - [ ] 3 keep the first element and cnt in iter.
   - sol 
-    the above is wrong since we can have duplicate elements in the ring.
+    the above is *wrong* since we can have duplicate elements in the ring.
 - [x] 4 do `rotate-left` with times `(- (ring-length ring) 1)`.
   - sol
     `repeated` -> Exercise 1.43
@@ -1938,13 +1940,47 @@ I will skip rec10 since that is one review for exam probably introducing no new 
 - [x] 1 see SICP Exercise 2.66.
 - [x] 2 see SICP p212 `adjoin-set`.
   - sol assumes no duplicate nodes are inserted.
-- [ ] 3 trivial
+- [x] 3 trivial
   - > there are never any left children,
     Since we inserts n,n-1... it should be "never any *right* children".
-- [ ] 4
+- [x] 4
   - > ;return the last k elements of l
     should be `(- (length l) k)`
 - [ ] 5
+### sp rec13 for lec12
+- > With list data structures, we think of having elements linked on to the end of other elements.
+  See lec p5 "represents the tree"
+- > if A 6< B and B 6< A, then it’s okay to think A ≡ B
+  due to [Irreflexivity](https://en.wikipedia.org/wiki/Partially_ordered_set#Strict_partial_orders)
+  - Here just think of the tree has no duplicate elements.
+- `bst/insert` trivial same as SICP p212 `adjoin-set`.
+- [ ] `set-node-value !` trivial by using `(set-car! (cdr tree) val)`. Similar for others.
+  - sol
+    - with check.
+    - > Note : cannot use set ! ( think why )
+      See CS61A Week 9 Lab 2.
+- [ ] `binary-tree/depth0` See `~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec9/4.scm`
+  - sol with check and avoiding duplicate `+1`.
+- [ ] 
+  - `Theta ( log n )`
+  - Theta ( log n )
+  - Theta (1)
+  - Theta (1)
+  - "Worst case" same as "the order of growth".
+    - see sol where we iterates through the whole list.
+      IMHO space should be Theta(1).
+- [ ] `( list->bst lst )` -> `(fold-left (lambda (elt acc) (bst/insert! elt acc)) lst)`.
+  - This is different from Exercise 2.64 and ~~CS61A notes~~ rec09 since it has no ordering assumption.
+- [ ] based on lec12 where `fold-left` has T(n)=O(n), S(n)=O(1).
+  - $\Theta(n \log{n})$
+  - $\Theta(1)$
+    - TODO
+      sol  space Θ(n)
+      iter and fn both can have $\Theta(1)$, so how "Θ(n)"?
+  - Time $\Theta(n)$ (see the next point)
+    - sol we should multiply...
+  - $\Theta(n)$ due to `bst/insert!` 1st sol may have $\Theta(n)$ for one totally unbalanced tree.
+- [ ] `sort-via-bst` just uses bst as the transform medium (I skipped checking complexity due to  triviality).
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
