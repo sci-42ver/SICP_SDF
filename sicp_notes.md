@@ -1923,6 +1923,30 @@ not use
 - `tree-fold` may use `init` multiple times since each `fold-right` will use once.
   So it does `fold` for subtrees of the root and recursively for each subtree ...
 - `make-leaf-set` See SICP p226 which will sorts in parallel.
+### 13
+I skipped reading context of biology.
+- > Want to evaluate likelihood of path to a leaf of the tree, and compare to other paths to leaves
+  TODO leaf -> match?
+- It's gotta -> It's got to -> It has got to -> has to.
+- kw
+  Distance Metric
+- 2-D Table same as [@meteorgan Most astute](http://community.schemewiki.org/?sicp-ex-3.25)
+- "Non-Abstract but Compact!" same as the book for "2-D Table".
+- "Table2 is a table of Table1’s" see "Figure 3.23".
+- `table2-set!` is more structural than book p365 `insert!`.
+- `omitted` means omitted by x.
+- see p6 figure for why $3^n$ where i has depth n and all d -> all m has depth 2n.
+  it must have $O(3^{2n})$ (TODO why $\Theta(3^n)$).
+- `(- new score)` is due to the same reason as `(+ old score)` that we get the score based on history (see recursive calls of `helper` in `(match0 one two)`).
+- `(bestfsearch start-state)`
+  first selects `0.3` and then `0.5` from `(0.6 0.8 1.0 ...)`.
+- > Have we reached “goal”?
+  search for one specific element
+- > Motivations
+  See
+  "Let's Play Games..."
+  - > Play with the Web
+    i.e. link tree.
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11
@@ -1981,6 +2005,9 @@ I will skip rec10 since that is one review for exam probably introducing no new 
     - sol we should multiply...
   - $\Theta(n)$ due to `bst/insert!` 1st sol may have $\Theta(n)$ for one totally unbalanced tree.
 - [ ] `sort-via-bst` just uses bst as the transform medium (I skipped checking complexity due to  triviality).
+### https://web.archive.org/web/20071221030700/https://people.csail.mit.edu/psz/6001/search.html for lec13
+- TODO
+  > In particular, the simple tree-growing procedures we presented have the problem that if you feed them inputs that are already sorted, they produce trees that are very list-like and therefore searching for an element takes O(n) time rather than O(log n).
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
