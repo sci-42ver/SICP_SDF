@@ -1894,6 +1894,33 @@ not use
   ensure doing operations on *the appropriate type*
   See [Defensive programming](https://en.wikipedia.org/wiki/Defensive_programming)
   - So this is better than SICP "3.3.2  Representing Queues".
+### 12 (bst is introduced in chapter 2)
+- > Sort & *merge*
+  [See](https://www.scaler.com/topics/merge-two-list-in-python/) where "merge" means concatenate
+- `(define (list-ref lst n)` similar to 2.2.1 p138 assuming lst is not nil.
+  So `(or (null? lst) (zero? n))` is better.
+- `(list-head! lst n)` better to check len.
+- `append!` is better than Exercise 3.12 due to considering the case where x is nil.
+- `Reverse` also [see](http://community.schemewiki.org/?sicp-ex-2.18)
+- `Reverse!` see http://community.schemewiki.org/?sicp-ex-3.14
+- See `filter.scm` where we can also make `filter` with `S(n)=\Theta(1)`.
+- `fold-left` is same as [MIT/GNU Scheme](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Folding-of-Lists.html#index-fold_002dleft) (notice `fn` arg order)
+- "Sorting a list" i.e. [merge sort](https://en.wikipedia.org/wiki/Merge_sort#Top-down_implementation)
+- `(merge x y less?)` is ~~same~~ similar to [`adjoin-set`](http://community.schemewiki.org/?sicp-ex-2.61).
+- [GIGO](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out)
+- merge!
+  - `(reverse! (cdr yroot))` is implied by `(set-cdr! current ans)`
+    so `ans` is the reverse of the temp result.
+  - IMHO `merge!` is less intuitive since we don't know how `!` mod does for x and y which may influence the later recursion.
+  - The latter 2 conditions
+- > Finding midpoint of list is expensive
+  we use `list-tail` and `length` (see SICP p138) where both are Theta(n).
+  > Instead, nibble away from left
+  interesting by not using splitting idea.
+- Trees See "2.2.2 Hierarchical Structures".
+- `tree-fold` may use `init` multiple times since each `fold-right` will use once.
+  So it does `fold` for subtrees of the root and recursively for each subtree ...
+- `make-leaf-set` See SICP p226 which will sorts in parallel.
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11
