@@ -1907,7 +1907,7 @@ not use
 - `Reverse!` see http://community.schemewiki.org/?sicp-ex-3.14
 - See `filter.scm` where we can also make `filter` with `S(n)=\Theta(1)`.
 - `fold-left` is same as [MIT/GNU Scheme](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Folding-of-Lists.html#index-fold_002dleft) (notice `fn` arg order)
-- "Sorting a list" i.e. [merge sort](https://en.wikipedia.org/wiki/Merge_sort#Top-down_implementation)
+- "Sorting a list" i.e. [merge sort][merge_sort]
 - `(merge x y less?)` is ~~same~~ similar to [`adjoin-set`](http://community.schemewiki.org/?sicp-ex-2.61).
 - [GIGO](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out)
 - merge!
@@ -2005,9 +2005,72 @@ I will skip rec10 since that is one review for exam probably introducing no new 
     - sol we should multiply...
   - $\Theta(n)$ due to `bst/insert!` 1st sol may have $\Theta(n)$ for one totally unbalanced tree.
 - [ ] `sort-via-bst` just uses bst as the transform medium (I skipped checking complexity due to  triviality).
-### https://web.archive.org/web/20071221030700/https://people.csail.mit.edu/psz/6001/search.html for lec13
-- TODO
-  > In particular, the simple tree-growing procedures we presented have the problem that if you feed them inputs that are already sorted, they produce trees that are very list-like and therefore searching for an element takes O(n) time rather than O(log n).
+### sp rec14 https://web.archive.org/web/20071221030700/https://people.csail.mit.edu/psz/6001/search.html for lec13
+I only read the context of "Search" and codes.
+- > In particular, the simple tree-growing procedures we presented have the problem that if you feed them inputs that are already sorted, they produce trees that are very list-like and therefore searching for an element takes O(n) time rather than O(log n).
+  i.e. always keep going to one specific branch.
+- > Eric introduced a general framework for searching, and applied it to searching for the best evolutionary explanation of the differences between two nucleotide sequences.
+  i.e. tree See lec p6.
+- > an abstract space of beliefs, goals and plans.
+  IMHO i.e. hypothesis, search goal and paths for tree.
+- > The path that got us there, as a list of cities in reverse order from how we traversed them.
+  i.e. `(cons city path)` (`(cons here ...)` in page).
+- ~~`(search start-state done? successors merge)` -> DFS.~~
+- kw
+  > for best-first and beam search, we need a comparison predicate that tells us which of two states is better
+- best-first-search
+  lec just uses `sort`. Here it do this inherently by recursion.
+- > Note that priority-merge is just like merging procedures that we have seen in our earlier discussion of merge-sort.
+  - [merge_sort]
+    ~~when ~~`TopDownSplitMerge(B[], iBegin, iEnd, A[])`~~ (IMHO for consistency, here it should be `TopDownSplitMerge(A[], iBegin, iEnd, B[])`) is finished, `B[]` is the sorted `A[]` by "// sort data from B[] into A[]".~~
+    - > // sort data from B[] into A[]
+      ~~then back to "B[]" which "is a work array" implied by "merge both runs from B[] to A[]".~~
+    - > The copy back step is avoided with *alternating the direction of the merge* with each level of recursion
+      i.e. `TopDownSplitMerge(A, iBegin,  iMiddle, B)`.
+      > (except for an initial one-time copy, that can be avoided too).
+      ~~IMHO i.e. `TopDownSplitMerge(B, 0, n, A);`~~ TODO
+      - > The elements are copied to B[], then merged back to A[].
+        since `TopDownSplitMerge(A, iBegin,  iMiddle, B)` will match `(iEnd - iBegin <= 1)`.
+        - > single element runs from A[] are merged to B[], and then at the next higher level of recursion, those two-element runs are merged to A[].
+          `TopDownSplitMerge(A, 0, 4, B)` -> `TopDownSplitMerge(B, 0, 2, A)` (here modify to use the global `A,B`) -> `TopDownSplitMerge(A, 0, 1, B)` doing nothing.
+    - In *summary*
+      > array B[] is a work array.
+      means it is one temporary variable which actually holds sorted array which *sorts for each half* implied by `TopDownSplitMerge(A, iBegin,  iMiddle, B); TopDownSplitMerge(A, iMiddle,    iEnd, B);`.
+      > This pattern continues with each level of recursion.
+      i.e. `TopDownSplitMerge(B[], iBegin, iEnd, A[])` first copys to A the sorted half which in turn may copys to B the sorted one quarter ...
+      So we actually *don't need to synchronize `A,B`*.
+    - TODO
+      > // Split A[] into 2 runs, sort both runs into B[], merge both runs from B[] to A[]
+      based on `TopDownMerge(B, iBegin, iMiddle, iEnd, A);` it should be "Split B[] into 2 runs, sort both runs into A[], merge both runs from A[] to B[]" (here A,B are local to `TopDownSplitMerge`).
+      similar for "// recursively sort both runs from array A[] into B[]".
+      > // merge the resulting runs from array B[] into A[]
+      by `TopDownMerge` it should be "from array A[] into B[]" by `B[k] = A[i];` etc.
+  - `priority-merge` is similar to `TopDownMerge` ~~which changes only `B`~~.
+- > but simply limit the output of the local definition of priority-merge to just the first beam-width queue elements.
+  See lec, i.e. `(list-head n ...)`.
+- > Of course if the order of the road network had been different, the search might have rushed off toward Miami, from which there are no outgoing paths; in that case, it would have *gone back* to some other state on the queue and continued from there.
+  implied by `merge`
+  >  If you've ever driven across the USA, however, you are likely to recognize that this is *not the shortest route* to follow, though in this case, we got lucky and it's not very bad, either.
+- > Best-first search searches over even more states, but yields a slightly better result.
+  See lec p7 where we may do both of DFS and BFS partly.
+  > though in this case those distances are actual road miles, not just steps
+- > best-first search is more efficient if we have a *better better?* function. For example, if we could estimate not how far we have already traveled from the origin of the trip but *how far we are from the destination*, then best-first search would laser in on the best paths. A search technique called A* search guarantees the optimum answer if the score of each node is *a sum of the distance traveled to there and an underestimate of the remaining distance*, such as "as the crow flies" distance between cities
+  ["as the crow flies"](https://en.wikipedia.org/wiki/As_the_crow_flies) -> shortest possible distance.
+  - A*: See [$f(n)...$](https://en.wikipedia.org/wiki/A*_search_algorithm#:~:text=A*%20is%20an%20informed%20search,shortest%20time%2C%20etc.).)
+    - [optimal proof][A*_optimal]
+      >  This is because the ⁠${\displaystyle g}⁠$ values of open nodes are not guaranteed to be optimal
+      since it is based on `tentative_gScore` by `gScore[neighbor] := tentative_gScore` instead of the actual one. (I didn't dig into checking the codes)
+- > just because our cost function is *not a very good predictor* of the final worth of each path. Beam search was first developed in *speech understanding* research, to find the best match of a sequence of words to the phonetic signal recorded from a microphone, and in that application it worked dramatically well. There, unlike in our example, the goodness of *local matches does yield valuable information about the overall* match.
+- > However, both depth and breadth-first search techniques are "blind", in that they have no notion of the relative values of different states
+  i.e. only check depth instead of actual distance.
+- > However, assuming that we don't ever want to revisit a city on a worthwhile path, we can change the implementation of next-states by doing the map not over all reachable destinations from here, but only *those that are not already on our previous* path:
+  Also see `/home/czg_arch/SICP_SDF/SDF_exercises/chapter_2/graph-lib/DFS_tests.scm` -> `visited` although not structural.
+- > Breadth and best-first searches both find solutions the same as in the case of the asymmetric road network, but do more work along the way.
+  ~~For Breadth, we are just adding some extra nodes at each ~~level~~ recursion (With proof by contradiction, we can't add goal before the level of goal).~~
+  This is not always true. Counterexample: 1->2->3->4, 5->1, 5->4.
+  Then 1->4 has one better path 1->5->4 if bidirectional.
+- > Search is often made more efficient by adding techniques based on *memoization* (so we need not re-evaluate partial paths that we have already explored) and by using much more insightful *estimates* of the value of partial solutions.
+  "estimates" -> what A* used.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
@@ -2028,6 +2091,7 @@ I will skip rec10 since that is one review for exam probably introducing no new 
 # TODO after algorithm
 - > There are also other ways to solve this problem, most of which involve designing new data structures for which searching and insertion both can be done in (log n) steps.
 - AVL Tree in `~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec9`.
+- [A*_optimal]
 # TODO after abstract algebra
 - exercise 2.93 footnote.
 
@@ -2051,7 +2115,10 @@ TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which 
 
 [evernote_proof_1_13]:https://www.evernote.com/shard/s100/client/snv?noteGuid=6a4b59d5-e99f-417c-9ef3-bcf03a4efecd&noteKey=7e030d4602a0bef5df0d6dd4c2ad47bf&sn=https%3A%2F%2Fwww.evernote.com%2Fshard%2Fs100%2Fsh%2F6a4b59d5-e99f-417c-9ef3-bcf03a4efecd%2F7e030d4602a0bef5df0d6dd4c2ad47bf&title=Exercise%2B1.13
 
+<!-- wikipedia -->
 [Banach_fixed_point_proof]:https://en.wikipedia.org/wiki/Banach_fixed-point_theorem#Proof
 [First_class_citizen]:https://en.wikipedia.org/wiki/First-class_citizen#History
+[merge_sort]:https://en.wikipedia.org/wiki/Merge_sort#Top-down_implementation
+[A*_optimal]:https://en.wikipedia.org/wiki/A*_search_algorithm#Admissibility
 
 [CS61A_lib]:https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/
