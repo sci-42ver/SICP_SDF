@@ -1530,7 +1530,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       wrong since we are `set-cdr!` but not `set-car!`.
   - infinite loop
 - [x] 14
-  - based no each call we does (I assume `(set-cdr! x y)` sets `x` in `loop` instead of `mystery`)
+  - based no each call we does (I assume `(set-cdr! x y)` sets `x` in `loop` instead of `mystery` which is ensured by book "That is, one finds the *first* frame in the environment that contains a binding for the variable and modi-fies that frame.")
     The following `x` are all `x` in `mystery`.
     `(x y)` -> `((cdr x) ((car x) y))` and `x` -> `((car x) y)`
     `((cdr x) ((car x) y))` -> `((cddr x) ((cadr x) ((car x) y)))` and `(cdr x)` -> `((cadr x) ((car x) y))` (notice here `x` in `mystery` doesn't change.)

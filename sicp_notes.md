@@ -979,13 +979,22 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
         so the frame is just what E1 points to without the pointer outwards and the pointer inwards.
     - > So we’d better make our new environment by extending E1, not by extending G.
       Even if "The body of g" is just `y`, we should also do as the above.
-    - > applied
-      TODO this may be *not strict*
-      See
-      > Rather, we extend the environment in which the function was *created*,
-      But IMHO `3+` *implicitly* has already in E1.
+    - ~~> applied~~
+      ~~TODO this may be *not strict*~~
+      ~~See~~
+      > Rather, we extend the *environment in which* the function was *created*,
+      ~~But IMHO `3+` *implicitly* has already in E1.~~
+      is same as the book
+      > as its enclosing environment the *environment part of the procedure object* being applied.
+      > a pointer to the *envi-ronment in which the procedure was created*.
+      and 6.001 lec14
+      > goes to the same frame as the *environment pointer* of P
+      > Useful to link the environment pointer of each new frame to the *procedure that created* it
+      (see Figure 3.8 for how 2 args are nested.)
+      - Also see 6.001 lec14 where "evaluated" means "created"
+        > was evaluated in E1
       - > Scheme’s rule, in which the procedure’s defining environment is extended, is called lexical scope. The other rule, in which the current environment is extended, is called dynamic scope.
-        So the book is dynamic scope? (also see SDF_notes)
+        ~~So the book is dynamic scope? (also see SDF_notes)~~
 - > to the current environment at the time the lambda is seen.
   i.e. ["created"](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html)
   > The resulting procedure object is a pair consisting of the text of the lambda expression and a pointer to the environment in which the procedure was created.
@@ -1947,6 +1956,17 @@ I skipped reading context of biology.
   "Let's Play Games..."
   - > Play with the Web
     i.e. link tree.
+### 14
+- > any other environment: it is an error
+  For MIT/GNU Scheme, this is fine.
+  ```scheme
+  (define test 1)
+  ((lambda (x) (define test 2) test) 2)
+  ```
+- p4
+  > environment pointer points to E1
+  is implied by the book
+  > evaluating the body of the proce-dure in the context of the new environment constructed
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11
@@ -2071,6 +2091,7 @@ I only read the context of "Search" and codes.
   Then 1->4 has one better path 1->5->4 if bidirectional.
 - > Search is often made more efficient by adding techniques based on *memoization* (so we need not re-evaluate partial paths that we have already explored) and by using much more insightful *estimates* of the value of partial solutions.
   "estimates" -> what A* used.
+### TODO rec17 (I can't find Project 4 by "6.001 Spring 2007 Project")
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
