@@ -1967,6 +1967,39 @@ I skipped reading context of biology.
   > environment pointer points to E1
   is implied by the book
   > evaluating the body of the proce-dure in the context of the new environment constructed
+### 15
+- > Can use procedure to encapsulate (and hide) data, and provide controlled access to that data
+  i.e. message passing.
+  > accessors, mutators, predicates, operations
+  all can be done in `dispatch`.
+- > in scheme, a <type> procedure
+  See SDF adventure game `(type-instantiator avatar?)` etc. which is so similar to project 4.
+  > an instance is a message-handling procedure made by a create-<type> procedure
+  in SDF `(create-avatar name place)` is one tagged data.
+  Then operations are all generic.
+- torp -> TORPEDO.
+- > Keep track of things that can move (the *universe*)
+  SDF `clock-things`
+  > Clock sends *‘ACTIVATE* message to objects to have
+  SDF `clock-tick!`
+  > Coordinating with a clock
+  SDF `tick!` -> `for-each`
+  > (clock-callback ‘moveit me ‘MOVE)
+  `clock-tick!` just define a sequence of operations for each object.
+- > Inheritance
+  - method Inheritance
+    SDF `predicate<=` -> `tag<=`.
+    Then `make-chaining-dispatch-store` will use all handlers sorted by `rule<` where we first did child operations (but see `set-up!` -> `(super exit)` etc. where we *actually* run parent operations first), so Inheritance.
+    This is just
+    > *Specializes* a TYPE method
+  - private variable Inheritance
+    See `type-instantiator` -> `type-properties`.
+- TODO
+  > we will clean this up to insert handlers inside each class
+- > Make and add the message handler for the object
+  i.e. based on inherited methods by `get-method`.
+- `(define some-method (get-method <instance> ‘<MESSAGE>))` by `(define (get-method message . objects) ...)` should be `‘<MESSAGE> <instance>`.
+- `(ask c-instance ‘IS-A ‘C)` is probably done by checking `(ask c-instance ‘TYPE)`.
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11
@@ -2152,8 +2185,10 @@ I only read the context of "Search" and codes.
   See lec p4 the purple horizontal link and [procedure_application_environment_rule].
 - > Drop a new frame A that points to F
   IMHO i.e. "Create a new frame A" "into an environment" F which is env of the implicit lambda.
-- 
-### TODO sp rec17 (I can't find Project 4 by "6.001 Spring 2007 Project")
+### sp [rec17](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/resources/st05project4/)
+1. https://github.com/psholtz/MIT-SICP/tree/master/Projects-S2005 https://github.com/yangchenyun/learning-sicp/tree/master/solutions/projects lacks some solutions for project including project 4.
+2. https://github.com/junqi-xie-learning/SICP-Projects/blob/main/4%20The%20Object-Oriented%20Adventure%20Game/objsys.scm just copys the lib...
+3. https://github.com/nrosiello/MIT-6.001/blob/master/project-4/project-4.scm have some valid solutions.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

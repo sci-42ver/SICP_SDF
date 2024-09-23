@@ -24,7 +24,9 @@ sci-42ver/SICP_SDF
 - `error`
   - > is can be accomplished using error, which takes as arguments a number of items that are printed as error messages.
     [i.e.](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Condition-Signalling.html#index-error-2)
-    > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the irritants field containing the arguments.
+    > In this case a condition of type condition-type:simple-error is created with the message field containing the reason and the *irritants* field containing the arguments.
+    [See](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Taxonomy.html#index-condition_002dtype_003asimple_002derror) (I won't dig into format func `format-error-message`)
+    > irritants contains a list of objects
 # TODO if wanting to learn how to write tests?
 - ./3_25_nttest.perl
 # exercises
