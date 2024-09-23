@@ -1,4 +1,4 @@
-Currently we can see https://en.wikipedia.org/wiki/First-class_function#cite_ref-1 which uses SICP as the reference.
+@PepijnKramer Reply to your modified 1st comment: "monadic style (member) functions" is a bit beyond my understanding ability implied by my 1st comment. I don't understand https://en.wikipedia.org/wiki/Monad_(functional_programming)#Overview `M a` and `M b` meanings. I will return to this when learning c++.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -984,7 +984,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
       ~~See~~
       > Rather, we extend the *environment in which* the function was *created*,
       ~~But IMHO `3+` *implicitly* has already in E1.~~
-      is same as the book
+      is same as the book <a id="procedure_application_environment_rule"></a>
       > as its enclosing environment the *environment part of the procedure object* being applied.
       > a pointer to the *envi-ronment in which the procedure was created*.
       and 6.001 lec14
@@ -2091,7 +2091,69 @@ I only read the context of "Search" and codes.
   Then 1->4 has one better path 1->5->4 if bidirectional.
 - > Search is often made more efficient by adding techniques based on *memoization* (so we need not re-evaluate partial paths that we have already explored) and by using much more insightful *estimates* of the value of partial solutions.
   "estimates" -> what A* used.
-### TODO rec17 (I can't find Project 4 by "6.001 Spring 2007 Project")
+### sp rec15 for lec14
+~~I don't know what "cone" is to do for~~ https://people.csail.mit.edu/dalleyg/6.001/SP2007/hats.pdf see rec p6.
+- > when using other languages like C++ I miss them immensely for their elegance and compactness
+  ~~C++ [only supports "higher-order function"](https://stackoverflow.com/a/26369869) which "takes one or more functions as arguments".~~
+  > C++ does have HOPs, but they are not nearly as convenient nor as powerful.
+  because that is based on *pointer*.
+- [x] 1 trivial by creating one new env for each `fact` with enclosed env GE.
+  - `*,-` etc are primitive so no new env.
+- [x] 2
+  - 15,0,15,15
+  - `(f 5)` -> E1 binding one new `x` (Shadowing)
+  - `(g 5)` just modifies `x` in GE.
+- [ ] 3
+  - `( lambda ( z ) (+ x 2))` is in GE, so `5`, then res -> 9.
+    This creates E1
+    - *wrong* since `z` is not used.
+    - sol
+      notice `x` is binded to one lambda func.
+  - Then `( x y )` -> E2.
+- [x] 4
+  - 1
+    - GE: `x` binding
+    - E1-GE (-GE means having enclosing env GE): `x,y` binding
+      return ...
+      - E2-GE: arg of square is binded to `x`
+        returned value is passed to `y`
+  - λ-let
+    - GE: `x` binding
+    - E1-GE: x -> lambda
+      `( set ! x ( x 7))` sets `x` in E1 to `13`.
+    - sol
+      notice both lambda and its application `(x 7)` has GE as the "enclosing env".
+- [ ] 5
+  - GE: `a,foo,bar`
+    - E1-GE: `a` -> 10
+      return `( lambda ( x ) ...)` to `foo`
+    - E2-GE: `a` -> 100
+    - E3-GE: `x` -> 20
+      210
+      - wrong, should E3-E1.
+- [x] 6
+  - trivial 2,1,16,1
+  - GE: `make-count-proc,sqrt*,square*`
+  - `sqrt*`
+    - E1-GE: `f->sqrt`
+      - E2-E1: `count->0`
+        - E3-E2: `x->4`
+          `set!,+` etc. are all primitive.
+    - E4-GE by `(f x)`: ...
+  - similar for `square*`
+- > Each binding associates a name (must be a sym-bol) with a value.
+  so
+  ```scheme
+  (define (square 2) 2) ; error
+  (define square sqrt)
+  (square 2)
+  ```
+- > Link these two pointers together with handcuffs.
+  See lec p4 the purple horizontal link and [procedure_application_environment_rule].
+- > Drop a new frame A that points to F
+  IMHO i.e. "Create a new frame A" "into an environment" F which is env of the implicit lambda.
+- 
+### TODO sp rec17 (I can't find Project 4 by "6.001 Spring 2007 Project")
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
@@ -2117,6 +2179,9 @@ I only read the context of "Search" and codes.
 - exercise 2.93 footnote.
 
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+
+<!-- in-page link -->
+[procedure_application_environment_rule]:#procedure_application_environment_rule
 
 [ucb_sicp_review]:https://people.eecs.berkeley.edu/~bh/sicp.html
 
