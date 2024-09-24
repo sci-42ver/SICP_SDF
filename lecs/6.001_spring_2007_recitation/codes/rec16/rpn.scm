@@ -1,4 +1,4 @@
-;; Run scheme --interactive --eval '(load "rpn.scm")' '(rpn)' '10 2 + 6 /'
+;; Run scheme --interactive --eval '(load "rpn.scm")''(rpn)''10 2 + 6 /'
 (load "stack.scm")
 
 (cd "~/SICP_SDF/exercise_codes/SICP")
@@ -15,10 +15,10 @@
   (let ((n (string-length string)))
     (let loop ((a 0) (b 0) (parts '()))
       (if (< b n)
-          (if (not (char-delimiter? (string-ref string b)))
-              (loop a (+ b 1) parts)
-              (loop (+ b 1) (+ b 1) (maybe-add a b parts)))
-          (reverse (maybe-add a b parts))))))
+        (if (not (char-delimiter? (string-ref string b)))
+          (loop a (+ b 1) parts)
+          (loop (+ b 1) (+ b 1) (maybe-add a b parts)))
+        (reverse (maybe-add a b parts))))))
 
 (define (string-split-pred string char-delimiter?)
   (define (maybe-add a b parts)
@@ -28,10 +28,10 @@
   (let ((n (string-length string)))
     (let loop ((a 0) (b 0) (parts '()))
       (if (< b n)
-          (if (not (char-delimiter? (string-ref string b)))
-              (loop a (+ b 1) parts)
-              (loop (+ b 1) (+ b 1) (maybe-add a b parts)))
-          (reverse (maybe-add a b parts))))))
+        (if (not (char-delimiter? (string-ref string b)))
+          (loop a (+ b 1) parts)
+          (loop (+ b 1) (+ b 1) (maybe-add a b parts)))
+        (reverse (maybe-add a b parts))))))
 
 (define max-depth 100)
 (define (transform-num-proc str)
@@ -40,30 +40,30 @@
   (cond 
     ((num-str? str) (string->number str))
     ((= 1 (string-length str)) 
-      ;; TODO case str fails.
-      
-      ;; https://stackoverflow.com/a/53487618/21294350
-      (let ((match 
-              ; (string-ref str 0)
-              (string->symbol str)
-              ; str ; fail
-              ))
-        (case match
-          ; ((#\+) +)
-          ; ((#\-) -)
-          ; ((#\*) *)
-          ; ((#\/) /)
-          ; (("+") +)
-          ; (("-") -)
-          ; (("*") *)
-          ; (("/") /)
-          ((+) +)
-          ((-) -)
-          ((*) *)
-          ((/) /)
-          (else (error "wrong stack elt" str match))
-          ))
-        )
+     ;; TODO case str fails.
+
+     ;; https://stackoverflow.com/a/53487618/21294350
+     (let ((match 
+             ; (string-ref str 0)
+             (string->symbol str)
+             ; str ; fail
+             ))
+       (case match
+         ; ((#\+) +)
+         ; ((#\-) -)
+         ; ((#\*) *)
+         ; ((#\/) /)
+         ; (("+") +)
+         ; (("-") -)
+         ; (("*") *)
+         ; (("/") /)
+         ((+) +)
+         ((-) -)
+         ((*) *)
+         ((/) /)
+         (else (error "wrong stack elt" str match))
+         ))
+     )
     (else (error "wrong stack elt" str))))
 (define rpn
   ; not put define here, since `define rpn ...` expects one expr.
@@ -73,23 +73,24 @@
         (if (null? rest-lst)
           (error "operator should be put at last.")
           (let* ((top-str (car rest-lst))
-                (top (transform-num-proc top-str)))
+                 (top (transform-num-proc top-str)))
             (cond 
               ((compiled-procedure? top) 
-                (let ((res (apply top (reverse visited-lst))))
-                  (if (= 1 (length rest-lst))
-                    (displayln (list "result:" res))
-                    (iter (list res) (cdr rest-lst)))))
+                ;; sol assumes binary op although this is not that case for Scheme.
+               (let ((res (apply top (reverse visited-lst))))
+                 (if (= 1 (length rest-lst))
+                   (displayln (list "result:" res))
+                   (iter (list res) (cdr rest-lst)))))
               ((number? top)
-                (iter (cons top visited-lst) (cdr rest-lst)))
+               (iter (cons top visited-lst) (cdr rest-lst)))
               (else (error "wrong arg" top))
               ))))
-        (iter '() lst))
+      (iter '() lst))
     (define (iter)
       (displayln "expr:")
       ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Input-Procedures.html#index-read_002dline
       (let* ((msg-str (read-line))
-            ;  (msg-str (symbol->string msg))
+             ;  (msg-str (symbol->string msg))
              )
         (cond 
           ((equal? "finish" msg-str) 'done)
@@ -108,5 +109,7 @@
     iter)
   )
 
-; 10 2 + 6 / 3 * 2 -
+; 10 2 + 6/3 * 2 -
 ; (result: 4)
+
+;; sol just calc's 4 5 + 7 -, i.e. (4+5)

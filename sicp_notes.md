@@ -2188,7 +2188,14 @@ I only read the context of "Search" and codes.
 - > Drop a new frame A that points to F
   IMHO i.e. "Create a new frame A" "into an environment" F which is env of the implicit lambda.
 ### sp rec16
-- 
+- [ ] `stack`
+  - See "; any additional initialization , parameter checking , etc .".
+- > The first is a predicate that tells DrScheme ... If #f is returned , the next
+  > ; enclosing with-handlers is looked at.
+  same as https://practical-scheme.net/wiliki/schemexref.cgi?with-handlers but the latter allows multiple *pred*s.
+- > I had trouble finding documentation on the data type of an error
+  > ; object . (raise ...) is a more flexible way of generating the objects .
+  IMHO `error` [calls `raise` in the end](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_912)
 ### sp [rec17](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/resources/st05project4/)
 1. https://github.com/psholtz/MIT-SICP/tree/master/Projects-S2005 https://github.com/yangchenyun/learning-sicp/tree/master/solutions/projects lacks some solutions for project including project 4.
 2. https://github.com/junqi-xie-learning/SICP-Projects/blob/main/4%20The%20Object-Oriented%20Adventure%20Game/objsys.scm just copys the lib...

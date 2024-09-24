@@ -1,3 +1,4 @@
+;; Use `sed -i -f ~/SICP_SDF/lecs/6.001_spring_2007_recitation/codes/rec13/format.sed *.scm;for i in *.scm; do vim -c "execute 'normal gg=G'| update | quitall" $i;done` to format.
 ; constructor for stack objects with a maximum depth
 (define (make-stack max-depth)
   ; private local state
@@ -11,7 +12,7 @@
       (set! data '())
       ;; sol return one msg symbol.
       ;; similar for push
-      )
+     )
     (define (peek)
       (if (empty?)
         (error "stack underflow")
@@ -19,7 +20,10 @@
     (define (push elt)
       (if (have-room?)
         (set! data (cons elt data))
-        'do-nothing))
+        ; 'do-nothing
+        ;; to be compatible with test
+        (error "stack overflow")
+       ))
     (define (pop)
       ;; > Remember to program defensively.
       (if (empty?)
@@ -41,18 +45,23 @@
          (empty?))
         ((clear) (clear))
         ((peek) (peek))
-        ;; sol `( push ( car args ))` is defensive.
+        ;; sol `(push (car args))` is defensive.
         ((push) (apply push args))
         ((pop) (pop))
         ((push-all-args) (apply push-all-args args))
+        ;; sol: ` (for-each push (car args))` only considers one list.
         ((push-all-list) 
-          (for-each 
-            (lambda (arg-lst) (push-all-list arg-lst))
-            args))
+         (for-each 
+           (lambda (arg-lst) (push-all-list arg-lst))
+           args))
 
         ((data) data)
         (else (error " stacks can 't " msg))))
     ; any additional initialization , parameter checking , etc .
+    ;; sol `(< max-depth 0)`
+    (if (< max-depth 0)
+      (error " max-depth must be non-negative , not :" max-depth))
+
     ; return the message handler
     msg-handler))
 (define my-stack (make-stack 10))
@@ -88,10 +97,20 @@
       ; (append lst (list (pop stack)))
       ;; reversed order
       (set! lst (cons (stack 'pop) lst))
-      ))
+      ;; sol is better where we cons the first to the rest instead of lst here.
+      ;; > What 's (potentially) wrong with getting rid ...?
+      ;; See https://stackoverflow.com/a/5522061/21294350
+     ))
   (reverse (reverse-lst))
-  )
+ )
 (my-stack 'data)
 (my-stack 'empty?)
 (pop-all my-stack)
 (my-stack 'empty?)
+
+;; to be compatible with test
+(define (reverse-using-stack lst)
+  (let ((stack (make-stack (length lst))))
+    (stack 'push-all-list lst)
+    (pop-all stack)
+   ))
