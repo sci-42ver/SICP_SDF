@@ -76,7 +76,7 @@
                  (top (transform-num-proc top-str)))
             (cond 
               ((compiled-procedure? top) 
-                ;; sol assumes binary op although this is not that case for Scheme.
+               ;; sol assumes binary op although this is not that case for Scheme.
                (let ((res (apply top (reverse visited-lst))))
                  (if (= 1 (length rest-lst))
                    (displayln (list "result:" res))

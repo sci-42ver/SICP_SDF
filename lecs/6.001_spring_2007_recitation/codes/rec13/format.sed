@@ -10,6 +10,9 @@ s/ ?/?/g
 s/’/'/g
 s/' /'/g
 s/- > /->/g
-s/ . /./g
+s/scm "/scm"/g
+s/load " /load "/g
+s/d o e s n t/doesn't/g
+#s/ \. /./g
 #s/\* /*/g
 #s/ \*/*/g

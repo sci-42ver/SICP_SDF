@@ -12,7 +12,7 @@
       (set! data '())
       ;; sol return one msg symbol.
       ;; similar for push
-     )
+      )
     (define (peek)
       (if (empty?)
         (error "stack underflow")
@@ -23,7 +23,7 @@
         ; 'do-nothing
         ;; to be compatible with test
         (error "stack overflow")
-       ))
+        ))
     (define (pop)
       ;; > Remember to program defensively.
       (if (empty?)
@@ -100,9 +100,9 @@
       ;; sol is better where we cons the first to the rest instead of lst here.
       ;; > What 's (potentially) wrong with getting rid ...?
       ;; See https://stackoverflow.com/a/5522061/21294350
-     ))
+      ))
   (reverse (reverse-lst))
- )
+  )
 (my-stack 'data)
 (my-stack 'empty?)
 (pop-all my-stack)
@@ -113,4 +113,4 @@
   (let ((stack (make-stack (length lst))))
     (stack 'push-all-list lst)
     (pop-all stack)
-   ))
+    ))

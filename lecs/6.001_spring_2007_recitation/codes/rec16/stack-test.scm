@@ -31,7 +31,7 @@
     ;                ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Operations.html#index-eval
     ;                ;; TODO directly call `(the-environment)` here won't work.
     ;                (eval expr top-env)
-    ;              ) ; try evaluating
+    ;            ) ; try evaluating
 
     ;; Since I use MIT-scheme instead of DrScheme (i.e. Drracket now)
     ;; https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_910 hinted by https://practical-scheme.net/wiliki/schemexref.cgi?with-handlers -> https://practical-scheme.net/wiliki/schemexref.cgi?with-exception-handler
