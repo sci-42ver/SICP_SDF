@@ -1,4 +1,5 @@
-@PepijnKramer Reply to your modified 1st comment: "monadic style (member) functions" is a bit beyond my understanding ability implied by my 1st comment. I don't understand https://en.wikipedia.org/wiki/Monad_(functional_programming)#Overview `M a` and `M b` meanings. I will return to this when learning c++.
+I don't know much about c++ but just know some C++ syntax shared by C (I only learnt C in one university introduction course before). 1. Does `|` in `v | transform(f)` mean logical or? But that seems to be nonsense. Here | is more like pipe in shell. 2. "So it's as "functional" as a program that explicitly deals with lists all along without ever defining high-level abstractions." IMHO this means we can actually use for loop in C to  achieve that, is that right? 3. Do you mean `map_assocmap` can be achieved also by `transform` which can't be done by Scheme `map`?
+4. Functor https://en.wikipedia.org/wiki/Functor_(functional_programming) is more complex. IMHO it can be implemented as one *generic procedure* which I have learnt in SICP section 2.4 and SDF Software Design for Flexibility chapter 3.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -30,6 +31,7 @@ Review one history comment
 - `atan`
   > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).
 - comparison of `eq?,eqv?` etc: see ~/SICP_SDF/lecs/6.001_fall_2007_recitation/r08.pdf.
+- `(read)` returns one symbol.
 # Some abbr's used by CS 61A and MIT 6.001
 - abstract data type -> ADT
 # What we should achieve
@@ -2185,6 +2187,8 @@ I only read the context of "Search" and codes.
   See lec p4 the purple horizontal link and [procedure_application_environment_rule].
 - > Drop a new frame A that points to F
   IMHO i.e. "Create a new frame A" "into an environment" F which is env of the implicit lambda.
+### sp rec16
+- 
 ### sp [rec17](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/resources/st05project4/)
 1. https://github.com/psholtz/MIT-SICP/tree/master/Projects-S2005 https://github.com/yangchenyun/learning-sicp/tree/master/solutions/projects lacks some solutions for project including project 4.
 2. https://github.com/junqi-xie-learning/SICP-Projects/blob/main/4%20The%20Object-Oriented%20Adventure%20Game/objsys.scm just copys the lib...
