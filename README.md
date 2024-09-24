@@ -1,3 +1,14 @@
+# What this repo contains
+- notes for SICP and SDF
+- SICP 
+  - project 4 needed by SICP lec
+  - notes for SICP 6.001 lec and rec with solutions (if unavailable for some section, use 6.037)
+    - also for CS61A notes and labs with solutions
+  - CS61A Unit 0 solution and notes
+- SDF 
+  - exercise solutions
+  - 6.5150 ps solution
+  - TODO 6.5150 project demo
 # How long I have taken to read these books
 ## SICP
 - From Jun 2 to Jul 2, chapter 1 is finished.

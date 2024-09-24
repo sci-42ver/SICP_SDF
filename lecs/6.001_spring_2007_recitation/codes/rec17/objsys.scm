@@ -58,6 +58,7 @@
   (let* ((instance (make-instance))
          (handler (apply maker instance args)))
     (set-instance-handler! instance handler)
+    ;; For `screen`, this is not used.
     (if (method? (get-method 'INSTALL instance))
       (ask instance 'INSTALL))
     instance))
@@ -142,10 +143,12 @@
 ; All classes should inherit (directly or indirectly) from root.
 ;
 (define (root-object self)
+  ;; TYPE -> root
   (make-handler
     'root
     (make-methods
       'IS-A
+      ;; Here `self` will be delayed to evaluate. So passing `(make-instance)` is fine.
       (lambda (type)
         (memq type (ask self 'TYPE))))))
 
@@ -157,7 +160,7 @@
 ; We "ask" an object to invoke a named method on some arguments.
 ;
 (define (ask object message . args)
-  ;; See your Scheme manual to explain `. args' usage
+  ;; See your Scheme manual to explain `. args'usage
   ;; which enables an arbitrary number of args to ask.
   (let ((method (get-method message object)))
     (cond ((method? method)
@@ -191,6 +194,7 @@
 (define (get-method message . objects)
   (find-method-from-handler-list message (map ->handler objects)))
 
+;; Same as Lect15 `find-method-from-list`.
 (define (find-method-from-handler-list message objects)
   (if (null? objects)
     (no-method)
@@ -204,12 +208,14 @@
         ((eq? x (no-method)) #F)
         (else (error "Object returned this non-message:" x))))
 
+;; TODO why not just `(lambda () (list 'NO-METHOD))`.
 (define no-method
   (let ((tag (list 'NO-METHOD)))
     (lambda () tag)))
 
 ; used in make-handler to build the TYPE method for each handler
 ;
+;; If parents is nil, then just (list type)
 (define (type-extend type parents)
   (cons type 
         (remove-duplicates
@@ -429,6 +435,7 @@
     (make-handler
       'screen
       (make-methods
+        ;; Make the above `root-object` 'TYPE work.
         'TYPE   (lambda () (type-extend 'screen root-part))
         'NAME   (lambda () 'THE-SCREEN)
         'SET-ME (lambda (new-me) (set! me new-me))

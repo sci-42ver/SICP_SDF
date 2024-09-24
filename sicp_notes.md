@@ -2002,6 +2002,23 @@ I skipped reading context of biology.
   i.e. based on inherited methods by `get-method`.
 - `(define some-method (get-method <instance> ‘<MESSAGE>))` by `(define (get-method message . objects) ...)` should be `‘<MESSAGE> <instance>`.
 - `(ask c-instance ‘IS-A ‘C)` is probably done by checking `(ask c-instance ‘TYPE)`.
+### 16
+- TODO after reading the codes
+- `named-object-part` see lect15 `(define (book self name copyright) ...)`
+  - Since root has no superclass, so no corresponding part for this.
+- `handler` arg: see `(SET-HANDLER!)` ~~which makes it possible that multiple instances sharing one ~~ which uses one new instance of the *class* handler.
+- subpage 6
+  all self are passed among recursive calls.
+- > self is a pointer to the entire instance
+  Due to `(set-instance-handler! instance handler)`.
+- > This mostly matters when we have subclass methods that shadow superclass methods, and we want to invoke one of those shadowing methods *from inside the superclass*
+  i.e. we can call `'YEAR` message in `named-object` handler.
+- > *Inheritance* of methods
+  by `get-method`
+  > *Explicit* use of superclass methods
+  e.g. `(ask named-object-part ‘CHANGE-NAME ‘mit-sicp)`
+  > Shadowing of methods to over-ride default behaviors
+  implied by the ordering of explicit funcs before `get-method`.
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11

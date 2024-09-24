@@ -37,7 +37,7 @@
         (baker (create-place 'baker))
         (legal-seafood (create-place 'legal-seafood))
         (graduation-stage (create-place 'graduation-stage)))
-    
+
     ; Connect up places
     (can-go-both-ways lobby-10 'up 'down 10-250)
     (can-go-both-ways grendels-den 'up 'down lobby-10)
@@ -59,7 +59,7 @@
     (can-go-both-ways eecs-hq 'up 'down 6001-lab)
     (can-go-both-ways legal-seafood 'east 'west great-court)
     (can-go-both-ways great-court 'up 'down graduation-stage)
-    
+
     ; Create some things
     (create-thing 'blackboard 10-250)
     (create-thing 'lovely-trees great-court)
@@ -70,7 +70,7 @@
     (create-mobile-thing 'sicp stata-center)
     (create-mobile-thing 'engineering-book barker-library)
     (create-mobile-thing 'diploma graduation-stage)
-    
+
     (list 10-250 lobby-10 grendels-den barker-library lobby-7
           eecs-hq eecs-ug-office edgerton-hall 34-301 6001-lab
           building-13 great-court stata-center
@@ -85,57 +85,57 @@
 (define (instantiate-spells)
   (let ((chamber (create-place 'chamber-of-stata)))
     (create-spell
-     'boil-spell
-     chamber
-     "habooic katarnum"
-     (lambda (caster target)
-       (ask target 'EMIT
-	    (list (ask target 'NAME) "grows boils on their nose"))))
+      'boil-spell
+      chamber
+      "habooic katarnum"
+      (lambda (caster target)
+        (ask target 'EMIT
+             (list (ask target 'NAME) "grows boils on their nose"))))
     (create-spell
-     'slug-spell
-     chamber
-     "dagnabbit ekaterin"
-     (lambda (caster target)
-       (ask target 'EMIT (list "A slug comes out of" (ask target 'NAME) "'s mouth."))
-       (create-mobile-thing 'slug (ask target 'LOCATION))))
+      'slug-spell
+      chamber
+      "dagnabbit ekaterin"
+      (lambda (caster target)
+        (ask target 'EMIT (list "A slug comes out of" (ask target 'NAME) "'s mouth."))
+        (create-mobile-thing 'slug (ask target 'LOCATION))))
     chamber))
 
 (define (populate-spells rooms)
   (for-each (lambda (room)
-	      (clone-spell (pick-random (ask chamber-of-stata 'THINGS)) room))
-	    rooms))
+              (clone-spell (pick-random (ask chamber-of-stata 'THINGS)) room))
+            rooms))
 
 (define (populate-players rooms)
   (let* ((students (map (lambda (name)
-			  (create-autonomous-person name
-						    (pick-random rooms)
-						    (random-number 3)
-						    (random-number 3)))
-			'(ben-bitdiddle alyssa-hacker
-			  course-6-frosh lambda-man)))
-;uncomment after writing professors
-;	 (profs (map (lambda (name)
-;		       (create-wit-professor name
-;					     (pick-random rooms)
-;					     (random-number 3)
-;					     (random-number 3)))
-;		     '(susan-hockfield eric-grimson)))
-	 (monitors (map (lambda (name)
-			  (create-hall-monitor name
-					       (pick-random rooms)
-					       (random-number 3)
-					       (random-number 3)))
-			'(dr-evil mr-bigglesworth)))
-	 (trolls (map (lambda (name)
-			(create-troll name
-				      (pick-random rooms)
-				      (random-number 3)
-				      (random-number 3)))
-		      '(grendel registrar))))
+                          (create-autonomous-person name
+                                                    (pick-random rooms)
+                                                    (random-number 3)
+                                                    (random-number 3)))
+                        '(ben-bitdiddle alyssa-hacker
+                                        course-6-frosh lambda-man)))
+         ;uncomment after writing professors
+         ;	 (profs (map (lambda (name)
+         ;		       (create-wit-professor name
+         ;					     (pick-random rooms)
+         ;					     (random-number 3)
+         ;					     (random-number 3)))
+         ;		     '(susan-hockfield eric-grimson)))
+         (monitors (map (lambda (name)
+                          (create-hall-monitor name
+                                               (pick-random rooms)
+                                               (random-number 3)
+                                               (random-number 3)))
+                        '(dr-evil mr-bigglesworth)))
+         (trolls (map (lambda (name)
+                        (create-troll name
+                                      (pick-random rooms)
+                                      (random-number 3)
+                                      (random-number 3)))
+                      '(grendel registrar))))
 
     (append students
-;	    profs        ;uncomment after writing wit-professor
-	    monitors trolls)))
+            ;	    profs        ;uncomment after writing wit-professor
+            monitors trolls)))
 
 (define me 'will-be-set-by-setup)
 (define all-rooms 'will-be-set-by-setup)
@@ -153,9 +153,9 @@
     (populate-players rooms)
 
     ;uncomment after writing chosen one
-;    (create-chosen-one 'hairy-cdr (pick-random rooms)
-;		       (random-number 3) (random-number 3))
-    
+    ;    (create-chosen-one 'hairy-cdr (pick-random rooms)
+    ;		       (random-number 3) (random-number 3))
+
     (set! me (create-avatar name (pick-random rooms)))
     (ask screen 'SET-ME me)
     (set! all-rooms rooms)

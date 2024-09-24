@@ -1,6 +1,6 @@
 ;; from rec
 (load "stack.scm")
-(define top-env (the-environment))
+; (define top-env (the-environment))
 
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tests your recitation instructor used to make sure the code actually
