@@ -69,10 +69,12 @@
 ; it automatically implements the TYPE and METHODS methods.
 
 (define (make-handler typename methods . super-parts)
+  ; (display (list "methods" methods))
   (cond ((not (symbol? typename))    ;check for possible programmer errors
          (error "bad typename" typename))
         ((not (method-list? methods))
          (error "bad method list" methods))
+        ;; only ensure at least one available super-parts.
         ((and super-parts (not (filter handler? super-parts)))
          (error "bad part list" super-parts))
         (else
@@ -162,6 +164,8 @@
 ; 
 ; We "ask" an object to invoke a named method on some arguments.
 ;
+
+;; checked
 (define (ask object message . args)
   ;; See your Scheme manual to explain `. args'usage
   ;; which enables an arbitrary number of args to ask.
@@ -206,6 +210,7 @@
         method
         (find-method-from-handler-list message (cdr objects))))))
 
+;; checked
 (define (method? x)
   (cond ((procedure? x) #T)
         ((eq? x (no-method)) #F)
@@ -466,6 +471,7 @@
 ;; Utilities for our simulation world 
 ;;
 
+;; not considering multiple people with different ports. (also for display-net-message)
 (define (display-message list-of-stuff)
   (if (not (null? list-of-stuff)) (newline))
   (for-each (lambda (s) (display s) (display " "))

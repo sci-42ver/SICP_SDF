@@ -1,8 +1,4 @@
-1. Clarification to my 2nd comment: `for (i = 0; i < length(items); i++) {items[i]=proc(items[i])}`. 2. Summary of your reply to my 3rd comment: so c++ namespace implies `transform` won't be general/generic and return type is also restricted implicitly by namespace. 3. One small question: do you know why lecturer says "environment model" influence `map` implementation in c++ *before c++11* (sorry for not saying this explicitly in post since I don't know different standards of c++ may have big differences. Maybe this should be one new follow-up question)?
-
-:57654462 Thanks for your patience. I am a bit messy. IMHO all comments and the answer don't say much about the relationship between *environment model* and lackness of `map` in pre-C++11. They are talking about how to implement `map` etc in C++ *now*. Do you think it is  appropriate to ask one new follow-up question asking explicitly about this relationship?
-
-"it's more about being able to create procedures that are stateful.": Yes that is what chapter 3 teaches. But all 3 funcs are shown in chapter 2. Although lambda application will create one new env, I don't see why this is necessary for "fully-functional map, filter, and fold-right/fold-left".
+@molbdnilo Thanks very much. "object lifetimes" implies passing func *pointer* may fail at some time. This is why environment model is useful since if we pass one `lambda` object explicitly like `(map (lambda (x) x) items)`, then `proc` will just be binded to `(lambda (x) x)` in the new env created when procedure application. This *won't be influenced* by garbage collector in Scheme or destructor in C++. I understand this problem now.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -2255,7 +2251,61 @@ I only read the context of "Search" and codes.
 ### sp [rec17](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/resources/st05project4/)
 1. https://github.com/psholtz/MIT-SICP/tree/master/Projects-S2005 https://github.com/yangchenyun/learning-sicp/tree/master/solutions/projects lacks some solutions for project including project 4.
 2. https://github.com/junqi-xie-learning/SICP-Projects/blob/main/4%20The%20Object-Oriented%20Adventure%20Game/objsys.scm just copys the lib...
-3. https://github.com/nrosiello/MIT-6.001/blob/master/project-4/project-4.scm have some valid solutions.
+3. https://github.com/nrosiello/MIT-6.001/blob/master/project-4/project-4.scm have *some valid solutions*.
+- > Our object instances are thus procedures which accept messages.
+  more specifically, one tagged data.
+- typo's
+  - > which will be useful in following the code
+    "the following code"
+- TODO
+  - > This set of code is a slightly modified version of what was presented in lecture
+    no "make-methods" in 2 lecs
+- > Thus, we may think of a thing as a kind of named object except that it also handles the messages that are *special* to things.
+  SDF use `predicate<=` to share operations between the superclasses and self. This also manipulates with `(root-part (root-object self)` etc related with superclass.
+  - > 'INSTALL
+    `thing` overloads this method. For SDF this is done by `make-most-specific-dispatch-store`.
+    But it calls `(ask named-part 'INSTALL)`, so here it corresponds to `make-chaining-dispatch-store`.
+    This is similar to `set-up!`.
+    - similar to
+      > You'll note that named-object and container only share one method of the same name, TYPE , and place *overrides* it.
+- > (ask screen 'TELL-ROOM (ask self 'LOCATION) ...)
+  i.e. SDF `send-message!`. But here `server-port` is static while SDF has `screen:port`.
+- > The thing class overrides two methods on named-object explicitly (as well as two implicitly);
+  explicitly (trivial): `'INSTALL, 'DESTROY`
+  implicitly (in `make-handler`): ...
+- > This allows the class of an instance to be discovered at run time
+  IMHO this means checking "instance" most specific type.
+- > It turns out just using location would be a bug in this case; you'll be able to see why after doing the warm-up exercises!
+  TODO
+- **Notice**
+  > This is the only situation in which you should be asking your superclass-part!
+- `(things '())` done in SDF by `property`.
+  - `(root-object ...)` corresponds to SDF `object?`
+- > they are only meant to be used internally by other objects to gain the capability of adding things
+  In SDF this is done by "inheritance".
+  Same here with `(container-part (container self))`.
+- > we can say the place class establishes a "has-a" relationship with the exit class
+  `has-a` is not implemented.
+- > ; This shadows message to thing-part!
+  Since `(set! location new-location)` only changes the local `location` instead of that in `thing-part`.
+- > thus the location contains a reference to the instance not the handler
+  "handler" is also fine since
+  ```scheme
+  (eq? (named-lambda (test1 x) x) (named-lambda (test1 x) x)) ; #f
+  (eq? (lambda (test1 x) x) (lambda (test1 x) x)) ; #f
+  ```
+- > A person is a kind of mobile thing that is also a container.
+  SDF uses `bag` for `container`.
+#### comparison with SDF for some operations
+- > (ask (ask self 'LOCATION) 'DEL-THING self)
+  SDF gives `remove-thing!` which is *not one internal* function for any instance.
+  Similar for `find-exit-in-direction`, `ENTER-ROOM`.
+- > 'ADD-EXIT
+  SDF defines this for exit by `create-exit` instead of `place`, so conflict is less possible.
+- > 'CHANGE-LOCATION
+  Done in SDF by checking type in `generic-move!`.
+- > 'CREATION-SITE
+  Done in SDF with one different naming property `origin`.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

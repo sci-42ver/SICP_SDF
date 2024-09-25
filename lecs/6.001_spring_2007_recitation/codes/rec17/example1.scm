@@ -1,3 +1,4 @@
+;; Use `(type-extend '[^(]*)([^()]+)` -> `$1(list $2)` to ensure type-extend work.
 (load "objsys.scm")
 
 ;; Lect16 p2
@@ -30,9 +31,9 @@
 
 (define p1 (create-person 'joe))
 (ask p1 'whoareyou?)
-; ; ; ; ; ; ; ; ; ⇒ joe
+; ; ; ; ; ; ; ; ; ; ⇒ joe
 (ask p1 'say '(the sky is blue))
-; ; ; ; ; ; ; ; ; ⇒ (the sky is blue)
+; ; ; ; ; ; ; ; ; ; ⇒ (the sky is blue)
 
 (define (create-professor name)
   (create-instance professor name))
@@ -58,9 +59,9 @@
 
 (define prof1 (create-professor 'fred))
 (ask prof1 'whoareyou?)
-; ; ; ; ; ; ; ⇒ (prof fred)
+; ; ; ; ; ; ; ; ⇒ (prof fred)
 (ask prof1 'lecture '(the sky is blue))
-; ; ; ; ; ; ; ⇒ (therefore the sky is blue)
+; ; ; ; ; ; ; ; ⇒ (therefore the sky is blue)
 
 (define (arrogant-prof self name)
   (let ((prof-part (professor self name)))
@@ -124,7 +125,7 @@
     (lambda (message)
       (case message
         ((TYPE)
-         (lambda () (type-extend 'named-object root-part)))
+         (lambda () (type-extend 'named-object (list root-part))))
         ((NAME) (lambda () name))
         (else (get-method message root-part))))))
 (define (names-of objects)
@@ -142,7 +143,7 @@
         (children nil))
     (lambda (message)
       (case message
-        ((TYPE) (lambda () (type-extend 'person named-part)))
+        ((TYPE) (lambda () (type-extend 'person (list named-part))))
         ((SAY) (lambda (stuff) (display stuff)))
         ((MOTHER) (lambda () mother))
         ((FATHER) (lambda () father))
@@ -161,7 +162,7 @@
   (let ((person-part (person self name)))
     (lambda (message)
       (case message
-        ((TYPE) (lambda () (type-extend 'mother person-part)))
+        ((TYPE) (lambda () (type-extend 'mother (list person-part))))
         ((HAVE-CHILD)
          (lambda (dad child-name)
            (let ((child (create-person child-name)))

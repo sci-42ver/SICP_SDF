@@ -20,6 +20,7 @@
 (define (create-named-object name)      ; symbol -> named-object
   (create-instance named-object name))
 
+;; different from lec
 (define (named-object self name)
   (let ((root-part (root-object self)))
     (make-handler
@@ -138,6 +139,7 @@
         'EXITS (lambda () exits)
         'EXIT-TOWARDS
         (lambda (direction)
+          ;; either #f or exit
           (find-exit-in-direction exits direction))
         'ADD-EXIT
         (lambda (exit)
@@ -186,6 +188,7 @@
 (define (find-exit-in-direction exits dir)
   ; Given a list of exits, find one in the desired direction.
   (cond ((null? exits) #f)
+        ;; only work for exit type
         ((eq? dir (ask (car exits) 'DIRECTION))
          (car exits))
         (else (find-exit-in-direction (cdr exits) dir))))
@@ -225,6 +228,7 @@
                              (ask self 'NAME) "says --")
                        list-of-stuff))
           'SAID-AND-HEARD)
+        ;; TODO fit -> upset? 
         'HAVE-FIT
         (lambda ()
           (ask self 'SAY '("Yaaaah! I am upset!"))
@@ -243,6 +247,7 @@
         'PEEK-AROUND          ; other people's stuff...
         (lambda ()
           (let ((people (ask self 'PEOPLE-AROUND)))
+            ;; fold is also fine.
             (fold-right append '() (map (lambda (p) (ask p 'THINGS)) people))))
 
         'TAKE
@@ -255,6 +260,7 @@
                      (not (ask thing 'IS-A 'MOBILE-THING)))
                  (ask self 'SAY (list "I try but cannot take"
                                       (ask thing 'NAME)))
+                 ;; Same as #f by eq?.
                  #F)
                 (else
                   (let ((owner (ask thing 'LOCATION)))
@@ -269,6 +275,7 @@
         (lambda (thing lose-to)
           (ask self 'SAY (list "I lose" (ask thing 'NAME)))
           (ask self 'HAVE-FIT)
+          ;; this may be duplicate of `(ask thing 'CHANGE-LOCATION self)`. But fine for 'DIE.
           (ask thing 'CHANGE-LOCATION lose-to))
 
         'DROP
@@ -284,6 +291,7 @@
         'GO
         (lambda (direction) ; symbol -> boolean
           (let ((exit (ask (ask self 'LOCATION) 'EXIT-TOWARDS direction)))
+            ;; IMHO if not #f, must be exit.
             (if (and exit (ask exit 'IS-A 'EXIT))
               (ask self 'GO-EXIT exit)
               (begin (ask screen 'TELL-ROOM (ask self 'LOCATION)
@@ -297,6 +305,7 @@
           health)
 
         'DIE          ; depends on global variable "death-exit"
+        ;; perp is not used
         (lambda (perp)
           (for-each (lambda (item) (ask self 'LOSE item (ask self 'LOCATION)))
                     (ask self 'THINGS))
