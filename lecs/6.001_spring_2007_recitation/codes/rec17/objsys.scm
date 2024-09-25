@@ -76,6 +76,7 @@
         ((and super-parts (not (filter handler? super-parts)))
          (error "bad part list" super-parts))
         (else
+          ;; checked
           (named-lambda (handler message)
                         (case message
                           ((TYPE)
@@ -93,7 +94,9 @@
 
 (define (handler? x)
   (and (compound-procedure? x)
-       (eq? 'handler (lambda-name (procedure-lambda x)))))
+       ;; invalid for MIT/GNU Scheme
+       ;  (eq? 'handler (lambda-name (procedure-lambda x)))
+       ))
 
 (define (->handler x)
   (cond ((instance? x)
@@ -216,6 +219,8 @@
 ; used in make-handler to build the TYPE method for each handler
 ;
 ;; If parents is nil, then just (list type)
+
+;; TODO work for `(type-extend typename super-parts)` but maybe not for `(type-extend 'screen root-part)` since root-part is one named-lambda func.
 (define (type-extend type parents)
   (cons type 
         (remove-duplicates

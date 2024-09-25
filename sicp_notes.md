@@ -1,5 +1,8 @@
-I don't know much about c++ but just know some C++ syntax shared by C (I only learnt C in one university introduction course before). 1. Does `|` in `v | transform(f)` mean logical or? But that seems to be nonsense. Here | is more like pipe in shell. 2. "So it's as "functional" as a program that explicitly deals with lists all along without ever defining high-level abstractions." IMHO this means we can actually use for loop in C to  achieve that, is that right? 3. Do you mean `map_assocmap` can be achieved also by `transform` which can't be done by Scheme `map`?
-4. Functor https://en.wikipedia.org/wiki/Functor_(functional_programming) is more complex. IMHO it can be implemented as one *generic procedure* which I have learnt in SICP section 2.4 and SDF Software Design for Flexibility chapter 3.
+1. Clarification to my 2nd comment: `for (i = 0; i < length(items); i++) {items[i]=proc(items[i])}`. 2. Summary of your reply to my 3rd comment: so c++ namespace implies `transform` won't be general/generic and return type is also restricted implicitly by namespace. 3. One small question: do you know why lecturer says "environment model" influence `map` implementation in c++ *before c++11* (sorry for not saying this explicitly in post since I don't know different standards of c++ may have big differences. Maybe this should be one new follow-up question)?
+
+:57654462 Thanks for your patience. I am a bit messy. IMHO all comments and the answer don't say much about the relationship between *environment model* and lackness of `map` in pre-C++11. They are talking about how to implement `map` etc in C++ *now*. Do you think it is  appropriate to ask one new follow-up question asking explicitly about this relationship?
+
+"it's more about being able to create procedures that are stateful.": Yes that is what chapter 3 teaches. But all 3 funcs are shown in chapter 2. Although lambda application will create one new env, I don't see why this is necessary for "fully-functional map, filter, and fold-right/fold-left".
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -64,20 +67,18 @@ Review one history comment
     See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
 - section 3.1
   - TODO
-    - > But this view is no longer valid in the presence of change, where a com-pound data object has an “identity” that is something different from the pieces of which it is composed.
-      > an “identity” that is something different from the pieces of which it is composed. ... “the same” rational number.
-      Also see
+    - ~~Also see~~
       > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
-      IMHO “identity” just means not decomposable.
-      - > we are “solving the problem” of defining the identity of objects by stipulating that a data object “itself ” is the information *stored in some particular set of memory locations* in the computer.
+      ~~IMHO “identity” just means not decomposable.~~
+      - ~~> we are “solving the problem” of defining the identity of objects by stipulating that a data object “itself ” is the information *stored in some particular set of memory locations* in the computer.~~
         is same as CS61A notes
         > so that mutating one also changes the other
         and 6.001 lec11
         > Yes, if we retain the *same pointer* to the object
-        - So
+        - ~~So~~
           > A bank account is still “the same” bank account even if we change the balance by making a withdrawal; con-versely, we could have two different bank accounts with the same state information.
           means the former one is same as itself, but the latter are 2 objects just with the same contents in *different locations*.
-          - TODO 
+          - ~~TODO ~~
             but how to interpret 
             > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
             then?
@@ -1833,6 +1834,17 @@ not use
   i.e. the issue in the preface of section 3.1.3.
 - > A language that supports the concept that “equals can be substituted for equals” in an expression without changing the value of the expres-sion is said to be referentially transparent.
   IMHO i.e. not use `set!` etc. here -> `(make-decrementer 25)`
+- > But this view is no longer valid in the presence of change, where a com-pound data object has an “identity” that is something different from the pieces of which it is composed.
+  See `~/SICP_SDF/lecs/6.001_spring_2007_lec/Lect15-oops-1.pdf`
+  > Each instance has its own identity *in sense of eq?*
+  [and](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Equivalence-Predicates.html#index-eq_003f) (i.e. book "In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of *pointers*.")
+  > obj1 and obj2 are *pairs*, vectors, strings, bit strings, *records*, cells, or weak pairs that denote *the same locations* in the store.
+  Here "identity" means *unique identifier* of one object.
+  - > A bank account is still “the same” bank account even if we change the balance by making a withdrawal; con-versely, we could have two different bank accounts with the same state information.
+    here we can use location to understand or just think account as being someone's where we use the *owner* to identify.
+    > is complication is a consequence, not of our program-ming language, but of our perception of a bank account as an *object*.
+    - > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
+      IMHO it is more appropriate to say "could change the numerator" but have different rational number. Compare this with "... “the same” bank account even if we change the balance ..."
 ### 3.2
 - Figure 3.3:
   "the text of the lambda expression" -> "parameters" and "body".
@@ -1989,7 +2001,7 @@ I skipped reading context of biology.
   > (clock-callback ‘moveit me ‘MOVE)
   `clock-tick!` just define a sequence of operations for each object.
 - > Inheritance
-  - method Inheritance
+  - method Inheritance <a id="SDF_Inheritance"></a>
     SDF `predicate<=` -> `tag<=`.
     Then `make-chaining-dispatch-store` will use all handlers sorted by `rule<` where we first did child operations (but see `set-up!` -> `(super exit)` etc. where we *actually* run parent operations first), so Inheritance.
     This is just
@@ -2019,6 +2031,33 @@ I skipped reading context of biology.
   e.g. `(ask named-object-part ‘CHANGE-NAME ‘mit-sicp)`
   > Shadowing of methods to over-ride default behaviors
   implied by the ordering of explicit funcs before `get-method`.
+- > Use of TYPE information for additional control
+  e.g. `is-a` uses that and then uses `is-a` to dispatch like `(ask whom 'is-a 'student)`.
+- > to inherit structure and methods from superclasses
+  structure: e.g. `prof-part` which can get private variables there if having available APIs.
+  methods: e.g. `(get-method message prof-part)`.
+- > Just look through the supplied objects from left to right until the first matching method is found.
+  corresponds to SDF `make-most-specific-dispatch-store` but the latter will sort beforehand.
+  SDF also supplies [SDF_Inheritance]
+- > Default methods for all instances:
+  See `(root-object self)` where `'TYPE` is implied in `'IS-A`.
+- > Inheritance of state and behavior from superclass
+  i.e. private variables and methods.
+- p8 subpage1
+  IMHO here 
+  1. E1-GE: create-person
+  2. E2-E1: create-instance
+  3. E3-E2: `instance, handler` ...
+  - > E2:
+    i.e. `(lambda () name)`
+  - > (lambda () name) | E1 
+    | means "enclosing env"
+  - > (#[proc 9]) | E55
+    IMHO E55 should be E2.
+- > Have a starting “instance” (self) object in env. model
+  i.e. `(make-instance)`
+  > Instance contains a series of message/state handlers for each class in *inheritance chain*
+  `get-method` in `handler` of `(set-instance-handler! instance handler)`
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 ### rec15 for lec11
@@ -2244,6 +2283,7 @@ I only read the context of "Search" and codes.
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
 <!-- in-page link -->
+[SDF_Inheritance]:#SDF_Inheritance
 [procedure_application_environment_rule]:#procedure_application_environment_rule
 
 [ucb_sicp_review]:https://people.eecs.berkeley.edu/~bh/sicp.html

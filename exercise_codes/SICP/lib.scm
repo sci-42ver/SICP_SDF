@@ -9,7 +9,7 @@
   (assert (pred x y)))
 
 ;; See stack-test.scm
-;; Can't catch syntax errors seemingly, see named-lambda-self-reference.scm.
+;; Can't catch syntax errors seemingly, see named-lambda-self-reference.scm. Maybe due to being based on *exception* thrown by error.
 (let ((top-env (the-environment)))
   (define (assert-throws expr)
     (let ((exception-thrown #f))
