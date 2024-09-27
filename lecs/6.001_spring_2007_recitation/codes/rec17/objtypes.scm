@@ -54,7 +54,10 @@
       (make-methods
         'THINGS      (lambda () things)
         'HAVE-THING? (lambda (thing)
-                       (not (null? (memq thing things))))
+                       ;; in MIT/GNU Scheme 12.1 the API is changed
+                      ;  (not (null? (memq thing things)))
+                       (memq thing things)
+                       )
         'ADD-THING   (lambda (thing)
                        (if (not (ask self 'HAVE-THING? thing))
                          (set! things (cons thing things)))
@@ -82,9 +85,14 @@
       (make-methods
         'INSTALL  (lambda ()
                     (ask named-part 'INSTALL)
-                    (ask (ask self 'LOCATION) 'ADD-THING self))
+                    (ask (ask self 'LOCATION) 'ADD-THING self)
+                    (displayln (list (ask self 'NAME) "in" (ask (ask self 'LOCATION) 'NAME) "with things" (ask (ask self 'LOCATION) 'THINGS)))
+                    )
         'LOCATION (lambda () location)
         'DESTROY  (lambda ()
+                    ;; > It turns out just using location would be a bug in this case; you'll be able to see why after doing the warm-up exercises!
+                    ;; For mobile-thing, `LOCATION` may be changed by `'CHANGE-LOCATION`, so we need to use location there by `(ask self 'LOCATION)`.
+                    ;; After all, inheritance implies `(ask self 'LOCATION)` may be always safer.
                     (ask (ask self 'LOCATION) 'DEL-THING self))
         'EMIT     (lambda (text)
                     (ask screen 'TELL-ROOM (ask self 'LOCATION)
@@ -111,7 +119,9 @@
         (lambda (new-location)
           (ask location 'DEL-THING self)
           (ask new-location 'ADD-THING self)
-          (set! location new-location))
+          (set! location new-location)
+          ; (displayln (list (ask self 'NAME) "CHANGE-LOCATION" (ask (ask self 'LOCATION) 'NAME)))
+          )
         'ENTER-ROOM    (lambda () #t)
         'LEAVE-ROOM    (lambda () #t)
         'CREATION-SITE (lambda () (ask thing-part 'location)))
@@ -194,6 +204,7 @@
         (else (find-exit-in-direction (cdr exits) dir))))
 
 (define (random-exit place)
+  ;; return #f or one exit
   (pick-random (ask place 'EXITS)))
 
 ;;--------------------
@@ -330,6 +341,7 @@
 (define (create-autonomous-person name birthplace activity miserly)
   (create-instance autonomous-person name birthplace activity miserly))
 
+;; checked.
 (define (autonomous-person self name birthplace activity miserly)
   (let ((person-part (person self name birthplace)))
     (make-handler
@@ -362,6 +374,7 @@
         'MOVE-SOMEWHERE
         (lambda ()
           (let ((exit (random-exit (ask self 'LOCATION))))
+            ;; IMHO this is wrong since `(not (null? #f))` is #t.
             (if (not (null? exit)) (ask self 'GO-EXIT exit))))
         'TAKE-SOMETHING
         (lambda ()
@@ -394,7 +407,7 @@
         (lambda ()
           (if (= (random irritability) 0)
             (let ((people (ask self 'PEOPLE-AROUND)))
-              (if people
+              (if (not (null? people))
                 (begin
                   (ask self 'SAY '("What are you doing still up?"
                                    "Everyone back to their rooms!"))
@@ -407,7 +420,7 @@
                             people)
                   'grumped)
                 (ask self 'SAY '("Grrr... When I catch those students..."))))
-            (if (ask self 'PEOPLE-AROUND)
+            (if (not (null? (ask self 'PEOPLE-AROUND)))
               (ask self 'SAY '("I'll let you off this once...")))))
         'DIE
         (lambda (perp)
@@ -436,7 +449,7 @@
         (lambda ()
           (if (= (random hunger) 0)
             (let ((people (ask self 'PEOPLE-AROUND)))
-              (if people
+              (if (not (null? people))
                 (let ((victim (pick-random people)))
                   (ask self 'EMIT
                        (list (ask self 'NAME) "takes a bite out of"
@@ -499,6 +512,7 @@
                  (other-people (ask self 'PEOPLE-AROUND))
                  (my-stuff (ask self 'THINGS))
                  (stuff (ask self 'STUFF-AROUND)))
+            ;; TODO shouldn't this be 'TELL-ROOM.
             (ask screen 'TELL-WORLD (list "You are in" (ask place 'NAME)))
             (ask screen 'TELL-WORLD
                  (if (null? my-stuff)

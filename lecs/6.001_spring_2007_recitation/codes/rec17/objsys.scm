@@ -60,7 +60,10 @@
     (set-instance-handler! instance handler)
     ;; For `screen`, this is not used.
     (if (method? (get-method 'INSTALL instance))
-      (ask instance 'INSTALL))
+      (begin
+        ; (displayln (list "install" (ask instance 'NAME)))
+        (ask instance 'INSTALL)
+        ))
     instance))
 
 ;;------------------------------------------------------------
@@ -225,7 +228,7 @@
 ;
 ;; If parents is nil, then just (list type)
 
-;; TODO work for `(type-extend typename super-parts)` but maybe not for `(type-extend 'screen root-part)` since root-part is one named-lambda func.
+;; work for `(type-extend typename super-parts)` but not for `(type-extend 'screen root-part)` since root-part is one named-lambda func.
 (define (type-extend type parents)
   (cons type 
         (remove-duplicates
@@ -317,9 +320,12 @@
         (lambda ()
           (set! removed-callbacks '())
           (for-each (lambda (x) 
+                      ;; TODO since we have reset removed-callbacks to nil, so why do this memq check.
                       (if (not (memq x removed-callbacks))
                         (ask x 'activate)))
-                    (reverse callbacks))
+                    ;; due to cons in 'ADD-CALLBACK
+                    (reverse callbacks)
+                    )
           (set! the-time (+ the-time 1)))
         'ADD-CALLBACK
         (lambda (cb)
@@ -437,6 +443,7 @@
 ;;
 ;; network-mode is something set only by the network code.
 
+;; checked
 (define (screen self)
   (let ((deity-mode #t)
         (network-mode #f)
@@ -455,6 +462,7 @@
                           (if network-mode
                             (display-net-message msg)
                             (display-message msg))))
+        ;; tells the current user.
         'TELL-WORLD   (lambda (msg)
                         (if network-mode
                           (display-net-message msg)
@@ -517,10 +525,12 @@
 ;; Treat these as gifts from the (Scheme) Gods.  
 ;; Don't try to understand these procedures!
 
+;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Format.html#index-load_002doption
 (load-option 'format)
 
 (define (show obj)
   (define (show-guts obj)
+    (newline)
     (format #t "INSTANCE ~A~% TYPE: ~A~%" obj (ask obj 'TYPE))
     (show-handler (->handler obj))
     'instance)
@@ -528,11 +538,12 @@
     (show-guts obj) 
     (show-handler obj)))
 
+;; TODO this frame is similar to one answer of one question of mine https://stackoverflow.com/users/21294350/an5drama
 (define (show-handler proc)
   (define (show-frame frame depth)
     (define *max-frame-depth* 1)
     (if (global-environment? frame)
-      (display (env-name frame))
+      (display (list "env-name" (env-name frame)))
       (let* ((bindings (environment-bindings frame))
              (parent   (environment-parent frame))
              (names    (cons "Parent frame"
@@ -546,27 +557,38 @@
                  (< depth *max-frame-depth*))
           (show-frame parent (+ depth 1))))))
   (define (global-environment? frame)
+    ;; TODO not in MIT_Scheme_Reference
     (environment->package frame))
   (define (env-name env)
     (if (global-environment? env) 'GLOBAL-ENVIRONMENT env))
   (define (pp-binding name value width depth)
+    ;; https://groups.csail.mit.edu/mac/projects/info/schemedocs/ref-manual/html/scheme_132.html
     (let ((value* (with-string-output-port
                     (lambda (port)
                       (if (pair? value)
+                        ;; See https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=c1e1c97ad2084708239833da62e5ed5e033423b1
+                        ;; But it has at most 3 args.
                         (pretty-print value port #F (+ width 2))
                         (display value port))))))
       (display-spaces (* 2 (+ depth 1)))
       (display name) (display ": ")
       (display (make-string (- width (string-length name)) #\Space))
       (if (pair? value)
+        ;; See the above `(+ width 2)` although I don't know what it does.
         (display (substring value* (+ width 2) (string-length value*)))
+        ; (display value*)
         (display value*))
       (newline)))
   (define (display-spaces num)
     (if (> num 0) (begin (display " ") (display-spaces (- num 1)))))
   (if (handler? proc)
+    ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Output-Procedures.html#index-_002aunparser_002dlist_002ddepth_002dlimit_002a
+    ;; better to use `parameterize`
+    ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Dynamic-Binding.html#index-fluid_002dlet
+    ;; > The parameterize special form (see parameterize) should be used instead.
     (fluid-let ((*unparser-list-depth-limit* 5)
                 (*unparser-list-breadth-limit* 6))
+               ;; See `(make-handler typename methods . super-parts)`
                (let ((methods (environment-lookup (procedure-environment proc)
                                                   'methods))
                      (parts   (environment-lookup (procedure-environment proc)
@@ -575,9 +597,10 @@
                                                   'typename)))
                  (format #t " HANDLER: ~A~%" proc)
                  (format #t " TYPE: ~A~%" type)
-                 (format #t "~A~%" (with-output-to-string 
+                 (format #t " METHODS:~%~A~%" (with-output-to-string 
                                      (lambda () (pretty-print methods))))
                  (if (cdr methods)
+                   ;; cadr first gets the first method pair, then again ad to get the actual method proc.
                    (show-frame (procedure-environment (cadadr methods)) 0)
                    (format #t " PARENTS: ~A~%" parts))
                  ;(display " HANDLER PROCEDURE:\n")

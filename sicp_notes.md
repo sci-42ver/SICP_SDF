@@ -31,6 +31,8 @@ Review one history comment
   > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).
 - comparison of `eq?,eqv?` etc: see ~/SICP_SDF/lecs/6.001_fall_2007_recitation/r08.pdf.
 - `(read)` returns one symbol.
+- [`fluid-let`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Dynamic-Binding.html#index-fluid_002dlet)
+  > but fluid-let *temporarily rebinds* existing variables
 # Some abbr's used by CS 61A and MIT 6.001
 - abstract data type -> ADT
 # What we should achieve
@@ -2260,6 +2262,11 @@ I only read the context of "Search" and codes.
 - TODO
   - > This set of code is a slightly modified version of what was presented in lecture
     no "make-methods" in 2 lecs
+  - ~~> (eq? object (ask cb 'OBJECT))~~
+    Why this doesn't need to call `object` method?
+    - See the reasons of the following
+      Here `clock-callback` has no class to inherit it, so no ambiguity.
+  - ~~> It turns out just using location would be a bug in this case; you'll be able to see why after doing the warm-up exercises!~~
 - > Thus, we may think of a thing as a kind of named object except that it also handles the messages that are *special* to things.
   SDF use `predicate<=` to share operations between the superclasses and self. This also manipulates with `(root-part (root-object self)` etc related with superclass.
   - > 'INSTALL
@@ -2275,10 +2282,6 @@ I only read the context of "Search" and codes.
   implicitly (in `make-handler`): ...
 - > This allows the class of an instance to be discovered at run time
   IMHO this means checking "instance" most specific type.
-- > It turns out just using location would be a bug in this case; you'll be able to see why after doing the warm-up exercises!
-  TODO
-- **Notice**
-  > This is the only situation in which you should be asking your superclass-part!
 - `(things '())` done in SDF by `property`.
   - `(root-object ...)` corresponds to SDF `object?`
 - > they are only meant to be used internally by other objects to gain the capability of adding things
@@ -2296,6 +2299,49 @@ I only read the context of "Search" and codes.
   ```
 - > A person is a kind of mobile thing that is also a container.
   SDF uses `bag` for `container`.
+- > 'MOVE-AND-TAKE-STUFF
+  Here it may do multiple moves but SDF will only do once.
+- > non-muggles
+  [See](https://harrypotter.fandom.com/wiki/Non-magic_people)
+#### solution
+Warmup Exercise (only 1,2,4 have sample-implementation)
+- [x] 1
+  - `place`
+    `'EXITS` etc
+    - see `sample-implementation.scm` for the detailed info's.
+- [x] 2
+  - > Also look through the code in setup.scm to see what the world looks like
+    `create-world` is almost same as SDF `create-mit`.
+  - See lec16 p6
+    Here `person` has no nested `has-a list` etc.
+    For `autonomous-person`, no such 3 arrows outside exist.
+  - "see `sample-implementation.scm` for detailed" relations between types.
+- [x] 3
+  - > How are they interconnected?
+    by exit.
+  - > Draw a map.
+    routine... so I won't do that.
+- [x] 4
+  See `create-world` and `populate-players`.
+  > How is it determined which room each person and thing starts out in
+  by deity
+- [ ] 5
+  - `(thing ‘foo some-location)` (This should be `create-thing`) creates 
+    E1: `name location`
+    E2-E1: `thing name location`
+    E3 ... (routine I have done many env exercises...)
+  - > For the bindings associated with methods,  just  leave  the  actual  value  blank.
+    `()` in `(lambda () ...)`?
+  - > draw boxes around the structures that correspond to each of the superparts of the object created.
+    See lec16 p1 subpage 3.
+- [x] 6
+Project
+summary of general requirement (also see highlighted words)
+> Note that we do this with the *INSTALL* method of a thing, where we *explicitly ask the superpart* to also install, as well as doing some specific actions. This is *the only situation in which you should be asking your superclass-part*!
+> a brief transcript indicating *how you tested* the procedure
+> You should *not need to change the setup* code to do simple tests.
+> Never use *thing-named* in object code, only for testing; this is a corollary to never using "*me*" except in *testing*.
+- [ ] 1
 #### comparison with SDF for some operations
 - > (ask (ask self 'LOCATION) 'DEL-THING self)
   SDF gives `remove-thing!` which is *not one internal* function for any instance.

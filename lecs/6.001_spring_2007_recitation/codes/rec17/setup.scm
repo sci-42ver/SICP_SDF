@@ -82,6 +82,8 @@
 ; is cloned (using clone-spell; see objtypes.scm).
 ; There are no entrances, exits, or people in the chamber, preventing
 ;  the spells there from being stolen.
+
+;; Here spell is related with "incant".
 (define (instantiate-spells)
   (let ((chamber (create-place 'chamber-of-stata)))
     (create-spell
@@ -139,12 +141,15 @@
 
 (define me 'will-be-set-by-setup)
 (define all-rooms 'will-be-set-by-setup)
+;; see project4.pdf "Hairy Cdr and the Chamber of Stata"
 (define chamber-of-stata 'will-be-set-by-setup)
 
 (define (setup name)
   (ask clock 'RESET)
+  ;; to add back since having reset.
   (ask clock 'ADD-CALLBACK
        (create-clock-callback 'tick-printer clock 'PRINT-TICK))
+  ;; > It has ... objects, 
   (let ((rooms (create-world)))
     (set! chamber-of-stata (instantiate-spells))
 
