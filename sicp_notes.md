@@ -2343,6 +2343,7 @@ test
 > a brief transcript indicating *how you tested* the procedure
 > Never use *thing-named* in object code, only for testing; this is a corollary to never using "*me*" except in *testing*.
 - sample-implementation.scm checked up to 7.
+- IMHO up to exercise 7, the code exercises are just how to use the lib. But the basic OOP ideas are still same as what lec's say.
 #### comparison with SDF for some operations
 - > (ask (ask self 'LOCATION) 'DEL-THING self)
   SDF gives `remove-thing!` which is *not one internal* function for any instance.

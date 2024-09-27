@@ -11,9 +11,14 @@
       root-part)))
 
 ;; similar to SDF
-(define (person? obj)
+(define (type? obj type)
   (and (instance? obj)
-       (ask obj 'IS-A 'person)))
+       (ask obj 'IS-A type)))
+(define (person? obj)
+  (type? obj 'person))
 
 (define (not-empty? lst)
   (not (null? lst)))
+
+(define (autonomous-person? obj)
+  (type? obj 'autonomous-person))

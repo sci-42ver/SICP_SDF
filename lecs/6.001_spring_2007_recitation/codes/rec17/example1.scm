@@ -31,9 +31,9 @@
 
 (define p1 (create-person 'joe))
 (ask p1 'whoareyou?)
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ joe
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ joe
 (ask p1 'say '(the sky is blue))
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (the sky is blue)
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (the sky is blue)
 
 (define (create-professor name)
   (create-instance professor name))
@@ -59,9 +59,9 @@
 
 (define prof1 (create-professor 'fred))
 (ask prof1 'whoareyou?)
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (prof fred)
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (prof fred)
 (ask prof1 'lecture '(the sky is blue))
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (therefore the sky is blue)
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ⇒ (therefore the sky is blue)
 
 (define (arrogant-prof self name)
   (let ((prof-part (professor self name)))

@@ -125,7 +125,7 @@
 (define (wit-student self name birthplace activity miserly)
   (let ((autonomous-person-part (autonomous-person self name birthplace activity miserly)))
     (make-handler
-      'autonomous-person
+      'wit-student
       (make-methods
         'INSTALL
         (lambda ()
@@ -193,9 +193,7 @@
             ;	    profs        ;uncomment after writing wit-professor
             monitors trolls)))
 
-(setup 'foo)
-(ask screen 'DEITY-MODE #f)
-(run-clock 50)
+(set-up-cnt 50 'foo #f)
 ; --- the-clock Tick 32 --- 
 ; Wit-student ben-bitdiddle is zapping. 
 ; Wit-student alyssa-hacker is zapping. 

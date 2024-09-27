@@ -657,6 +657,7 @@
   (not (null? (ask obj 'IS-A 'wit-student))))
 
 (define (wit-professor self name birthplace activity miserly)
+  ;; > acts like a wit-student
   (let ((wit-student-part (wit-student self name birthplace activity miserly)))
     (make-handler
       'wit-professor
@@ -695,7 +696,8 @@
       'counterspell
       (make-methods
         'COUNTERS? 
-        (lambda (spell) 
+        (lambda (spell)
+          ;; IMHO type is more appropriate.
           (eq? (ask spell 'NAME) spell-name)))
       mobile-part)))
 

@@ -10,3 +10,8 @@
   (do ()
     ((pred) 'done)
     (setup name)))
+
+(define (set-up-cnt cnt name deity?)
+  (setup name)
+  (ask screen 'DEITY-MODE deity?)
+  (run-clock cnt))

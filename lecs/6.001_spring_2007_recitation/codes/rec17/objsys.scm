@@ -158,6 +158,7 @@
       'IS-A
       ;; Here `self` will be delayed to evaluate. So passing `(make-instance)` is fine.
       (lambda (type)
+        ;; may return #f https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Searching-Lists.html#index-memq
         (memq type (ask self 'TYPE))))))
 
 ;;------------------------------------------------------------
