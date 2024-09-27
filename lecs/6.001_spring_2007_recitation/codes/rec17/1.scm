@@ -9,49 +9,51 @@
   (newline)
   (show obj))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 1
-;; person
-(newline-show #[compound-procedure 17 handler])
+;; person-part
+(newline-show #@18)
 ;; container-part which has `things:       ()`
-(newline-show #[compound-procedure 26 handler])
+;; See sample-implementation.scm, here we should get person-part -> ... -> thing part
+; (newline-show #[compound-procedure 26 handler])
+(newline-show #@26)
+(newline-show #@34)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 2
-(newline-show #[compound-procedure 18 handler])
-(newline-show #[compound-procedure 38 handler])
+;; birthplace of avatar -> person
+(newline-show #@19)
+(newline-show #@46)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 3
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 3
 ;; > about the values of the location variables in thing and mobile-thing.
 ;; IMHO it means what I take?
+;; sample-implementation.scm thinks thing as avatar.
+;; > after moving from the birthplace of the avatar, ...
+;; IMHO this is more appropriate.
+(ask (ask me 'location) 'name)
+(ask me 'look-around)
+(ask me 'go 'up)
 
-;; Emm... the random result has changed when run here.
-(load "warmup-6.scm")
-(newline-show me)
-;; place
-(newline-show #[compound-procedure 53 handler])
-;; container-part
-(newline-show #[compound-procedure 59 handler])
-;; thing1 (spell) -> `name:         boil-spell`.
-(newline-show #[compound-procedure 70 handler])
-;; location -> #[compound-procedure 53 handler]
-;; mobile-part
-(newline-show #[compound-procedure 75 handler])
-;; thing
-(newline-show #[compound-procedure 83 handler])
+;; same as 1
+;; Here only the 2nd have #@55 for location others have #@19 for birthplace/location.
+(newline-show #@18)
+;; 'CHANGE-LOCATION is only done in mobile-thing which is called by avatar due to order.
+(newline-show #@26)
+(newline-show #@34)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 4
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 4
 ;; > Does the value of the self variable ever change?
 ;; by seeing the code, this arg is just passed along. So same.
 
 ;; (avatar person mobile-thing thing named-object root container)
-;; their self -> (instance #[compound-procedure 47 handler])
+;; their self -> #@13 (see the first `(show me)`)
 ;; person
-(newline-show #[compound-procedure 52 handler])
+(newline-show #@18)
 ;; mobile-thing
-(newline-show #[compound-procedure 96 handler])
+(newline-show #@26)
 ;; container
-(newline-show #[compound-procedure 97 handler])
-;; thing
-(newline-show #[compound-procedure 104 handler])
+(newline-show #@27)
+;; thing from mobile-thing
+(newline-show #@34)
 ;; named-object 
-(newline-show #[compound-procedure 116 handler])
+(newline-show #@40)
 ;; root
-(newline-show #[compound-procedure 121 handler])
+(newline-show #@66)
