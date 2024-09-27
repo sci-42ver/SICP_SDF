@@ -598,7 +598,7 @@
                  (format #t " HANDLER: ~A~%" proc)
                  (format #t " TYPE: ~A~%" type)
                  (format #t " METHODS:~%~A~%" (with-output-to-string 
-                                     (lambda () (pretty-print methods))))
+                                                (lambda () (pretty-print methods))))
                  (if (cdr methods)
                    ;; cadr first gets the first method pair, then again ad to get the actual method proc.
                    (show-frame (procedure-environment (cadadr methods)) 0)

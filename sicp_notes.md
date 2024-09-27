@@ -2335,13 +2335,14 @@ Warmup Exercise (only 1,2,4 have sample-implementation)
   - > draw boxes around the structures that correspond to each of the superparts of the object created.
     See lec16 p1 subpage 3.
 - [x] 6
-Project
+Project (see https://github.com/nrosiello/MIT-6.001/blob/master/project-4/project-4.scm)
 summary of general requirement (also see highlighted words)
 > Note that we do this with the *INSTALL* method of a thing, where we *explicitly ask the superpart* to also install, as well as doing some specific actions. This is *the only situation in which you should be asking your superclass-part*!
-> a brief transcript indicating *how you tested* the procedure
 > You should *not need to change the setup* code to do simple tests.
+test
+> a brief transcript indicating *how you tested* the procedure
 > Never use *thing-named* in object code, only for testing; this is a corollary to never using "*me*" except in *testing*.
-- [ ] 1
+- sample-implementation.scm checked up to 6.
 #### comparison with SDF for some operations
 - > (ask (ask self 'LOCATION) 'DEL-THING self)
   SDF gives `remove-thing!` which is *not one internal* function for any instance.

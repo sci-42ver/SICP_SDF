@@ -53,7 +53,7 @@
 ;; several random things are present in the world. for example: blackboard,
 ;; blackboard, lovely-trees, flag-pole, tons-of-code, problem-set, recitation-problem,
 ;; sicp, engineering-book, diploma
-    
+
 ;; a room is randomly picked for each person to start out in.  the things are
 ;; placed in the the same room each time.  starting rooms are different between
 ;; the things.
@@ -97,12 +97,18 @@
 (define spell-1 (create-spell 'spell-1 loc '() '()))
 (define spell-2 (create-spell 'spell-2 loc '() '()))
 
+;; from https://github.com/nrosiello/MIT-6.001/blob/dae24973c4a8ccf296c152a9a11512f0be505e24/common/test.scm#L6
+(load-option 'format)
+(define (test-equal a b)
+  (if (not (equal? a b))
+    (format #t "Test failed: ~A not equal to ~A\n" a b)))
+
 ;; test that bob initially has no spells
 (test-equal (ask bob 'HAS-A 'spell) '())
 
 (ask bob 'ADD-THING spell-1)
 (ask bob 'ADD-THING spell-2)
-  
+
 ;; test that now bob has spells
 (test-equal (ask bob 'HAS-A 'spell) (list spell-2 spell-1))
 (test-equal (ask bob 'HAS-A 'fake-type) (list))
@@ -155,12 +161,12 @@
 
 ;; now add a spell to person-1 and test that it is used
 (define test-spell (create-spell 'test-spell test-place 
-     "incant-ing text"
-     (lambda (caster target)
-       (ask caster 'EMIT (list "Using test-spell, caster:"
-                               (ask caster 'NAME)
-                               ", target:"
-                               (ask target 'NAME))))))
+                                 "incant-ing text"
+                                 (lambda (caster target)
+                                   (ask caster 'EMIT (list "Using test-spell, caster:"
+                                                           (ask caster 'NAME)
+                                                           ", target:"
+                                                           (ask target 'NAME))))))
 (ask person-1 'ADD-THING test-spell)
 (ask wand-1 'ZAP person-2)
 
@@ -214,7 +220,7 @@
 
 (define person-with-counterspell (create-person 'person-with-counterspell test-place))
 (ask person-with-counterspell 'ADD-THING (create-counterspell 'test-counterspell
-                                            test-place 'test-spell))
+                                                              test-place 'test-spell))
 
 ;; using a spell on a regular person should work as expected
 (ask test-spell 'USE person-1 person-2)

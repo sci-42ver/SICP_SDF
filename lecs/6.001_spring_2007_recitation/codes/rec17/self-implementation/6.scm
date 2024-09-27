@@ -17,12 +17,12 @@
         ;; added
         (cond 
           ((ask target 'IS-A 'person) 
-            (ask target 'SUFFER (random-number 2) caster))
+           (ask target 'SUFFER (random-number 2) caster))
           (else
             (ask screen 'TELL-ROOM (ask caster 'location)
-               (list (ask caster 'NAME)
-                     "destroyed"
-                     (ask target 'NAME)))
+                 (list (ask caster 'NAME)
+                       "destroyed"
+                       (ask target 'NAME)))
             (ask target 'DESTROY)))
         ))
     (create-spell
@@ -33,7 +33,7 @@
         ;; added
         (if (ask target 'IS-A 'person)
           (ask target 'EMIT
-             (list (ask target 'NAME) "grows boils on their nose"))
+               (list (ask target 'NAME) "grows boils on their nose"))
           'do-nothing)
         ))
     (create-spell
@@ -44,8 +44,8 @@
         ;; added
         (cond 
           ((ask target 'IS-A 'person)
-            (ask target 'EMIT (list "A slug comes out of" (ask target 'NAME) "'s mouth."))
-            (create-mobile-thing 'slug (ask target 'LOCATION)))
+           (ask target 'EMIT (list "A slug comes out of" (ask target 'NAME) "'s mouth."))
+           (create-mobile-thing 'slug (ask target 'LOCATION)))
           (else
             'do-nothing))
         ))
@@ -53,7 +53,7 @@
     ;; Skipped.
     chamber))
 
-(load "test-lib.scm")
+(load "lib/test-lib.scm")
 (set-up-until have-people-and-things-around? 'foo)
 
 (let ((loc (ask me 'location)))

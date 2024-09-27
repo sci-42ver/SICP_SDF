@@ -3,7 +3,7 @@
 (load "objtypes.scm")
 (load "setup.scm")
 
-(load "misc-lib.scm")
+(load "lib/misc-lib.scm")
 
 ;; > sense the locations of other people in the world
 ;; Similar to SDF "Exercise 3.19: A palantir".
@@ -45,7 +45,8 @@
         'FEEL-THE-FORCE
         (lambda () 
           (for-each 
-            (lambda (person) 
+            (lambda (person)
+              ;; See sample-implementation.scm where `display-message` is more appropriate.
               (displayln 
                 (string-append 
                   (ask person 'NAME-STR)

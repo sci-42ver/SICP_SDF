@@ -13,5 +13,5 @@
 ;; similar to SDF
 (define (person? obj)
   (and (instance? obj)
-    (ask obj 'IS-A 'person)))
+       (ask obj 'IS-A 'person)))
 

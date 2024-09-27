@@ -55,7 +55,7 @@
         'THINGS      (lambda () things)
         'HAVE-THING? (lambda (thing)
                        ;; in MIT/GNU Scheme 12.1 the API is changed
-                      ;  (not (null? (memq thing things)))
+                       ;  (not (null? (memq thing things)))
                        (memq thing things)
                        )
         'ADD-THING   (lambda (thing)

@@ -36,6 +36,7 @@
         'PEOPLE-AROUND        ; other people in room...
         (lambda ()
           (remove
+            ;; See sample-implementation.scm where 'HAS-A is more elegant.
             (lambda (person) 
               (find 
                 (lambda (thing) (eq? 'ring-of-obfuscation (ask thing 'NAME))) 

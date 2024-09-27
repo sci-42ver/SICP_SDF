@@ -1,3 +1,4 @@
+;; Use `sed -i -f ~/SICP_SDF/lecs/6.001_spring_2007_recitation/codes/rec13/format.sed *.scm;for i in $(find . -name "*.scm"); do vim -c "execute 'normal gg=G' | update | quitall" $i;done` to format.
 (cd "~/SICP_SDF/lecs/6.001_spring_2007_recitation/codes/rec17")
 (load "objsys.scm")
 (load "objtypes.scm")
