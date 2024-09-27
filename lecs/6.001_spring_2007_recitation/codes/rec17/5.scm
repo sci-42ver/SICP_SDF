@@ -60,16 +60,8 @@
         )
       thing-part)))
 
-(define (finished?)
-  (and
-    (not (null? (ask me 'PEOPLE-AROUND)))
-    (not (null? (ask me 'STUFF-AROUND)))
-    )
-  )
-
-(do ()
-  ((finished?) 'done)
-  (setup 'foo))
+(load "test-lib.scm")
+(set-up-until have-people-and-things-around? 'foo)
 
 (let ((loc (ask me 'location)))
   (create-instance wand 'wand loc)

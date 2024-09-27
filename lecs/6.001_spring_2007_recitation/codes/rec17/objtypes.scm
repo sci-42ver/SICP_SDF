@@ -86,7 +86,7 @@
         'INSTALL  (lambda ()
                     (ask named-part 'INSTALL)
                     (ask (ask self 'LOCATION) 'ADD-THING self)
-                    (displayln (list (ask self 'NAME) "in" (ask (ask self 'LOCATION) 'NAME) "with things" (ask (ask self 'LOCATION) 'THINGS)))
+                    ; (displayln (list (ask self 'NAME) "in" (ask (ask self 'LOCATION) 'NAME) "with things" (ask (ask self 'LOCATION) 'THINGS)))
                     )
         'LOCATION (lambda () location)
         'DESTROY  (lambda ()
