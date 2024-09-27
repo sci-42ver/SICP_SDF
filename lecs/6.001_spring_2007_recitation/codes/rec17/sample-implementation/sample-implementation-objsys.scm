@@ -59,7 +59,7 @@
          (handler (apply maker instance args)))
     (set-instance-handler! instance handler)
     (if (method? (get-method 'INSTALL instance))
-        (ask instance 'INSTALL))
+      (ask instance 'INSTALL))
     instance))
 
 ;;------------------------------------------------------------
@@ -69,38 +69,39 @@
 
 (define (make-handler typename methods . super-parts)
   (cond ((not (symbol? typename))    ;check for possible programmer errors
-	 (error "bad typename" typename))
-	((not (method-list? methods))
-	 (error "bad method list" methods))
-	((and super-parts (not (filter handler? super-parts)))
-	 (error "bad part list" super-parts))
-	(else
-	 (named-lambda (handler message)
-	   (case message
-	     ((TYPE)
-	      (lambda () (type-extend typename super-parts)))
-	     ((METHODS)
-	      (lambda ()
-		(append (method-names methods)
-			(append-map (lambda (x) (ask x 'METHODS))
-				    super-parts))))
-	     (else
-	      (let ((entry (method-lookup message methods)))
-		(if entry
-		    (cadr entry)
-		    (find-method-from-handler-list message super-parts)))))))))
+         (error "bad typename" typename))
+        ((not (method-list? methods))
+         (error "bad method list" methods))
+        ((and super-parts (not (filter handler? super-parts)))
+         (error "bad part list" super-parts))
+        (else
+          (named-lambda (handler message)
+                        (case message
+                          ((TYPE)
+                           (lambda () (type-extend typename super-parts)))
+                          ((METHODS)
+                           (lambda ()
+                             (append (method-names methods)
+                                     (append-map (lambda (x) (ask x 'METHODS))
+                                                 super-parts))))
+                          (else
+                            (let ((entry (method-lookup message methods)))
+                              (if entry
+                                (cadr entry)
+                                (find-method-from-handler-list message super-parts)))))))))
 
 (define (handler? x)
   (and (compound-procedure? x)
-       (eq? 'handler (lambda-name (procedure-lambda x)))))
+       ;  (eq? 'handler (lambda-name (procedure-lambda x)))
+       ))
 
 (define (->handler x)
   (cond ((instance? x)
-	 (instance-handler x))
-	((handler? x)
-	 x)
-	(else
-	 (error "I don't know how to make a handler from" x))))
+         (instance-handler x))
+        ((handler? x)
+         x)
+        (else
+          (error "I don't know how to make a handler from" x))))
 
 ; builds a list of method (name,proc) pairs suitable as input to make-handler
 ; note that this puts a label on the methods, as a tagged list
@@ -109,18 +110,18 @@
   (define (helper lst result)
     (cond ((null? lst) result)
 
-	  ; error catching
-	  ((null? (cdr lst))
-	   (error "unmatched method (name,proc) pair"))
-	  ((not (symbol? (car lst)))
-	   (if (procedure? (car lst))
-	       (pp (car lst)))
-	   (error "invalid method name" (car lst)))
-	  ((not (procedure? (cadr lst)))
-	   (error "invalid method procedure" (cadr lst)))
+          ; error catching
+          ((null? (cdr lst))
+           (error "unmatched method (name,proc) pair"))
+          ((not (symbol? (car lst)))
+           (if (procedure? (car lst))
+             (pp (car lst)))
+           (error "invalid method name" (car lst)))
+          ((not (procedure? (cadr lst)))
+           (error "invalid method procedure" (cadr lst)))
 
-	  (else
-	   (helper (cddr lst) (cons (list (car lst) (cadr lst)) result)))))
+          (else
+            (helper (cddr lst) (cons (list (car lst) (cadr lst)) result)))))
   (cons 'methods (reverse (helper args '()))))
 
 (define (method-list? methods)
@@ -143,11 +144,11 @@
 ;
 (define (root-object self)
   (make-handler
-   'root
-   (make-methods
-    'IS-A
-    (lambda (type)
-      (memq type (ask self 'TYPE))))))
+    'root
+    (make-methods
+      'IS-A
+      (lambda (type)
+        (memq type (ask self 'TYPE))))))
 
 ;;------------------------------------------------------------
 ;; Object Interface
@@ -157,15 +158,15 @@
 ; We "ask" an object to invoke a named method on some arguments.
 ;
 (define (ask object message . args)
-  ;; See your Scheme manual to explain `. args' usage
+  ;; See your Scheme manual to explain `. args'usage
   ;; which enables an arbitrary number of args to ask.
   (let ((method (get-method message object)))
     (cond ((method? method)
            (apply method args))
           (else
-           (error "No method for" message 'in 
-                  (safe-ask 'UNNAMED-OBJECT
-                            object 'NAME))))))
+            (error "No method for" message 'in 
+                   (safe-ask 'UNNAMED-OBJECT
+                             object 'NAME))))))
 
 ; Safe (doesn't generate errors) method of invoking methods
 ; on objects.  If the object doesn't have the method,
@@ -175,8 +176,8 @@
 (define (safe-ask default-value obj msg . args)
   (let ((method (get-method msg obj)))
     (if (method? method)
-        (apply ask obj msg args)
-        default-value)))
+      (apply ask obj msg args)
+      default-value)))
 
 ;;--------------------
 ;; Method Interface
@@ -193,11 +194,11 @@
 
 (define (find-method-from-handler-list message objects)
   (if (null? objects)
-      (no-method)
-      (let ((method ((car objects) message)))
-	(if (not (eq? method (no-method)))
-	    method
-	    (find-method-from-handler-list message (cdr objects))))))
+    (no-method)
+    (let ((method ((car objects) message)))
+      (if (not (eq? method (no-method)))
+        method
+        (find-method-from-handler-list message (cdr objects))))))
 
 (define (method? x)
   (cond ((procedure? x) #T)
@@ -213,8 +214,8 @@
 (define (type-extend type parents)
   (cons type 
         (remove-duplicates
-         (append-map (lambda (parent) (ask parent 'TYPE))
-                     parents))))
+          (append-map (lambda (parent) (ask parent 'TYPE))
+                      parents))))
 
 ;;------------------------------------------------------------
 ;; Utility procedures
@@ -225,8 +226,8 @@
 
 (define (pick-random lst)
   (if (null? lst)
-      #F
-      (list-ref lst (random (length lst)))))
+    #F
+    (list-ref lst (random (length lst)))))
 
 (define (find-all source type)
   (filter (lambda (x) (ask x 'IS-A type))
@@ -245,17 +246,17 @@
 
 (define (fold-right op init lst)
   (if (null? lst)
-      init
-      (op (car lst)
-          (fold-right op init (cdr lst)))))
+    init
+    (op (car lst)
+        (fold-right op init (cdr lst)))))
 
 (define (remove-duplicates lst)
   (if (null? lst)
-      '()
-      (cons (car lst)
-            (remove-duplicates (filter (lambda (x) 
-                                         (not (eq? x (car lst))))
-                                       lst)))))
+    '()
+    (cons (car lst)
+          (remove-duplicates (filter (lambda (x) 
+                                       (not (eq? x (car lst))))
+                                     lst)))))
 
 ;; utility for finding all the people in the world
 (define (all-people)
@@ -277,62 +278,62 @@
 (define (clock self . args)
   (let ((root-part (root-object self))
         (name (if (not (null? args))
-                  (car args)
-                  'THE-CLOCK))
+                (car args)
+                'THE-CLOCK))
         (the-time 0)
         (callbacks '())
         (removed-callbacks '()))
     (make-handler
-     'clock
-     (make-methods
-      'INSTALL
-      (lambda ()
-	;; By default print out clock-ticks
-	;; -- note how we are adding a callback
-	;;    to a method of the clock object
-	(ask self 'ADD-CALLBACK
-	     (create-clock-callback 'tick-printer self 'PRINT-TICK)))
-      'NAME      (lambda () name)
-      'THE-TIME  (lambda () the-time)
-      'RESET     (lambda ()
-		   (set! the-time 0)
-		   (set! callbacks '()))
-      'TICK
-      (lambda ()
-	(set! removed-callbacks '())
-	(for-each (lambda (x) 
-		    (if (not (memq x removed-callbacks))
-			(ask x 'activate)))
-		  (reverse callbacks))
-	(set! the-time (+ the-time 1)))
-      'ADD-CALLBACK
-      (lambda (cb)
-	(cond ((not (ask cb 'IS-A 'CLOCK-CALLBACK))
-	       (error "Non callback provided to ADD-CALLBACK"))
-	      ((null? (filter (lambda (x) (ask x 'SAME-AS? cb))
-			      callbacks))
-	       (set! callbacks (cons cb callbacks))
-	       'added)
-	      (else
-	       'already-present)))
-      'REMOVE-CALLBACK
-      (lambda (obj cb-name)
-	(set! callbacks 
-	      (filter (lambda (x) 
-			(cond ((and (eq? (ask x 'NAME) cb-name)
-				    (eq? (ask x 'OBJECT) obj))
-			       (set! removed-callbacks
-				     (cons x removed-callbacks))
-			       #f)
-			      (else #t)))
-		      callbacks))
-	'removed)
-      'PRINT-TICK
-      ;; Method suitable for a callback that prints out the tick
-      (lambda ()
-	(ask screen 'TELL-WORLD
-	     (list "---" (ask self 'NAME) "Tick" (ask self 'THE-TIME) "---"))))
-     root-part)))
+      'clock
+      (make-methods
+        'INSTALL
+        (lambda ()
+          ;; By default print out clock-ticks
+          ;; -- note how we are adding a callback
+          ;;    to a method of the clock object
+          (ask self 'ADD-CALLBACK
+               (create-clock-callback 'tick-printer self 'PRINT-TICK)))
+        'NAME      (lambda () name)
+        'THE-TIME  (lambda () the-time)
+        'RESET     (lambda ()
+                     (set! the-time 0)
+                     (set! callbacks '()))
+        'TICK
+        (lambda ()
+          (set! removed-callbacks '())
+          (for-each (lambda (x) 
+                      (if (not (memq x removed-callbacks))
+                        (ask x 'activate)))
+                    (reverse callbacks))
+          (set! the-time (+ the-time 1)))
+        'ADD-CALLBACK
+        (lambda (cb)
+          (cond ((not (ask cb 'IS-A 'CLOCK-CALLBACK))
+                 (error "Non callback provided to ADD-CALLBACK"))
+                ((null? (filter (lambda (x) (ask x 'SAME-AS? cb))
+                                callbacks))
+                 (set! callbacks (cons cb callbacks))
+                 'added)
+                (else
+                  'already-present)))
+        'REMOVE-CALLBACK
+        (lambda (obj cb-name)
+          (set! callbacks 
+            (filter (lambda (x) 
+                      (cond ((and (eq? (ask x 'NAME) cb-name)
+                                  (eq? (ask x 'OBJECT) obj))
+                             (set! removed-callbacks
+                               (cons x removed-callbacks))
+                             #f)
+                            (else #t)))
+                    callbacks))
+          'removed)
+        'PRINT-TICK
+        ;; Method suitable for a callback that prints out the tick
+        (lambda ()
+          (ask screen 'TELL-WORLD
+               (list "---" (ask self 'NAME) "Tick" (ask self 'THE-TIME) "---"))))
+      root-part)))
 
 (define (create-clock . args)
   (apply create-instance clock args))
@@ -347,19 +348,19 @@
 (define (clock-callback self name object msg . data)
   (let ((root-part (root-object self)))
     (make-handler
-     'clock-callback
-     (make-methods
-      'INSTALL  (lambda () 'INSTALLED)
-      'NAME     (lambda () name)
-      'OBJECT   (lambda () object)
-      'MESSAGE  (lambda () msg)
-      'ACTIVATE (lambda () (apply ask object msg data))
-      'SAME-AS? (lambda (cb)
-		  (and (ask cb 'IS-A 'CLOCK-CALLBACK)
-		       (eq? (ask self 'NAME)
-			    (ask cb 'NAME))
-		       (eq? object (ask cb 'OBJECT)))))
-     root-part)))
+      'clock-callback
+      (make-methods
+        'INSTALL  (lambda () 'INSTALLED)
+        'NAME     (lambda () name)
+        'OBJECT   (lambda () object)
+        'MESSAGE  (lambda () msg)
+        'ACTIVATE (lambda () (apply ask object msg data))
+        'SAME-AS? (lambda (cb)
+                    (and (ask cb 'IS-A 'CLOCK-CALLBACK)
+                         (eq? (ask self 'NAME)
+                              (ask cb 'NAME))
+                         (eq? object (ask cb 'OBJECT)))))
+      root-part)))
 
 (define (create-clock-callback name object msg . data)
   (apply create-instance clock-callback name object msg data))
@@ -427,25 +428,25 @@
         (me #f)
         (root-part (root-object self)))
     (make-handler
-     'screen
-     (make-methods
-      'TYPE   (lambda () (type-extend 'screen root-part))
-      'NAME   (lambda () 'THE-SCREEN)
-      'SET-ME (lambda (new-me) (set! me new-me))
-      'TELL-ROOM    (lambda (room msg)
-		      (if (or deity-mode
-			      (eq? room (safe-ask #f me 'location)))
-			  (if network-mode
-			      (display-net-message msg)
-			      (display-message msg))))
-      'TELL-WORLD   (lambda (msg)
-		      (if network-mode
-			  (display-net-message msg)
-			  (display-message msg)))
-      'DEITY-MODE   (lambda (value) (set! deity-mode value))
-      'NETWORK-MODE (lambda (value) (set! network-mode value))
-      'DEITY-MODE?  (lambda () deity-mode))
-     root-part)))
+      'screen
+      (make-methods
+        'TYPE   (lambda () (type-extend 'screen root-part))
+        'NAME   (lambda () 'THE-SCREEN)
+        'SET-ME (lambda (new-me) (set! me new-me))
+        'TELL-ROOM    (lambda (room msg)
+                        (if (or deity-mode
+                                (eq? room (safe-ask #f me 'location)))
+                          (if network-mode
+                            (display-net-message msg)
+                            (display-message msg))))
+        'TELL-WORLD   (lambda (msg)
+                        (if network-mode
+                          (display-net-message msg)
+                          (display-message msg)))
+        'DEITY-MODE   (lambda (value) (set! deity-mode value))
+        'NETWORK-MODE (lambda (value) (set! network-mode value))
+        'DEITY-MODE?  (lambda () deity-mode))
+      root-part)))
 
 (define screen
   (create-instance screen))
@@ -485,9 +486,9 @@
           ((null? (cdr things-named))   ; just one thing
            (car things-named))
           (else
-           (display-message (list "There is more than one thing named"
-                                  name "here. Picking one of them."))
-           (pick-random things-named)))))
+            (display-message (list "There is more than one thing named"
+                                   name "here. Picking one of them."))
+            (pick-random things-named)))))
 
 
 
@@ -507,65 +508,65 @@
     (show-handler (->handler obj))
     'instance)
   (if (instance? obj)
-      (show-guts obj) 
-      (show-handler obj)))
+    (show-guts obj) 
+    (show-handler obj)))
 
 (define (show-handler proc)
   (define (show-frame frame depth)
     (define *max-frame-depth* 1)
     (if (global-environment? frame)
-        (display (env-name frame))
-        (let* ((bindings (environment-bindings frame))
-               (parent   (environment-parent frame))
-               (names    (cons "Parent frame"
-                               (map symbol->string (map car bindings))))
-               (values   (cons (env-name parent)
-                               (map cadr bindings)))
-               (width    (reduce max 0 (map string-length names))))
-          (for-each (lambda (n v) (pp-binding n v width depth))
-                    names values)
-          (if (and (not (global-environment? parent))
-                   (< depth *max-frame-depth*))
-              (show-frame parent (+ depth 1))))))
+      (display (env-name frame))
+      (let* ((bindings (environment-bindings frame))
+             (parent   (environment-parent frame))
+             (names    (cons "Parent frame"
+                             (map symbol->string (map car bindings))))
+             (values   (cons (env-name parent)
+                             (map cadr bindings)))
+             (width    (reduce max 0 (map string-length names))))
+        (for-each (lambda (n v) (pp-binding n v width depth))
+                  names values)
+        (if (and (not (global-environment? parent))
+                 (< depth *max-frame-depth*))
+          (show-frame parent (+ depth 1))))))
   (define (global-environment? frame)
     (environment->package frame))
   (define (env-name env)
     (if (global-environment? env) 'GLOBAL-ENVIRONMENT env))
   (define (pp-binding name value width depth)
     (let ((value* (with-string-output-port
-                      (lambda (port)
-                        (if (pair? value)
-                            (pretty-print value port #F (+ width 2))
-                            (display value port))))))
+                    (lambda (port)
+                      (if (pair? value)
+                        (pretty-print value port #F (+ width 2))
+                        (display value port))))))
       (display-spaces (* 2 (+ depth 1)))
       (display name) (display ": ")
       (display (make-string (- width (string-length name)) #\Space))
       (if (pair? value)
-          (display (substring value* (+ width 2) (string-length value*)))
-          (display value*))
+        (display (substring value* (+ width 2) (string-length value*)))
+        (display value*))
       (newline)))
   (define (display-spaces num)
     (if (> num 0) (begin (display " ") (display-spaces (- num 1)))))
   (if (handler? proc)
-      (fluid-let ((*unparser-list-depth-limit* 5)
-		  (*unparser-list-breadth-limit* 6))
-	(let ((methods (environment-lookup (procedure-environment proc)
-					   'methods))
-	      (parts   (environment-lookup (procedure-environment proc)
-					   'super-parts))
-	      (type    (environment-lookup (procedure-environment proc)
-					   'typename)))
-	  (format #t " HANDLER: ~A~%" proc)
-	  (format #t " TYPE: ~A~%" type)
-	  (format #t "~A~%" (with-output-to-string 
-					(lambda () (pretty-print methods))))
-	  (if (cdr methods)
-	      (show-frame (procedure-environment (cadadr methods)) 0)
-	      (format #t " PARENTS: ~A~%" parts))
-	  ;(display " HANDLER PROCEDURE:\n")
-	  ;(pretty-print (procedure-lambda proc) (current-output-port) #T 2)
-	  'handler))
-      'not-a-handler))
+    (fluid-let ((*unparser-list-depth-limit* 5)
+                (*unparser-list-breadth-limit* 6))
+               (let ((methods (environment-lookup (procedure-environment proc)
+                                                  'methods))
+                     (parts   (environment-lookup (procedure-environment proc)
+                                                  'super-parts))
+                     (type    (environment-lookup (procedure-environment proc)
+                                                  'typename)))
+                 (format #t " HANDLER: ~A~%" proc)
+                 (format #t " TYPE: ~A~%" type)
+                 (format #t "~A~%" (with-output-to-string 
+                                     (lambda () (pretty-print methods))))
+                 (if (cdr methods)
+                   (show-frame (procedure-environment (cadadr methods)) 0)
+                   (format #t " PARENTS: ~A~%" parts))
+                 ;(display " HANDLER PROCEDURE:\n")
+                 ;(pretty-print (procedure-lambda proc) (current-output-port) #T 2)
+                 'handler))
+    'not-a-handler))
 
 (define (repeat n proc)
   (if (<= n 0)
