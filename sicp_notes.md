@@ -2338,11 +2338,11 @@ Warmup Exercise (only 1,2,4 have sample-implementation)
 Project (see https://github.com/nrosiello/MIT-6.001/blob/master/project-4/project-4.scm)
 summary of general requirement (also see highlighted words)
 > Note that we do this with the *INSTALL* method of a thing, where we *explicitly ask the superpart* to also install, as well as doing some specific actions. This is *the only situation in which you should be asking your superclass-part*!
-> You should *not need to change the setup* code to do simple tests.
+> You should *not* need to *change the setup* code to do simple tests.
 test
 > a brief transcript indicating *how you tested* the procedure
 > Never use *thing-named* in object code, only for testing; this is a corollary to never using "*me*" except in *testing*.
-- sample-implementation.scm checked up to 6.
+- sample-implementation.scm checked up to 7.
 #### comparison with SDF for some operations
 - > (ask (ask self 'LOCATION) 'DEL-THING self)
   SDF gives `remove-thing!` which is *not one internal* function for any instance.

@@ -15,3 +15,5 @@
   (and (instance? obj)
        (ask obj 'IS-A 'person)))
 
+(define (not-empty? lst)
+  (not (null? lst)))

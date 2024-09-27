@@ -29,7 +29,7 @@
                    (waving-msg (string-append caster-name " is waving wand arbitrarily")))
               ;; See sample-implementation.scm where we can extract waving-msg out.
               (cond 
-                ((ask caster 'HAS-A 'spell) 
+                ((not-empty? (ask caster 'HAS-A 'spell)) 
                  (let ((spell (find-type caster 'spell)))
                    (ask caster 'EMIT 
                         (list (string-append waving-msg " and saying incant " (ask spell 'INCANT))))
@@ -52,7 +52,9 @@
                        ;; See sample-implementation.scm better to use `(ask caster 'PEOPLE-AROUND)` since we only consider person.
                        (remove 
                          (lambda (person) (eq? caster person)) 
-                         (filter person? (ask caster-loc 'THINGS))
+                         ;; See Computer Exercise 7. Here all things should be considered.
+                         ;  (filter person? (ask caster-loc 'THINGS))
+                         (ask caster-loc 'THINGS)
                          )))
                    ) 
               (and
@@ -71,5 +73,6 @@
   (ask me 'take (thing-named 'wand))
   (ask me 'take (find-type loc 'spell))
   (let ((wand-inst (find-type me 'wand)))
+    ;; use `(filter person? (ask caster-loc 'THINGS))` to test both WAVE and ZAP.
     (ask wand-inst 'WAVE))
   )

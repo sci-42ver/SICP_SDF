@@ -636,9 +636,9 @@
         (lambda () 
           (let ((wand (ask self 'HAS-A 'wand))
                 (other-people (ask self 'PEOPLE-AROUND)))
-            (cond ((null? wand) 'no-wand
-                                (null? other-people) (ask (first wand) 'WAVE)
-                                (else (ask (first wand) 'ZAP (random-list-entry other-people)))))))
+            (cond (((null? wand) 'no-wand)
+                   ((null? other-people) (ask (first wand) 'WAVE))
+                   (else (ask (first wand) 'ZAP (random-list-entry other-people)))))))
         'DIE
         (lambda (perp)
           (ask clock 'REMOVE-CALLBACK self 'attempt-zap)
