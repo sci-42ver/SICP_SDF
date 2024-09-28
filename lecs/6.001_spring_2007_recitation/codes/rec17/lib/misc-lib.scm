@@ -22,3 +22,11 @@
 
 (define (autonomous-person? obj)
   (type? obj 'autonomous-person))
+
+(define (thing-typed typename obj)
+  (let* ((cands (ask obj 'THINGS))
+         (specific-type? (lambda (obj) (type? obj typename)))
+         (filtered-cands (filter specific-type? cands)))
+    (if (not-empty? filtered-cands)
+      (pick-random filtered-cands)
+      #f)))

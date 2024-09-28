@@ -19,6 +19,13 @@
 ;; Dementors is similar to "chosen-one" if having "patronus spell".
 ;; So I will do "Spell Points".
 
+(cd "~/SICP_SDF/lecs/6.001_spring_2007_recitation/codes/rec17/self-implementation")
+(load "init-load.scm")
+
+(cd "~/SICP_SDF/lecs/6.001_spring_2007_recitation/codes/rec17")
+(load "lib/misc-lib.scm")
+(load "lib/test-lib.scm")
+
 (define (person self name birthplace)
   (let ((mobile-thing-part (mobile-thing self name birthplace))
         (container-part    (container self))
@@ -136,7 +143,7 @@
         'INSTALL
         (lambda ()
           (ask mobile-thing-part 'INSTALL)
-          (ask container-part 'INSTALL)
+          ; (ask container-part 'INSTALL) ; no 'INSTALL
           (ask clock 'ADD-CALLBACK
                (create-clock-callback 'restore-spell-points self 
                                       'RESTORE-SPELL-POINTS))
@@ -144,6 +151,11 @@
           ;      (list "create one professor" (ask self 'NAME)))
           )
         
+        'NOTIFY-SPELL-POINTS 
+        (lambda () 
+          (ask self 'SAY (list "Currently I have" spell-points "spell-points."))
+          )
+
         'RESTORE-SPELL-POINTS
         (lambda () 
           (set! spell-points-tick (+ spell-points-tick 1))
@@ -151,6 +163,7 @@
             (begin
               (set! spell-points-tick 0)
               (set! spell-points (+ spell-points 1))
+              (ask self 'NOTIFY-SPELL-POINTS)
               )
             'do-nothing)
           )
@@ -186,3 +199,17 @@
           )
         )
       mobile-part)))
+
+(set-up-until have-people-and-things-around? 'foo)
+
+(let ((selected-spell (thing-typed 'spell (ask me 'LOCATION)))
+      (target (pick-random (ask me 'PEOPLE-AROUND))))
+  (if selected-spell
+    (begin
+      (ask selected-spell 'USE me target)
+      (ask me 'NOTIFY-SPELL-POINTS)
+      )
+    (error "need to reset set-up")))
+
+(ask screen 'DEITY-MODE #f)
+(run-clock 5)
