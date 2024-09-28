@@ -86,7 +86,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
 - up to section 3.3.3 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.5 (included) by searching "chapter", "section" and "exercise" (the 3rd  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
+tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~
@@ -135,11 +135,11 @@ checked up to section 3.3.3 (included)
 - > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
 - > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
 - > Section 3.3.4 describes one such language.
-- >  Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).
+- ~~> Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).~~
 - > In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.
-- > In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.
+- ~~> In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.~~
 - > or that change data structures, as we will see in Section 3.3
-- > substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)
+- ~~> substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)~~
 - ~~> develop a new model of *procedure ap-plication*. In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.~~
   See Figure 3.7~9 where 7 creates "local variables" and 8~9 do `set!`.
 - ~~> since formal parameters are already local. is will be clearer aer the discussion of the environment model of evaluation in Section 3.2. (See also *Exercise 3.10*.)~~
@@ -150,6 +150,7 @@ checked up to section 3.3.3 (included)
 - > In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts
 - > execute concurrently. We will return to this in Section 3.4.
 - > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
+- > (For example, see Ex-ercise 3.30.)
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1894,6 +1895,10 @@ not use
     Here we adds the nil at the end to ensure base case `((null? records) false)` in `assoc` work (same for `(list '*table*)` in `(make-table)`).
 - > These gluing pairs are called the backbone of the table
   For Figure 3.22, i.e. the 1st row.
+- TODO
+  > event-driven simulation
+- [half adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Half_adder) where [XOR](https://en.wikipedia.org/wiki/XOR_gate#AND-OR-Invert) is different from book.
+  Here D gets 3 cases (0,1) or (1,1) and the AND-invert removes (1,1) then. This is similar for wikipedia where the 1st OR-Invert allows (1.0) or (1,1) and then the AND gate needs 0 which  excludes (1,1).
 ## lec
 ### 11
 - > operations
@@ -2342,7 +2347,7 @@ summary of general requirement (also see highlighted words)
 test
 > a brief transcript indicating *how you tested* the procedure
 > Never use *thing-named* in object code, only for testing; this is a corollary to never using "*me*" except in *testing*.
-- sample-implementation.scm checked up to 10.
+- sample-implementation.scm checked up to 11.
 - IMHO up to exercise 11, the code exercises are just how to use the lib. But the basic OOP ideas are still same as what lec's say.
   So if you have done SDF adventure game exercises, then IMHO there is no need to do this project.
 #### comparison with SDF for some operations

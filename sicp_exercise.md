@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.26 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.29 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1635,7 +1635,29 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     No since that will fail for `(lookup x table)` and then we just calculate `(result (f x))`, i.e. `(fib x)` which is exponential.
   - The above 2 explanations are *same* as wiki meteorgan's and Manu Halvagal's.
   - repo doesn't have valuable infos.
-- [ ] 28
+- [x] 28
+- [ ] 29
+  - OR: only (0,0) -> 0.
+    so $\overline{\overline{a}\land \overline{b}}$ to ensure only the above
+    - As wiki says, i.e. [NAND](https://en.wikipedia.org/wiki/OR_gate#Alternatives)
+  - > What is the delay time ...
+    2 `inverter-delay` plus 1 `and-gate-delay`.
+    - same as wiki squarebat's.
+- [ ] 30
+  - I learnt "Ripple-carry adder" in COD (IMHO here it is not strictly "parallel" due to the wait of carry bit's).
+    > The major drawback of the ripple-carry adder is the need to wait for the carry signals to propagate.
+  - delay
+    each FA will have 2 delay of half-adder and one or to output $C_{out}$.
+    - half-adder: 
+      S has `(+ (max or-gate-delay (+ and-gate-delay inverter-delay)) and-gate-delay)`
+      C: and-gate-delay.
+    - So FA
+      C: $S_h+C_h+or-gate-delay$
+      SUM: $2*S_h$
+    - So 
+      to get the final C of "ripple-carry adder" we have $n*(S_h+C_h+or-gate-delay)$
+      the final S_1 is similarly $(n-1)*(S_h+C_h+or-gate-delay)+2*S_h$
+- [ ] 31
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
