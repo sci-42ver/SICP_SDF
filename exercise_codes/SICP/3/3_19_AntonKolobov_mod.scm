@@ -57,3 +57,5 @@
 (load "3_18_19_tests.scm")
 (test has-cycle?)
 (assert (has-cycle? cycle-1))
+
+;; See 3_32.scm TODO semmingly fail for one special case.

@@ -1,4 +1,3 @@
-@molbdnilo Thanks very much. "object lifetimes" implies passing func *pointer* may fail at some time. This is why environment model is useful since if we pass one `lambda` object explicitly like `(map (lambda (x) x) items)`, then `proc` will just be binded to `(lambda (x) x)` in the new env created when procedure application. This *won't be influenced* by garbage collector in Scheme or destructor in C++. I understand this problem now.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -84,7 +83,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.3 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.3.3 (included).
+- up to "Implementing the agenda" (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -150,7 +149,8 @@ checked up to section 3.3.3 (included)
 - > In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts
 - > execute concurrently. We will return to this in Section 3.4.
 - > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
-- > (For example, see Ex-ercise 3.30.)
+- ~~> (For example, see Ex-ercise 3.30.)~~
+- > See Exercise 3.31.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -1878,8 +1878,8 @@ not use
 ### 3.3
 - IMHO Figure 3.16 is wrong since although `(car z1)` is right, `(cdr z1)` is `(b)`.
   See xxyzz/SICP Exercise 3.15.
-- > Since Scheme provides no way to mutate a symbol, this sharing is undetectable.
-  TODO we cacn detect this by `(eq? (caar z2) (cadr z2))`.
+- > Since Scheme provides no way to mutate a symbol, this *sharing* is undetectable.
+  TODO we can detect this by `(eq? (caar z2) (cadr z2))`.
 - `(define (set-car! z new-value) ...)` defined the returned value as `z` but that is [not necessary](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Pairs.html#index-set_002dcar_0021).
 - > we mentioned in Section 2.3.3 the task of maintaining a table of records in-dexed by identifying keys.
   ~~It should be 2.4.3.~~ See "Sets and information retrieval".
@@ -1896,7 +1896,8 @@ not use
 - > These gluing pairs are called the backbone of the table
   For Figure 3.22, i.e. the 1st row.
 - TODO
-  > event-driven simulation
+  - > event-driven simulation
+  - When is `(propagate)` run?
 - [half adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Half_adder) where [XOR](https://en.wikipedia.org/wiki/XOR_gate#AND-OR-Invert) is different from book.
   Here D gets 3 cases (0,1) or (1,1) and the AND-invert removes (1,1) then. This is similar for wikipedia where the 1st OR-Invert allows (1.0) or (1,1) and then the AND gate needs 0 which  excludes (1,1).
 ## lec
@@ -2383,6 +2384,8 @@ test
 - [A*_optimal]
 # TODO after abstract algebra
 - exercise 2.93 footnote.
+# TODO after c++
+- the [3 comments](https://stackoverflow.com/questions/79011368/is-environment-model-necessary-for-higher-order-procedures/79028978#comment139349156_79028978)
 
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 

@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.29 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.31 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1636,7 +1636,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - The above 2 explanations are *same* as wiki meteorgan's and Manu Halvagal's.
   - repo doesn't have valuable infos.
 - [x] 28
-- [ ] 29
+- [x] 29
   - OR: only (0,0) -> 0.
     so $\overline{\overline{a}\land \overline{b}}$ to ensure only the above
     - As wiki says, i.e. [NAND](https://en.wikipedia.org/wiki/OR_gate#Alternatives)
@@ -1644,6 +1644,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     2 `inverter-delay` plus 1 `and-gate-delay`.
     - same as wiki squarebat's.
 - [ ] 30
+  I made one mistake as [this diff](http://community.schemewiki.org/?p=sicp-ex-3.30&c=hd&t=1727513415&t1=1727598537) shows.
   - I learnt "Ripple-carry adder" in COD (IMHO here it is not strictly "parallel" due to the wait of carry bit's).
     > The major drawback of the ripple-carry adder is the need to wait for the carry signals to propagate.
   - delay
@@ -1657,7 +1658,39 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - So 
       to get the final C of "ripple-carry adder" we have $n*(S_h+C_h+or-gate-delay)$
       the final S_1 is similarly $(n-1)*(S_h+C_h+or-gate-delay)+2*S_h$
-- [ ] 31
+- [x] 31
+  - > Explain why this initialization is necessary
+    At least for `inverter` and `and-gate`, we need to register agenda by `after-delay`.
+    For `probe` it may be just to tell the init value.
+  - `(half-adder input-1 input-2 sum carry)`
+    former: register
+  - `(set-signal! input-1 1)`
+    former and latter: will call `action-procedures` for `input-1`, i.e. `and-action-procedure` and `or...` for `input-1`.
+  - `(propagate)`
+    former will call more item's listed in `the-agenda`.
+  - wiki
+    - > in which actions (``events'') trigger further events that happen at a later time
+      i.e. "trigger"ed by `after-delay`.
+    - IMHO thomas's emphasis is
+      > However this will not happen when we run propagate (without an initialization), since the propagate-procedure will *only* call the procedures *stored in the agenda*, but the commands will only get stored in the agenda when *the procedures are run in the first place*.
+      But actually `action-procedures` will also be called in `set-signal!`.
+  - IMHO 
+    > the procedure is immediately run
+    is wrong since `(inverter c e)` should wait when we get `c` changed.
+    But if we do this when `(half-adder input-1 input-2 sum carry)`, then the delay will just be  earlier.
+    So `sum` will be got with just `and-gate-delay` due to `(and-gate d e s)`.
+    - ~~TODO~~ ~~after reading implementation about "delay".~~
+      ~~the time will be only updated when `first-agenda-item` by `(propagate)`.~~
+      ~~So we need to call~~
+  - repo ~~lacks this solution.~~ see 3.32 which is same as the wiki top.
+- [x] 32
+  - > Explain why this order *must* be used.
+    IMHO this is *natural*.
+    `add-to-agenda!` is only called in `after-delay` -> gates `action-procedure`. See `half-adder` where gates are run by how they are connected in Figure 3.25 circuit.
+  - > last in, first out
+    As the normal one implies, we just *reverse* the `set-signal!` order in the sequence, so the result is obviously wrong.
+    - same as wiki top and the last paragraph of https://github.com/kana/sicp/blob/master/ex-3.32.md.
+- [ ] 33
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
