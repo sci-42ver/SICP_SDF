@@ -1,13 +1,13 @@
 (define (squarer a b)
   (define (process-new-value)
     (if (has-value? b)
-        (if (< (get-value b) 0)
-            (error "square less than 0 -- SQUARER" (get-value b))
-            ;; See wiki using `get-value` and me.
-            (set-value! a (sqrt b)))
-        (if (has-value? a)
-          (set-value! b (square a))
-          'nothing)))
+      (if (< (get-value b) 0)
+        (error "square less than 0 -- SQUARER" (get-value b))
+        ;; See wiki using `get-value` and me.
+        (set-value! a (sqrt b)))
+      (if (has-value? a)
+        (set-value! b (square a))
+        'nothing)))
   ;; The following is trivial.
   (define (process-forget-value) 
     (forget-value! a me)
@@ -20,7 +20,7 @@
           ((eq? request 'I-lost-my-value) 
            (process-forget-value))
           (else 
-           (error "Unknown request -- ADDER" request)))
+            (error "Unknown request -- ADDER" request)))
     )
   (connect a me)
   (connect b me)

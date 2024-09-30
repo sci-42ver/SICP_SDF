@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.32 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.37 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1708,6 +1708,29 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - `(celsius-fahrenheit-converter x)` just transforms from c to f which is one part of what `(celsius-fahrenheit-converter c f)` does.
   - trivial
   - repo is same as wiki.
+- [ ] 38
+  - here "half" depends on the context.
+  - a. 3 cases based on when Mary does.
+  - b. here each sub-sequence is deterministic.
+    1. all accesses concurrently, then 3 cases based on who `set!` at last.
+    2. 2 concurrently
+      - Peter, Paul: 
+        90/75/50 if Mary access before `set!` or 45/37.5
+      - ...
+        IMHO this is more about mathematics... So I skipped.
+    - See wiki
+  - repo only has solution for a.
+- [ ] 39
+  - here we have 3 components which can't be splitted.
+    part 1: access x -> (* x x)
+      set x
+    part 2: set x to (+ x 1)
+    here part 1 is implicitly ordered. So 3 cases for where part 2 is.
+    1. before part 1: 121
+    2. inside: 100
+    3. after: 101
+- 
+
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

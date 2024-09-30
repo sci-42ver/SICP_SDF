@@ -23,7 +23,7 @@
           ((eq? request 'I-lost-my-value) 
            (process-forget-value))
           (else 
-           (error "Unknown request -- ADDER" request))))
+            (error "Unknown request -- ADDER" request))))
   (connect a1 me)
   (connect a2 me)
   (connect sum me)
@@ -62,7 +62,7 @@
           ((eq? request 'I-lost-my-value)
            (process-forget-value))
           (else
-           (error "Unknown request -- MULTIPLIER" request))))
+            (error "Unknown request -- MULTIPLIER" request))))
   (connect m1 me)
   (connect m2 me)
   (connect product me)
@@ -92,7 +92,7 @@
           ((eq? request 'I-lost-my-value)
            (process-forget-value))
           (else
-           (error "Unknown request -- PROBE" request))))
+            (error "Unknown request -- PROBE" request))))
   (connect connector me)
   me)
 
@@ -110,17 +110,17 @@
             (else 'ignored)))
     (define (forget-my-value retractor)
       (if (eq? retractor informant)
-          (begin (set! informant false)
-                 (for-each-except retractor
-                                  inform-about-no-value
-                                  constraints))
-          'ignored))
+        (begin (set! informant false)
+               (for-each-except retractor
+                                inform-about-no-value
+                                constraints))
+        'ignored))
     (define (connect new-constraint)
       (if (not (memq new-constraint constraints))
-          (set! constraints 
-                (cons new-constraint constraints)))
+        (set! constraints 
+          (cons new-constraint constraints)))
       (if (has-value? me)
-          (inform-about-value new-constraint))
+        (inform-about-value new-constraint))
       'done)
     (define (me request)
       (cond ((eq? request 'has-value?)

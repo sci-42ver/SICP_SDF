@@ -11,12 +11,12 @@
     (for-each 
       (lambda (Ak Bk Sk C-in-idx)
         (full-adder Ak Bk 
-          (list-ref Ck-lst C-in-idx)
-          Sk 
-          (if (= C-in-idx 0)
-            (list-ref Ck-lst (- C-in-idx 1))
-            C)
-          )
+                    (list-ref Ck-lst C-in-idx)
+                    Sk 
+                    (if (= C-in-idx 0)
+                      (list-ref Ck-lst (- C-in-idx 1))
+                      C)
+                    )
         )
       ;; See http://community.schemewiki.org/?sicp-ex-2.18
       ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Miscellaneous-List-Operations.html#index-reverse

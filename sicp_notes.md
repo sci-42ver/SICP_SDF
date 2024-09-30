@@ -83,7 +83,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.3 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.3.5 (excluded).
+- up to section 3.4 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -115,7 +115,7 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "*exe
 - > although it does lead to coercion problems, as discussed below
   See exercise 2.92.
 ### 3
-checked up to section 3.3.3 (included)
+checked up to section 3.4 (excluded)
 - chapter 1 footnote 9
   > Chapter 3 will show that this notion of environment is crucial
   16(also with *Chapter 4*)
@@ -163,6 +163,7 @@ checked up to section 3.3.3 (included)
 - > For the interpreter we implement in Chapter 4, the code is in fact shared
 - > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
 - > For the interpreter we implement in Chapter 4, the code is in fact shared.
+- > In Section 4.3 we will study a language for expressing nondeterministic computations.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -1910,6 +1911,25 @@ not use
 - `forget-value!` may set to one symbol `?` so `(process-new-value)` will reset then.
 - `(eq? request 'I-have-a-value)` etc correspond to `inform-about-value` etc.
 - As the example `(forget-value! C 'user)` shows, `forget-value!` for *one* value will also make other related values forgotten.
+- > This is useful if we wish to extend the system with new operations that communicate with constraints directly rather than only indirectly via operations on connectors.
+  IMHO this may mean in `(celsius-fahrenheit-converter c f)` abstraction, `adder` can be directly manipulated but in `(celsius-fahrenheit-converter x)` this is abstracted in `c+`.
+  > Although it is easy to implement the expression-oriented style in terms of the imperative implementation, it is very difficult to do the converse.
+  By seeing `(adder a1 a2 sum)` implementation, `(- (get-value sum) (get-value a1))` can be done by `(c+ sum (- a1))`. Others are all operations of "connector".
+- > it is used only to speed up the execution of a sequential instruction stream, while retaining the behavior of the sequential program.
+  As COD shows, `pipelining` is just one strategy for one CPU core. Multi-core needs more complex sync strategies.
+- > Most computers have interlocks on the primitive *memory-write* operations
+  [interlock](https://en.wikipedia.org/wiki/Interlock_(engineering)#Microprocessors) -> https://en.wikipedia.org/wiki/Hazard_(computer_architecture)#Write_after_write_(WAW)
+### 3.4
+- > the loss of referential transparency
+  [See](https://www.baeldung.com/cs/referential-transparency#:~:text=Referential%20transparency%20is%20a%20property,get%20the%20same%20returning%20value.)
+  This corresponds to footnote 33.
+  > giving rise to a thicket of questions about sameness and *change*
+  > the need to abandon the substitution model of evaluation in favor of the more intricate environment model.
+  since we may change "local state"
+- > Each process repeatedly changes its value to the average of its own value and its neighbors’ values. is algorithm converges to the right answer independent of the order in which the operations are done;
+  By physics, this is easily proved by "law of conservation of energy".
+  I won't prove this by mathematics.
+  > there is no need for any restrictions on concurrent use of the shared val-ues.
 ## lec
 ### 11
 - > operations

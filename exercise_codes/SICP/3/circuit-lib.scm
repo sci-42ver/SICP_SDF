@@ -41,7 +41,7 @@
   (define (and-action-procedure)
     (displayln (list "call and-action-procedure"))
     (let ((new-value
-           (logical-and (get-signal a1) (get-signal a2))))
+            (logical-and (get-signal a1) (get-signal a2))))
       (after-delay and-gate-delay
                    (lambda ()
                      (set-signal! output new-value)))))
@@ -66,11 +66,11 @@
   (let ((signal-value 0) (action-procedures '()))
     (define (set-my-signal! new-value)
       (if (not (= signal-value new-value))
-          (begin (set! signal-value new-value)
-                 (displayln (list "set to new-value" new-value))
-                 (call-each action-procedures)
-                 )
-          'done))
+        (begin (set! signal-value new-value)
+               (displayln (list "set to new-value" new-value))
+               (call-each action-procedures)
+               )
+        'done))
     (define (accept-action-procedure! proc)
       ;; later is first manipulated. See `call-each`. But `add-to-agenda!` will sort it.
       (set! action-procedures (cons proc action-procedures))
@@ -85,10 +85,10 @@
 
 (define (call-each procedures)
   (if (null? procedures)
-      'done
-      (begin
-        ((car procedures))
-        (call-each (cdr procedures)))))
+    'done
+    (begin
+      ((car procedures))
+      (call-each (cdr procedures)))))
 
 (define (get-signal wire)
   (wire 'get-signal))
@@ -105,14 +105,14 @@
 
 (define (propagate)
   (if (empty-agenda? the-agenda)
-      'done
-      ;; will set time.
-      (let ((first-item (first-agenda-item the-agenda)))
-        (displayln (list "the-agenda" the-agenda))
-        ;; for 3.31, this will call `set-signal!` for d which will then call `action-procedures` which will add `after-delay` based on the *new* time.
-        (first-item)
-        (remove-first-agenda-item! the-agenda)
-        (propagate))))
+    'done
+    ;; will set time.
+    (let ((first-item (first-agenda-item the-agenda)))
+      (displayln (list "the-agenda" the-agenda))
+      ;; for 3.31, this will call `set-signal!` for d which will then call `action-procedures` which will add `after-delay` based on the *new* time.
+      (first-item)
+      (remove-first-agenda-item! the-agenda)
+      (propagate))))
 
 (define (probe name wire)
   (add-action! wire
@@ -133,15 +133,15 @@
     (let ((new-value  
             (logic-or (get-signal a1) (get-signal a2)))) 
       (after-delay or-gate-delay 
-                  (lambda () 
-                    (set-signal! output new-value))))) 
+                   (lambda () 
+                     (set-signal! output new-value))))) 
   (add-action! a1 or-action-procedure) 
   (add-action! a2 or-action-procedure)
   ) 
 (define (logic-or s1 s2) 
   (if (or (= s1 1) (= s2 1)) 
-        1 
-        0))
+    1 
+    0))
 
 (define (make-time-segment time queue)
   ;; For the original queue, queue is (cons (list ...) (last-item lst)).
@@ -175,32 +175,32 @@
       (make-time-segment time q)))
   (define (add-to-segments! segments)
     (if (= (segment-time (car segments)) time)
-        (insert-queue! (segment-queue (car segments))
-                       action)
-        (let ((rest (cdr segments)))
-          (if (belongs-before? rest)
-              (set-cdr!
-               segments
-               (cons (make-new-time-segment time action)
-                     (cdr segments)))
-              (add-to-segments! rest)))))
+      (insert-queue! (segment-queue (car segments))
+                     action)
+      (let ((rest (cdr segments)))
+        (if (belongs-before? rest)
+          (set-cdr!
+            segments
+            (cons (make-new-time-segment time action)
+                  (cdr segments)))
+          (add-to-segments! rest)))))
   (let ((segments (segments agenda)))
     (if (belongs-before? segments)
-        (set-segments!
-         agenda
-         (cons (make-new-time-segment time action)
-               segments))
-        (add-to-segments! segments))))
+      (set-segments!
+        agenda
+        (cons (make-new-time-segment time action)
+              segments))
+      (add-to-segments! segments))))
 
 (define (remove-first-agenda-item! agenda)
   (let ((q (segment-queue (first-segment agenda))))
     (delete-queue! q)
     (if (empty-queue? q)
-        (set-segments! agenda (rest-segments agenda)))))
+      (set-segments! agenda (rest-segments agenda)))))
 
 (define (first-agenda-item agenda)
   (if (empty-agenda? agenda)
-      (error "Agenda is empty -- FIRST-AGENDA-ITEM")
-      (let ((first-seg (first-segment agenda)))
-        (set-current-time! agenda (segment-time first-seg))
-        (front-queue (segment-queue first-seg)))))
+    (error "Agenda is empty -- FIRST-AGENDA-ITEM")
+    (let ((first-seg (first-segment agenda)))
+      (set-current-time! agenda (segment-time first-seg))
+      (front-queue (segment-queue first-seg)))))

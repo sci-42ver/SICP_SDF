@@ -38,14 +38,14 @@
   (let ((q (segment-queue (first-segment agenda))))
     (delete-queue! q)
     (if (empty-queue? q)
-        (set-segments! agenda (rest-segments agenda)))))
+      (set-segments! agenda (rest-segments agenda)))))
 
 (define (first-agenda-item agenda)
   (if (empty-agenda? agenda)
-      (error "Agenda is empty -- FIRST-AGENDA-ITEM")
-      (let ((first-seg (first-segment agenda)))
-        (set-current-time! agenda (segment-time first-seg))
-        (rear-queue (segment-queue first-seg)))))
+    (error "Agenda is empty -- FIRST-AGENDA-ITEM")
+    (let ((first-seg (first-segment agenda)))
+      (set-current-time! agenda (segment-time first-seg))
+      (rear-queue (segment-queue first-seg)))))
 
 ;; reinit
 (define the-agenda (make-agenda))
