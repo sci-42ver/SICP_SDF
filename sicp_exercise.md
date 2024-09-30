@@ -1690,7 +1690,24 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - > last in, first out
     As the normal one implies, we just *reverse* the `set-signal!` order in the sequence, so the result is obviously wrong.
     - same as wiki top and the last paragraph of https://github.com/kana/sicp/blob/master/ex-3.32.md.
-- [ ] 33
+- [x] 33
+- [x] 34
+  - by viewing `process-new-value`, if we set `b`, then `a` can't be set automatically.
+    - same as wiki meteorgan's and repo.
+- [ ] 35
+- [ ] 36
+  - GE, i.e. global environment: a,b,
+  - E1 (`make-connector` for a) null parameter:
+    - E1' (`let`) `value` -> false etc: `set-my-value` etc.
+  - E2 (`make-connector`): similar to E1
+  - E3 (`set-value!`) `connector` -> a etc: 
+    - E3' (`connector`) `request` -> 'set-value!:
+      - E3'' (`set-my-value`) `newval` -> 10 etc.:
+        - E3''' (`for-each-except`) `` -> setter etc.:
+- [x] 37
+  - `(celsius-fahrenheit-converter x)` just transforms from c to f which is one part of what `(celsius-fahrenheit-converter c f)` does.
+  - trivial
+  - repo is same as wiki.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
