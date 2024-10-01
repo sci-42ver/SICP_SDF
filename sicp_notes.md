@@ -83,7 +83,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.3 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.4 (excluded).
+- up to "Implementing serializers" (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -1930,6 +1930,8 @@ not use
   By physics, this is easily proved by "law of conservation of energy".
   I won't prove this by mathematics.
   > there is no need for any restrictions on concurrent use of the shared val-ues.
+- > Peter might compute the difference in the balances for a1 and a2, but then Paul might change the balance in a1 before Peter is able to complete the exchange.
+  If Peter does before Paul, then Paul should calculate "difference" based on a2 and a3 instead of a1 and a3.
 ## lec
 ### 11
 - > operations
