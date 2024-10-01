@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.37 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.40 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1717,8 +1717,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       - Peter, Paul: 
         90/75/50 if Mary access before `set!` or 45/37.5
       - ...
-        IMHO this is more about mathematics... So I skipped.
-    - See wiki
+        IMHO this is more about mathematics... So I *skipped*.
+    - See wiki for details.
   - repo only has solution for a.
 - [ ] 39
   - here we have 3 components which can't be splitted.
@@ -1729,7 +1729,28 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     1. before part 1: 121
     2. inside: 100
     3. after: 101
-- 
+  - the above is *wrong*
+    repo is same as karthikk's.
+- [x] 40
+  - > Give all possible values of x that can result from executing
+    ~~Emm... 5 accesses~~
+    ~~better to use program to simulate...~~
+    - here possible access value are 10,100,1000.
+      - all l0 (l00/1k)
+      - the 2nd `lambda` has 100,... (1e+6) / 10,100... (1e+5) / 10,10,100 (10000).
+      - the 1st has 1k,... (1e+6) / 10,1k (10000)
+      - so 1e+2 to 1e+6.
+    - same as meteorgan's and repo.
+  - > Which of these possibilities remain if we instead use seri-alized procedures:
+    2 trivially but they are same as $x^6$.
+- [ ] 41
+  - > Do you agree?
+    Yes.
+    See https://en.wikipedia.org/wiki/Hazard_(computer_architecture)#Read_after_write_(RAW).
+  - repo is same as Mike's.
+- [x] 42
+  - IMHO here `withdraw` doesn't change so `(protected withdraw)` also won't change.
+    So safe.
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html

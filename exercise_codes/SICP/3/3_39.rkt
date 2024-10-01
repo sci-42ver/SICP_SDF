@@ -15,9 +15,7 @@
     (let ((m (in-test))) 
       (cond ((= 0 numtimes) output) 
             ((memq m output) (run-test (- numtimes 1) output)) 
-            (true
-              (displayln (list "add" m))
-              (run-test (- numtimes 1) (cons m output)))))) 
+            (true (run-test (- numtimes 1) (cons m output)))))) 
   (run-test num '())) 
 
 (define (test-2) 
