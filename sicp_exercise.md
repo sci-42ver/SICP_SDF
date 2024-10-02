@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.47 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.49 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1788,6 +1788,17 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     where both gets #f and sets to #t. Then "acquire the mutex at the same time".
     - same as xdavidliu's and repo.
 - [ ] 47
+- [ ] 48
+  - since no circular waiting as OSTEP 32.3 "Circular Wait" says.
+  - add one number identifier in `make-account-and-serializer` and order by that in `serialized-exchange`.
+    - See wiki leafac's.
+      maybe better to *avoid id conflict* with one global record (this is done in repo).
+- [ ] 49
+  - by [this](https://wiki.sei.cmu.edu/confluence/display/java/LCK07-J.+Avoid+deadlock+by+requesting+and+releasing+locks+in+the+same+order), "deadlock-avoid-ance mechanism" should work
+    > Deadlock is avoided when two threads request the same two locks but one thread completes its transfer before the other thread begins. Similarly, deadlock is avoided if the two threads request the same two locks *in the same order* (which would happen if they both transfer money from one account to a second account) or if two transfers involving distinct accounts occur concurrently.
+  - as wiki leafac says, the problem here is that we may be unable to decide the "ordering" beforehand.
+    This may always occur in "database management systems" due to something like *unknown future transactions*.
+  - repo no solution
 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html

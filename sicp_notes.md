@@ -81,9 +81,9 @@ Review one history comment
             then?
 ## check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 3.3 included.
+- up to section 3.4 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to "Implementing serializers" (excluded).
+- up to section 3.4 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -115,7 +115,7 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "*exe
 - > although it does lead to coercion problems, as discussed below
   See exercise 2.92.
 ### 3
-checked up to section 3.4 (excluded)
+checked up to section 3.4 (included)
 - chapter 1 footnote 9
   > Chapter 3 will show that this notion of environment is crucial
   16(also with *Chapter 4*)
@@ -1939,6 +1939,21 @@ not use
   see ostep 28.4 Evaluating Locks where absolutely fair is impossible.
   > because it is incapable of deciding which to go to first.
   Here it just shows equality makes "fair" decision impossible.
+- > Suppose that Peter’s process reaches the point where it has entered a serialized procedure protecting a1 and, just aer that, Paul’s process en-ters a serialized procedure protecting a2.
+  ~~IMHO this can't happen for `serialized-exchange` since both mutexes are acquired when using args `account1 account2` by `(serialized-p . args)`.~~
+  is related with the solution
+  > a process will always aempt to enter a procedure protecting the lowest-numbered account first.
+  which is same as what csapp says.
+- > Situations where deadlock can-not be avoided require deadlock-*recovery* methods, which entail having processes “back out” of the deadlocked state and try again.
+  This is said in OSTEP 32.3 "Detect and Recover", but not in detail.
+- > where due to optimiza-tion techniques such as pipelining and cached memory, the contents of memory may not be in a consistent state at every instant.
+  See COD (same for footnote 49) and csapp.
+- See ["Note: The eieio instruction ..."](https://www.ibm.com/docs/en/aix/7.2?topic=set-eieio-enforce-in-order-execution-io-instruction) for the difference between eieio and sync.
+- TODO serializer diff "barrier" concurrency
+  IMHO the former inhibits concurrency while the latter doesn't (at least partly allow).
+- > when should we say that the account balance has changed—when the balance in the local branch changes, or not until aer the synchronization?
+  this is similar to cache and main memory.
+- TODO footnote 50 about economics.
 ## lec
 ### 11
 - > operations
@@ -2425,6 +2440,8 @@ test
 - exercise 2.93 footnote.
 # TODO after c++
 - the [3 comments](https://stackoverflow.com/questions/79011368/is-environment-model-necessary-for-higher-order-procedures/79028978#comment139349156_79028978)
+# TODO after distributed systems
+- footnote 51 in section 3.4.
 
 TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
