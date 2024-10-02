@@ -1932,6 +1932,13 @@ not use
   > there is no need for any restrictions on concurrent use of the shared val-ues.
 - > Peter might compute the difference in the balances for a1 and a2, but then Paul might change the balance in a1 before Peter is able to complete the exchange.
   If Peter does before Paul, then Paul should calculate "difference" based on a2 and a3 instead of a1 and a3.
+- > e test-and-set! operation must be performed atomically. 
+  As csapp and COD shows, this is done by one instruction (this [may be](https://stackoverflow.com/a/1091448/21294350) atomic).
+  "atomically" just means "serialize".
+- > one cannot physically construct a *fair* arbiter that works 100% of the time
+  see ostep 28.4 Evaluating Locks where absolutely fair is impossible.
+  > because it is incapable of deciding which to go to first.
+  Here it just shows equality makes "fair" decision impossible.
 ## lec
 ### 11
 - > operations

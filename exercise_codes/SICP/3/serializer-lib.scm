@@ -19,8 +19,11 @@
 (define (clear! cell)
   (set-car! cell false))
 
+;; wrong as book Exercise 3.46 says. (also for footnote 46 which depends on CPU architecture)
 (define (test-and-set! cell)
-  (if (car cell)
-    true
-    (begin (set-car! cell true)
-           false)))
+  (without-interrupts
+   (lambda ()
+     (if (car cell)
+         true
+         (begin (set-car! cell true)
+                false)))))

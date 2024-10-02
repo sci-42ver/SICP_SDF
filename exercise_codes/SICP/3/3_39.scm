@@ -21,6 +21,9 @@
                     (s (lambda () (set! x (+ x 1))))) 
   x) 
 
-(display (run-many-times test-2 1000000)) 
+; (display (run-many-times test-2 1000000)) 
 ;; weird "(add 10)", i.e. doing nothing.
 ;; See 3_39.rkt
+
+(load "serializer-lib.scm")
+(display (run-many-times test-2 1000000))
