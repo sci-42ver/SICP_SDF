@@ -847,6 +847,9 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - [x] 4 
   - 3.13 same as wiki
   - 3.14 is less detailed.
+## Week 10
+- skipped as https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week11 says and it needs multiple-person cooperation.
+  > There aren't really any answers; this is all a *try-it-out* kind of lab.
 # @CS 61A notes
 ## skipped underlined words
 - p2
