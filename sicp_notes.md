@@ -1063,6 +1063,42 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   > This could be improved still further by calling length only once,
   i.e. same as what `loop` does.
   - `shuffle3!` also swaps.
+## Week 10
+### Client/server paradigm (I don't know why CS 61A teaches this here...)
+- ~~TODO~~ I don't find "~cs61a/lib/im-client.scm" in [CS61A_lib]
+  maybe [this](https://git.sr.ht/~codersonly/wizard-book-study) (got by googling 'cs61a im-"client".scm') work.
+  - This repo is based on https://github.com/search?q=repo%3Afgalassi%2Fcs61a-sp11%20make-server-socket&type=code.
+    But MIT/GNU Scheme and Racket used by that repo *doesn't support `make-server-socket`*.
+- `socket` See csapp -> `man accept`.
+  > *listening* on port port-number of *hostname*.
+  configured by `ai_flags` (see `getaddrinfo` -> `struct addrinfo`).
+  - can be seen like ["electrical cable"](https://en.wikipedia.org/wiki/Network_socket#Use)
+- `make-server-socket` means create one socket endpoint at the server side.
+- `(socket-output s2)` is one [output port](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Format.html#index-format)
+- [thunk](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Arity.html#index-thunk_003f)
+- [asynchronous](https://resources.owllabs.com/blog/asynchronous-communication#:~:text=Asynchronous%20communication%20is%20any%20type,information%20and%20offer%20their%20responses.)
+  > then there is a time lag before the recipients take in the information and offer their responses.
+- `eof-object?` [see](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Input-Procedures.html#index-eof_002dobject_003f)
+  > The precise set of end-of-file objects will *vary among implementations*
+- `when-port-readable` implies "asynchronous" delay.
+### Concurrency (skipped reading `concurrent.scm` since I don't use STK)
+- TODO [simulated parallelism](https://www.princeton.edu/~rblee/ELE572Papers/SMT_Eggers.pdf)
+- > operating system input/output device handlers
+  Here it means [the ordering implied by input/output](https://blog.risingstack.com/concurrency-and-parallelism-understanding-i-o/) relation.
+- "critical section" is also said in csapp p1036.
+- > Over the years I've seen mutexes implemented about *20 different ways*
+  > Note that when you can't acquire a mutex *the kernel is told* not to give your task any CPU time until the mutex is released
+  > In other words; the code to acquire and release a mutex typically isn't even in one place - it's *two pieces*, with one piece is in user-space and another piece is in the kernel.
+  [see](https://stackoverflow.com/a/49978238/21294350). Emm... in my memory this is related with scheduler.
+- > Since a serializer isn’t a special form, it *can’t take an expression as argument*.
+  More specifically, this is [due to](https://www.gnu.org/software/emacs/manual/html_node/elisp/Special-Forms.html)
+  > A special form is a primitive specially marked so that its *arguments are not all evaluated*.
+- > What if we check the value of in-use, discover that it’s false, and right at that moment another process sneaks in and grabs the serializer?
+  So we need atomic `test-and-set!` to ensure `set` immediately.
+  > That underlying level must provide a guaranteed atomic operation with which we can test the old value of in-use and change it to a new value with no possibility of another process intervening
+- > Look up “Peterson’s algorithm” in Wikipedia if you want to see the software solution.
+  Also see OSTEP
+  [here](https://en.wikipedia.org/wiki/Peterson%27s_algorithm#The_algorithm) the different treats of `turn` implies these 2 processes *can't both* in "critical section".
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
