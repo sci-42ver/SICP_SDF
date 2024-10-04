@@ -22,8 +22,8 @@
 ;; wrong as book Exercise 3.46 says. (also for footnote 46 which depends on CPU architecture)
 (define (test-and-set! cell)
   (without-interrupts
-   (lambda ()
-     (if (car cell)
-         true
-         (begin (set-car! cell true)
-                false)))))
+    (lambda ()
+      (if (car cell)
+        true
+        (begin (set-car! cell true)
+               false)))))

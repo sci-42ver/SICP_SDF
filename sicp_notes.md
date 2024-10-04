@@ -112,8 +112,9 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "*exe
   > In Section 2.5.3, we’ll show how to use generic arithmetic in a system that performs *symbolic algebra*.
 - ~~> Nevertheless, it provides a *clear illustration* of the design of a system using generic operations and a good *introduction* to the *more substantial systems* to be developed later in this chapter.~~
 - ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
-- > although it does lead to coercion problems, as discussed below
+- ~~> although it does lead to coercion problems, as discussed below~~
   See exercise 2.92.
+- > We’ve also already mentioned *(Section 2.2.3) that this is the natural way* to think about signal-processing systems. We will explore applications of streams to signal processing in Section 3.5.3.
 ### 3
 checked up to section 3.4 (included)
 - chapter 1 footnote 9
@@ -133,11 +134,12 @@ checked up to section 3.4 (included)
 - > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
 - > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
 - > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
-- > Section 3.3.4 describes one such language.
+- ~~> Section 3.3.4 describes one such language.~~
 - ~~> Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).~~
-- > In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.
+- ~~> In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.~~
 - ~~> In Chapter 3 we will return to message passing, and we will see that it can be a powerful tool for structuring simulation programs.~~
-- > or that change data structures, as we will see in Section 3.3
+- ~~> or that change data structures, as we will see in Section 3.3~~
+  IMHO See ~~Figure 3.22, Figure 3.23 ~~ Exercise 3.25 where the tree depth will be changed, so "data structures" are "change"d.
 - ~~> substitution is no longer an adequate model of procedure application. (We will see why this is so in Section 3.1.3.)~~
 - ~~> develop a new model of *procedure ap-plication*. In Section 3.2 we will introduce such a model, together with an explanation of set! and local variables.~~
   See Figure 3.7~9 where 7 creates "local variables" and 8~9 do `set!`.
@@ -145,12 +147,15 @@ checked up to section 3.4 (included)
   Exercise 3.10 has `initial-amount`, `balance` and `amount` "formal parameters".
 - ~~> Now a variable somehow refers to a *place where a value can be stored*, and the value stored at this place can change. In Section 3.2 we will see how environments play this role of “place” in our computational model.~~
   i.e. frame -> bindings.
-- > e complexity of imperative programs becomes even worse if we consider applications in which several processes execute concurrently. We will return to this in Section 3.4
-- > In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts
-- > execute concurrently. We will return to this in Section 3.4.
+- ~~> e complexity of imperative programs becomes even worse if we consider applications in which several processes execute concurrently. We will return to this in Section 3.4~~
+- ~~> In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts~~
+  IMHO see the codes after Figure 3.16 where `(car z1)` and `(cdr z1)` "share parts".
 - > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 - ~~> (For example, see Ex-ercise 3.30.)~~
-- > See Exercise 3.31.
+- ~~> See Exercise 3.31.~~
+- > We will explore applications of streams to signal processing in Section 3.5.3.
+- > We will discuss this point further at the end of Section 3.5.4.
+- > is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -164,6 +169,7 @@ checked up to section 3.4 (included)
 - > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
 - > For the interpreter we implement in Chapter 4, the code is in fact shared.
 - > In Section 4.3 we will study a language for expressing nondeterministic computations.
+- > In Section 4.2, we’ll develop a framework that unifies lists and streams.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -863,7 +869,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - p24 MapReduce
   > (accumulate reducer base-case (map mapper data))
 - p56
-  > how the Scheme interpreter uses mutable pairs to *implement environments*
+  > how the Scheme *interpreter* uses mutable pairs to *implement environments*
 - p60
   > This idea of using a *non-functional implementation* for something that has functional behavior will be very useful later when we look at *streams*.
 ## Week 1
@@ -1993,6 +1999,39 @@ not use
 - > when should we say that the account balance has changed—when the balance in the local branch changes, or not until aer the synchronization?
   this is similar to cache and main memory.
 - TODO footnote 50 about economics.
+### 3.5
+- [worldline](https://web.physics.ucsb.edu/~fratus/phys103/LN/SR3.pdf) (notice Figure 1,2 are about "*one-dimensional* trajectory")
+  i.e. ["space-time"](https://phys.libretexts.org/Bookshelves/Relativity/Spacetime_Physics_(Taylor_and_Wheeler)/05%3A_Trekking_through_Spacetime/5.04%3A_Worldline)
+- > If the consumer attempts to access a part of the stream that has *not yet been constructed*, the stream will automatically construct just enough more of itself to produce the required part
+  see [doc][scheme_stream_doc]
+  > except that the *tail* of a stream is *not computed until it is referred to*.
+  > Returns a newly allocated stream pair. Equivalent to (cons object (*delay* expression)).
+- > e fact that we are defining such similar procedures for streams and lists indicates that we are missing some underlying abstraction.
+  IMHO this means we should have one option to choose between `stream-ref` and `list-ref` instead of just mimicking with the *same structure*.
+- > the cdr of a stream to be evaluated when it is accessed by the stream-cdr procedure rather than when the stream is constructed by cons-stream.
+  see [scheme_stream_doc]
+  > Returns the *first tail* of stream. Equivalent to (*force* (cdr stream))
+  notice here `force` can only [force one `delay`][scheme_promise_doc] (see `(force (cdr (list->stream '(1 2 3))))`)
+  - i.e. the book
+    > stream-cdr selects the cdr of the pair and evaluates the delayed expression
+- > evaluating (cons-stream ⟨a⟩ ⟨b ⟩) would automatically cause ⟨b ⟩ to be evaluated
+  due to (see [applicative-order](https://rivea0.github.io/blog/applicative-order-vs-normal-order))
+  > Lisp uses applicative-order evaluation
+- `(delay ⟨exp⟩)` implementation implies why *thunk* is always used.
+- > In other words, we implement delay as a special-purpose memoized procedure similar to the one described in Exercise 3.27
+  just as the [scheme_promise_doc] says
+- `(memo-proc proc)` only works for the case where one specific delay is called multiple times.
+  But if there are 2 distinct `(delay proc1)`, then we can't memoize when calling the 2nd as expected.
+- call-by-name [diff](https://softwareengineering.stackexchange.com/a/194713) "Normal order evaluation"
+  > Thus normal order evaluation leaves open the possibility of memoizing the arguments as an optimization (sometimes called call-by-need), while call-by-name does not. Thus one could say that call-by-name evaluation is a *special case of normal order* evaluation.
+  so call-by-need, call-by-name < normal order evaluation < Non-strict evaluation (< means "is included in") which also containes (same as book "e memoizing optimization is also known as call-by-need.")
+  > Boolean expressions in many languages use a form of non-strict evaluation called *short-circuit evaluation*, where evaluation evaluates the left expression but *may skip the right expression* if the result can be determined
+  - also see
+    > Normal order evaluation uses complex structures such as *thunks* for unevaluated expressions, compared to the call stack used in applicative order evaluation.
+    "stack" is to help return back to the caller.
+  - https://cs.stackexchange.com/a/7703/161388 is similar to Exercise 1.5.
+    $\lambda x.(x \  \ x) \  \lambda x.(x \ \  x) \to \lambda x.(x \  \ x) \  \lambda x.(x \ \  x)$ -> (p) to (p)
+    normal-order: both drops the evaluation of the above loop in some way although not same.
 ## lec
 ### 11
 - > operations
@@ -2513,3 +2552,7 @@ TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which 
 [A*_optimal]:https://en.wikipedia.org/wiki/A*_search_algorithm#Admissibility
 
 [CS61A_lib]:https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/
+
+<!-- gnu scheme doc -->
+[scheme_stream_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Streams.html#index-cons_002dstream
+[scheme_promise_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Promises.html#index-force

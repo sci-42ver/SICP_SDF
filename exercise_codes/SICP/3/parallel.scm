@@ -37,7 +37,7 @@
       (lambda ()
         (set! my-threads
           (map (lambda (thunk)
-                ;; not in MIT_Scheme_Reference
+                 ;; not in MIT_Scheme_Reference
                  (let ((thread (create-thread #f thunk)))
                    (detach-thread thread)
                    thread))

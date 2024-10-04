@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.49 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.52 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1796,10 +1796,46 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 49
   - by [this](https://wiki.sei.cmu.edu/confluence/display/java/LCK07-J.+Avoid+deadlock+by+requesting+and+releasing+locks+in+the+same+order), "deadlock-avoid-ance mechanism" should work
     > Deadlock is avoided when two threads request the same two locks but one thread completes its transfer before the other thread begins. Similarly, deadlock is avoided if the two threads request the same two locks *in the same order* (which would happen if they both transfer money from one account to a second account) or if two transfers involving distinct accounts occur concurrently.
-  - as wiki leafac says, the problem here is that we may be unable to decide the "ordering" beforehand.
+  - as wiki leafac says, the problem here is that we may be unable to decide the "ordering" beforehand. (the above is *wrong*)
     This may always occur in "database management systems" due to something like *unknown future transactions*.
   - repo no solution
-
+- [ ] 50
+  - TODO by `((lambda (a . args) (null? (car args))) 1)` here `(car argstreams)` may fail.
+    - see wiki this is *impossible* (see `(map (lambda (x) x))` error).
+  - `??, cons-stream, stream-car, stream-cdr`
+- [ ] 51
+  - `(stream-enumerate-interval 0 10)` is `(cons-stream 0 (stream-enumerate-interval 1 10))`
+    so we do `(cons-stream (show 0) (apply stream-map ...))`
+  - Then `stream-ref` will do `show` by `force` until `(= n 0)` where we won't `force`.
+    So this outputs ~~the former 5 items.~~ the former *cdr* items, i.e. item 1 to item 6.
+    Then `(stream-car s)` will get `(car s)`, i.e. showing item 6.
+  - `(stream-ref x 7)` depends on whether `memo-proc`
+    if `memo-proc`, then only item ~~6 and~~ 7 and 8 will be outputed.
+    Otherwise, the former 8.
+  - wiki
+    - the above `(cons-stream (show 0) (apply stream-map ...))` implies we will output item 0 there.
+    - the above strikethrough is *hinted by the wiki*.
+  - repo is based on racket whose implementation is a bit weird based on its result.
+- [ ] 52
+  - 0,0-`(accum 1)`>1-(3,6)>6(`y`)-~~(8,11,15 Notice here `seq` is not modified by the sequence before, so `(accum 2)` will be rerun.)>15-(17,... until 15+(2+...+8)=15+5*7=50)>50-(50+(2+...+))>~~(6+4 due to memorizer. So `delay` will be only `force`d once.)>10-(10+5...+8=36)>36->(1+20)*20/2=210
+    - 36 *wrong*
+  - > What is the printed response to evaluating the stream-ref and display-stream expressions?
+    item 8 -> 36
+    1,3,...,210
+    - *wrong*, see wiki.
+  - > Would these responses differ if we had implemented (delay ⟨exp⟩) simply as (lambda () ⟨exp⟩) without using the optimiza-tion provided by memo-proc?
+    ~~just see the above strikethroughed ones.~~
+    - hinted by wiki, without memoization:
+      0,0-`(accum 1)`>1-(3,6)>6(`y`)
+      -(8,11,15 Notice here `seq` is not modified by the sequence before, so `(accum 2)` will be rerun.)>15
+      -> 15+4(since we begin from the next number *unevaluated* for `y`)+5(even)+... until we get another 7 even numbers, i.e. until $(2*7+3)=17$, so $15+21*14/2=162$
+      -> 162+5+6+7...+20=162+25*8=362, so output 10,180,...
+      - same as wiki codybartfast's.
+  - wiki
+    - the above is `(stream-ref y 7)` instead of `(stream-ref seq 7)`, so it begins with `(accum 4)` until `(accum 10)` (wrong)
+    - the above `(display-stream z)` will output `10 15 45 ...` due to memorizer, then `190 ...`.
+    - here MIT/GNU Scheme just uses ['odd' streams](https://srfi.schemers.org/srfi-41/srfi-41.html), so "Racket With ..." won't occur.
+  - repo is just based on wiki.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
