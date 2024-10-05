@@ -1,3 +1,6 @@
+4. In SICP section 3.2 about environment model, it doesn't say about how that model is related with special forms. https://people.eecs.berkeley.edu/~bh/61a-pages/Volume2/notes.pdf p54 says "special forms" have different evaluation rules where when called no "new environment" is created. 4.1 I found that if we `(define (cons-stream a b) ...)` before `(define (stream-enumerate-interval low high) ...)` then `stream-enumerate-interval` will call the defined lambda func. Continued...
+
+Does that mean `(define (stream-enumerate-interval low high) ...)` run before `(define (cons-stream a b) ...)` will *mark* `cons-stream` as one special form which may be not recorded in GE(global environment), so it won't check the latter defined lambda func `cons-stream` although that exists in GE?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -83,7 +86,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.4 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.4 (included).
+- up to section 3.5.2 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -155,7 +158,7 @@ checked up to section 3.4 (included)
 - ~~> See Exercise 3.31.~~
 - > We will explore applications of streams to signal processing in Section 3.5.3.
 - > We will discuss this point further at the end of Section 3.5.4.
-- > is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)
+- > we end up forcing the *same delayed object many times*. is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -2032,6 +2035,16 @@ not use
   - https://cs.stackexchange.com/a/7703/161388 is similar to Exercise 1.5.
     $\lambda x.(x \  \ x) \  \lambda x.(x \ \  x) \to \lambda x.(x \  \ x) \  \lambda x.(x \ \  x)$ -> (p) to (p)
     normal-order: both drops the evaluation of the above loop in some way although not same.
+- [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#Overview)
+  here "Sieve" means being *not one multiple* of some number.
+- TODO
+  - > We have named these figures after Peter Henderson, who was the first person to show us *diagrams* of this sort as a way of thinking about *stream processing*
+    google image "Henderson diagram Peter Henderson stream" has no related results
+- > (define (prime? n) ...)
+  This is different from section 1.2.6 `prime?` definition since it only checks for *prime* smaller.
+  - `(divisible? n (stream-car ps))` ~~should be `(divisible? (stream-car ps) n)` if using `divisible?` in section 1.2.6.~~ is based on `divisible?` in this section.
+- > either n is not prime (in which case there is a prime already generated that divides it)
+  based on "Prime Factorization"
 ## lec
 ### 11
 - > operations

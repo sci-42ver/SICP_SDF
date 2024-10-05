@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.52 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.57 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1836,6 +1836,33 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - the above `(display-stream z)` will output `10 15 45 ...` due to memorizer, then `190 ...`.
     - here MIT/GNU Scheme just uses ['odd' streams](https://srfi.schemers.org/srfi-41/srfi-41.html), so "Racket With ..." won't occur.
   - repo is just based on wiki.
+- [x] 53 trivial $a_n=2a_{n-1}$
+- [x] 54
+  - > mul-streams
+    trivial
+  - `(integers-starting-from 2) factorials`
+- [ ] 55
+  ```scheme
+  (define (partial-sums S)
+    (cons-stream (stream-car S) (add-streams (stream-cdr S) (partial-sums S))))
+  ```
+  - see wiki: the above is wrong.
+- [x] 56
+  - > But this is very inefficient, since, as the integers get larger, fewer and fewer of them fit the requirement.
+    IMHO it should be due to that we need to check much more possible prime factors.
+  - > notice the following facts about it.
+    This is one generative method instead of the filtering method above, i.e. just listing all  numbers "with" only factors from "2, 3, or 5".
+  - `(scale-stream S 2) (merge (scale-stream S 3) (scale-stream S 5))`
+- [x] 57
+  - based on "shifted by one place: ..."
+    (index starting from 0) total addition: 0,0,1,2,... since all the former results are stored in `fibs` itself.
+  - > without using the optimization provided by the memo-proc procedure
+    In a nutshell, each item will be recalculated.
+    So each item needs addition: 0,0,1,2 with $a_{n+2}=a_{n+1}+a_{n}+1$, so $a_{n}+1$ is like [fibonacci sequence](https://math.stackexchange.com/questions/4934605/a-n1-a-na-n-11-relation-with-fibonacci-sequence#comment10546077_4934605) with 1,1,.... So [$a_{n}=F_{n+1}-1$](https://en.wikipedia.org/wiki/Fibonacci_sequence#Definition)
+    So $\sum_{i=0}^{n-1} a_{i}=\sum_{i=1}^{n} F_{i}-n=F_{n+2}-1-n$, so [exponential](https://en.wikipedia.org/wiki/Fibonacci_sequence#Closed-form_expression).
+  - same as wiki adams "max(0, n-1)".
+    fib(n) means item n, needing $a_{n}=F_{n+1}-1=fib(n+1)-1$.
+- 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

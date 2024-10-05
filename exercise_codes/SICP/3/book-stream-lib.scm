@@ -25,3 +25,17 @@
                       (stream-filter pred
                                      (stream-cdr stream))))
         (else (stream-filter pred (stream-cdr stream)))))
+
+;; 3.5.2
+(define (integers-starting-from n)
+  (cons-stream n (integers-starting-from (+ n 1))))
+
+(define integers (integers-starting-from 1))
+
+(define ones (cons-stream 1 ones))
+
+(define (add-streams s1 s2)
+  (stream-map + s1 s2))
+
+(define (scale-stream stream factor)
+  (stream-map (lambda (x) (* x factor)) stream))

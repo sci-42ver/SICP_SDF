@@ -35,3 +35,13 @@
 
 (stream-enumerate-interval 0 10)
 ; will use the new "cons-stream-1" by outputing "call cons-stream-1".
+
+;; case 3
+(define (test-redefine-+ . args)
+  (display (apply + args)))
+
+(test-redefine-+ 2 3 4)
+(define (+ . args)
+  (apply * args))
+(test-redefine-+ 2 3 4)
+; redefinition works by outputing 24.

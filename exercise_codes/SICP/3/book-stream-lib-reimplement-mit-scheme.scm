@@ -32,8 +32,19 @@
   (if (= n 0)
     (stream-car s)
     (stream-ref (stream-cdr s) (- n 1))))
-(define (stream-map proc s)
-  (if (stream-null? s)
-    the-empty-stream
-    (cons-stream (proc (stream-car s))
-                 (stream-map proc (stream-cdr s)))))
+
+; (define (stream-map proc s)
+;   (if (stream-null? s)
+;     the-empty-stream
+;     (cons-stream (proc (stream-car s))
+;                  (stream-map proc (stream-cdr s)))))
+
+;; general http://community.schemewiki.org/?sicp-ex-3.50
+(define (stream-map proc . streams) 
+  (if (any? stream-null? streams) 
+      empty-stream 
+      (cons-stream
+        (apply proc (map stream-car streams)) 
+        (apply stream-map 
+                proc ; No need to cons proc and the result of map. 
+                (map stream-cdr streams))))) 

@@ -30,3 +30,13 @@
               (eval expr top-env)))))
       (if (not exception-thrown)
         (error " The following expression should have raised an exception :" expr)))))
+
+(define (loop cnt thunk)
+  (do ((i 0 (+ i 1)))
+    ((= i cnt) 'done)
+    (thunk)))
+
+(define (loop-cnt-ref cnt func)
+  (do ((i 0 (+ i 1)))
+    ((= i cnt) 'done)
+    (func i)))
