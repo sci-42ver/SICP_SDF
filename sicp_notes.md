@@ -1,8 +1,4 @@
-Based on your offered checking order, my above 2 questions are solved now. Thanks.
-
-"then it's just not defined what happens if you later define it to be something else.": Does this mean it depends on the specific Scheme implementation whether to overload `cons-stream`? In Racket it won't allow redefine something (Although `(require racket/stream) (define (stream-cons a b) ...)` doesn't throw errors. I don't know much about the difference between Racket and MIT/GNU Scheme) by consecutive `define` but MIT/GNU Scheme allows it.
-
-"then it's just not defined what happens if you later define it to be something else.": In Racket it won't allow redefine something (Although `(require racket/stream) (define (stream-cons a b) ...)` doesn't throw errors. I don't know much about the difference between Racket and MIT/GNU Scheme) by consecutive `define` but MIT/GNU Scheme allows it. Since you say "how things *might* work", we need to see the source codes of MIT/GNU Scheme to learn more but that is off topic for learning SICP. After all, I know the problem is due to *redefining special form* and I will look out for this. Thanks.
+@WillNess I add one implementation based on stream hinted by you. You can review this if you have time and are willing to review the above codes (Although a bit not elegant, it at least works).
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
