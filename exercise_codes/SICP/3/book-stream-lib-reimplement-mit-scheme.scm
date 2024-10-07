@@ -41,10 +41,21 @@
 
 ;; general http://community.schemewiki.org/?sicp-ex-3.50
 (define (stream-map proc . streams) 
-  (if (any? stream-null? streams) 
+  (if (any stream-null? streams) 
       empty-stream 
       (cons-stream
         (apply proc (map stream-car streams)) 
         (apply stream-map 
                 proc ; No need to cons proc and the result of map. 
                 (map stream-cdr streams))))) 
+
+(define (stream-map proc . streams) 
+  (if (any stream-null? streams) 
+      empty-stream 
+      ;; https://stackoverflow.com/a/30561923/21294350
+      (cons
+        (apply proc (map stream-car streams)) 
+        (delay 
+          (apply stream-map 
+                  proc ; No need to cons proc and the result of map. 
+                  (map stream-cdr streams)))))) 

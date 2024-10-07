@@ -1,6 +1,8 @@
-4. In SICP section 3.2 about environment model, it doesn't say about how that model is related with special forms. https://people.eecs.berkeley.edu/~bh/61a-pages/Volume2/notes.pdf p54 says "special forms" have different evaluation rules where when called no "new environment" is created. 4.1 I found that if we `(define (cons-stream a b) ...)` before `(define (stream-enumerate-interval low high) ...)` then `stream-enumerate-interval` will call the defined lambda func. Continued...
+Based on your offered checking order, my above 2 questions are solved now. Thanks.
 
-Does that mean `(define (stream-enumerate-interval low high) ...)` run before `(define (cons-stream a b) ...)` will *mark* `cons-stream` as one special form which may be not recorded in GE(global environment), so it won't check the latter defined lambda func `cons-stream` although that exists in GE?
+"then it's just not defined what happens if you later define it to be something else.": Does this mean it depends on the specific Scheme implementation whether to overload `cons-stream`? In Racket it won't allow redefine something (Although `(require racket/stream) (define (stream-cons a b) ...)` doesn't throw errors. I don't know much about the difference between Racket and MIT/GNU Scheme) by consecutive `define` but MIT/GNU Scheme allows it.
+
+"then it's just not defined what happens if you later define it to be something else.": In Racket it won't allow redefine something (Although `(require racket/stream) (define (stream-cons a b) ...)` doesn't throw errors. I don't know much about the difference between Racket and MIT/GNU Scheme) by consecutive `define` but MIT/GNU Scheme allows it. Since you say "how things *might* work", we need to see the source codes of MIT/GNU Scheme to learn more but that is off topic for learning SICP. After all, I know the problem is due to *redefining special form* and I will look out for this. Thanks.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -1234,6 +1236,7 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
     We should better read the book first before the recitation since
     1. floating precision problem is said in exercise 1.7.
     2. Shawn's comment is implied in [one footnote](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-10.html#footnote_Temp_35).
+    - Also see 3_58.scm
 1. [x] see code
 2. [ ] I originally planned to use base case for `n=1,2`.
   The solution is more elegant to use implicitly the 0th number being 0 although in the actual series that doesn't exist.
@@ -1269,7 +1272,7 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   4,5 are fast-expt and fast-expt-iter.
   7 is just one small variation of the book first `(prime? n)`.
   8 is Exercise 1.18.
-  4. > Space: Θ(log n)
+  1. > Space: Θ(log n)
       approximately $\log n/2$ due to `else`.
 ## book reading
 ### 1.1

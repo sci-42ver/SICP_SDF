@@ -15,6 +15,21 @@
 (stream-enumerate-interval 0 10)
 ; not output "call cons-stream"
 
+;; case 1.1
+(define (cons-stream a b)
+  (display "call cons-stream")
+  (cons a (delay b)))
+
+(define (stream-enumerate-interval low high)
+  (if (> low high)
+    the-empty-stream
+    (cons-stream
+      low
+      (stream-enumerate-interval (+ low 1) high))))
+
+(stream-enumerate-interval 0 10)
+; output "call cons-stream"
+
 ;; case 2
 (define (cons-stream-1 a b)
   (display "call cons-stream")

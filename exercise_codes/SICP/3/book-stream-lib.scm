@@ -13,6 +13,7 @@
 
 (define (stream-enumerate-interval low high)
   (if (> low high)
+    ;; not in MIT_Scheme_Reference
     the-empty-stream
     (cons-stream
       low
@@ -34,8 +35,12 @@
 
 (define ones (cons-stream 1 ones))
 
-(define (add-streams s1 s2)
-  (stream-map + s1 s2))
+; (define (add-streams s1 s2)
+;   (stream-map + s1 s2))
+
+;; modified
+(define (add-streams . addends)
+  (apply stream-map + addends))
 
 (define (scale-stream stream factor)
   (stream-map (lambda (x) (* x factor)) stream))

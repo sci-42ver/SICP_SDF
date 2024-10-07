@@ -1862,7 +1862,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     So $\sum_{i=0}^{n-1} a_{i}=\sum_{i=1}^{n} F_{i}-n=F_{n+2}-1-n$, so [exponential](https://en.wikipedia.org/wiki/Fibonacci_sequence#Closed-form_expression).
   - same as wiki adams "max(0, n-1)".
     fib(n) means item n, needing $a_{n}=F_{n+1}-1=fib(n+1)-1$.
-- 
+- [ ] 58
+  - this is just `(num*radix)/den` with the first item being the number before the decimal point.
+  - 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
