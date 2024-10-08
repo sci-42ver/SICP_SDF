@@ -57,7 +57,7 @@ Review one history comment
   After reading the book, check "What we should achieve".
 ## @Recheck 
 - https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962
-  > "*streams* of decimal digits"
+  ~~> "*streams* of decimal digits"~~ (finished)
 - https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
   > "lexical *environment*", "*garbage* collected"
   - > "lexical *environment*"
@@ -84,7 +84,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.4 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.5.2 (excluded).
+- up to section 3.5.3 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~

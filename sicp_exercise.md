@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.57 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.62 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1862,9 +1862,37 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     So $\sum_{i=0}^{n-1} a_{i}=\sum_{i=1}^{n} F_{i}-n=F_{n+2}-1-n$, so [exponential](https://en.wikipedia.org/wiki/Fibonacci_sequence#Closed-form_expression).
   - same as wiki adams "max(0, n-1)".
     fib(n) means item n, needing $a_{n}=F_{n+1}-1=fib(n+1)-1$.
-- [ ] 58
+  - > Our call-by-need stream optimization effectively constructs such a table automatically, *storing values in the previously forced parts* of the stream.
+    This is just how `memo-proc` does.
+- [x] 58
   - this is just `(num*radix)/den` with the first item being the number before the decimal point.
-  - 
+    - same as repo.
+- [x] 59
+  - > In a similar way, we can work with power series
+    just reuse the poly lib.
+  - `integrate-series`: just based on `integers` and `stream-map`
+  - > except for the constant term
+    since $\int e^x dx=e^x+C$
+  - b trivial
+  - wiki (see meteorgan's which is right IMHO)
+    - `(stream-map / ones integers)` can be `(stream-map (lambda (num) (/ 1 num)) integers)`
+  - repo
+    - a. elegant by dropping 1.
+    - b. same
+- [x] 60
+  - `(* (stream-car s1) (stream-car s2))`
+    `(mul-series s1 (stream-cdr s2))`
+    `(scale-stream (stream-cdr s1) (stream-car s2))`
+    - almost same as meteorgan's but swap s1 and s2.
+- [ ] 61 trivial by the formula.
+  - see wiki and repo to notice using one internal definition to ensure memorization.
+- [x] 62
+  - > provided that the denominator series begins with a nonzero constant term.
+    to ensure `1/Den` exist.
+    - if zero, then we make extract factor $1/x^k$, then the rest is same.
+  - `Num*(1/(scale Den 1/C))`
+    - see wiki meteorgan's, *not to forget factor back*.
+  - repo is same as wiki cyzx's.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
