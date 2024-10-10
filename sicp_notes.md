@@ -84,7 +84,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.4 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.5.3 (excluded).
+- up to section 3.5.3 "Streams as signals" (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -117,7 +117,7 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "*exe
   See exercise 2.92.
 - > We’ve also already mentioned *(Section 2.2.3) that this is the natural way* to think about signal-processing systems. We will explore applications of streams to signal processing in Section 3.5.3.
 ### 3
-checked up to section 3.4 (included)
+checked up to section 3.5.3 (included)
 - chapter 1 footnote 9
   > Chapter 3 will show that this notion of environment is crucial
   16(also with *Chapter 4*)
@@ -157,6 +157,12 @@ checked up to section 3.4 (included)
 - > We will explore applications of streams to signal processing in Section 3.5.3.
 - > We will discuss this point further at the end of Section 3.5.4.
 - > we end up forcing the *same delayed object many times*. is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)
+- ~~section 3.5.3~~
+  - > Streams with delayed evaluation can be a powerful modeling tool, pro-viding many of the benefits of local state and assignment. 
+    I don't find "assign" later in section 3.5.3. So IMHO "Streams as signals" implies their similarity.
+  - > Moreover, they avoid some of the theoretical tangles that accompany the intro-duction of assignment into a programming language.
+    see
+    > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
@@ -2044,6 +2050,21 @@ not use
   - `(divisible? n (stream-car ps))` ~~should be `(divisible? (stream-car ps) n)` if using `divisible?` in section 1.2.6.~~ is based on `divisible?` in this section.
 - > either n is not prime (in which case there is a prime already generated that divides it)
   based on "Prime Factorization"
+- > pro-viding many of the benefits of local state and assignment.
+  IMHO i.e. only calculate the current element and 
+  assignment: `force` in the future
+- I skipped proving [Leonhard Euler's "sequence accelerator"](https://en.wikipedia.org/wiki/Series_acceleration#Euler's_transform)
+- > e tableau has the form
+  Here $s_{i\cdot}$ is the $i$th stream.
+- > appear as element number f (i, j)
+  i.e. not infinite.
+- > We began our discussion of streams by describing them as computa-tional *analogs of the “signals”* in signal-processing systems. 
+  See "Figure 3.31".
+- > if Sn is the nth term of the original sum sequence, then the accelerated sequence has terms
+  this term corresponds to $S_{n-1}$ in the new sequence, so we need $n\ge 1$
+- > we can implement an integrator or summer that ...
+  IMHO this is one "partial sum" "integrator".
+  - so `int` recursive call in `int`.
 ## lec
 ### 11
 - > operations

@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.62 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.76 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1868,6 +1868,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - this is just `(num*radix)/den` with the first item being the number before the decimal point.
     - same as repo.
 - [x] 59
+  - > In Section 2.5.3 we saw how to implement a polynomial arithmetic system representing polynomials as lists of terms.
+    Here we doesn't store order (see `(add-terms L1 L2)`) since that is implied as *consecutive*.
   - > In a similar way, we can work with power series
     just reuse the poly lib.
   - `integrate-series`: just based on `integers` and `stream-map`
@@ -1893,6 +1895,61 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - `Num*(1/(scale Den 1/C))`
     - see wiki meteorgan's, *not to forget factor back*.
   - repo is same as wiki cyzx's.
+- [x] 63
+  - See LisScheSic's comment in http://community.schemewiki.org/?sicp-ex-3.55.
+  - No.
+  - same as leafac's.
+- [x] 64
+  - Let `(sqrt-stream x)` be `t` and `(stream-cdr t)` be `next`, trivial by comparing `(stream-car t)` and `(stream-car next)`, then recursively call `stream-limit` for `next` if not meeting the requirement.
+    - same basic ideas as wiki meteorgan's, i.e. repo.
+- [ ] 65 trivial by using `partial-sums` and then use that for `euler-transform` and then `accelerated-sequence`.
+  - > How rapidly do these sequences converge?
+    just count... (same as repo)
+    - see wiki Sphinxsky's.
+- [ ] 66
+  ```
+  0 1 3 5 7
+    2 4 (here "2 4 6" pattern is just duplicate of "0 1 2", then recursion...) 
+      6
+  ```
+  - this is about maths and the appropriate ordering depends on what elements we want to see earlier, so I skipped.
+- [x] 67 add one `stream-map` by `(stream-map (lambda (x) (list (stream-car s) x)) (stream-cdr t))` (let this be `bottom-right`) -> `(interleave (stream-map (lambda (x) (list x (stream-car t))) (stream-cdr s)) bottom-right)` which is same as repo.
+  - wiki 3pmtea's is better
+- [ ] 68
+  - IMHO this is right since no items are dropped.
+- [ ] 69
+- [ ] 70
+  - > We will require ...
+    IMHO this is not necessary.
+  - `merge-weighted` trivial by substituting `<` with `weight` and modifying `>` to `<` appropriately.
+  - based on footnote 69, 
+    we can assume `(list (stream-car s) (stream-car t))` must be the 1st,
+    so changing `interleave` to `merge` is enough.
+    - Then 
+      a. trivial by defining `weight`.
+      b. since we are combining 3 sub-streams/elem, `filter` at last.
+      - b is *wrong*.
+        see wiki `filter` for the *inputs* first.
+  - wiki
+    x3v's: here same weight doesn't mean the same pair, so no dropping. (same as repo)
+- [x] 71
+  - > then search the stream for two consecu-tive pairs with the same weight
+    trivial by using iter which adds one pair when necessary.
+    - same as meteorgan's.
+      TODO test based on "two consecu-tive" elements in the stream is also used in one former exercise.
+    - repo is based on `stream-filter` with zero mark.
+- [x] 72
+  - same basic ideas as 3.71.
+- [x] 73
+- [x] 74 trivial `(cons-stream 0 sense-data)` (same as meteorgan's and repo)
+- [x] 75
+- [x] 76
+  - > the extractor should not have to be changed if Alyssa finds a better way to condition her input signal
+    i.e. extractor -> `make-zero-crossings`, "condition her input signal" -> average?
+  - `smooth`: trivial by `(stream-map average s (cons-stream last-value s))`
+  - `make-zero-crossings`: just let `input-stream` be `(smooth input-stream)`
+    - wiki use the same `smooth` but use `make-zero-crossings` in Exercise 3.74.
+- 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
