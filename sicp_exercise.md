@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.76 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3.1~3.82 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1949,7 +1949,17 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - `smooth`: trivial by `(stream-map average s (cons-stream last-value s))`
   - `make-zero-crossings`: just let `input-stream` be `(smooth input-stream)`
     - wiki use the same `smooth` but use `make-zero-crossings` in Exercise 3.74.
-- 
+- [x] 77 trivial by using `let` (same as repo and wiki)
+- [x] 78
+- [x] 79 just as the book to use `(stream-map f dy y)` (see mg's which is right. Same as *repo* and meteorgan's).
+- [x] 80
+- [ ] 81
+  - if based on Exercise 3.6, then we just call `(rand 'generate)` or `((rand 'reset) 1)`.
+    - see wiki which *allows setting the argument* for `'reset`.
+- [ ] 82
+  Here we only need to set `experiment-stream`, i.e. `stream-map (lamdbda (x) (experiment)) ones` where `ones` can be any infinite stream.
+  If using `random-update`, IMHO we still need `random`.
+  - same as wiki meteorgan's but using `make-point` instead of `cons`.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

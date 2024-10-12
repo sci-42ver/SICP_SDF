@@ -84,7 +84,7 @@ Review one history comment
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 3.4 included.
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.5.3 "Streams as signals" (excluded).
+- up to section 3.5.5 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -115,26 +115,64 @@ tracked up to section 2.5 (included) by searching "chapter", "section" and "*exe
 - ~~> Section 2.4.2 will show how both representations can be made to coexist in a single system through the use of type tags and generic operations.~~
 - ~~> although it does lead to coercion problems, as discussed below~~
   See exercise 2.92.
-- > We’ve also already mentioned *(Section 2.2.3) that this is the natural way* to think about signal-processing systems. We will explore applications of streams to signal processing in Section 3.5.3.
+- ~~> We’ve also already mentioned *(Section 2.2.3) that this is the natural way* to think about signal-processing systems.~~
+  compare Figure 2.7 with Figure 3.32 where we all let input go through a sequence of operations to get the final output.
 ### 3
-checked up to section 3.5.3 (included)
-- chapter 1 footnote 9
-  > Chapter 3 will show that this notion of environment is crucial
-  16(also with *Chapter 4*)
-  > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
-  > In Chapter 3 we will introduce stream processing, which is a way of handling *appar-ently “infinite” data structures* by incorporating a *limited form* of normal-order evalu-ation. In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
-  27
-  > that is, they are looked up in *the environment in which the procedure was defined*. We will see how this works in detail in chapter 3 when we study environments and the detailed behavior of the interpreter.
-  31
-  > who explained it in terms of the *“message-passing” model* of computation that we shall discuss in Chapter 3.
-- > As we shall see in Chapter 3, the general notion of the environment
-- > We will discuss this more fully in Chapter 3 and *Chapter 4* when we examine the implementation of an interpreter in detail.
-  > we will investigate some of its implications in Chapter 3 and *Chapter 4*
-- > In particular, when we address in Chapter 3 the use of procedures with “mutable data,”
-- > We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.
-- > This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation
-- > We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
-- > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
+checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (included)
+- ~~Check how this chapter explains "Modularity".~~
+  - In a summary, "Modularity" ->
+    1. implemented by 
+      objects with local state, e.g. "local procedure"
+      or
+      stream
+    2. limited information
+    4. less "timing constraints".
+    5. "specific function" for each "specific purpose" but can be still be "general".
+    - also see "sequences".
+    - from section 2.2
+      > The value of expressing programs as sequence operations is that this helps us make program designs that are modular, that is, designs that are constructed by *combining relatively independent pieces*.
+  - > For such a model to be modular, it should be *decomposed into computational objects*
+  - > One can make a system more modular and robust by protecting parts of the system from each other; that is, by providing *information access only* to those parts of the system that have a ``*need* to know.''
+    > The key modularity issue was that we wished to *hide the internal state* of a random-number generator *from programs that used* random numbers.
+  - > The environment model thus explains the two key properties that make *local procedure definitions* a useful technique for modularizing programs:
+    >> The names of the local procedures do *not interfere* with names *external* to the enclosing procedure
+    >> The local procedures can *access the arguments of the enclosing procedure*, simply by using parameter names as free variables.
+  - > as if they were to be executed concurrently forces the programmer to *avoid inessential timing constraints* and thus makes programs more modular.
+  - > On the other hand, the stream framework raises difficulties of its own, and the question of *which* modeling technique leads to more modular and more easily maintained systems *remains open*.
+  - > sequences can serve as standard interfaces for *combining program modules*
+  - > The program he wrote is not modular, because it intermixes the operation of smoothing with the zero-crossing extraction.
+    so one specific purpose -> one specific function leading to "modular".
+  - > There is considerable modularity in this approach, because we still can formulate a *general* monte-carlo procedure that can deal with *arbitrary* experiments.
+  - > e functional model does not modularize along object boundaries
+    i.e. stream, see
+    > The stream approach can be illuminating because it allows us to build systems with *different module boundaries* than systems organized around assignment to state variables.
+- ~~chapter 1~~ 
+  - ~~footnote 9~~
+    > Chapter 3 will show that this notion of environment is crucial
+  - ~~16(also with *Chapter 4*)~~
+    > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
+    see stream -> "Normal-order evaluation", which becomes natural when "Normal-order evaluation".
+    > In Chapter 3 we will introduce stream processing, which is a way of handling *appar-ently “infinite” data structures* by incorporating a *limited form* of normal-order evalu-ation.
+  - ~~27~~
+    > that is, they are looked up in *the environment in which the procedure was defined*. We will see how this works in detail in chapter 3 when we study environments and the detailed behavior of the interpreter.
+    i.e. "the *environment part* of the procedure object being applied" / "a pointer to the environment in which the procedure was *created*" in section 3.2.
+  - ~~31~~
+    > who explained it in terms of the *“message-passing” model* of computation that we shall discuss in Chapter 3.
+- ~~> As we shall see in Chapter 3, the general notion of the environment as *providing a context* in which evaluation takes place will play an important role in our understanding of program execution.~~
+- ~~> In practice, the “substi-tution” is accomplished by using a *local environment for the for-mal parameters*. We will discuss this more fully in Chapter 3 and *Chapter 4* when we examine the implementation of an interpreter in detail.~~
+  IMHO Chapter 3 is enough.
+- ~~> In particular, when we address in Chapter 3 the use of procedures with “mutable data,” we will see that the substitution model breaks down and *must be replaced by a more complicated model* of procedure application.~~
+- ~~> We’ll see how to use this as the basis for some fancy numerical tricks in Section 3.5.3.~~
+  i.e. Euler acceleration and "recursively accelerate".
+- ~~> This style of programming is often called message passing, we will be using it as a basic tool in chapter 3 when we address the issues of modeling and simulation~~
+  See "Exercise 3.11" and `(make-wire)`.
+- ~~> Additionally, when we uniformly represent structures as sequences, we have localized the data-structure *dependencies in our programs to a small number of sequence operations*.~~
+  i.e. based on functional programming, we can only use these "a small number of sequence operations" to get one new "sequence", this is "data-structure dependencies".
+  > By *changing these*, we can experiment with *alternative representations of sequences*, while leaving the overall design of our programs intact. We will exploit this capability in Section 3.5, when we generalize the sequence-processing paradigm to admit *infi-nite* sequences.
+  i.e. `map` -> `stream-map` etc.
+- ~~> include many computations that are commonly expressed using *nested loops*.[18] ... find all ordered pairs of distinct positive integers i and j, where *1 ≤ j < i ≤ n, such that i + j is prime*~~
+  > Section 3.5.3, we’ll see how this approach generalizes to infinite sequences.
+  see "Infinite streams of pairs".
 - ~~> Section 3.3.4 describes one such language.~~
 - ~~> Such a definition skirts a deep issue that we are not yet ready to address: the meaning of “sameness” in a programming language. We will return to this in Chapter 3 (Section 3.1.3).~~
 - ~~> In Chapter 3 (Section 3.3.3) we will see how to implement these and other operations for manipulating tables.~~
@@ -151,12 +189,11 @@ checked up to section 3.5.3 (included)
 - ~~> e complexity of imperative programs becomes even worse if we consider applications in which several processes execute concurrently. We will return to this in Section 3.4~~
 - ~~> In Section 3.3 we will see much more complex examples, such as “distinct” compound data structures that share parts~~
   IMHO see the codes after Figure 3.16 where `(car z1)` and `(cdr z1)` "share parts".
-- > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 - ~~> (For example, see Ex-ercise 3.30.)~~
 - ~~> See Exercise 3.31.~~
-- > We will explore applications of streams to signal processing in Section 3.5.3.
-- > We will discuss this point further at the end of Section 3.5.4.
-- > we end up forcing the *same delayed object many times*. is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)
+- ~~> We will explore applications of streams to signal processing in Section 3.5.3.~~
+- ~~> Physicists sometimes adopt this view by introducing the *“world lines”* of particles as a device for reasoning about motion. ... We will discuss this point further at the end of Section 3.5.4.~~
+- ~~> we end up forcing the *same delayed object many times*. is can lead to serious inefficiency in recursive programs involving streams. (See Exercise 3.57.)~~
 - ~~section 3.5.3~~
   - > Streams with delayed evaluation can be a powerful modeling tool, pro-viding many of the benefits of local state and assignment. 
     I don't find "assign" later in section 3.5.3. So IMHO "Streams as signals" implies their similarity.
@@ -164,6 +201,9 @@ checked up to section 3.5.3 (included)
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
+checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (included)
+- > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
+- > In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
@@ -177,6 +217,9 @@ checked up to section 3.5.3 (included)
 - > For the interpreter we implement in Chapter 4, the code is in fact shared.
 - > In Section 4.3 we will study a language for expressing nondeterministic computations.
 - > In Section 4.2, we’ll develop a framework that unifies lists and streams.
+- > The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)
+- > In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way
+- > In Section 4.3, we will look at nondeterminism from yet another point of view.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -185,6 +228,7 @@ checked up to section 3.5.3 (included)
 - > we will not dwell on how these *returned values are passed from call to call*; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 - > We will see in Section 5.3.2 that Lisp memory-management systems include a garbage collector
 - > get-new-pair is one of the operations that must be implemented as part of the memory management required by a Lisp implementation. We will discuss this in Sec-tion 5.3.1.
+- > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -1898,6 +1942,13 @@ not use
     > is complication is a consequence, not of our program-ming language, but of our perception of a bank account as an *object*.
     - > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
       IMHO it is more appropriate to say "could change the numerator" but have different rational number. Compare this with "... “the same” bank account even if we change the balance ..."
+- cost
+  1. > Moreover, no simple model with ``nice'' mathematical properties can be an adequate framework for dealing with objects and assignment in programming languages.
+    since "Assignment" makes "functional programming" fail.
+    > A language that supports the concept that ``equals can be substituted for equals'' in an expresssion without changing the value of the expression is said to be referentially transparent. Referential transparency is *violated* when we *include set!* in our computer language.
+  2. > In general, programming with assignment forces us to *carefully consider the relative orders of the assignments* to make sure that each statement is using the correct version of the variables that have been changed.
+  - > *First*, however, we will address the issue of providing a computational model for expressions that involve assignment
+    IMHO environmental model since that is taught in section 3.2 immediately after 3.1. 
 ### 3.2
 - Figure 3.3:
   "the text of the lambda expression" -> "parameters" and "body".
@@ -2065,6 +2116,58 @@ not use
 - > we can implement an integrator or summer that ...
   IMHO this is one "partial sum" "integrator".
   - so `int` recursive call in `int`.
+- > we could try to model this system using the procedure
+  notice here `(stream-map f y)` is actually `dy/dt`, then we have $\int \frac{dy}{dt}\cdot dt=\int dy=y$ where the last step is based on `y0`.
+- > One way of dealing with this problem is illustrated by the language ML
+  [See](https://courses.cs.washington.edu/courses/cse341/02wi/functional/basics.html)
+  > In fact, functions in ML can *only take one argument*. We can write functions which take multiple arguments by having them take *tuples of arguments*
+- TODO [ML type-inferencing](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system)
+- > Even the single delay in cons-stream can cause great confusion, as illustrated by Exercise 3.51 and Exercise 3.52. As far as anyone knows, mutability and delayed evaluation do not mix well in programming lan-guages
+  see Exercise 3.52 where the result of stream depends on each other and the order, which may be  inappropriate since stream is one sequence as one *single object* (i.e. "world line").
+- [Cesàro experiment](https://www.perlmonks.org/?node_id=1200927)
+  also see section 3.1 "monte-carlo".
+  - > There is considerable modularity in this approach, because we still can formulate a general monte-carlo procedure that can deal with arbitrary experiments. Yet there is no assignment or local state.
+    See section 3.1 "monte-carlo" -> `cesaro-test` which uses `rand` with "assignment" and "local state".
+#### 3.5.5
+- > We constructed computational objects with local state variables
+  see
+  > we make computational objects (such as bank ac-counts ...
+- > there is no assignment, no local state variable
+  just iter (see "Formulating iterations as stream processes" and "Pitfalls of imperative programming" where stream is more appropriate to substitute iter).
+- > However, from the perspective of the particle’s world line in space-time there is no change involved.
+  IMHO the space-time graph actually change although it is the "same" object if thinking of its stored location.
+- > raise thorny problems of constraining the order of events and of synchronizing multiple processes
+  See "Pitfalls of imperative programming" for "the order of events" and section 3.4 for "synchronizing multiple processes" where *at least these* use "assignment".
+  - also see
+    > all procedures implement well-defined mathematical functions of their arguments
+- > gave high *visibility* to functional programming
+  i.e. [prospective](https://softwarefordays.com/post/fp-advantages-synopsis/#:~:text=John%20Backus%20%E2%80%9Cgave%20high%20visibility,%2B%2B%20and%20thirteen%20before%20Java.)
+- > Observe that, for any two streams, there is in general more than one acceptable or-der of interleaving
+  maybe due to that we only ensure "meeting" results are reasonable.
+- >  us, technically, “merge” is a relation rather than a function—the answer is not a deterministic function of the inputs.
+  [see](https://qr.ae/p2Usss)
+  > many-to-many mappings
+- > e merge rela-tion illustrates the same essential nondeterminism, from the functional perspective
+  i.e. although this function has one deterministic result when rerun, but this result can be nondeterministic.
+- > Each view has powerful advantages, but neither view alone is completely satisfactory
+  - advantage of stream but disadvantages of assignment:
+    > Part of the power of stream processing is that it lets us *ignore the order in which events actually happen* in our programs. Unfortunately, this is precisely what we cannot afford to do in the presence of assignment, which forces us to be concerned with time and change.
+    due to `delay`.
+  - disadvantages of stream:
+    > Unfortunately, including delays in procedure calls wreaks havoc with our ability to design programs that depend on the order of events, such as programs that use assignment, mutate data, or perform input or output.
+    i.e. make the *original reasonable programs* difficult to understand and possible with different results based on the context (see exercises 3.51 and *3.52*).
+    - advantage of assignment
+      maybe better to constrain the running order.
+  - TODO summary of more comparisons.
+- > Yet the system has state!
+  Here "Yet" means "the system has state" but "the stream version" to simulate that system doesn't have.
+- > Indeed, because of the presence of delay there may be *little relation between simulated time* in the model and the *order of events* during the evaluation.
+  compare this with
+  > By doing this we make the *time of execution* of a computation model *time in the world* that we are part of, and thus we get ``objects'' in our computer.
+  "simulated time" -> "time in the world".
+  - > On the other hand, if we look closely, we can see time-related problems creeping into *functional models* as well ... it must interleave the two transaction streams in some way that is constrained by *``real time''* as perceived by Peter and Paul
+- > Unifying the object view with the functional view may have little to do with programming, but rather with fundamental epistemological issues.
+  object -> assignment -> not functional.
 ## lec
 ### 11
 - > operations
