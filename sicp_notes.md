@@ -1151,7 +1151,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   > In other words; the code to acquire and release a mutex typically isn't even in one place - it's *two pieces*, with one piece is in user-space and another piece is in the kernel.
   [see](https://stackoverflow.com/a/49978238/21294350). Emm... in my memory this is related with scheduler.
 - > Since a serializer isn’t a special form, it *can’t take an expression as argument*.
-  More specifically, this is [due to](https://www.gnu.org/software/emacs/manual/html_node/elisp/Special-Forms.html)
+  More specifically, this is [due to](https://www.gnu.org/software/emacs/manual/html_node/elisp/Special-Forms.html) <a id="special_form"></a>
   > A special form is a primitive specially marked so that its *arguments are not all evaluated*.
 - > What if we check the value of in-use, discover that it’s false, and right at that moment another process sneaks in and grabs the serializer?
   So we need atomic `test-and-set!` to ensure `set` immediately.
@@ -1159,6 +1159,30 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > Look up “Peterson’s algorithm” in Wikipedia if you want to see the software solution.
   Also see OSTEP
   [here](https://en.wikipedia.org/wiki/Peterson%27s_algorithm#The_algorithm) the different treats of `turn` implies these 2 processes *can't both* in "critical section".
+## Week 11
+- > time-varying information (versus OOP)
+  i.e. "OOP" has "time-varying information".
+- `prime1.scm`: i.e. based on chapter 2.
+- `prime0.scm`: ~~too naive by checking from 2 up to n, see section 1.2 up to $\sqrt{n}$.~~
+  see notes in the parentheses
+- `stream-range` i.e. book `stream-enumerate-interval`.
+- `prime2.scm` is just one simpler example than the book "The stream implementation in action".
+- > letting us write programs in language that reflects the problems we’re trying to solve instead of reflecting the way computers work.
+  i.e. doing like `prime0.scm` instead of `prime1.scm`.
+- "lazy evaluation" is just ["call-by-need"](https://en.wikipedia.org/wiki/Lazy_evaluation).
+- > Why isn’t it a problem with let?
+  since `let` is just application of `lambda` whose argument calculation order doesn't matter since they have *no dependency with each other*.
+  [see](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Procedure-Call-Syntax.html)
+  > and the order of evaluation is unspecified.
+- > Time-varying information.
+  see
+  > We can describe the time-varying behavior of a quantity x as a function of time x(t). If we concentrate on x instant by instant, we think of it as a changing quantity. Yet if we concentrate on the *entire time history* of values, we do not emphasize change -- the function itself does not change.
+  although here `(read)` is not strictly one function.
+  - > purely functional programming languages can handle user interaction
+    Here `(read)` has no argument, so its varying output is fine for ["purely functional programming language"](https://en.wikipedia.org/wiki/Purely_functional_programming).
+    > Purely functional programming consists of ensuring that functions, inside the functional paradigm, will *only depend on their arguments*, regardless of any *global or local state*.
+    but "remember the effect of each thing the user type" will need "local state".
+- 
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -2662,6 +2686,7 @@ TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which 
 <!-- in-page link -->
 [SDF_Inheritance]:#SDF_Inheritance
 [procedure_application_environment_rule]:#procedure_application_environment_rule
+[special_form]:#special_form
 
 [ucb_sicp_review]:https://people.eecs.berkeley.edu/~bh/sicp.html
 
