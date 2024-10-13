@@ -907,6 +907,15 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 ## Week 10
 - skipped as https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week11 says and it needs multiple-person cooperation.
   > There aren't really any answers; this is all a *try-it-out* kind of lab.
+## [Week 11](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week13)
+- [x] 1 trivial
+- [ ] 2 since no implicit `the-empty-stream` at the end.
+  - see sol
+- [ ] 3 the 1st only has one `delay` while the 2nd has one for each element.
+  - sol views from the different perspective.
+- [x] 4 
+  - a. just `stream-map` based on self.
+  - b. use `(iter stream idx)` where `idx` starts from 1.
 # @CS 61A notes
 ## skipped underlined words
 - p2
