@@ -29,3 +29,14 @@
   )
 (test)
 ;; only 1 `add-streams` as expected since the 2nd `add-streams` is avoided due to res having already calculated that one and can be reused.
+
+;; huntzhan shares the same structure as meteorgan's.
+;; i.e. (s0+s1, s0+s1+s2, s0+s1+s2+s3, ...) = (s0, s0+s1, s0+s1+s2, ...) + (s1, s2, s3, ...).
+
+;; dekuofa1995 correction.
+(define (partial-sums S)
+  (let ((a (stream-car s)))
+    (cons-stream
+      a
+      (add-streams (scale-stream a ones)
+                   (partial-sums (stream-cdr s)))))) 

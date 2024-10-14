@@ -2213,8 +2213,8 @@ not use
   - > On the other hand, if we look closely, we can see time-related problems creeping into *functional models* as well ... it must interleave the two transaction streams in some way that is constrained by *``real time''* as perceived by Peter and Paul
 - > Unifying the object view with the functional view may have little to do with programming, but rather with fundamental epistemological issues.
   object -> assignment -> not functional.
-## @lec
-TODO read stream lec since [wayback machine is hacked temporarily](https://www.theverge.com/2024/10/11/24268040/internet-archive-data-breach-outage-hacked).
+## lec
+~~TODO read stream lec since [wayback machine is hacked temporarily](https://www.theverge.com/2024/10/11/24268040/internet-archive-data-breach-outage-hacked).~~
 ### 11
 - > operations
   See book
@@ -2376,7 +2376,8 @@ I skipped reading context of biology.
   i.e. `(make-instance)`
   > Instance contains a series of message/state handlers for each class in *inheritance chain*
   `get-method` in `handler` of `(set-instance-handler! instance handler)`
-### 20 (stream)
+### lec20 (stream)
+This doesn't say much beyond what the book says. Also for the former lecs but this one has more overlap.
 - > by primitive procedure (that is, primitive procedures are *"strict" in their arguments*)
   [see](https://sicp.sourceacademy.org/chapters/4.2.1.html)
   > If the *argument is evaluated before the body* of the procedure function is entered we say that the procedure function is strict in that argument.[2] In a purely applicative-order language, all procedures functions are strict in each argument. In a purely normal-order language, all compound procedures functions are non-strict in each argument, and primitive procedures functions may be *either strict or non-strict*.
@@ -2690,6 +2691,14 @@ test
   Done in SDF by checking type in `generic-move!`.
 - > 'CREATION-SITE
   Done in SDF with one different naming property `origin`.
+### rec16
+almost same as spring lec20
+- [ ] `memoization_check.scm`
+  > Problem: Write an expression that will return true ...
+  sicp uses `display` in Exercise 3.51~~, but how to check that by code?~~
+- `define-macro` doesn't exist in MIT/GNU Scheme and Racket.
+- `(define ints ...)` has already been shown in the book.
+  same for `map2-stream, scale-stream`.
 # chapter 4
 ## book
 - > with the same general techniques used by designers of all complex systems
@@ -2725,6 +2734,7 @@ TODO Figure 4.1
       > Cons: Requires additional maintenance; may obscure some problems leaking from the library.
   - > This trick will shine when B’s CHECK is essential within a single class, and the class’s implementation is independent of A.
     so it means `MyClass.cc` uses A's CHECK while `MyClassImpl.h` uses B’s CHECK?
+    see name-conflict.cpp.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
