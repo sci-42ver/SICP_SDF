@@ -1960,6 +1960,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   Here we only need to set `experiment-stream`, i.e. `stream-map (lamdbda (x) (experiment)) ones` where `ones` can be any infinite stream.
   If using `random-update`, IMHO we still need `random`.
   - same as wiki meteorgan's but using `make-point` instead of `cons`.
+## chapter 4
+- [x] 1 use `let`
+  - see wiki `(let ((first (eval (first-operand exps) env)))` but I will just let `rest` omitted by putting that value in `cons`, i.e. mathieubordere's.
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

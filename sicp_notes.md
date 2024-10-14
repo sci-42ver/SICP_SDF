@@ -80,9 +80,13 @@ Review one history comment
             but how to interpret 
             > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
             then?
-## check *underlined* words in the *chapter and section prefaces*
+## @check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 3.4 included.
+- up to section 3.5 included and chapter 3.
+### TODO
+- chapter 3
+  - > a more mechanistic but less theoretically tractable environment model of computation
+    "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
 - up to section 3.5.5 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
@@ -220,6 +224,10 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)
 - > In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way
 - > In Section 4.3, we will look at nondeterminism from yet another point of view.
+- > This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)
+- > We will see what the problem is and how to solve it in section 4.1.6.
+  IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.
+- > by binding them in the global environment. See Section 4.1.4.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -229,6 +237,8 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > We will see in Section 5.3.2 that Lisp memory-management systems include a garbage collector
 - > get-new-pair is one of the operations that must be implemented as part of the memory management required by a Lisp implementation. We will discuss this in Sec-tion 5.3.1.
 - > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
+- > We will address these issues in chapter 5, where we take a closer look at the evaluation process by implementing the evaluator as a simple register machine.
+- > They are introduced as mnemonic names for the basic list operations in order to make it easier to understand the explicit-control evaluator in section 5.4.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -930,8 +940,9 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   > (accumulate reducer base-case (map mapper data))
 - p56
   > how the Scheme *interpreter* uses mutable pairs to *implement environments*
-- p60
+- ~~p60~~
   > This idea of using a *non-functional implementation* for something that has functional behavior will be very useful later when we look at *streams*.
+  here it just means Memoization, so see "Memoization of streams" at page 77.
 ## Week 1
 - > reminder about quoting
   IMHO this means we first get the value of `hello` and then do `first` on that.
@@ -2194,14 +2205,16 @@ not use
   - TODO summary of more comparisons.
 - > Yet the system has state!
   Here "Yet" means "the system has state" but "the stream version" to simulate that system doesn't have.
-- > Indeed, because of the presence of delay there may be *little relation between simulated time* in the model and the *order of events* during the evaluation.
+- > so that we *decouple time in our simulated world from the sequence of events* that take place during evaluation. Indeed, because of the presence of delay there may be *little relation between simulated time* in the model and the *order of events* during the evaluation.
   compare this with
   > By doing this we make the *time of execution* of a computation model *time in the world* that we are part of, and thus we get ``objects'' in our computer.
   "simulated time" -> "time in the world".
+  Here if we run the program, it is unknown when `cdr` of `cons-stream` will be calculated, so "decouple".
   - > On the other hand, if we look closely, we can see time-related problems creeping into *functional models* as well ... it must interleave the two transaction streams in some way that is constrained by *``real time''* as perceived by Peter and Paul
 - > Unifying the object view with the functional view may have little to do with programming, but rather with fundamental epistemological issues.
   object -> assignment -> not functional.
-## lec
+## @lec
+TODO read stream lec since [wayback machine is hacked temporarily](https://www.theverge.com/2024/10/11/24268040/internet-archive-data-breach-outage-hacked).
 ### 11
 - > operations
   See book
@@ -2363,8 +2376,23 @@ I skipped reading context of biology.
   i.e. `(make-instance)`
   > Instance contains a series of message/state handlers for each class in *inheritance chain*
   `get-method` in `handler` of `(set-instance-handler! instance handler)`
+### 20 (stream)
+- > by primitive procedure (that is, primitive procedures are *"strict" in their arguments*)
+  [see](https://sicp.sourceacademy.org/chapters/4.2.1.html)
+  > If the *argument is evaluated before the body* of the procedure function is entered we say that the procedure function is strict in that argument.[2] In a purely applicative-order language, all procedures functions are strict in each argument. In a purely normal-order language, all compound procedures functions are non-strict in each argument, and primitive procedures functions may be *either strict or non-strict*.
+- `(d lazy-memo)` is not supported directly in scheme.
+  see sicp section 4.2 https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_and_Computation_Fundamentals/Structure_and_Interpretation_of_Computer_Programs_(Abelson_Sussman_and_Sussman)/04%3A_Metalinguistic_Abstraction/4.02%3A_New_Page.
+- 100000000, i.e. 100,000,000 should be 100M.
+- compare Exercise 3.59 with "An example: power series", here it incorporates the symbol variable `x`.
+- notice `(sqrt-stream x)` has recalculation.
+- `trapezoid`
+  [see](https://en.wikipedia.org/wiki/Trapezoidal_rule)
+  > the formula can be simplified for calculation efficiency by factoring
+- > a powerful way to structure and think about computation
+  see "Using streams to decouple computation".
 ## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
+also skip https://people.csail.mit.edu/jastr/6001/fall07/r14.pdf since it has no sol and just still draws env diagrams.
 ### rec15 for lec11
 - [x] 1 trivial. See Exercise 3.13
   - sol
@@ -2662,6 +2690,41 @@ test
   Done in SDF by checking type in `generic-move!`.
 - > 'CREATION-SITE
   Done in SDF with one different naming property `origin`.
+# chapter 4
+## book
+- > with the same general techniques used by designers of all complex systems
+  e.g. physical system.
+- > preserve modularity by adopting appropriate large-scale views of system structure
+  e.g. stream?
+- > for constructing computational data objects and processes
+  see chapter 1
+  > e evolution of a process is directed by a paern of rules called a pro-gram
+  so "computational process" can be seen just as the running behavior of one program
+- electrical system filters and amplifier is related with [Frequency Response ](https://www.electronics-tutorials.ws/amplifier/frequency-response.html#:~:text=Amplifiers%20and%20filters%20are%20widely,an%20upper%20and%20lower%20band.)
+  > Only the *functional* behavior of the modules is relevant, and signals are manipulated *without concern* for their physical realization as *voltages and currents*
+- > the stratified design technique illustrated by the picture language of section 2.2.4.
+  see "Levels of language for robust design"
+  > For example, in computer engineering, *resistors* and transistors are combined (and described using a language of analog circuits) to produce parts such as *and-gates* and or-gates, which form the primitives of a language for *digital-circuit* design.
+- Formal logic [vs](https://en.wikipedia.org/wiki/Logic#Informal_logic) Informal logic
+  > Formal logic can only examine them indirectly by translating them *first into a formal language* while informal logic investigates them in their *original form*.
+### @4.1
+TODO Figure 4.1
+- [Metacircular](https://stackoverflow.com/a/1481132/21294350) Evaluator
+  > in a (possibly more basic) implementation of the *same* language
+- > Contemplation of the meaning of true? here yields expansion of consciousness without the abuse of substance.
+  i.e. using the same "substance"/`eval-if` but allows different values for `(eval (if-predicate exp) env)` so "expansion of consciousness"?
+- notice `(definition? exp)` doesn't ensure the correct usage of `define`.
+- > A procedure application is any compound expression that is not one of the above expression types.
+  So it is put at last and uses `(pair? exp)`.
+- name-conflict problem due to "macro"
+  see [c++ solution](https://nimrod.blog/posts/how-to-resolve-macro-name-collisions/#isolating-third-party-headers-with-forwarding-files-recommended) for example
+  - [`push_macro`](https://gcc.gnu.org/onlinedocs/gcc/Push_002fPop-Macro-Pragmas.html)
+    here `#pragma push_macro("CHECK")` will save the definition in lib B, then `#include "A.h" // And other A's headers` will only use `CHECK` in the file lib A itself. Then "prefer to retain B’s definition of CHECK" -> `#pragma pop_macro("CHECK")`.
+    - [`#pragma once`](https://en.wikipedia.org/wiki/Pragma_once)
+    - TODO
+      > Cons: Requires additional maintenance; may obscure some problems leaking from the library.
+  - > This trick will shine when B’s CHECK is essential within a single class, and the class’s implementation is independent of A.
+    so it means `MyClass.cc` uses A's CHECK while `MyClassImpl.h` uses B’s CHECK?
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

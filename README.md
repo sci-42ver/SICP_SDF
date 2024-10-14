@@ -15,7 +15,7 @@
   to Jul 11, up to chapter 2.1.
   to Jul 13, review history chapter recitations, etc.
   to Jul 15, up to chapter 2.2.1.
-  to Jul 16, finish related history labs, lecs, recs.
+  to Jul 16, finish related history labs, lecs, recs. (15 days)
   From Aug 5 to Aug 7, finish chapter 2.2.2.
   to Aug 10, 2.2.3.
   to Aug 11, 2.2.
@@ -23,8 +23,23 @@
   to Aug 13, 2.3.
   to Aug 15, related lec, rec and labs.
   to Aug 16, 2.5.2 and 2.5.3.
-  to Aug 18, finish chapter 2.
+  to Aug 18, finish chapter 2. (14 days)
+  From Sep 12 to Sep 13, section 3.2
+  to Sep 15, 2 CS61A week notes and labs.
+  to Sep 19, section 3.3 up to exercise 3.12~3.27 most of time to do exercises.
+  to Sep 20, one CS61A week
+  to Sep 25, read 6.001 notes lec11 to lec16.
+  to Sep 28, 6.001 OOP project.
+  to Sep 30, section 3.3.
+  to Oct 2, section 3.4
+  to Oct 3, one CS61A week
+  to Oct 5, Exercise 3.50~exercise 3.57.
+  to Oct 7, https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962
+  to Oct 10, section 3.5.3. (the speed is a bit slow.)
+  to Oct 12, chapter 3 is finished.
+  to Oct 13, one CS61A week
   - Up to now, the main time is spent on reading the book and *schemewiki*.
+    Emm about one month for each chapter... up to chapter 3.
 ## SDF
 From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up to Aug 14 where I sometimes may think about weird things (still up to Aug 19)... ).
 - From Jul 16 to Jul 18, read ps00 prerequisite contents.
