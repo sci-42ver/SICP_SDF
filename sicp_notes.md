@@ -2391,7 +2391,7 @@ This doesn't say much beyond what the book says. Also for the former lecs but th
   > the formula can be simplified for calculation efficiency by factoring
 - > a powerful way to structure and think about computation
   see "Using streams to decouple computation".
-## rec
+## @rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 also skip https://people.csail.mit.edu/jastr/6001/fall07/r14.pdf since it has no sol and just still draws env diagrams.
 ### rec15 for lec11
@@ -2699,6 +2699,33 @@ almost same as spring lec20
 - `define-macro` doesn't exist in MIT/GNU Scheme and Racket.
 - `(define ints ...)` has already been shown in the book.
   same for `map2-stream, scale-stream`.
+### @sp rec22
+Emm... still duplicate of much book contents but relates with env model...
+- > ; Returns the value of exp in the original environment
+  see env-test.scm.
+- > How many cases can you think of?
+  ~~based on sol, this doesn't mean "everything is implicit" but means "values are forced".~~
+  - > Used as an argument to a primitive procedure.
+    ~~should be `and` etc.~~
+    > Used as an operator.
+    Here it doesn't mean necessarily delay, but means they *must be evaluated*. So applicative order is same as normal order.
+    see lec20 "Remember our Lazy Language?".
+- > We’ll use the following notation to graphically represent various Scheme objects
+  Thunk is just one special procedure with *no argument*.
+- [ ] `ones` I didn't draw the representation of thunk.
+- [ ] `( stream-cdr ones )` I thought $[1,]->[1,]->thunk$ but that will have no memorization.
+- [x] `( define ( ints-from-n x ) ...` just creates one lambda.
+- [ ] 
+  - `stream-cdr` is primitive, so no frame is created.
+  - better to have one frame for `display`.
+- Cartography ... this term for `map` here is inappropriate IMHO
+- [x] `map-streams` see Exercise 3.50.
+- [x] 
+  - TODO
+    - `define-syntax`
+  - same as book but use `(map-streams + ...)`.
+    > We can define the Fibonacci numbers in the same style:
+- TODO "Bonus Problem"
 # chapter 4
 ## book
 - > with the same general techniques used by designers of all complex systems

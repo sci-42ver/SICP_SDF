@@ -1802,6 +1802,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 50
   - TODO by `((lambda (a . args) (null? (car args))) 1)` here `(car argstreams)` may fail.
     - see wiki this is *impossible* (see `(map (lambda (x) x))` error).
+    - Shade's is correct.
   - `??, cons-stream, stream-car, stream-cdr`
 - [ ] 51
   - `(stream-enumerate-interval 0 10)` is `(cons-stream 0 (stream-enumerate-interval 1 10))`
