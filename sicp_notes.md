@@ -10,6 +10,10 @@ Review history comments:
 LisScheSic's review the top solution based on LisScheSic's implementation.
 
 My implementation shares the same basic ideas with x3v's. This is better than the  solution at the top location since it will throw error earlier.
+
+review woofy's comment and the comment sequence after Shade's comment
+
+review the top 3 comment seq's.
 >>>
 Review of the solution at the top:
 review history comments.

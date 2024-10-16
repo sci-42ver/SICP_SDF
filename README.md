@@ -38,6 +38,7 @@
   to Oct 10, section 3.5.3. (the speed is a bit slow.)
   to Oct 12, chapter 3 is finished.
   to Oct 13, one CS61A week
+  to Oct 15, one lec, 2 recs and partly section 4.1.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF

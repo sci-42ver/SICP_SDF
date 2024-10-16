@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3.1~3.82 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.6 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1964,6 +1964,34 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 ## chapter 4
 - [x] 1 use `let`
   - see wiki `(let ((first (eval (first-operand exps) env)))` but I will just let `rest` omitted by putting that value in `cons`, i.e. mathieubordere's.
+- [x] 2
+  - a. trivial since mismatch as procedure for some special forms.
+  - b. `(define (application? exp) (tagged-list? exp 'call))`
+    then change for `operator`...
+  - same as wiki.
+- [x] 3
+  - `quoted?` up to `cond?` use `get 'eval (proc exp)` where proc is `car`.
+- [ ] 4
+  - see section 1.1 "The interpreter evaluates the expressions".
+    - "if there are no expressions" is not said there.
+  - Compared with https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Conditionals.html#index-and
+    `and` is same.
+    For `or`
+    > If all expressions evaluate to false values, the value of the last expression is returned.
+    implies returning #f since that is the only case for false.
+    > The conditional expressions count only #f as false.
+- [ ] 5
+- [ ] 6 
+  - use `map` to extract `var1~n` and `exp1~n`.
+    Then `make-lambda` and `append` with `exp1~n`.
+  - see wiki Hertz's `cons` is ~~better~~ correct, i.e. repo.
+- [x] 7
+  - ["a pointer to the environment in which the procedure was created."](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html#%_sec_3.2)
+    so nested `lambda` can access the parent lambda formal parameter bindings.
+    so "sufficient".
+  - use `(fold-right (lambda (x res) (cons 'let (cons x res))) body bindings)` similar to `make-lambda`.
+  - my 1st comment is same as repo.
+- 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
