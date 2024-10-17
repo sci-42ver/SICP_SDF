@@ -1,4 +1,8 @@
-@WillNess I add one implementation based on stream hinted by you. You can review this if you have time and are willing to review the above codes (Although a bit not elegant, it at least works).
+As one quick reference to avoid using `(fact-gen fact-gen)` so that we can use the *normal* `fact` definition, see Mark Bolusmjak's answer. This feature is very useful due to the code block being reusable *without any modification*.
+
+As one note, what Mark Bolusmjak implements is actually Z-combinator which works for applicative-order Scheme while the pure Y Combinator doesn't. See https://gist.github.com/z5h/238891?permalink_comment_id=5239505#gistcomment-5239505 comment for more infos.
+
+As the reference, the above link can't be accessed now. Use https://web.archive.org/web/20120104222518/http://www.ccs.neu.edu/home/matthias/BTLS/ instead. The sample chapter p25 shows the same form as Mark Bolusmjak's one (IMHO Mark Bolusmjak's is more elegant and can be *searched*).
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
