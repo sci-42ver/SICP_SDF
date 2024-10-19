@@ -2001,6 +2001,78 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         - > Applications are assumed to be left associative: M N P may be written instead of ((M N) P).
           so https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
           `r r (n−1)` means `((r r) (n−1))`, i.e. `((fact-gen fact-gen) (sub1 n))`.
+  - see `4_8_wiki.scm`
+    all the former 4.x exercises are not related with *iteration*, so no need to check for  better solutions for them.
+  - [link1](https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion) from https://chat.stackoverflow.com/transcript/message/57699637#57699637
+    - [H combinator](https://esolangs.org/wiki/Combinatory_logic)
+      `BW(BC)`
+      so based on [this](https://en.wikipedia.org/wiki/Lambda_calculus#Standard_terms)
+      IGNORE:
+        -> we have λz.W ((BC) z)
+        -> `BC` will be λy.λz.(λx.λy.λz.x z y) (y z)
+        -> `((BC) z)` λz.(λx.λy.λz.x z y) (z z)
+        -> `W ((BC) z)` λy.(λz.(λx.λy.λz.x z y) (z z)) y y
+          i.e. λy.((λx.λy.λz.x z y) (y y)) y
+          i.e. λy.((λx.λy.λz.x z y) (y y)) y
+      `BW`: λy.λz.W (y z)
+      `BC`: λy1.λz1.C (y1 z1)
+      `W`: λx2.λy2.x2 y2 y2
+      `C`: λx3.λy3.λz3.x3 z3 y3
+      - `BW(BC)`: λz.W ((BC) z) -> λz.W (λz1.C (z z1)) -> λz.W T0
+        -> λz.λy2.T0 y2 y2 -> λz.λy2.((C (z y2)) y2) -> λz.λy2.λz3.(z y2) z3 y2
+          TODO this is not same as link1 definition.
+      - checking consistency with link1
+        - [SKI](https://esolangs.org/wiki/Combinatory_logic#SKI_calculus) is [consistent](https://en.wikipedia.org/wiki/SKI_combinator_calculus#Informal_description)
+        - `B = S(KS)K`: λx.λy.λz.x z (y z) -> λz.(KS) z (K z) 
+          -> λz.(λy0.S) z (K z)
+          -> λz.(S (K z))
+          -> λz.(S (λy1.z))
+          -> λz.λy2.λz2.(λy1.z) z2 (y2 z2)
+          -> λz.λy2.λz2.z (y2 z2)
+          consistent
+          - esolangs version
+            - > Derivations to prove these (follow them by eta conversions):
+              see [eta conversions](https://wiki.haskell.org/Eta_conversion)
+              i.e. B->λx.λy.λz.B x y z.
+            - `S (K S) K x y z = K S x (K x) y z = S (K x) y z = K x z (y z) = x (y z) = B x y z;`
+              the 1st = simplifies `S (K S) K x`, i.e. `H x` which is allowed due to *nested* λ.
+            - following the same method to try deriving `H`
+              to prove `Hxy = x(yy)`
+              - reference
+                S f g x = f x (g x);
+                x (y z) = B x y z;
+                x y y = W x y;
+                x z y = C x y z;
+              TODO BW(BC) x y=W((BC) x) y=((BC) x) y y=BCxyy=C(x y) y=λz.(x y) z y lacking one variable.
+              But
+              CBUgx=BgUx=g(U x)...
+    - See link1 `Hgx = g(xx) = BgUx = CBUgx`, so H is `CBU`
+      `BgUx`: x (y z) -> g (U x) -> g(xx)
+      `CBUg`: x z y -> BgU
+  - https://stackoverflow.com/a/78586373/21294350
+    - > without appealing to their equivalent lambda expressions at all.
+      due to eta conversions as the above esolangs shows.
+    - H' is chosen instead of `KH'` due to `S` structure.
+    - `S(Kg)(S(SSK)(Kg))x`
+      `Kgx((S(SSK)(Kg))x)` -> `g((S(SSK)(Kg))x)`
+    - > H' itself is not recursive
+      since `H'gx  = g(x gx )` where the right part doesn't use `H'`.
+      - similar for
+        > Y' and X, which, both, are non-recursive
+    - ~~TODO jump-starting?~~
+    - > Using some speculation
+      better to see https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion.
+      `Yg = Hg(Hg)`
+      Hg(Hg)=g(Hg(Hg))=g(Yg).
+      - So 2. is by H definition.
+    - In a summary, for one arbitray `Hanything = g(hanything)` we just to choose appropriate arguments to make the pattern `Yg=g(Yg)`.
+  - https://chat.stackoverflow.com/rooms/258659/discussion-between-an5drama-and-will-ness
+    - https://chat.stackoverflow.com/transcript/message/57699969#57699969
+      ["static"](https://en.wikipedia.org/wiki/Static_variable#:~:text=In%20computer%20programming%2C%20a%20static,as%20required%20at%20run%20time.) means no mutation.
+      "lexical scoping" see sicp_notes
+      so static implies "redefining global" is not recommended
+      while lexical implies it is better to use local variables.
+    - 
 - [ ] 9
   - 
 

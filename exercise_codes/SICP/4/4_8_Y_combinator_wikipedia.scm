@@ -1,4 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; How to think out Y combinator?
+;; https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
+;; > a parameter (typically the first one) will be assumed to *receive the lambda expression itself* as its value, so that calling it – *applying it to an argument* – will amount to recursion.
+;; So r r (n−1) and F := G G.
+;; > r = G r =: FIX G
+;; > have a *generic* solution
+;; So we need one FIX.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; https://stackoverflow.com/a/11833038/21294350 -> https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
+;; > as a closure object. I.e. a function of one argument, n, which also *remembers the bindings* for g, h, and U.
+;; https://en.wikipedia.org/wiki/Closure_(computer_programming)#Anonymous_functions
+;; > closure is an instance of a function, a value, whose non-local variables have been bound either to values
+
+;; wikipedia:
 ;; self-application just means U combinator https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion
 ;; > We would like to have a generic solution, without a need for any re-writes:
 ;; FIX https://en.wikipedia.org/wiki/Fixed-point_combinator https://en.wikipedia.org/wiki/Fixed-point_combinator#Example_implementations

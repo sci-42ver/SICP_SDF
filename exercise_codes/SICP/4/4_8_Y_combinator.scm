@@ -1,3 +1,9 @@
+;; I found the following link when *rechecking* one old link https://stackoverflow.com/a/7719140/21294350
+;; where I first found https://stackoverflow.com/a/11833038/21294350 similar to karthikk's in http://community.schemewiki.org/?sicp-ex-4.9
+;; Then I found https://en.wikipedia.org/wiki/Lambda_calculus#Standard_terms -> https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points -> 4_8_Y_combinator_wikipedia.scm
+;; Then infinite recursion problem, so rechecking "combinator" in the 1st link -> https://stackoverflow.com/a/7721871/21294350
+;; and google "fixed-point combinator avoid maximum recursion" -> https://stackoverflow.com/a/67408069/21294350
+
 ;; https://stackoverflow.com/a/7721871/21294350
 ;; > Let's try to call that with a value other than 0.
 ;; same as OP
@@ -50,10 +56,12 @@
 ;       (cond 
 ;         ((< n 2) n)
 ;         (else (+ (fib (- n 1)) (fib (- n 2))))))))
-((Z
+
+(define fib-body
   (lambda (fib)
     (lambda (n)
       (cond 
         ((< n 2) n)
         (else (+ (fib (- n 1)) (fib (- n 2))))))
-    )) 8)
+    ))
+((Z fib-body) 8)

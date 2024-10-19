@@ -1,8 +1,29 @@
-As one quick reference to avoid using `(fact-gen fact-gen)` so that we can use the *normal* `fact` definition, see Mark Bolusmjak's answer. This feature is very useful due to the code block being reusable *without any modification*.
+@WillNess 1. One small question: Did you follow this question posted long time ago and also answered by you? IMHO my comments seems to not notify you. 2. Thanks very much for your link https://blog.klipse.tech/assets/y-in-practical-programs.pdf. In MIT/GNU Scheme, "recursive definitions are allowed", so we can transform the 3 lines of codes in "Y in programs" part to Scheme codes using `define` although it doesn't show how to define `Y` and `fact_` (i.e. `g` in your comment) using pure lambda *without using `Y` or `fact_` in definition*.
 
-As one note, what Mark Bolusmjak implements is actually Z-combinator which works for applicative-order Scheme while the pure Y Combinator doesn't. See https://gist.github.com/z5h/238891?permalink_comment_id=5239505#gistcomment-5239505 comment for more infos.
+So IMHO Mark Bolusmjak's is better if we want one *pure lambda* (i.e. `(define Y ...)` without the infinite recursive call) definition. The link version implicitly returns one lambda for `(Y g)`, so also having no "infinite recursive call". 3. "ML is just a strict Scheme with syntax" then that is same for MIT/GNU Scheme which has `define-syntax` and SICP shows "a lazy language" in chapter 4 (although I haven't read that part yet when learning SICP now).
 
-As the reference, the above link can't be accessed now. Use https://web.archive.org/web/20120104222518/http://www.ccs.neu.edu/home/matthias/BTLS/ instead. The sample chapter p25 shows the same form as Mark Bolusmjak's one (IMHO Mark Bolusmjak's is more elegant and can be *searched*).
+:57699086 4. `H h g = g (h h g)` etc seems to be related with Reduction https://en.wikipedia.org/wiki/Lambda_calculus#Reduction. I haven't learnt lambda calculus systematic, so I don't know how to systematically transform lambda expression to achieve one  equivalent form but meeting more specific requirements.
+
+I happened to know Z combinator using η-reduction in https://stackoverflow.com/a/67408069/21294350 by googling "fixed-point combinator avoid maximum recursion" when one naive Y combinator fails. 5. Additional infos for point 2: I want one "pure lambda" since `define` may cause name collision as LisScheSic's 2nd comment shows in http://community.schemewiki.org/?sicp-ex-4.8.
+
+6. Sorry for my ambiguity for "searched" in my 1st comment. I means ps file can't be easily searched at least in Okular pdf reader.
+
+7. Additional infos for point 5: My above comments may be too long. Do you think that "Y in practical programs" gives one pure lambda definition (Sorry if I didn't get it)?
+
+Good explanation although a bit long. Notes to help future readers: 1. "without appealing to their equivalent *lambda* expressions at all." this is due to eta conversion https://wiki.haskell.org/Eta_conversion as https://esolangs.org/wiki/Combinatory_logic#SKI_calculus points out. 2. H' is chosen instead of `KH'` due to `S` structure. 3. "H' itself is not recursive" since the right part doesn't use `H'`. 3.1 But we can choose *appropriate arguments* to achieve "jump-start" to the pattern `Yg=g(Yg)`, like what `Hanything = g(hanything)` does.
+
+4. "Using some speculation ..." so we use H which has U (self-application) inside itself where we choose `x` to be `Hg` to achieve "jump-start" as point 3 says. Then we can have `4. Xg     = Hg(Hg)` definition.
+
+5. "so that the next computation step expression is created when and if it is needed to be called." This still needs *eta conversion* if using applicative order language like Scheme. If we follow `Xg     = Hg(Hg)` and use `(define H (lambda (x) (lambda (y) (x (y y))))))` instead of `(define H (lambda (x) (lambda (y) (lambda args (apply (x (y y)) args)))))` (X definition can be normal `(define X (lambda (g) ((H g) (H g))))`). Then "infinite expression" will still occur.
+
+:57700653 So good explanation. One small question about https://esolangs.org/wiki/Combinatory_logic#SKI_calculus which I follows before reading your offered post to understand deriving "combinator replacement": I checked "S (K S) K x y z = K S x (K x) y z = S (K x) y z = K x z (y z) = x (y z) = B x y z;" in https://esolangs.org/wiki/Combinatory_logic#BCKW_calculus which is right. So "C, K, W" is probably right.
+
+Then I tried to derive "H = BW(BC)" by `BW(BC) x y=W((BC) x) y=((BC) x) y y=BCxyy=C(x y) y`. But at that last step we lack one variable for `C` to achieve `x(yy)`. However, using definition `Hgx = g(xx) = BgUx = CBUgx` in https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion and the esolangs wiki method, `CBUgx=BgUx=g(U x)=g(xx)=Hgx` works fine. Does this mean `H = BW(BC)` is wrong or my derivation is wrong?
+
+In a summary, you use many comments to explain delay but I have already known that before reading your comments. Thanks for your patience anyway. I want to ask "So "Y in practical programs" doesn't show this "DELAYING" technique explicitly, is it that case?". If so, IMHO Mark Bolusmjak's answer can be at least one *good complementary material* for your offered "Y in practical programs".
+
+
+Sorry for the possible unnecessary pedantic behavior but this is why this discussion starts due to that you recommended "Y in practical programs" after I recommended Mark Bolusmjak's answer.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -1414,6 +1435,7 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   - An5Drama's question
     2: here $z$ won't exist in $t,e,y$, so it is safe to replace (i.e. "a *fresh* name"). More detailed about "free" see the book.
 - [lexical scoping](https://www.shecodes.io/athena/9740-what-is-lexical-scoping-and-how-does-it-work-in-javascript#:~:text=Lexical%20scoping%20is%20a%20way,interact%20with%20examples%20in%20JavaScript.) just means child scope can use all variables defined in the parent scope but not vice versa.
+  > > For example, lexical scoping determines that when a variable is *declared inside a function*, it is local to that function and *cannot be accessed outside* of it. This means that variables *declared outside of the function can be accessed* by the functions defined within it.
 - > the simplest name-packaging problem
   i.e. to [package the function](https://stackoverflow.com/a/20520767/21294350).
   > better structuring a procedure, not for efficiency

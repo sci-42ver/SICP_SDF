@@ -58,6 +58,17 @@
 ;     )
 ;   (fib-iter fib-iter 0 n)
 ;   ))
+;; https://chat.stackoverflow.com/transcript/message/57699973#57699973
+;; no use since we redefine one global value *temporarily*.
+;; so "probably shouldn't be done anyway" to use one global variable (i.e. to be more lexical).
+((lambda () 
+  (letrec 
+    ((fib-iter (lambda (a b count)
+      (if (= count 0)
+        b
+        (fib-iter (+ a b) a (- count 1))))))
+    (fib-iter fib-iter 0 n))
+  ))
 
 ;; modification based on meteorgan's
 (define old-apply apply)

@@ -1,3 +1,4 @@
+;; schemewiki
 ;; just abstract related things from 4_8_pure_lambda.scm.
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (define old-apply apply)
@@ -87,3 +88,8 @@
       (lambda (fib-iter) 
         (lambda (a b count) (if (= count 0) b (fib-iter (+ a b) a (- count 1))))))
       fib-iter 0 n)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; proof for the above correctness strictly
+;;; google 'combinator no variables (or "bound positions")'.
+;; https://www.mathematik.uni-muenchen.de/~schwicht/papers/lambda13/lamtheory8.pdf is too complex. similar to https://www.irit.fr/TYPES2013/TYPES2013BookOfAbstracts.pdf.
+;; 
