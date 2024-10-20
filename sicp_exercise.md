@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.8 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.9 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1994,7 +1994,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - The above is *wrong*.
       my comments are hinted by 3pmtea's test.
   - ~~my 1st comment is same as repo.~~
-- [ ] 8 
+- [ ] 8
+  name collision problem is hinted by wiki.
   - see `fib-iter` in chapter 1. 
   - [this](https://stackoverflow.com/a/7719140/21294350) needs to change `body`...
     - also see [this detailed answer](https://stackoverflow.com/a/11833038/21294350)
@@ -2076,6 +2077,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 9
   - https://www.willdonnelly.net/blog/2008-09-04-scheme-syntax-rules/ doesn't show how `syntax-rules` works at all.
   - see https://stackoverflow.com/q/79098453/21294350
+- [ ] 10
+  - IMHO this is already done in former exercises like Exercise 4.5.
+  - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
