@@ -1984,24 +1984,25 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 6 
   - use `map` to extract `var1~n` and `exp1~n`.
     Then `make-lambda` and `append` with `exp1~n`.
-  - see wiki Hertz's `cons` is ~~better~~ correct, i.e. repo.
+  - see wiki Hertz's `cons` is ~~better~~ *correct*, i.e. repo.
 - [ ] 7
   - ["a pointer to the environment in which the procedure was created."](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html#%_sec_3.2)
     so nested `lambda` can access the parent lambda formal parameter bindings.
     so "sufficient".
     - same as repo.
   - use `(fold-right (lambda (x res) (cons 'let (cons x res))) body bindings)` similar to `make-lambda`.
-    - The above is wrong.
+    - The above is *wrong*.
       my comments are hinted by 3pmtea's test.
   - ~~my 1st comment is same as repo.~~
-- [ ] 8 see `fib-iter`
+- [ ] 8 
+  - see `fib-iter` in chapter 1. 
   - [this](https://stackoverflow.com/a/7719140/21294350) needs to change `body`...
     - also see [this detailed answer](https://stackoverflow.com/a/11833038/21294350)
       - `x x` means [application](https://en.wikipedia.org/wiki/Lambda_calculus#Lambda_terms) (also see https://en.wikipedia.org/wiki/Lambda_calculus#Notation)
         - > Applications are assumed to be left associative: M N P may be written instead of ((M N) P).
           so https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
           `r r (n−1)` means `((r r) (n−1))`, i.e. `((fact-gen fact-gen) (sub1 n))`.
-  - see `4_8_wiki.scm`
+  - **see `4_8_wiki.scm`**
     all the former 4.x exercises are not related with *iteration*, so no need to check for  better solutions for them.
   - [link1](https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion) from https://chat.stackoverflow.com/transcript/message/57699637#57699637
     - [H combinator](https://esolangs.org/wiki/Combinatory_logic)
@@ -2049,7 +2050,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - See link1 `Hgx = g(xx) = BgUx = CBUgx`, so H is `CBU`
       `BgUx`: x (y z) -> g (U x) -> g(xx)
       `CBUg`: x z y -> BgU
-  - https://stackoverflow.com/a/78586373/21294350
+  - https://stackoverflow.com/a/78586373/21294350 from the above chat
     - > without appealing to their equivalent lambda expressions at all.
       due to eta conversions as the above esolangs shows.
     - H' is chosen instead of `KH'` due to `S` structure.
@@ -2072,9 +2073,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       "lexical scoping" see sicp_notes
       so static implies "redefining global" is not recommended
       while lexical implies it is better to use local variables.
-    - 
 - [ ] 9
-  - 
+  - https://www.willdonnelly.net/blog/2008-09-04-scheme-syntax-rules/ doesn't show how `syntax-rules` works at all.
+  - see https://stackoverflow.com/q/79098453/21294350
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

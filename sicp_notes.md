@@ -1,29 +1,17 @@
-@WillNess 1. One small question: Did you follow this question posted long time ago and also answered by you? IMHO my comments seems to not notify you. 2. Thanks very much for your link https://blog.klipse.tech/assets/y-in-practical-programs.pdf. In MIT/GNU Scheme, "recursive definitions are allowed", so we can transform the 3 lines of codes in "Y in programs" part to Scheme codes using `define` although it doesn't show how to define `Y` and `fact_` (i.e. `g` in your comment) using pure lambda *without using `Y` or `fact_` in definition*.
+IMHO this is the same reasons for one mechanism to implement `self` in C++ to refer to the same object itself in one class as my above link https://stackoverflow.com/a/6089145/21294350 shows, similar
 
-So IMHO Mark Bolusmjak's is better if we want one *pure lambda* (i.e. `(define Y ...)` without the infinite recursive call) definition. The link version implicitly returns one lambda for `(Y g)`, so also having no "infinite recursive call". 3. "ML is just a strict Scheme with syntax" then that is same for MIT/GNU Scheme which has `define-syntax` and SICP shows "a lazy language" in chapter 4 (although I haven't read that part yet when learning SICP now).
+@Shawn That link is helpful although *much longer* than the official doc. I didn't look through that doc detailedly. By searching "collision", I found `gen-temps-and-sets` is very helpful. Then "The answer lies in this template: ..." version `gen-temps-and-sets` shows how Scheme manipulates "name collision" when *expanding* by "It will be a *different* syntactic object than any created during *any other expansion step*". So for `(multiple-value-set! (a b c) (values 1 2 3))`, similarly duplicate `variable` will be also bound to `a, b, c` *at each step*.
 
-:57699086 4. `H h g = g (h h g)` etc seems to be related with Reduction https://en.wikipedia.org/wiki/Lambda_calculus#Reduction. I haven't learnt lambda calculus systematic, so I don't know how to systematically transform lambda expression to achieve one  equivalent form but meeting more specific requirements.
+Then for the above example, `var`s will be bound to `loop, i` consecutively. So `var` is  implicitly *"paired up properly"* with the `loop` vector instead of the `loop` in template. The link doesn't say further how Scheme avoids the *messing name collision* caused by either argument in the above example or expansion (maybe still others) detailedly in implementation. Maybe some clever techniques...
 
-I happened to know Z combinator using η-reduction in https://stackoverflow.com/a/67408069/21294350 by googling "fixed-point combinator avoid maximum recursion" when one naive Y combinator fails. 5. Additional infos for point 2: I want one "pure lambda" since `define` may cause name collision as LisScheSic's 2nd comment shows in http://community.schemewiki.org/?sicp-ex-4.8.
+"keeps track of which is which and won't mix them up." may mean "They are paired up
+properly because we generated all references to them at the same time." (i.e. the pair elements are got at the same expansion stage, so they can be paired) in the link.
 
-6. Sorry for my ambiguity for "searched" in my 1st comment. I means ps file can't be easily searched at least in Okular pdf reader.
+"I don't think syntax macros had been invented yet when SICP was written.": Do you think it is fine to use the above `define-syntax ...`  as the solution to exercise-4.9 since IMHO this is the only one solution I found up to now solving with the above name collision problem? Maybe that is done by just keeping duplicate `var`s instead of substituting that with `loop` or `i` in template (so avoid `loop` collision) and the clever pairing mechanism (so no name collision due to duplicate `var` names).
 
-7. Additional infos for point 5: My above comments may be too long. Do you think that "Y in practical programs" gives one pure lambda definition (Sorry if I didn't get it)?
+https://www.reddit.com/r/scheme/comments/5q5nag/comment/dcx3c4v/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button (This is got when googling "gauche scheme Syntax-rules Primer" to get some *possible summary* of your offered link although this link  doesn't refer to your offered link) recommends "syntactic closures", i.e. IMHO lambda in Scheme.
 
-Good explanation although a bit long. Notes to help future readers: 1. "without appealing to their equivalent *lambda* expressions at all." this is due to eta conversion https://wiki.haskell.org/Eta_conversion as https://esolangs.org/wiki/Combinatory_logic#SKI_calculus points out. 2. H' is chosen instead of `KH'` due to `S` structure. 3. "H' itself is not recursive" since the right part doesn't use `H'`. 3.1 But we can choose *appropriate arguments* to achieve "jump-start" to the pattern `Yg=g(Yg)`, like what `Hanything = g(hanything)` does.
-
-4. "Using some speculation ..." so we use H which has U (self-application) inside itself where we choose `x` to be `Hg` to achieve "jump-start" as point 3 says. Then we can have `4. Xg     = Hg(Hg)` definition.
-
-5. "so that the next computation step expression is created when and if it is needed to be called." This still needs *eta conversion* if using applicative order language like Scheme. If we follow `Xg     = Hg(Hg)` and use `(define H (lambda (x) (lambda (y) (x (y y))))))` instead of `(define H (lambda (x) (lambda (y) (lambda args (apply (x (y y)) args)))))` (X definition can be normal `(define X (lambda (g) ((H g) (H g))))`). Then "infinite expression" will still occur.
-
-:57700653 So good explanation. One small question about https://esolangs.org/wiki/Combinatory_logic#SKI_calculus which I follows before reading your offered post to understand deriving "combinator replacement": I checked "S (K S) K x y z = K S x (K x) y z = S (K x) y z = K x z (y z) = x (y z) = B x y z;" in https://esolangs.org/wiki/Combinatory_logic#BCKW_calculus which is right. So "C, K, W" is probably right.
-
-Then I tried to derive "H = BW(BC)" by `BW(BC) x y=W((BC) x) y=((BC) x) y y=BCxyy=C(x y) y`. But at that last step we lack one variable for `C` to achieve `x(yy)`. However, using definition `Hgx = g(xx) = BgUx = CBUgx` in https://en.wikipedia.org/wiki/SKI_combinator_calculus#Self-application_and_recursion and the esolangs wiki method, `CBUgx=BgUx=g(U x)=g(xx)=Hgx` works fine. Does this mean `H = BW(BC)` is wrong or my derivation is wrong?
-
-In a summary, you use many comments to explain delay but I have already known that before reading your comments. Thanks for your patience anyway. I want to ask "So "Y in practical programs" doesn't show this "DELAYING" technique explicitly, is it that case?". If so, IMHO Mark Bolusmjak's answer can be at least one *good complementary material* for your offered "Y in practical programs".
-
-
-Sorry for the possible unnecessary pedantic behavior but this is why this discussion starts due to that you recommended "Y in practical programs" after I recommended Mark Bolusmjak's answer.
+This may mean we can finish exercise-4.9 using only lambda probably based on  combinator like the powerful Z combinator used in http://community.schemewiki.org/?sicp-ex-4.8. @Shawn Do you have any thoughts about using lambda calculus or combinatory logic to finish exercise-4.9?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.

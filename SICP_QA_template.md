@@ -1,6 +1,7 @@
-This is from SICP exercise 4.9.
+This is from [SICP exercise 4.9][1].
+> Exercise 4.9.  Many languages support a variety of iteration constructs, such as do, for, while, and until. In Scheme, iterative processes can be expressed *in terms of ordinary procedure calls*, so special iteration constructs provide no essential gain in computational power. On the other hand, such constructs are often convenient. Design some iteration constructs, give examples of their use, and show how to implement them as *derived expressions*.
 
-Example to implement [`do` in MIT/GNU Scheme][1].
+Example to implement [`do` in MIT/GNU Scheme][2].
 ```scheme
 (define test (vector 3))
 (do ((vec (make-vector 5))
@@ -50,11 +51,11 @@ Example to implement [`do` in MIT/GNU Scheme][1].
        - i.e. djrochford's
        - > Make the interpreter scan the code for all variable names before translating
        
-         See C++, maybe by namespace
+         See C++, maybe by [namespace][3]
   
     In a nut shell, "the interpreter scan the code" is possible for MIT/GNU Scheme to implement "derived expressions". "Reserve additional keywords" may work for Racket since redefinition is restricted more there.
 
-3. Then I checked [standard implementation](https://people.csail.mit.edu/jaffer/r5rs/Derived-expression-type.html) (I haven't studied `syntax-rules` which is also not taught in SICP. I also don't know how to grasp the main ideas from the long contents in [the official doc](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Pattern-Language.html#index-syntax_002drules).)
+3. Then I checked [R5RS standard implementation](https://people.csail.mit.edu/jaffer/r5rs/Derived-expression-type.html) (same as [R7RS][4]) (I haven't studied `syntax-rules` which is also not taught in SICP. I also don't know how to grasp the main ideas from the long contents in [the official doc](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Pattern-Language.html#index-syntax_002drules).)
      ```scheme
      (define-syntax do
         (syntax-rules ()
@@ -78,6 +79,12 @@ Example to implement [`do` in MIT/GNU Scheme][1].
           x)
           ((do "step" x y)
           y)))
+     ;; similarly we can use named let for the above letrec part
+     (let loop 
+      ((var init) ...)
+        (if test
+            ; ...... same as the above
+            ))
      ```
 
      The above actually avoids the name collision problem where `loop` is used by `letrec` above.
@@ -109,4 +116,12 @@ Q:
 
 As the above shows, the main problem is "name collision". "In a nut shell" works possibly and `define-syntax` works although I don't know how that does internally. How does `define-syntax` work to solve the above `loop` name collision? If that is complex, is there some more elegant way to implement `do` using "derived expressions" besides scan and "Reserve additional keywords"?
 
-  [1]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Iteration.html#index-do-2
+p.s. the only former exercise in chapter 4 related with iteration exercise 4.8 to implement [named-let][5] `let name ((variable init) …) expr expr …` doesn't have the above problem since `name` and `variable`s are *implicitly* contained in `expr`s. So there is no "name collision" otherwise the definition is *wrong*. Then we can use *Z-combinator* to avoid "name collision" between `init`s and `name` as [LisScheSic's 1st comment][6] does.
+
+
+  [1]: https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-26.html
+  [2]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Iteration.html#index-do-2
+  [3]: https://stackoverflow.com/a/3871548/21294350
+  [4]: https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-9.html#TAG:__tex2page_sec_7.3
+  [5]: https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Iteration.html#index-let-6
+  [6]: http://community.schemewiki.org/?sicp-ex-4.8
