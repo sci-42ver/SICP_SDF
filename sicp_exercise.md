@@ -2077,6 +2077,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 9
   - https://www.willdonnelly.net/blog/2008-09-04-scheme-syntax-rules/ doesn't show how `syntax-rules` works at all.
   - see https://stackoverflow.com/q/79098453/21294350
+    - > They are paired up properly
+      maybe done by `(extend-environment ⟨variables⟩ ⟨ values⟩ ⟨base-env ⟩)` in section 4.1.
 - [ ] 10
   - IMHO this is already done in former exercises like Exercise 4.5.
   - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.

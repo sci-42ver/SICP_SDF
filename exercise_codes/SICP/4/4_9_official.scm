@@ -108,6 +108,19 @@
 ;         (loop (do "step" loop) (do "step" i (+ i 1)))))))) 
 ;     (loop (make-vector 5) 0))
 
+;;; > you can invoke the macro expansion system on a piece of list structure and *get back* the expanded form
+(define-syntax nth-value
+  (syntax-rules ()
+    ((nth-value n values-producing-form)
+     (call-with-values
+       (lambda () values-producing-form)
+       (lambda all-values
+         (list-ref all-values n))))))
+
+(unsyntax (syntax '(nth-value 1 (let ((q (get-number)))
+                                      (quotient/remainder q d)))
+                       (nearest-repl/environment)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; use named let instead of lecrec
 (define-syntax do
   (syntax-rules ()
@@ -130,6 +143,64 @@
     ((do "step" x y)
     y)))
 (define test (vector 3))
+(display 
+  (do ((.loop.0 (make-vector 5))
+        (i 0 (+ i 1)))
+      ((begin 
+        (set! test .loop.0)
+        (= i 5)) (list .loop.0 test))
+    (vector-set! .loop.0 i i)))
+(do ((loop (make-vector 5))
+      (i 0 (+ i 1)))
+    ((begin 
+      (set! test loop)
+      (= i 5)) (list loop test))
+   (vector-set! loop i i))
+; (letrec
+;   ((loop
+;     (lambda (loop i)
+;       (if (begin (set! test loop) (= i 5))
+;           (begin
+;             (if #f #f)
+;             (list loop test))
+;           (begin
+;             (vector-set! loop i i)
+;             (loop loop (+ i 1)))))))
+;   (loop (make-vector 5) 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; use define instead of lecrec
+(define-syntax do
+  (syntax-rules ()
+    ((do ((var init step ...) ...)
+        (test expr ...)
+        command ...)
+    ;; follow repo
+    ((lambda ()
+      (define (loop var ...)
+        (if test
+          ;; same as the above
+          (begin
+            (if #f #f)
+            expr ...)
+          (begin
+            command
+            ...
+            (loop (do "step" var step ...)
+                  ...))
+          ))
+      (loop init ...)))
+    )
+    ((do "step" x)
+    x)
+    ((do "step" x y)
+    y)))
+; ((lambda ()
+;   (define (loop var ...)
+;     (if test
+;       ; ...... same as the above corresponding part
+;       ))
+;       (loop init ...)))
+
 (do ((loop (make-vector 5))
       (i 0 (+ i 1)))
     ((begin 

@@ -1,17 +1,3 @@
-IMHO this is the same reasons for one mechanism to implement `self` in C++ to refer to the same object itself in one class as my above link https://stackoverflow.com/a/6089145/21294350 shows, similar
-
-@Shawn That link is helpful although *much longer* than the official doc. I didn't look through that doc detailedly. By searching "collision", I found `gen-temps-and-sets` is very helpful. Then "The answer lies in this template: ..." version `gen-temps-and-sets` shows how Scheme manipulates "name collision" when *expanding* by "It will be a *different* syntactic object than any created during *any other expansion step*". So for `(multiple-value-set! (a b c) (values 1 2 3))`, similarly duplicate `variable` will be also bound to `a, b, c` *at each step*.
-
-Then for the above example, `var`s will be bound to `loop, i` consecutively. So `var` is  implicitly *"paired up properly"* with the `loop` vector instead of the `loop` in template. The link doesn't say further how Scheme avoids the *messing name collision* caused by either argument in the above example or expansion (maybe still others) detailedly in implementation. Maybe some clever techniques...
-
-"keeps track of which is which and won't mix them up." may mean "They are paired up
-properly because we generated all references to them at the same time." (i.e. the pair elements are got at the same expansion stage, so they can be paired) in the link.
-
-"I don't think syntax macros had been invented yet when SICP was written.": Do you think it is fine to use the above `define-syntax ...`  as the solution to exercise-4.9 since IMHO this is the only one solution I found up to now solving with the above name collision problem? Maybe that is done by just keeping duplicate `var`s instead of substituting that with `loop` or `i` in template (so avoid `loop` collision) and the clever pairing mechanism (so no name collision due to duplicate `var` names).
-
-https://www.reddit.com/r/scheme/comments/5q5nag/comment/dcx3c4v/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button (This is got when googling "gauche scheme Syntax-rules Primer" to get some *possible summary* of your offered link although this link  doesn't refer to your offered link) recommends "syntactic closures", i.e. IMHO lambda in Scheme.
-
-This may mean we can finish exercise-4.9 using only lambda probably based on  combinator like the powerful Z combinator used in http://community.schemewiki.org/?sicp-ex-4.8. @Shawn Do you have any thoughts about using lambda calculus or combinatory logic to finish exercise-4.9?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -256,6 +242,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > how these returned values are passed from call to call; however, this is also an important aspect of the evaluation process, and we will return to it in detail in Chapter 5.
 - > We will address these issues in chapter 5, where we take a closer look at the evaluation process by implementing the evaluator as a simple register machine.
 - > They are introduced as mnemonic names for the basic list operations in order to make it easier to understand the explicit-control evaluator in section 5.4.
+- > One way to avoid this inefficiency is to make use of a strategy called lexical addressing, which will be discussed in section 5.5.6.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -2780,6 +2767,21 @@ TODO Figure 4.1
   - > This trick will shine when B’s CHECK is essential within a single class, and the class’s implementation is independent of A.
     so it means `MyClass.cc` uses A's CHECK while `MyClassImpl.h` uses B’s CHECK?
     see name-conflict.cpp.
+- > adds to the first frame
+  see section 3.2.2 Figure 3.5
+  > We first look in the first frame of ... en we proceed to the enclosing environment, i.e. the global environment
+  i.e. based on the "enclosing environment" sequence, "first" means the most inner.
+- > or signals an error if the variable is *unbound*.
+  ~~IMHO `set!` in GE is implicitly enclosed by "the top level".~~
+  - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-26.html
+    > Variable *must be bound* either in some region enclosing the set! expression, or at the top level.
+    "or at the top level" is implied by `(define the-empty-environment '())`.
+- > Frames are not really a data abstraction in the following code
+  i.e. `set-variable-value!` uses env which uses frame.
+- > If no such binding exists, we adjoin one to the first frame.
+  since we *only* define in that frame/env, so won't check "the enclosing environment".
+- > change the binding if it exists (just as in set-variable-value!)
+  i.e. allow redefinition although racket doesn't.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

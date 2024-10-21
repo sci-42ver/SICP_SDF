@@ -116,7 +116,28 @@ Q:
 
 As the above shows, the main problem is "name collision". "In a nut shell" works possibly and `define-syntax` works although I don't know how that does internally. How does `define-syntax` work to solve the above `loop` name collision? If that is complex, is there some more elegant way to implement `do` using "derived expressions" besides scan and "Reserve additional keywords"?
 
-p.s. the only former exercise in chapter 4 related with iteration exercise 4.8 to implement [named-let][5] `let name ((variable init) …) expr expr …` doesn't have the above problem since `name` and `variable`s are *implicitly* contained in `expr`s. So there is no "name collision" otherwise the definition is *wrong*. Then we can use *Z-combinator* to avoid "name collision" between `init`s and `name` as [LisScheSic's 1st comment][6] does.
+p.s. 
+
+1. the only former exercise in chapter 4 related with iteration exercise 4.8 to implement [named-let][5] `let name ((variable init) …) expr expr …` doesn't have the above problem since `name` and `variable`s are *implicitly* contained in `expr`s. So there is no "name collision" otherwise the definition is *wrong*. Then we can use *Z-combinator* to avoid "name collision" between `init`s and `name` as [LisScheSic's 1st comment][6] does.
+
+2. Thanks for Shawn's help. We can add one `(bkpt "test loop")` before `(loop (do "step" var step ...) ...)`. Then when running `do` after `(define-syntax do ......)` by `scheme --interactive --eval '(load "demo.scm")'` (I used MIT/GNU Scheme):
+   ```bash
+   2 bkpt> (debug)
+   ...
+   Expression (from stack):
+       (begin <!> (.loop.0 loop (+ i 1)))
+    subproblem being executed (marked by <!>):
+       (bkpt "test loop")
+   ```
+   As the above shows, here the `loop` in `syntax-rules` is renamed to `.loop.0` (if we use `.loop.0` as one variable in the code, then the interpreter will still rename `loop` to `.loop.0`. But the code can still run. Maybe as the link offered by Shawn says "They are paired up properly", so the interpreter won't mess up the superficial name collision of `.loop.0`).
+  - 2.1
+    As [this comment](https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e#comment139484711_79098453) says, the name collision may be actually avoided by
+    > Maybe that is done by just *keeping duplicate `var`s* instead of substituting that with loop or i in template (so avoid `loop` collision) and the clever *pairing* mechanism (so no name collision due to duplicate `var` names).
+    
+    implied by Shawn's link example in the context of "name collisions":
+    > Since we run the *expansion step* three times, one for each variable to be assigned, we get three variables named temp.  They are paired up properly because we generated all references to them at the same time.
+    
+    So probably at *each expansion step*, `var` will be *also* paired up with the appropriate variable like `loop` or `i` at *the expansion step when applying* `(do ((loop (make-vector 5)) ...))`. `(loop (do "step" var step ...) ...)` will be paired with the definition of the `loop` func in `letrec` instead of the variable `loop` vector probably at the `define-syntax` step.
 
 
   [1]: https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-26.html
