@@ -2782,6 +2782,14 @@ TODO Figure 4.1
   since we *only* define in that frame/env, so won't check "the enclosing environment".
 - > change the binding if it exists (just as in set-variable-value!)
   i.e. allow redefinition although racket doesn't.
+- > to distinguish the value of the expression from other output that may be printed.
+  "other output" possibly in `(eval input the-global-environment)`.
+- > types 'x, read returns a two-element list containing the symbol quote
+  see `(car (read))` when typing `'x`.
+- > or may even contain cycles
+  i.e. binding in `env` may contain the binding pair `(foo env)`.
+  - `compound-procedure` is just the `lambda` structure taught in environment model.
+- 
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

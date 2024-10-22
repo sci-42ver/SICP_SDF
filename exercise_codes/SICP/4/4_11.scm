@@ -1,0 +1,98 @@
+(cd "~/SICP_SDF/exercise_codes/SICP/4")
+(load "4_11_lib.scm")
+
+(define (make-frame variables values)
+  ;; wiki is more robust.
+  (map (lambda (var val) (cons var val)) variables values))
+(define (frame-variables frame) (map car frame))
+(define (frame-values frame) (map cdr frame))
+(define (add-binding-to-frame! var val frame-wrapper)
+  ;; wrong since it will change the argument binding.
+  ; (set! frame (cons (cons var val) frame))
+  ;; set-car! works since the variable inside is binded in the enclosing env instead of here.
+  (set-car! frame-wrapper (cons (cons var val) (car frame-wrapper)))
+  ; (let ((frame (car frame-wrapper)))
+  ;   (display (list (frame-variables frame) (frame-values frame))))
+  )
+
+;;; the following code is very not elegant due to set! will change only the local arg binding.
+(define (set-first-frame env variables values)
+  (set-car! env (make-frame variables values))
+  )
+(define (wrap frame)
+  (list frame))
+
+(define (set-variable-value! var val env)
+  (define (env-loop env)
+    (define (scan vars vals)
+      (cond ((null? vars)
+             (env-loop (enclosing-environment env)))
+            ((eq? var (car vars))
+             (set-car! vals val))
+            (else (scan (cdr vars) (cdr vals)))))
+    (if (eq? env the-empty-environment)
+        (error "Unbound variable -- SET!" var)
+        (let ((frame (first-frame env)))
+          ;; changed to make `set-car!` work for frame instead of the temporary variable `frame-values` etc.
+          (let ((variables (frame-variables frame))
+                (values (frame-values frame)))
+            (scan variables values)
+            ; (display (list "set to" (list variables values)))
+            (set-first-frame env variables values)
+            ))))
+  (env-loop env))
+
+(define (define-variable! var val env)
+  (let ((frame (first-frame env)))
+    (define (scan vars vals)
+      (cond ((null? vars)
+             (let ((wrapper (wrap frame)))
+              (add-binding-to-frame! var val wrapper)
+              (set! frame (car wrapper))
+            )
+             )
+            ((eq? var (car vars))
+             (set-car! vals val))
+            (else (scan (cdr vars) (cdr vals)))))
+    ;; similar to the above
+    (let ((variables (frame-variables frame))
+          (values (frame-values frame)))
+      (scan variables values)
+      (if (= (length (frame-variables frame)) (length variables))
+        (set-first-frame env variables values)
+        (set-car! env frame)
+        )
+      )))
+
+(define (define-variable! var val env)
+  (let ((frame (first-frame env)))
+    (define (scan vars vals)
+      (cond ((null? vars)
+            ;  (display (list "add" (list var val)))
+             (let ((wrapper (wrap frame)))
+              (add-binding-to-frame! var val wrapper)
+              (set! frame (car wrapper))
+              )
+            ;  (display (list "after define in cond" (frame-variables frame) (frame-values frame)))
+             )
+            ((eq? var (car vars))
+             (set-car! vals val))
+            (else (scan (cdr vars) (cdr vals)))))
+    ;; same as above
+    (let ((variables (frame-variables frame))
+          (values (frame-values frame)))
+      (scan variables values)
+      ; (display (list "after define" (frame-variables frame) (frame-values frame)))
+      (if (= (length (frame-variables frame)) (length variables))
+        ; (set! frame (make-frame variables values))
+        (set-first-frame env variables values)
+        ; 'added
+        ;; since we change the frame instead of variables inside it, we need to explicitly set env here again to avoid only changing the local frame in let.
+        (set-car! env frame)
+        )
+      )))
+
+(test)
+;Unspecified return value
+
+;; WRONG: based on data abstraction, `extend-environment` etc are based on env, not needing changes.

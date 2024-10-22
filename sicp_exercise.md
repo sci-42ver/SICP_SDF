@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.9 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2082,7 +2082,19 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 10
   - IMHO this is already done in former exercises like Exercise 4.5.
   - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.
-- [ ] 
+- [ ] 11
+  - I didn't find this is related with footnote 14.
+- [x] 12
+  - trivial due to `scan`.
+- [ ] 13
+  - > For example, should we remove only the binding in the first frame of the environment? *Complete* the specification and *justify* any choices you make.
+    ~~IMHO to have more control on the frame and same as `define-variable!` which only adds to "the first frame of the environment", we should "remove only the binding in the first frame of the environment".~~
+    `(eval exp env)` will use `(lookup-variable-value exp env)`, so to *actually* remove "the binding", we need to check `enclosing-environment`.
+    - so just modify `set-variable-value!` by changing `(set-car! vals val)` to `(remove-binding-from-frame! var val (first-frame env))` which does `(set-car! frame (delq var (car frame))) ...`.
+      - > It is allowed, *but not required, to alter the cons cells in its argument* list to construct the result.
+        so `delq!` may not modify in place as MIT/GNU Scheme does.
+  - wiki
+    - we also need to define the *syntax* of "special form make-unbound!".
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

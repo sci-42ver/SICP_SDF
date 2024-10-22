@@ -1,0 +1,23 @@
+(cd "~/SICP_SDF/exercise_codes/SICP/4")
+(load "lib.scm")
+
+(define (test)
+  (define variables '(a b c))
+  (define values (iota 3))
+  (define frame (make-frame variables values))
+  (assert (equal? (frame-variables frame) variables))
+  (assert (equal? (frame-values frame) values))
+  ;; test with env
+  (define base-env (extend-environment variables values the-empty-environment))
+  (assert (= 0 (lookup-variable-value 'a base-env)))
+  (set-variable-value! 'a 1 base-env)
+  ; (let ((env-frame (first-frame base-env)))
+  ;   (display (list (frame-variables env-frame) (frame-values env-frame))))
+  (assert (= 1 (lookup-variable-value 'a base-env)))
+  (define-variable! 'd 3 base-env)
+  (assert (= 3 (lookup-variable-value 'd base-env)))
+  (define-variable! 'd 4 base-env)
+  (assert (= 4 (lookup-variable-value 'd base-env)))
+  )
+(test)
+;Unspecified return value
