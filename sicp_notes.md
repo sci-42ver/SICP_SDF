@@ -231,6 +231,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > We will see what the problem is and how to solve it in section 4.1.6.
   IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.
 - > by binding them in the global environment. See Section 4.1.4.
+- > He used this framework to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -2789,7 +2790,16 @@ TODO Figure 4.1
 - > or may even contain cycles
   i.e. binding in `env` may contain the binding pair `(foo env)`.
   - `compound-procedure` is just the `lambda` structure taught in environment model.
-- 
+- > In a similar way, we can regard the evaluator as a very special machine that takes as input a description of a machine.
+  i.e. one expression "as input"
+- > ``what can in principle be computed'' (ignoring practicalities of time and memory required) is *independent of the language* or the computer
+  - "independent of the language": due to "any evaluator can emulate any other".
+  TODO "or the computer"
+- > See Hodges 1983 for a biography of Turing.
+  [see](https://cstheory.stackexchange.com/questions/1139/turing-machines-and-subroutine-simulation#comment1968_1139) which same as C assembly code implementation by stack.
+- > From this perspective, our evaluator is seen to be a universal machine. It *mimics other machines* when these are described as Lisp programs.
+  see
+  > a Turing machine that behaves as *an evaluator for Turing-machine programs*
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

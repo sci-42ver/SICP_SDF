@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.11 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.14 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2095,6 +2095,40 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         so `delq!` may not modify in place as MIT/GNU Scheme does.
   - wiki
     - we also need to define the *syntax* of "special form make-unbound!".
+- [x] 14
+- [ ] 15
+  - if halts, then will `(run-forever)` which implies `(try try)` will not halt.
+    Similar contradiction for not halt.
+    - same as wiki meteorgan's.
+    - similar to https://en.wikipedia.org/wiki/Halting_problem#Proof_concept which is also refereed to in DMIA notes and same as DMIA 3.1.6 proof where `K` is `try` here.
+    - https://en.wikipedia.org/wiki/Halting_problem#Sketch_of_rigorous_proof (TODO it seems that I have read this proof when learning mcs/DMIA but I can't find that)
+      - > but the computable function halts does not directly take a subroutine as an argument; instead it takes the source code of a program.
+        i.e. footnote.
+      - kw
+        > Moreover, the definition of g is *self-referential*. A rigorous proof addresses these issues.
+        > not producing a defined result (for example, by *looping forever*),
+      - > but the computable function halts does not directly take a subroutine as an argument; instead it takes the source code of a program.
+        i.e. body and parameter implied by `h(i,x)`.
+      - > The verification that g is computable relies on the following constructs (or their equivalents):
+        similar to the book "Figure 4.2" except for not explicitly showing "duplication of values".
+      - > The following pseudocode for e illustrates a straightforward way to compute g:
+        just implement `g`.
+        - Compared with here.
+          f:halts?
+          i:p
+          ==0:true
+          return 0:'halted
+          so they are *same*.
+      - > In either case, f cannot be the same function as h. Because f was an *arbitrary* total computable function with two arguments, all such functions must differ from h.
+        here we first define `h` to return 1 when halt, so we *then* define `f...== 0` part in `e`.
+      - > The contradiction comes from the fact that there is some column e of the array corresponding to g itself.
+        - IMHO this just means `f(.,j)`/`f(i,.)` is one unary func which can *emulate all unary funcs* including `g` by "Turing-complete".
+          ~~ i.e. `g(e)` can't be in that array same as~~But `g(i)=0` when `f(i,i)=0` is different from construction in [`s` can't be one of `s_n`](https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument#Uncountable_set), so no direct contradiction.
+          This is also shown by the following text which has no relation with column/row.
+        - see `mcs.md` for the relation with "Cantor's diagonal argument".
+  - > this reasoning still applies even if halts? can gain access to the procedure's text and its environment
+    this is just how Scheme manipulates lambda procedure in environment model.
+- [ ] 
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

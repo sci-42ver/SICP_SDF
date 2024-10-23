@@ -34,3 +34,7 @@
 
 ;; IGNORE: similarly but square is the value evaluated by the underlying Scheme above. So `(proc (car items))` is fine.
 ; (map square '(2 3))
+
+;; The key problem above is that we should let M-Eval manipulate its created *tagged* procedure.
+;; > Eva types in the definition of map, and runs some test programs that use it. They work fine.
+;; then the value of map is by `make-procedure` recognized by `compound-procedure?`. Then `eval-sequence` will manipulate `(proc (car items))` correctly. 
