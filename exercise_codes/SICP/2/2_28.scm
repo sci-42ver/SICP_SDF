@@ -1,3 +1,7 @@
+;; > Write a procedure fringe that takes as argument a tree (represented as a list) and 
+;; > returns a list whose elements are all the *leaves* of the tree arranged in *left-to-right order*.
+
+
 ;; This is similar to "Yes, there is a better way"
 ;; 1. But doesn't use `(cons first (fringe (cdr tree)))`.
 ;; `(null? tree)` functions same as `(not (pair? lst))` here since `lst` can't be number when recursively calling `fringe`.
@@ -116,6 +120,8 @@
                       (iter (car lst) f #f)  
                       is-outer-list?)) 
           )) 
-  (iter lst (lambda (x) x) #t))
+  (if (not (pair? lst))
+    (list lst)
+    (iter lst (lambda (x) x) #t)))
 (test)
 ; (assert (equal? fringed-test-lst (fringe test-lst)))

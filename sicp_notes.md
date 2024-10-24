@@ -91,7 +91,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 3.5.5 (included).
+- up to section 4.1.6 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -163,6 +163,8 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
   - ~~27~~
     > that is, they are looked up in *the environment in which the procedure was defined*. We will see how this works in detail in chapter 3 when we study environments and the detailed behavior of the interpreter.
     i.e. "the *environment part* of the procedure object being applied" / "a pointer to the environment in which the procedure was *created*" in section 3.2.
+    - > detailed behavior of the interpreter
+      see `(procedure-environment procedure)` in `(apply procedure arguments)`.
   - ~~31~~
     > who explained it in terms of the *“message-passing” model* of computation that we shall discuss in Chapter 3.
 - ~~> As we shall see in Chapter 3, the general notion of the environment as *providing a context* in which evaluation takes place will play an important role in our understanding of program execution.~~
@@ -208,7 +210,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (included)
+checked up to section 3.5.5 (included) and exercise checking up to 4.1.6 (excluded)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
 - > In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
 - > nondeterministic evaluation in Chapter 4.
@@ -228,10 +230,13 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way
 - > In Section 4.3, we will look at nondeterminism from yet another point of view.
 - > This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)
+  - i.e. use one table inside. So just `put` and then `get` can automatically work.
 - > We will see what the problem is and how to solve it in section 4.1.6.
   IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.
 - > by binding them in the global environment. See Section 4.1.4.
-- > He used this framework to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)
+- ~~> He used *this framework* to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)~~
+  maybe here "framework" is used to "cannot be computed" -> "can be formulated as a [program](https://en.wikipedia.org/wiki/Halting_problem#Proof_concept)" failure.
+- >  so that sequential definition isn't equivalent to simultaneous definition, see exercise 4.19.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -244,6 +249,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
 - > We will address these issues in chapter 5, where we take a closer look at the evaluation process by implementing the evaluator as a simple register machine.
 - > They are introduced as mnemonic names for the basic list operations in order to make it easier to understand the explicit-control evaluator in section 5.4.
 - > One way to avoid this inefficiency is to make use of a strategy called lexical addressing, which will be discussed in section 5.5.6.
+- > However, we will see in section 5.5.6 that moving to a model of simultaneous scoping for internal definitions avoids some nasty difficulties that would otherwise arise in implementing a compiler.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -2800,6 +2806,34 @@ TODO Figure 4.1
 - > From this perspective, our evaluator is seen to be a universal machine. It *mimics other machines* when these are described as Lisp programs.
   see
   > a Turing machine that behaves as *an evaluator for Turing-machine programs*
+- > In fact, our *sequential* evaluation mechanism will give the same result as a mechanism that directly implements *simultaneous* definition for any procedure in which the *internal definitions come first* in a body and *evaluation of the value* expressions for the defined variables *doesn't actually use any of the defined variables*.
+  so it means
+  ```scheme
+  ;; > doesn't actually use any of the defined variables
+  (define foo (not-have-bar...))
+  (define bar (not-have-foo...))
+  ;; > internal definitions come first
+  (program-using-foo-or-bar)
+  ```
+  trivial since we don't need "simultaneous definition" in this case. So same.
+- `(let ((u '*unassigned*) ...) ...)` is very similar to [fake_let_assignment] in sicp_exercise.md.
+- > Wanting programs to not depend on this evaluation mechanism
+  i.e.
+  > By insisting that internal definitions come first and do not use each other while the definitions are being evaluated
+  so that
+  > sequential evaluation mechanism will give the *same result* as a mechanism that directly implements simultaneous definition
+  - IMHO
+    > do not use each other while the definitions are being evaluated
+    ~~isn't needed as `(f x)` here shows.~~
+    is needed for the possible implementation like Exercise 4.18, i.e. "sequential evaluation".
+    > this enforces the restriction that the defined variables' *values can be evaluated without using any of the variables' values*.
+    - But if not using `delay` there, "would be transformed into" implementation will also not work since it still uses sequential implementation as `test-sequential-and-simultaneous-evaluation.scm` shows.
+  - > management is not responsible
+    i.e.
+    > the  standard for Scheme *leaves implementors some choice*
+- > where *unassigned* is a special symbol that causes looking up a variable to signal an error if an attempt is made to use the value of the not-yet-assigned variable.
+  ~~not internally implemented in MIT/GNU Scheme and M-Eval.~~
+  See Exercise 4.16 a.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

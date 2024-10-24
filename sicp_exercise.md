@@ -7,7 +7,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.14 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.15 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1998,7 +1998,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   name collision problem is hinted by wiki.
   - see `fib-iter` in chapter 1. 
   - [this](https://stackoverflow.com/a/7719140/21294350) needs to change `body`...
-    - also see [this detailed answer](https://stackoverflow.com/a/11833038/21294350)
+    - also see [this detailed answer][fake_let_assignment]
       - `x x` means [application](https://en.wikipedia.org/wiki/Lambda_calculus#Lambda_terms) (also see https://en.wikipedia.org/wiki/Lambda_calculus#Notation)
         - > Applications are assumed to be left associative: M N P may be written instead of ((M N) P).
           so https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
@@ -2096,7 +2096,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     - we also need to define the *syntax* of "special form make-unbound!".
 - [x] 14
-- [ ] 15
+- [x] 15
+  - > whether p halts on a for *any* procedure p and object a
   - if halts, then will `(run-forever)` which implies `(try try)` will not halt.
     Similar contradiction for not halt.
     - same as wiki meteorgan's.
@@ -2128,10 +2129,84 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         - see `mcs.md` for the relation with "Cantor's diagonal argument".
   - > this reasoning still applies even if halts? can gain access to the procedure's text and its environment
     this is just how Scheme manipulates lambda procedure in environment model.
-- [ ] 
+- [ ] 16
+  - a. just check `(car vals)`. (same as wiki)
+  - b. so `eval-definition` -> `(eval (definition-value exp) env)` -> `(lambda-body exp)`.
+    So just wrap `(lambda-body exp)` which will then evaluated by `eval-sequence` in `apply`.
+    - So follow `eval-sequence` structure by changing `eval` to some test.
+  - c.
+    - > Which place is better?
+      IMHO both are fine. The former does transformation when construction while the latter does when usage just as section 2.1 does
+      > our rational-number implementation does not reduce rational numbers to lowest terms. We can remedy this by changing *make-rat*.
+      > an alternate way to address the problem of reducing rational numbers to lowest terms is to perform the reduction *whenever we access* the parts of a rational number, rather than when we construct it.
+      How to choose.
+      > If in our typical use of rational numbers we *access* the numerators and denominators of the same rational numbers *many times*, it would be preferable to compute the gcd when the rational numbers are *constructed*. If not, we may be better off waiting until access time to compute the gcd.
+      IMHO the former case is more frequent.
+    - wiki
+      > make-procedure is better because we can easily explore other transformations 
+      e.g. for `procedure-parameters` or using one general `transformation`.
+- [ ] 17
+  - > comparing how this will be structured when definitions are interpreted sequentially with how it will be structured if definitions are scanned out as described.
+    - original
+      E1: when applied with one `<vars>` seq. Then add `u, v` bindings.
+    - transformed
+      E1: "when applied with one `<vars>` seq."
+      E11 in E1: when applied with `'*unassigned*` ... Then `set!` special form to change 2 bindings
+    - *same* as wiki.
+  - > Explain why this difference in environment structure can never make a difference in the behavior of a correct program.
+    i.e. not "badly formed" programs, i.e. keep
+    > internal definitions come first and do not use each other while the definitions are being evaluated
+    "do not use each other" so original will work.
+    - "internal definitions come first" so when the above is finished. `<e3>` has the *same environment effect*.
+      - *same* as wiki pvk's "It's pretty clear that ...".
+  - wiki
+    - > might allow the body to access variables not yet defined in the original code. 
+      i.e. `set!` between `define` to change some binding.
+- [ ] 18
+  - Not since `y` is unknown.
+  - Fine since `y` is known.
+  - same as wiki meteorgan's.
+- [ ] 19
+  - As footnote says, Alyssa's is right for the *book implementation* while Eva's is right academically.
+    Also see "But actually MIT/GNU Scheme".
+  - see wiki
+    > if we had to work with a circular dependency (i.e. `b` depends on `a`, `a` depends on `b`).
+    - Same as repo "If `a` and `b` don't reference each other, rearrange the code will solve the problem otherwise throw an error.".
+### @TODO
+- 17
+  - > Design a way...
+    See `test-sequential-and-simultaneous-evaluation.scm`. IMHO just making all `define`s before the rest is fine.
+      1. The above is not allowed by wiki meteorgan's. This is fine due to not allow reordering. Also see the above. (SOLVED)
+      2. If so, what is the difference from meteorgan's and the original `define`?
+        See "So the above meteorgan's" in the following. (SOLVED)
+      3. Most important, what is "simultaneous scope" at all?
+        - Based on exercise 4.19, it is just one implementation for footnote 24 restriction where "insisting that internal definitions come first and do not use each other while the definitions are being evaluated" all can be ensured by error signaling for `'*unassigned*`.
+          - one specific case of violating "internal definitions come first"
+            ```scheme
+            (define (even? n) ...)
+            (odd? foo)
+            (define (odd? n) ...)
+            ```
+            Then `odd?` will be `'*unassigned*` when accessed earlier.
+          - one specific case of violating "do not use each other"
+            See exercise 4.19.
+        - Here "simultaneous scope" just means all are `'*unassigned*`. (SOLVED)
+          > just *create all local variables* that will be in the current environment *before evaluating*
+    - repo is same as meteorgan's.
+    - See exercise 4.19
+      > Eva is in principle correct -- the definitions should be regarded as simultaneous.
+      so "simultaneous scope" means the former value will use the *latter* value when necessary.
+      - > it is better to *generate an error* in the difficult cases of simultaneous definitions
+        "difficult" due to `b` is based on `a` violating footnote 24.
+        - So the above meteorgan's will "generate an error" due to accessing `'*unassigned*` while the original won't but saying ";Unbound variable: v".
+      > than to produce an incorrect answer (as Ben would have it).
+      But actually MIT/GNU Scheme will output as Ben's (IMHO this is just how *environment model* works where `(+ a x)` will search frame*s* and find `(a 1)` and `(+ a b)` just uses the *first* frame `(define a 5)`.)
+
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
 [Fibonacci_variant]:https://math.stackexchange.com/q/4934605/1059606
 
 [Composite_Simpson_rule]:https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_1/3_rule
+
+[fake_let_assignment]:https://stackoverflow.com/a/11833038/21294350
