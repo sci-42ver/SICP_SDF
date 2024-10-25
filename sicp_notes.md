@@ -59,13 +59,14 @@ Review one history comment
 
   After reading the book, check "What we should achieve".
 ## @Recheck 
-- https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962
+- ~~https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962~~
   ~~> "*streams* of decimal digits"~~ (finished)
 - https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
   > "lexical *environment*", "*garbage* collected"
-  - > "lexical *environment*"
+  - ~~> "lexical *environment*"~~
     Here `cont` is just one local variable.
     See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
+  - "*garbage* collected"
 - section 3.1
   - TODO
     - ~~Also see~~
@@ -91,7 +92,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.1.6 (excluded).
+- up to section 4.1.7 (excluded).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -2403,7 +2404,7 @@ This doesn't say much beyond what the book says. Also for the former lecs but th
   > the formula can be simplified for calculation efficiency by factoring
 - > a powerful way to structure and think about computation
   see "Using streams to decouple computation".
-## @rec
+## rec
 I will skip rec10 since that is one review for exam probably introducing no new contents.
 also skip https://people.csail.mit.edu/jastr/6001/fall07/r14.pdf since it has no sol and just still draws env diagrams.
 ### rec15 for lec11
@@ -2711,7 +2712,7 @@ almost same as spring lec20
 - `define-macro` doesn't exist in MIT/GNU Scheme and Racket.
 - `(define ints ...)` has already been shown in the book.
   same for `map2-stream, scale-stream`.
-### @sp rec22
+### sp rec22
 Emm... still duplicate of much book contents but relates with env model...
 - > ; Returns the value of exp in the original environment
   see env-test.scm.
@@ -2755,8 +2756,9 @@ Emm... still duplicate of much book contents but relates with env model...
   > For example, in computer engineering, *resistors* and transistors are combined (and described using a language of analog circuits) to produce parts such as *and-gates* and or-gates, which form the primitives of a language for *digital-circuit* design.
 - Formal logic [vs](https://en.wikipedia.org/wiki/Logic#Informal_logic) Informal logic
   > Formal logic can only examine them indirectly by translating them *first into a formal language* while informal logic investigates them in their *original form*.
-### @4.1
-TODO Figure 4.1
+### 4.1
+- Figure 4.1
+  the texts besides the arrows are just arguments.
 - [Metacircular](https://stackoverflow.com/a/1481132/21294350) Evaluator
   > in a (possibly more basic) implementation of the *same* language
 - > Contemplation of the meaning of true? here yields expansion of consciousness without the abuse of substance.
