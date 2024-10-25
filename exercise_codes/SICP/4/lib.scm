@@ -127,6 +127,7 @@
         (else (make-begin seq))))
 (define (make-begin seq) (cons 'begin seq))
 
+;; cons-1
 (define (application? exp) (pair? exp))
 (define (operator exp) (car exp))
 (define (operands exp) (cdr exp))
@@ -174,8 +175,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Operations on Environments
 (define (enclosing-environment env) (cdr env))
 (define (first-frame env) (car env))
+;; implies list
 (define the-empty-environment '())
 
+;; cons-2
 (define (make-frame variables values)
   (cons variables values))
 (define (frame-variables frame) (car frame))
@@ -255,6 +258,13 @@
         (list 'square (lambda (x) (* x x)))
         (list 'square-twice (lambda (x) (square (square x))))
         (list 'first car)
+        ;; 4.24
+        (list '= =)
+        (list '- -)
+        (list '* *)
+        (list '<= <=)
+        (list '+ +)
+        (list 'display display)
         ))
 (define (primitive-procedure-names)
   (map car

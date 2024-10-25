@@ -1,13 +1,14 @@
 # @notice
-- I *didn't prove those theorems* which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - *Comment style* I follow [this](http://community.schemewiki.org/?comment-style)
 - I always give *tests* but sometimes I didn't since tests actually don't ensure the correctness.
+## what is skipped
+- I *didn't prove those theorems* which are not proved before when learning DMIA and mcs since I am not reading SICP to learn maths. (SkipMath)
 - I won't dig into *complexity analysis* like exercise 2.64.
 ## @wiki and repo solutions checking state
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.21 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.24 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2196,10 +2197,36 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         let
         > in which the bindings of the lambda itself *are not in place.*
     - As https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html#%_sec_3.2 shows the key problem is where we *~~define~~create* the lambda value which decides what bindings we can use when applying that lambda.
-- [ ] 21
+- [x] 21
   - a. We can do similar to [Lambda_calculus_Y_combinator] "Given n = 4, for example, this gives:"...
     Fib also see https://gist.github.com/z5h/238891 from https://stackoverflow.com/a/7721871/21294350.
   - see repo for 2 versions for a.
+- [x] 22
+- [ ] 23
+  - > What work will the execution procedure produced by Alyssa's program do?
+    just `(lambda (env) ((car procs) env))`.
+    > What about the execution procedure produced by the program in the text above?
+    `first-proc`.
+    So same
+  - > How do the two versions compare for a sequence with two expressions?
+    exercise: `(lambda (env) (proc-1 env) (proc-2 env))`
+    book: `(loop (sequentially first-proc (car rest-procs)) ...)` -> `(lambda (env) (proc1 env) (proc2 env))` (more longer arg list case: see the comment in `analyze-lib.scm`)
+    IMHO still same.
+    - see wiki
+      exercise should always be `(lambda (env) (execute-sequence procs env))` -(runtime)> `(lambda (env) ((car procs) env) (execute-sequence (cdr procs) env))`.
+  - > In effect, although the individual expressions in the sequence have been analyzed, the *sequence itself has not been.*
+    IMHO `(eval-sequence exps env)` just analyze implicitly by iter. So no analyze for "sequence itself"...
+    - Wrong
+      *See wiki meteorgan's*
+      > In Alyssa's analyze-sequence, execute-sequence is running in runtime.
+      So the book one has no recursive calls when executing that seq.
+      i.e.
+      > does *more of the work* of evaluating a sequence at analysis time
+      > rather than having the *calls* to the individual execution procedures *built in* ... the sequence itself has not been.
+      "recursive calls" in `eval-sequence` is already done in book `analyze`.
+- [x] 24
+  - repo doesn't compare but just shows each part time used by analyze and eval.
+- 
 ### @TODO
 - ~~17~~
   - > Design a way...

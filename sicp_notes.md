@@ -86,13 +86,13 @@ Review one history comment
             then?
 ## @check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 3.5 included and chapter 3.
+- up to section 4.1 included and chapter 3.
 ### TODO
 - chapter 3
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.1.7 (excluded).
+- up to section 4.1.7 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -211,12 +211,14 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 3.5.5 (included) and exercise checking up to 4.1.6 (excluded)
+checked up to section 4.1 (included) and exercise checking up to 4.1.7 (included)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
 - > In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
+- ~~> is can serve as a framework for ex-perimenting with evaluation rules, as we shall do later in this chapter.~~
+  see section 4.2
 - > We will return to this issue in section 4.1.6, after we learn more about evaluation.
 - > *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.
 - > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
@@ -230,14 +232,14 @@ checked up to section 3.5.5 (included) and exercise checking up to 4.1.6 (exclud
 - > The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)
 - > In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way
 - > In Section 4.3, we will look at nondeterminism from yet another point of view.
-- > This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)
+- ~~> This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)~~
   - i.e. use one table inside. So just `put` and then `get` can automatically work.
 - > We will see what the problem is and how to solve it in section 4.1.6.
   IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.
 - > by binding them in the global environment. See Section 4.1.4.
 - ~~> He used *this framework* to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)~~
   maybe here "framework" is used to "cannot be computed" -> "can be formulated as a [program](https://en.wikipedia.org/wiki/Halting_problem#Proof_concept)" failure.
-- >  so that sequential definition isn't equivalent to simultaneous definition, see exercise 4.19.
+- ~~> so that sequential definition isn't equivalent to simultaneous definition, see exercise 4.19.~~
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -251,6 +253,8 @@ checked up to section 3.5.5 (included) and exercise checking up to 4.1.6 (exclud
 - > They are introduced as mnemonic names for the basic list operations in order to make it easier to understand the explicit-control evaluator in section 5.4.
 - > One way to avoid this inefficiency is to make use of a strategy called lexical addressing, which will be discussed in section 5.5.6.
 - > However, we will see in section 5.5.6 that moving to a model of simultaneous scoping for internal definitions avoids some nasty difficulties that would otherwise arise in implementing a compiler.
+- > This technique is an integral part of the compilation process, which we shall discuss in chapter 5.
+- > As we will show in section 5.5.6, one can determine the position in the environment structure where the value of the variable will be found
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
@@ -2836,6 +2840,9 @@ Emm... still duplicate of much book contents but relates with env model...
 - > where *unassigned* is a special symbol that causes looking up a variable to signal an error if an attempt is made to use the value of the not-yet-assigned variable.
   ~~not internally implemented in MIT/GNU Scheme and M-Eval.~~
   See Exercise 4.16 a.
+- > Performing it repeatedly is wasteful.
+  maybe due to `eval` and `apply` are in different memory locations. So keeping running one part is much faster than *reading* 2 memory locations alternately.
+#### @TODO
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
