@@ -2001,7 +2001,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - also see [this detailed answer][fake_let_assignment]
       - `x x` means [application](https://en.wikipedia.org/wiki/Lambda_calculus#Lambda_terms) (also see https://en.wikipedia.org/wiki/Lambda_calculus#Notation)
         - > Applications are assumed to be left associative: M N P may be written instead of ((M N) P).
-          so https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
+          so [Lambda_calculus_Y_combinator]
           `r r (n−1)` means `((r r) (n−1))`, i.e. `((fact-gen fact-gen) (sub1 n))`.
   - **see `4_8_wiki.scm`**
     all the former 4.x exercises are not related with *iteration*, so no need to check for  better solutions for them.
@@ -2162,7 +2162,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     - > might allow the body to access variables not yet defined in the original code. 
       i.e. `set!` between `define` to change some binding.
-- [ ] 18
+    - See @TODO for what I was wrong here.
+- [x] 18
   - Not since `y` is unknown.
   - Fine since `y` is known.
   - same as wiki meteorgan's.
@@ -2172,11 +2173,37 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - see wiki
     > if we had to work with a circular dependency (i.e. `b` depends on `a`, `a` depends on `b`).
     - Same as repo "If `a` and `b` don't reference each other, rearrange the code will solve the problem otherwise throw an error.".
+- [x] 20
+  - > so it is not surprising that the variables it binds are bound simultaneously and have the same scope as each other.
+    "the same scope" i.e. ["has the exprs as its region."](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Lexical-Binding.html#index-letrec-1)
+    "are bound simultaneously" is implied by `lambda` application (just see the book "would be transformed into").
+  - a.
+    - > as shown in the text above
+      i.e. 4.16
+    - almost same as "Consider a procedure with internal definitions, such as", then "would be transformed into", so just 4.16.
+    - As wiki meteorgan's shows, this is simpler than 4.16 since we don't need to traverse to get all `define`s.
+  - b.
+    - letrec:
+      E1: x->5
+      E11: '*unassigned*...
+    - let:
+      E1 same
+      E11: even?->lambda...
+      ~~Then `(even? 5)` etc will be evaluated~~
+      so `lambda...` is created in E1 while the former is in E11.
+      Then when `lambda...` is applied it can only search E1 but it doesn't have the binding for `odd?`.
+      - see wiki leafac's for the more detailed examples.
+        let
+        > in which the bindings of the lambda itself *are not in place.*
+    - As https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html#%_sec_3.2 shows the key problem is where we *~~define~~create* the lambda value which decides what bindings we can use when applying that lambda.
+- [ ] 21
+  - a. We can do similar to [Lambda_calculus_Y_combinator] "Given n = 4, for example, this gives:"...
+    Fib also see https://gist.github.com/z5h/238891 from https://stackoverflow.com/a/7721871/21294350.
 ### @TODO
-- 17
+- ~~17~~
   - > Design a way...
     See `test-sequential-and-simultaneous-evaluation.scm`. IMHO just making all `define`s before the rest is fine.
-      1. The above is not allowed by wiki meteorgan's. This is fine due to not allow reordering. Also see the above. (SOLVED)
+      1. The above is *not allowed* by wiki meteorgan's. This is fine due to not allow reordering. Also see the above. (SOLVED)
       2. If so, what is the difference from meteorgan's and the original `define`?
         See "So the above meteorgan's" in the following. (SOLVED)
       3. Most important, what is "simultaneous scope" at all?
@@ -2207,6 +2234,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 
 [Fibonacci_variant]:https://math.stackexchange.com/q/4934605/1059606
 
+<!-- wikipedia -->
 [Composite_Simpson_rule]:https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_1/3_rule
+[Lambda_calculus_Y_combinator]:https://en.wikipedia.org/wiki/Lambda_calculus#Recursion_and_fixed_points
 
 [fake_let_assignment]:https://stackoverflow.com/a/11833038/21294350

@@ -4,7 +4,7 @@
 ;; Based on "... keep the evaluation order"
 (define (make-set! var val)
   (list 'set! var val))
-;; This replacement mechanism won't work for wiki example
+;; This replacement mechanism won't work for wiki example with let inside value of define
 ;; > may break our program and result in undefined behavior:
 (define (scan-out-defines-simultaneous body)
   ;;; same as 4.16.
