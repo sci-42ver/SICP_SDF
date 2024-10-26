@@ -2740,10 +2740,11 @@ Emm... still duplicate of much book contents but relates with env model...
 - [x] `map-streams` see Exercise 3.50.
 - [x] 
   - TODO
-    - `define-syntax`
+    - `define-syntax` (where is this?)
+      Anyway, [see](https://stackoverflow.com/q/79098453/21294350)
   - same as book but use `(map-streams + ...)`.
     > We can define the Fibonacci numbers in the same style:
-- TODO "Bonus Problem"
+#### @TODO "Bonus Problem"
 # chapter 4
 ## book
 - > with the same general techniques used by designers of all complex systems
@@ -2877,6 +2878,9 @@ Emm... still duplicate of much book contents but relates with env model...
   so at least more primitive operations.
 - > Sets the foundation for exploring variants of Scheme
   i.e. section 4.2, 4.3.
+## rec
+### 19
+- [`setf` implementation](https://stackoverflow.com/a/44700342) skipped due to about Common LISP.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

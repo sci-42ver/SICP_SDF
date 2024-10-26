@@ -1,6 +1,6 @@
 ;; from rec
 (load "stack.scm")
-; (define top-env (the-environment))
+(define top-env (the-environment))
 
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tests your recitation instructor used to make sure the code actually
@@ -19,6 +19,10 @@
   ; it raises an exception .
   ; ... black magic lies herein
   (let ((exception-thrown #f))
+    ;; > which errors we want catch ... the predicate returned #t
+    ;; i.e. all want to be caught.
+    ;; > the next enclosing with-handlers is looked at
+    ;; as the link shows we can have multiple (pred handler)'s.
     ;; IGNORE: https://practical-scheme.net/wiliki/schemexref.cgi?with-handlers 
     ; (with-handlers ((
     ;                  (lambda (exn) #t) ; filter all exceptions
@@ -35,6 +39,7 @@
 
     ;; Since I use MIT-scheme instead of DrScheme (i.e. Drracket now)
     ;; https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_910 hinted by https://practical-scheme.net/wiliki/schemexref.cgi?with-handlers -> https://practical-scheme.net/wiliki/schemexref.cgi?with-exception-handler
+    ;; Compared with the above, we don't allow multiple pred's but just catch all raised errors.
     (call-with-current-continuation
       (lambda (k)
         (with-exception-handler
@@ -46,6 +51,7 @@
             ;; return the appropriate value to avoid throwing errors
             (k 'exception))
           (lambda ()
+            ; (display (list "top-env" top-env))
             (eval expr top-env)))))
     (if (not exception-thrown)
       (error " The following expression should have raised an exception :" expr))))
@@ -54,6 +60,7 @@
 ; and thus assert-throws will complain .
 
 (assert-throws '(1 +))
+; thrown by: #[condition 13 "inapplicable-object"]
 
 ; Test stack methods
 (define s (make-stack 10))
@@ -86,7 +93,9 @@
 ; Make sure errors are generated appropriately .
 (define s (make-stack 10))
 (assert-throws '(s 'push-all-list '(1 2 3 4 5 6 7 8 9 10 11)))
-(assert-throws '(define s (make-stack -10))) ; -->error
+; thrown by: "stack overflow when push"
+(assert-throws '(define s (make-stack -10)))
+; thrown by: ("max-depth must be non-negative , not :" -10)
 ; You do * not * need to understand the following for this course , but it 's
 ; provided here for the curious ...
 ;
@@ -113,5 +122,6 @@
 ; argument , it returns silently . If an error is not thrown , it complains .
 ; Since it is supposed make sure errors are generated and suppress them , quote
 ; the expression in question instead of evaluating it in the global environment .
+
 ; (eval ...) is a special form that takes an object and evaluates it using the
 ; interpreter . We 'll be doing stuff like this this week in class .

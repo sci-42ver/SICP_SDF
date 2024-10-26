@@ -15,20 +15,21 @@
       )
     (define (peek)
       (if (empty?)
-        (error "stack underflow")
+        (raise "stack underflow when peek")
         (car data)))
     (define (push elt)
       (if (have-room?)
         (set! data (cons elt data))
         ; 'do-nothing
         ;; to be compatible with test
-        (error "stack overflow")
+        ;; See https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_index_910. Use raise to output some useful infos. 
+        (raise "stack overflow when push")
         ))
     (define (pop)
       ;; > Remember to program defensively.
       (if (empty?)
         ;; sol: done implicitly in peek.
-        (error "stack underflow")
+        (raise "stack underflow when pop")
         (let ((top (peek)))
           (set! data (cdr data))
           top)))
@@ -56,11 +57,11 @@
            args))
 
         ((data) data)
-        (else (error " stacks can 't " msg))))
+        (else (raise (list "stacks can't " msg)))))
     ; any additional initialization , parameter checking , etc .
     ;; sol `(< max-depth 0)`
     (if (< max-depth 0)
-      (error " max-depth must be non-negative , not :" max-depth))
+      (raise (list "max-depth must be non-negative , not :" max-depth)))
 
     ; return the message handler
     msg-handler))
