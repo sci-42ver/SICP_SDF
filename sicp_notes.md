@@ -276,7 +276,7 @@ I skipped [Problem Sets](https://github.com/abrantesasf/sicp-abrantes-study-guid
 Also see [this TA's site](https://people.csail.mit.edu/dalleyg/6.001/SP2007/) besides sicp.csail.mit.edu.
 - > You can use the lecture based "text book" by going to the tutor
   I can't access tutor since I am not one MIT student.
-- TODO see Some minor "bugs" in Project 4
+- TODO see Some minor "bugs" in Project 4 (where?)
 - trivially I can't use [6.001 Lab – 34-501](https://groups.csail.mit.edu/mac/classes/6.001/FT98/lab-use.html), [outer door combination 94210, inner door combination 04862*](https://people.csail.mit.edu/dalleyg/6.001/SP2007/solutions01.pdf)
 ### lecture
 - lecture corresponding chapter see 6.037 description.
@@ -2853,7 +2853,7 @@ Emm... still duplicate of much book contents but relates with env model...
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
 - > Names
   i.e. name in name collision.
-- Lexical analyzer, Parser: analyze where () is implicitly implied in Scheme implementation in 4.1.
+- [Lexical analyzer](https://en.wikipedia.org/wiki/Lexical_analysis), Parser: analyze where () is implicitly implied in Scheme implementation in 4.1.
   Printer: `user-print`
 - > Arithmetic calculator
   already shown in `(application? exp)` case of `eval`.
@@ -2879,8 +2879,15 @@ Emm... still duplicate of much book contents but relates with env model...
 - > Sets the foundation for exploring variants of Scheme
   i.e. section 4.2, 4.3.
 ## rec
-### 19
+### sp rec19
+With lec17, both overlap too much with the book (almost already contained)...
 - [`setf` implementation](https://stackoverflow.com/a/44700342) skipped due to about Common LISP.
+- [6.035](https://web.archive.org/web/20080503094255/http://web.mit.edu/6.035/www/index.html) is about compiler
+- [ ] 2
+  - ~~TODO diff~~
+- [x] 3 just see the book.
+- [x] 4
+  - both will redefine `quote`.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
