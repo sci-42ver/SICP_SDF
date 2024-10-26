@@ -2232,6 +2232,7 @@ not use
   object -> assignment -> not functional.
 ## lec
 ~~TODO read stream lec since [wayback machine is hacked temporarily](https://www.theverge.com/2024/10/11/24268040/internet-archive-data-breach-outage-hacked).~~
+I skipped Message Passing rec since 1. up to now I haven't get more knowledge from recalculate beside what the book taught ~~2. these rec are much ~~.
 ### 11
 - > operations
   See book
@@ -2842,7 +2843,40 @@ Emm... still duplicate of much book contents but relates with env model...
   See Exercise 4.16 a.
 - > Performing it repeatedly is wasteful.
   maybe due to `eval` and `apply` are in different memory locations. So keeping running one part is much faster than *reading* 2 memory locations alternately.
-#### @TODO
+- > *evaluation of the value* expressions for the defined variables doesn't actually use any of the defined variables
+  so `even?` example is fine since `lambda` can be evaluated even if its body implies mutual recursion.
+  [similar to](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-7.html#TAG:__tex2page_index_284) but not consider Exercise 4.19 Eva's
+  >it is an error if it is not possible to evaluate each <expression> of every internal definition in a <body> *without assigning or referring to* the value of the corresponding <variable> or the <variable> of any of the definitions that *follow* it in <body>.
+## lec
+### 17
+- From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
+- > Names
+  i.e. name in name collision.
+- Lexical analyzer, Parser: analyze where () is implicitly implied in Scheme implementation in 4.1.
+  Printer: `user-print`
+- > Arithmetic calculator
+  already shown in `(application? exp)` case of `eval`.
+- > How many times is eval called in these two evaluations?
+  - `define*` 1 + `plus*` 2
+    - wrong see p3, 1+3.
+  - 2
+  - totally one more (i.e. `define*`) than ~~same as~~ "1. Arithmetic calculator".
+- > What are the argument and return values of eval each time it is called in the expression above?
+  list
+- ~~`(eq? test #t)` better to be `true? ...` as the book for ADT.~~
+  `(eq? test #t)` is just based on ADT `true*`.
+- "some-other-environment" means extended GE with `plus*`?
+- > no pending operations on either call
+  i.e. not lazy evaluation.
+- > an iterative algorithm if the expression is iterative
+  see book `factorial` problem in 4.1.7.
+- > Writing a precise definition for what the Scheme language means
+  e.g. [BNF](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-9.html#TAG:__tex2page_chap_7)
+- > Describing computation in a computer language forces precision and *completeness*
+  [see](https://www.cs.cmu.edu/afs/cs/user/clamen/OODBMS/Manifesto/htManifesto/node9.html#:~:text=From%20a%20programming%20language%20point,for%20instance%20is%20not%20complete.)
+  so at least more primitive operations.
+- > Sets the foundation for exploring variants of Scheme
+  i.e. section 4.2, 4.3.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

@@ -127,9 +127,9 @@
         (else (make-begin seq))))
 (define (make-begin seq) (cons 'begin seq))
 
-;; cons-1
 (define (application? exp) (pair? exp))
 (define (operator exp) (car exp))
+;; return one list implied by no-operands?
 (define (operands exp) (cdr exp))
 (define (no-operands? ops) (null? ops))
 (define (first-operand ops) (car ops))
@@ -178,7 +178,7 @@
 ;; implies list
 (define the-empty-environment '())
 
-;; cons-2
+;; cons-1
 (define (make-frame variables values)
   (cons variables values))
 (define (frame-variables frame) (car frame))
