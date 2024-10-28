@@ -1,0 +1,5 @@
+; > That’s another reason why you need colons for variables.
+; i.e. to differentiate from func.
+to demo :list
+print list 1 2
+end

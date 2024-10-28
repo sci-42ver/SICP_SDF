@@ -1,3 +1,16 @@
+@CblueX IMHO that is fine as https://en.cppreference.com/w/c/language/operator_incdec "... real floating type ..." says.
+
+As Will Ness says, IMHO Christoph's is better than Kyle Cronin's. Also see this QA answer https://stackoverflow.com/a/1240613/21294350 which says the relation between tail-call optimization and tail-recursion optimization. It also says how `goto` or `jump` is used.
+
+The above "imaginary assembly language" can be understood better with https://en.wikipedia.org/wiki/Tail_call#C_example IMHO. `duplicate_aux` there can be *nested* in `duplicate` just like the above `function_tail_optimized` and `function` by adjusting the "parent frame" possibly to set "the parameters for the subroutine" appropriately. Then the `if` inside `duplicate_aux` decide the base case for the recursive `jump` and then "will then return directly to the return address of" callee as wikipedia says.
+
+Notice `jump` doesn't imply tracking "return address" at least for [x86 `jmp`](https://www.felixcloutier.com/x86/jmp) "the new TSS’s *previous task link field is not loaded* with the old task’s TSS selector. A return to the previous task can thus not be carried out by executing the IRET instruction. Switching tasks with the JMP instruction differs in this regard from the *CALL* instruction which does set the NT flag and *save the previous task link* information".
+
+As one reference for future readers, also see https://stackoverflow.com/a/9814654/21294350 which gives one more detailed step-by-step optimization example than Kevin Montrose's.
+
+As one reference for future readers, also see https://stackoverflow.com/a/9814654/21294350 which gives one more detailed step-by-step optimization example than Kevin Montrose's. One alternative method for implementing tail call optimization is shown in wikipedia https://en.wikipedia.org/wiki/Tail_call#Through_trampolining "a piece of code that *repeatedly* calls functions. *All* functions are entered via the trampoline". One detailed example is shown in https://stackoverflow.com/a/489860/21294350 which loops in `trampoline` to run all calls.
+
+Thanks. I can understand what you meant about env. But my question is about "first-class expression" shown in that notes pdf. I can't understand why ucblogo uses such "first-class expression" which seems to be not First-class citizen (please see the last sentence in point 1 and 2.1) *in place of first-class functions* used by Scheme? Sorry if my question has ambiguity. Please point out if any.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -273,7 +286,7 @@ I skipped [Problem Sets](https://github.com/abrantesasf/sicp-abrantes-study-guid
 - ~~From Lect 10 (excluded),~~ ~~I won't read lecs and recs in this course if it is *just rephrasing* of the book contents although it actually doesn't take much time to read these (at most one day each for lec and rec). ~~ ~~I will read lec by viewing its structure without detailed reading since it  probably is the duplicate of the book contents.~~
   lec: This is because from the former reading experience it is just duplicate without anything new except "Lecture 6 *Programming methodology*" which doesn't have the corresponding section with the same name. And it is enough to read CS 61A notes which has *something new* based on the book.
   rec: these are always *easier* than book exercises.
-Also see [this TA's site](https://people.csail.mit.edu/dalleyg/6.001/SP2007/) besides sicp.csail.mit.edu.
+Also see [this TA's site][6_001_sp_2007_rec] besides sicp.csail.mit.edu.
 - > You can use the lecture based "text book" by going to the tutor
   I can't access tutor since I am not one MIT student.
 - TODO see Some minor "bugs" in Project 4 (where?)
@@ -950,15 +963,19 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - p44
 - p54
 - p58
+- p68
 ## @TODO
-### @underlined words
-- p24 MapReduce
+### @underlined words checked up to p88
+- ~~p24 MapReduce~~
   > (accumulate reducer base-case (map mapper data))
+  See p26 where we actually combine related kv-pairs sharing the key into one *bucket*. Then `(reduce reducer base-case (map kv-value subset)` only for *value*s. Same as p85
+  > Since all the data seen by a single reduce process have the same key, the reducer doesn’t deal with keys at all.
 - p56
-  > how the Scheme *interpreter* uses mutable pairs to *implement environments*
+  ~~> how the Scheme *interpreter* uses mutable pairs to *implement environments*~~
 - ~~p60~~
   > This idea of using a *non-functional implementation* for something that has functional behavior will be very useful later when we look at *streams*.
   here it just means Memoization, so see "Memoization of streams" at page 77.
+- [p80~82](https://stackoverflow.com/q/79130435/21294350)
 ## Week 1
 - > reminder about quoting
   IMHO this means we first get the value of `hello` and then do `first` on that.
@@ -1045,6 +1062,15 @@ It is really hard to understand these codes since we don't know the detailed imp
   [See](https://introtcs.org/public/lec_08_uncomputability.html) or DMIA universal Turing machine.
   > One of the most significant results we showed for Boolean circuits (or equivalently, straight-line programs) is the notion of universality: there is a single circuit that can evaluate all other circuits
 - [tail recursion elimination (2nd paragraph and `function_tail_optimized`)](https://stackoverflow.com/a/1240613/21294350)
+  - [relation with tail call elimination](https://stackoverflow.com/a/1240560/21294350)
+  - https://en.wikipedia.org/wiki/Tail_call#Tail_recursion_modulo_cons
+    > But prefixing a value at the start of a list on exit from a recursive call is the same as appending this value *at the end of the growing list* on entry into the recursive call, thus building the list as a side effect, as if in an implicit accumulator parameter.
+    i.e. "growing list" -> `head` in Scheme.
+    just similar to [this](https://stackoverflow.com/a/310980/21294350) but `cons` -> `*`
+    - [accumulator parameter](http://homepages.math.uic.edu/~jan/mcs275/mcs275notes/lec08.html#:~:text=An%20accumulating%20parameter%20accumulates%20the,the%20input%20parameter(s)%3B)
+  - https://en.wikipedia.org/wiki/Tail_call#Relation_to_the_while_statement
+    IMHO mainly due to *recursive* calls which is just like one `while`.
+    Also see "This Julia program gives an iterative definition fact_iter of the factorial:" which just changes the accumulating arguments as what tail-recursive does.
 - > And yet these three procedures exactly parallel the core procedures in a real Scheme interpreter:
   ~~IMHO~~ "parallel" means "are similar to".
 ## Week 6
@@ -1092,8 +1118,9 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
       (see Figure 3.8 for how 2 args are nested.)
       - Also see 6.001 lec14 where "evaluated" means "created"
         > was evaluated in E1
-      - > Scheme’s rule, in which the procedure’s defining environment is extended, is called lexical scope. The other rule, in which the current environment is extended, is called dynamic scope.
+      - > Scheme’s rule, in which the procedure’s *defining* environment is extended, is called lexical scope. The other rule, in which the *current environment* is extended, is called dynamic scope.
         ~~So the book is dynamic scope? (also see SDF_notes)~~
+        <a id="Lexical_scoping_vs_Dynamic_scoping"></a>
 - > to the current environment at the time the lambda is seen.
   i.e. ["created"](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-21.html)
   > The resulting procedure object is a pair consisting of the text of the lambda expression and a pointer to the environment in which the procedure was created.
@@ -1218,7 +1245,84 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
     Here `(read)` has no argument, so its varying output is fine for ["purely functional programming language"](https://en.wikipedia.org/wiki/Purely_functional_programming).
     > Purely functional programming consists of ensuring that functions, inside the functional paradigm, will *only depend on their arguments*, regardless of any *global or local state*.
     but "remember the effect of each thing the user type" will need "local state".
-- 
+## Week 12
+- > Here’s a reminder of the reasons ...
+  See p40
+- > universality
+  i.e. Universal Turing machine
+- see book
+  > e key idea of *data-directed programming* is to handle generic opera-tions in programs by dealing explicitly with operation-and-type tables,
+  so "data" -> "table".
+- > You might want to compare it to the one-screenful substitution-model interpreter you saw in week 6.
+  i.e. highlighted words. In a nutshell, just add `env`.
+- > they’d still be teaching you where the semicolons go.
+  i.e. maybe analogy to [basic syntaxes](https://www.isu.edu/media/libraries/student-success/tutoring/handouts-writing/editing-and-mechanics/semicolons.pdf).
+- "get away with" means [succeed](https://dictionary.cambridge.org/us/dictionary/english/get-away-with) with
+- > as we did in week 7
+  TODO that is about OOP...
+- > data structures that are both hierarchical and circular.
+  i.e. recursive definition where if we keep expand the lambda, then [Circular buffer](https://en.wikipedia.org/wiki/Circular_buffer#:~:text=In%20computer%20science%2C%20a%20circular,circular%20buffer%20implementations%20in%20hardware.)
+- [homogeneous sequence](https://stackoverflow.com/a/17765013/21294350), i.e. [same *category*](https://doc.sagemath.org/html/en/reference/structure/sage/structure/sequence.html).
+  see https://docs.python.org/3/library/functions.html#enumerate for heterogeneous.
+  similar to [wikipedia reference](https://web.archive.org/web/20160304035925/http://www.wseas.us/e-library/conferences/2006lisbon/papers/517-481.pdf) about homogeneous recurrence relation definition
+- [name capture](https://www.computer-dictionary-online.org/definitions-n/name-capture#:~:text=In%20beta%20reduction%2C%20when%20a,spuriously%20bound%20or%20%22captured%22.) same as [this](https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B1-conversion)
+  > it would result in a variable getting captured by a different abstraction
+  i.e. the original free variable for the inner lambda is now bound (i.e. captured).
+  - different from [Variable_shadowing]
+- > That is, a procedure that has a local state variable must be defined within the scope where that variable is created
+  maybe `(let ((local ...)) (define proc1 ...))` like ["We can make balance internal to withdraw by rewriting the definition as follows:"](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html#%_sec_3.1.1)
+- how lexical scope Prevents “name capture” bugs
+  see `(area rad)` example where the original free variable `pi` is captured by the context caller when using dynamic scope.
+- > because the variable x is not bound in any environment lexically surrounding while.
+  this is due to we pass quote by `[:x > 0]`, so we need the value of `x`.
+- TODO
+  > complaining about an empty argument to first
+  here the `:list` is always the sublists of `:ranks` or `:suits`, so how this error is thrown?
+  ```
+  ? hand [10h 2d 3s]
+  ten of hearts
+  first doesn't like [] as input  in assq
+  [if equalp :thing first first :list [op last first :list]]
+  ? pons
+  Make "ranks [[a ace] [2 two] [3 three] [4 four] [5 five] [6 six] [7 seven] [8 eight] [9 nine] [10 ten] [j jack] [q queen] [k king]]
+  Make "suits [[h hearts] [s spades] [d diamonds] [c clubs]]
+  ```
+  > This will include the variable cards
+  not shown in my downloaded version.
+- > because the environment contains procedures and each procedure contains a pointer to the environment in which it’s defined
+  e.g. `(define (foo x) ...)`.
+### Mapreduce
+- `mapreduce` is just like the book Figure 2.7.
+- > write mapper functions that combine these three patterns for more complicated tasks
+  e.g. by `cond`
+- [bucket sort](https://hasty.dev/shorts/sorting/bucket-vs-merge) ([also](https://hasty.dev/blog/sorting/bucket-vs-merge))
+  one iter to get min,max
+  and then one more to create bucket with ordered *sublist*s.
+  Then `insertionSort` or ... for each bucket.
+  - `result.concat(left.slice(l)).concat(right.slice(r))` is to combine the rest un-compared elements.
+  - > in which each map process is responsible for sending each of its output kv-pairs to the proper reduce process
+    if with min, max and bucket predefined which is implied by
+    > The mapreduce program takes care of it
+- `ss` may mean `show-stream`
+- [data-driven computation](https://thesis.library.caltech.edu/10431/8/Kirchdoerfer_Trenton_2017_Thesis.pdf)
+  > Data Driven Computing is a new field of computational analysis which *uses provided data* to directly produce *predictive* outcomes
+- > `(ss (mapreduce list cons-stream the-empty-stream "/beatles-songs"))`
+  how `mapreduce` combines the final key-result depends on the implementation.
+- > in this case, map will call list with one argument and so it’ll return a list of length one.
+  i.e. `map list kv-pairs`, so for each `kv-pair` it just outputs `(list kv-pair)`
+  Compare this with `document-line-kv-pair`.
+- ~~TODO we should use `(stream-accumulate find-max-reducer (make-kv-pair ’foo 0) frequent)` since `frequent` is already one list of key-value pairs~~
+  `(stream-map kv-value frequent)` is to get the actual useful data, e.g. `(back . 3)` from `(b . (back . 3))`.
+- > A better way would be to count each play separately
+  i.e. `(lambda (kv-pair) (list (make-kv-pair (kv-key kv-pair) 1)))`
+  > then add those results if desired
+  `(stream-accumulate + 0 (stream-map kv-value will))`
+- > The Scheme interface to mapreduce recognizes the special cases of cons and cons-stream as reducers and does what you intend, even though it wouldn’t actually work without this special handling, both because cons-stream is a special form and because the iterative implementation of mapreduce would do the combining in the wrong order.
+  I can't get the `mapreduce` code, so skipped understanding this block.
+  same for
+  > Streams you make yourself with cons-stream, etc., can’t be used.
+### @TODO check underlined words (1 in each of page 80~82 all about first-class expressions)
+- all contexts of "first-class expression".
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -2024,11 +2128,11 @@ not use
   But the latter does `(factorial (- n 1))` which is just creating one new `factorial` and the caller is also `factorial`. So all of them are in "the global environment".
 - `(define (make-withdraw initial-amount) (let ((balance initial-amount)) ...))` is similar to `(define new-withdraw ...)`.
 - > simply by using parameter names as free variables.
-  i.e. they are [*defined externally*](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#Formal_explanation)
+  i.e. they are [*defined externally*](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#Formal_explanation) <a id="free_variable_def"></a>
   > In computer programming, the term free variable refers to variables used in a function that are *neither local variables nor parameters* of that function.
   parameters:
   > In the lambda calculus, x is a bound variable in the term M = λx. T and a free variable in the term T. We say x is bound in M and free in T.
-  [local variables](https://en.wikipedia.org/wiki/Local_variable#Local_variables_in_Perl)
+  [local variables](https://en.wikipediba.org/wiki/Local_variable#Local_variables_in_Perl)
   - Here `x` is not "parameters" of `good-enough?`.
     There is no `(define x ...)` in `good-enough?` so it is also not "local variables".
     See how "local variables" work:
@@ -2041,6 +2145,10 @@ not use
       (display (list "outer" x)))
     (test-1 1)
     ```
+  - Also see https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-10.html#%_sec_1.1 "For example, in the square-root problem we can write"
+    when running `(sqrt 5)` we creates one new frame with x->5 binding, then all later `define`s are also added to that frame.
+    So "local" and "parameter" are thought *similarly* for Scheme, probably also for other languages.
+    - https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables doesn't think about "local variable" since it has no something similar to `define`.
 ### 3.3
 - IMHO Figure 3.16 is wrong since although `(car z1)` is right, `(cdr z1)` is `(b)`.
   See xxyzz/SICP Exercise 3.15.
@@ -2772,7 +2880,7 @@ Emm... still duplicate of much book contents but relates with env model...
 - notice `(definition? exp)` doesn't ensure the correct usage of `define`.
 - > A procedure application is any compound expression that is not one of the above expression types.
   So it is put at last and uses `(pair? exp)`.
-- name-conflict problem due to "macro"
+- name-conflict problem due to "macro" (i.e. [name collision](https://en.wikipedia.org/wiki/Name_collision#Avoiding_name_collisions). Also see [name shadowing](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#Formal_explanation) (i.e. [this][Variable_shadowing]). The latter 2 are similar as [this](https://stackoverflow.com/q/62051936/21294350) implies.)
   see [c++ solution](https://nimrod.blog/posts/how-to-resolve-macro-name-collisions/#isolating-third-party-headers-with-forwarding-files-recommended) for example
   - [`push_macro`](https://gcc.gnu.org/onlinedocs/gcc/Push_002fPop-Macro-Pragmas.html)
     here `#pragma push_macro("CHECK")` will save the definition in lib B, then `#include "A.h" // And other A's headers` will only use `CHECK` in the file lib A itself. Then "prefer to retain B’s definition of CHECK" -> `#pragma pop_macro("CHECK")`.
@@ -2878,7 +2986,24 @@ Emm... still duplicate of much book contents but relates with env model...
   so at least more primitive operations.
 - > Sets the foundation for exploring variants of Scheme
   i.e. section 4.2, 4.3.
+### 18
+IMHO lexical vs. dynamic scoping is the only one concept up to now not taught in the book but in lecs
+- [Semantics vs. syntax](https://stackoverflow.com/a/17931183/21294350)
+- see [Lexical_scoping_vs_Dynamic_scoping] same as p6
+- [Syntactic Abstraction](https://wiki.c2.com/?SyntacticAbstraction) -> https://wiki.c2.com/?LispMacro -> [`syntax-rules`](https://www.gnu.org/software/guile/manual/html_node/Syntax-Rules.html)
+  - TODO [Lisp macros versus Rust macros and C](https://simondobson.org/2024/06/14/lisp-macros-versus-rust-macros/#:~:text=Lisp%20has%20only%20one%20kind,are%20basically%20just%20string%20expanders.)
+- > Separation of syntax and semantics
+  semantics -> `eval/apply`
+- [`let?` (see Hertz's which is same as here p4)](http://community.schemewiki.org/?sicp-ex-4.6)
+- [Syntactic transformation](https://people.eecs.berkeley.edu/~bjoern/papers/rolim-refazer-icse2017.pdf)
+  >  a program transformation is defined as a sequence of *distinct rewrite rules* applied to the abstract syntax tree
+- > How does our evaluator achieve lexical scoping?
+  i.e. `extend-environment` in `(apply procedure arguments)`.
+- when will Dynamic Scoping help
+  [see](https://www.geeksforgeeks.org/static-and-dynamic-scoping/#)
+  > such as recursive functions or code with complex control flow
 ## rec
+skip Analysis & Quiz II Review due to no related lecs.
 ### sp rec19
 With lec17, both overlap too much with the book (almost already contained)...
 - [`setf` implementation](https://stackoverflow.com/a/44700342) skipped due to about Common LISP.
@@ -2888,6 +3013,9 @@ With lec17, both overlap too much with the book (almost already contained)...
 - [x] 3 just see the book.
 - [x] 4
   - both will redefine `quote`.
+### rec18
+This is less appropriate here. But [6_001_sp_2007_rec] doesn't have one corresponding one.
+This is much more trivial than the book exercises.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
@@ -2915,13 +3043,18 @@ With lec17, both overlap too much with the book (almost already contained)...
 - the [3 comments](https://stackoverflow.com/questions/79011368/is-environment-model-necessary-for-higher-order-procedures/79028978#comment139349156_79028978)
 # TODO after distributed systems
 - footnote 51 in section 3.4.
+# TODO after compiler
+- Why is [dynamic scope implementation](https://stackoverflow.com/a/1048531/21294350) harder as CS 61A notes p81 says?
+  > With dynamic scope you have to defer the name-location correspondence until the program actually runs
 
-TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which don't have corresponding chapters in the book. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+# @TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
 <!-- in-page link -->
 [SDF_Inheritance]:#SDF_Inheritance
 [procedure_application_environment_rule]:#procedure_application_environment_rule
 [special_form]:#special_form
+[Lexical_scoping_vs_Dynamic_scoping]:#Lexical_scoping_vs_Dynamic_scoping
+[free_variable_def]:#free_variable_def
 
 [ucb_sicp_review]:https://people.eecs.berkeley.edu/~bh/sicp.html
 
@@ -2946,9 +3079,12 @@ TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which 
 [First_class_citizen]:https://en.wikipedia.org/wiki/First-class_citizen#History
 [merge_sort]:https://en.wikipedia.org/wiki/Merge_sort#Top-down_implementation
 [A*_optimal]:https://en.wikipedia.org/wiki/A*_search_algorithm#Admissibility
+[Variable_shadowing]:https://en.wikipedia.org/wiki/Variable_shadowing
 
 [CS61A_lib]:https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/
 
 <!-- gnu scheme doc -->
 [scheme_stream_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Streams.html#index-cons_002dstream
 [scheme_promise_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Promises.html#index-force
+
+[6_001_sp_2007_rec]:https://people.csail.mit.edu/dalleyg/6.001/SP2007/

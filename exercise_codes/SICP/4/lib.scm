@@ -303,3 +303,13 @@
       (display object)))
 
 (define the-global-environment (setup-environment))
+
+;; CS 61A
+;; > moral number 2 is not to try to trace a procedure in the evaluator that has an environment as an argument!
+(trace eval)
+(define (test x)
+  (* x x))
+;; MIT/GNU Scheme can debug this circular list although unable to display that.
+(define base (list 1 2))
+(set-cdr! base base)
+; (display base) ; infinite loop
