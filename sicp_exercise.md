@@ -1964,7 +1964,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - same as wiki meteorgan's but using `make-point` instead of `cons`.
 ## chapter 4
 - [x] 1 use `let`
-  - see wiki `(let ((first (eval (first-operand exps) env)))` but I will just let `rest` omitted by putting that value in `cons`, i.e. mathieubordere's.
+  - see wiki. But I will just let `rest` omitted by putting that value in `cons` with only ``(let ((first (eval (first-operand exps) env)))``, i.e. krubar's.
 - [x] 2
   - a. trivial since mismatch as procedure for some special forms.
   - b. `(define (application? exp) (tagged-list? exp 'call))`

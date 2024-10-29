@@ -14,6 +14,7 @@
 ;; For example in the book (factorial 4),
 ;; Then `execute-application` call on analyzed proc.
 ;; Then the recursive factorial *won't call analyze* due to having been analyzed.
+;;; Also see CS61A notes p88.
 ;; So "saves work".
 ;; i.e.
 ;; > n 4.1.1. Execute-application differs from apply in that the procedure body for a compound procedure has already been analyzed, so there is *no need to do further analysis*.

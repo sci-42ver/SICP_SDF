@@ -83,7 +83,8 @@
 (define test-exp3 '(and (display-ret false) (display-ret e) (display-ret #f) (display-ret e)))
 ;; from x3v test
 (define test-exp4 '(and (display-ret false) (display-ret false)))
-(define test-lst (list test-exp1 test-exp2 test-exp3 test-exp4))
+(define test-exp5 '(and (begin (define x 3) (display-ret x)) (display-ret (* x x))))
+(define test-lst (list test-exp1 test-exp2 test-exp3 test-exp4 test-exp5))
 (define (test proc test-lst env)
   (for-each 
     (lambda (exp) 
@@ -98,7 +99,9 @@
 ; (return 1)(return 2)2
 ; (return #f)#f
 ; (return #f)#f
+; (return 3)(return 9)9
 
+;; use MIT/GNU Scheme internal eval.
 (define (expand-and-predicates predicates env)
   (if (no-predicate? predicates) 
       'true 
@@ -125,6 +128,7 @@
 ;; here false is transformed to #f by MIT/GNU Scheme.
 ; (return #f)false
 ; (return #f)false
+; (return 3)(return 9)(if 3 (if 9 9 false) false)
 
 (define (expand-or-predicates predicates env)
   (if (no-predicate? predicates) 
@@ -143,3 +147,4 @@
 ; (return 1)1
 ; (return #f)(return 2)(if #f #f 2)
 ; (return #f)(return #f)(if #f #f (if #f #f false))
+; (return 3)3

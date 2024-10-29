@@ -1,16 +1,10 @@
-@CblueX IMHO that is fine as https://en.cppreference.com/w/c/language/operator_incdec "... real floating type ..." says.
+Thanks. 1. "manipulate expressions like any other data": Then the above point 1 in the question post can be understood that "expression" is manipulated as one *function* which is included in "any other data". 1.1 IMHO "expression" is *always* implicitly "first-class citizen" because that 3  properties are always met like in Scheme and C. Is there some counterexample? 
 
-As Will Ness says, IMHO Christoph's is better than Kyle Cronin's. Also see this QA answer https://stackoverflow.com/a/1240613/21294350 which says the relation between tail-call optimization and tail-recursion optimization. It also says how `goto` or `jump` is used.
+2. "you can also build arbitrary expressions from data": Do you mean "... from data and then run it"? So "There is no such thing in a language like C" since compiler outputs the executable and normally can't generate one new code block to run *at runtime* if not using special mechanism in footnote 1.
 
-The above "imaginary assembly language" can be understood better with https://en.wikipedia.org/wiki/Tail_call#C_example IMHO. `duplicate_aux` there can be *nested* in `duplicate` just like the above `function_tail_optimized` and `function` by adjusting the "parent frame" possibly to set "the parameters for the subroutine" appropriately. Then the `if` inside `duplicate_aux` decide the base case for the recursive `jump` and then "will then return directly to the return address of" callee as wikipedia says.
+3. "it can be used in place of first-class functions because thanks to dynamic scoping": Does it mean that "first-class expression" can be run (so can be "function") and passed implicitly due to "dynamic scoping" (i.e. "passed as an argument". Then "returned from a function, and assigned to a variable." can be also done due to being expression) so it can replace "first-class function"?
 
-Notice `jump` doesn't imply tracking "return address" at least for [x86 `jmp`](https://www.felixcloutier.com/x86/jmp) "the new TSS’s *previous task link field is not loaded* with the old task’s TSS selector. A return to the previous task can thus not be carried out by executing the IRET instruction. Switching tasks with the JMP instruction differs in this regard from the *CALL* instruction which does set the NT flag and *save the previous task link* information".
-
-As one reference for future readers, also see https://stackoverflow.com/a/9814654/21294350 which gives one more detailed step-by-step optimization example than Kevin Montrose's.
-
-As one reference for future readers, also see https://stackoverflow.com/a/9814654/21294350 which gives one more detailed step-by-step optimization example than Kevin Montrose's. One alternative method for implementing tail call optimization is shown in wikipedia https://en.wikipedia.org/wiki/Tail_call#Through_trampolining "a piece of code that *repeatedly* calls functions. *All* functions are entered via the trampoline". One detailed example is shown in https://stackoverflow.com/a/489860/21294350 which loops in `trampoline` to run all calls.
-
-Thanks. I can understand what you meant about env. But my question is about "first-class expression" shown in that notes pdf. I can't understand why ucblogo uses such "first-class expression" which seems to be not First-class citizen (please see the last sentence in point 1 and 2.1) *in place of first-class functions* used by Scheme? Sorry if my question has ambiguity. Please point out if any.
+@Barmar Yes. That is also taught in SICP section 4.1 although not saying "compiled at run time and then called". The notes doesn't give one *formal definition* for "first-class expression" as SICP does for "first-class function", so it is hard to understand it IMHO.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -955,6 +949,40 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - [x] 4 
   - a. just `stream-map` based on self.
   - b. use `(iter stream idx)` where `idx` starts from 1.
+## [Week 12](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week12)
+- [x] 1
+  `list-of-values` (just one different naming but the goal is same to eval), `eval-...` and `(driver-loop)`
+- [x] 2
+  only `eval`.
+- [ ] 3
+  just derived expression.
+  - see sol for the better explanation.
+- [x] 4
+  - 4.1 same as wiki krubar's.
+  - 4.2 same as wiki but more detailed.
+  - 4.4 ~~better to use `'true`.~~
+    Compared with `4_4.scm` "see wiki woofy better to pass env down.", the order of the latter 2 exp's before `else` doesn't matter since either they can't both exist or both orders do the same when both conds are met.
+    - `eval-or` is similar but uses `let` to avoid duplicate calculation.
+      - `(null? (cdr tests))` is dropped since at that time either `(true? result)` or not where the latter can be *also* captured by `(null? tests)` then.
+    - > This version is elegant but has the disadvantage that you end up computing the first true value twice.
+      Just the same structure as the primitive ones.
+      Also see wiki LisScheSic's implementation which just substitutes with the evaluated value and also with short circuit. They have the same structure.
+  - 4.5
+    using `lambda` to solve "duplicate calculation" problem although we can use `eval` inside to solve that just as 4.4 LisScheSic's and Unknown's.
+    Same structure as `4_5.scm`.
+- [ ] 5
+  - 5a just view `output.pdf, full-text-output.pdf`.
+    I won't dig into syntax definition and usage for `logo`.
+  - 5b just see `to greet :person` where lexical scope will throw errors.
+    - similar to sol
+  - 5c
+    ",[] both implies quote but the latter has list func.
+    - > in Logo you don't need any punctuation to call a procedure!  You just give the procedure name and its arguments.
+      for sum just 2 args when used without parentheses.
+    - > The reason this doesn't work in Logo is that in Logo procedures aren't just another data type, and a procedure name isn't just the name of a variable whose value happens to be a procedure.  (In other words, Logo procedures are not first-class.)
+      TODO "Logo procedures aren't just another data type"
+      - "procedure" can't be assigned to "variable".
+    - Sol says about differences but just similarities with Scheme.
 # @CS 61A notes
 ## skipped underlined words
 - p2
@@ -1296,6 +1324,8 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > write mapper functions that combine these three patterns for more complicated tasks
   e.g. by `cond`
 - [bucket sort](https://hasty.dev/shorts/sorting/bucket-vs-merge) ([also](https://hasty.dev/blog/sorting/bucket-vs-merge))
+  - [K-way Merge Sort](https://www.javatpoint.com/k-way-merge-sort)
+    > While the traditional merge sort algorithm merges *two subarrays* at a time
   one iter to get min,max
   and then one more to create bucket with ordered *sublist*s.
   Then `insertionSort` or ... for each bucket.
@@ -1323,6 +1353,23 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   > Streams you make yourself with cons-stream, etc., can’t be used.
 ### @TODO check underlined words (1 in each of page 80~82 all about first-class expressions)
 - all contexts of "first-class expression".
+## Week 13
+- > Software *doesn’t degrade like hardware*
+  [See](https://en.wikipedia.org/wiki/Software_rot#Onceability) Online connectivity (so "has much greater complexity") and Onceability which may probably not happen for "hardware".
+  > the quality in a technical system that *prevents a user from restoring* the system
+  - > In particular, when a program contains multiple parts which function at arm's length from one another, failing to consider how *changes* to one part that affect the others may introduce bugs.
+    IMHO this is more about *Dependency* instead of update. See "Action at a distance"
+    > varies wildly
+  - > cf. Star Wars (birth of CPSR)
+    TODO what is [the relation](http://cpsr.org/prevsite/publications/newsletters/old/fall96news.html/)?
+- > analyze invariants
+  [see](https://blog.trailofbits.com/2023/10/05/introducing-invariant-development-as-a-service/#:~:text=Invariants%20are%20facts%20about%20the,robust%20in%20the%20long%20term.)
+- > correctness proof impossible due to halting theorem
+  i.e. some problem [can't have the correct algorithm](https://en.wikipedia.org/wiki/Halting_problem#:~:text=Turing%20proved%20no%20algorithm%20exists,and%20therefore%20cannot%20be%20correct.).
+- > black box vs. glass box
+  [see](https://www.geeksforgeeks.org/differences-between-black-box-testing-vs-white-box-testing/#)
+- > Debug by subtraction
+  https://bjc.edc.org/March2019/bjc-r/cur/programming/2-complexity/4-abstraction/5-debugging-recap.html?topic=nyc_bjc%2F2-conditionals-abstraction.topic&course=bjc4nyc.html&novideo&noassignment
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -3046,6 +3093,9 @@ This is much more trivial than the book exercises.
 # TODO after compiler
 - Why is [dynamic scope implementation](https://stackoverflow.com/a/1048531/21294350) harder as CS 61A notes p81 says?
   > With dynamic scope you have to defer the name-location correspondence until the program actually runs
+- CS 61A notes 
+  - paragraph "recursive descent compiler ...".
+  - automatic analysis in compiler
 
 # @TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 

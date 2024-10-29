@@ -1,6 +1,7 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
 
+;; better to check len https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week12
 (define (alternative? sequence)
   (tagged-list? sequence '=>))
 (define (recipient clause)
