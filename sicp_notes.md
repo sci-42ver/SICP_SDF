@@ -1,10 +1,3 @@
-Thanks. 1. "manipulate expressions like any other data": Then the above point 1 in the question post can be understood that "expression" is manipulated as one *function* which is included in "any other data". 1.1 IMHO "expression" is *always* implicitly "first-class citizen" because that 3  properties are always met like in Scheme and C. Is there some counterexample? 
-
-2. "you can also build arbitrary expressions from data": Do you mean "... from data and then run it"? So "There is no such thing in a language like C" since compiler outputs the executable and normally can't generate one new code block to run *at runtime* if not using special mechanism in footnote 1.
-
-3. "it can be used in place of first-class functions because thanks to dynamic scoping": Does it mean that "first-class expression" can be run (so can be "function") and passed implicitly due to "dynamic scoping" (i.e. "passed as an argument". Then "returned from a function, and assigned to a variable." can be also done due to being expression) so it can replace "first-class function"?
-
-@Barmar Yes. That is also taught in SICP section 4.1 although not saying "compiled at run time and then called". The notes doesn't give one *formal definition* for "first-class expression" as SICP does for "first-class function", so it is hard to understand it IMHO.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.

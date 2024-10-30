@@ -49,7 +49,8 @@
 
 ;;; from wiki SophiaG
 (define test-exp-2
-  '((define map
+  '((define nil '())
+    (define map
       (lambda (proc items)
         (if (null? items)
             nil
@@ -58,7 +59,8 @@
     (define select-y '(#t #f #t #t))
     (define xs '(1 3 5 7))
     (define ys '(2 4 6 8))
-    (define selected (map (lambda (pred conseq alt) (unless pred conseq alt)) select-y xs ys))
+    ;; for simplicity, only think of unary map.
+    (define selected (map (lambda (pred) (unless pred 'yes 'no)) select-y))
     (display selected)
     ))
 (run-program-list test-exp-2 the-global-environment)

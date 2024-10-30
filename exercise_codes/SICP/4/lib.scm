@@ -267,6 +267,7 @@
         (list 'display display)
         ;; 4.26. See 4.14 for why we don't define here.
         ; (list 'map map)
+        ; (list 'nil '())
         ))
 (define (primitive-procedure-names)
   (map car

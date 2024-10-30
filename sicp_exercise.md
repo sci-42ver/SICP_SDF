@@ -2233,13 +2233,14 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     -> if (primitive) then will stop when base.
   - same as meteorgan's.
 - [ ] 26
-  - Alyssa's is just complement and in favor of Ben's
-  - > not a procedure that could be used in conjunction
-    can be done with thunk.
+  - Alyssa's is just the complement of and in favor of Ben's
   - > Fill in the details on both ...
-    Ben: just as derived expression of if.
-  - > have unless available as a procedure
+    Ben: just as the derived expression of if.
+    - > not a procedure that could be used in conjunction
+      Actually we can be transform that to procedure with something similar to thunk.
+  - > it might be useful to have unless available as a procedure
     debug?
+- [ ] 27
 ### @TODO
 - ~~17~~
   - > Design a way...
