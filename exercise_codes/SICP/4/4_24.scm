@@ -26,12 +26,13 @@
 
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
-(define (test program)
+(load "test-lib.scm")
+(define (4-24-test program)
   (implemented-measure-interval
-    (lambda () (for-each (lambda (exp) (eval exp the-global-environment)) program))
+    (lambda () (run-program-list program the-global-environment))
     (runtime))
   )
-(test test-program)
+; (4-24-test test-program)
 ;  *** 3.68
 ;; from wiki
 (define test-program-2
@@ -41,11 +42,12 @@
             1 
             (+ (fib (- n 1)) (fib (- n 2)))))
     '(display (fib 28))))
-(test test-program-2)
+; (4-24-test test-program-2)
 ;  *** 51.81
 
 (load "analyze-lib.scm")
-(test test-program)
+; (lookup-variable-value '= the-global-environment)
+(4-24-test test-program)
 ;  *** 2.740000000000002
-(test test-program-2)
+(4-24-test test-program-2)
 ;  *** 36.099999999999994

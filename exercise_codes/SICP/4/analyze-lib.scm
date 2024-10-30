@@ -1,3 +1,7 @@
+;; For 4_24.scm we will first load lib.scm. If reloading again, then `(define apply-in-underlying-scheme apply)` will not use the underlying apply.
+; (cd "~/SICP_SDF/exercise_codes/SICP/4")
+; (load "lib.scm")
+
 (define (eval exp env)
   ((analyze exp) env))
 

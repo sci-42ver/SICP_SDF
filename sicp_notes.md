@@ -784,9 +784,12 @@ I skipped https://cs.brown.edu/courses/cs017/content/docs/racket-style.pdf since
 # CS 61A lab
 Up to Week 3, they are much easier than the book exercises 
 or more specifically they are easy after having done exercises.
+
+https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week4 has no corresponding lab.
 ## Week 1 part 1
 - I won't check `emacs`.
 - I [don't have 32-bit system](https://people.eecs.berkeley.edu/~bh/61a-pages/Scheme/source/linux.html), so I won't install stk
+  > Use a 32-bit computer to 'alien STk-4.0.1-ucb1.3.6.i386.rpm'
 ## Week 1 part 2
 [sol](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week1)
 - 3 is already done in Exercise 1.3.
@@ -840,7 +843,7 @@ or more specifically they are easy after having done exercises.
   ((make-tester 'hal) 'hal)
   ((make-tester 'hal) 'cs61a)
   ```
-## Week 3
+## [Week 3](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week3)
 - [x] 1 reverses the order of `(= kinds-of-coins 1)`... or `(first-denomination (- 6 kinds-of-coins))`
 - [x] 2 should be almost ~~1:50.~~
   - sol
@@ -850,7 +853,7 @@ or more specifically they are easy after having done exercises.
 https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week5
 - [x] 5 trivial which has been stated in the book `add-rat`.
 - [x] 6,8 See `sicp_exercise.md`.
-## Week 5
+## [Week 5](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week6)
 - 2.27 same as wiki
   > A solution that uses reverse to do the work:
   and the other one solution is almost same as tf3's.
@@ -889,7 +892,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
 - [x] 2 trivial
 - [x] 3
   > the constraint is that each node must be added before any node below it.
-## Week 7
+## [Week 7](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week8)
 - [ ] 1 wrong
   - notice here all functions will call `say` at last.
     So we should just change `say` instead of `greet`.
@@ -908,7 +911,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
       - > This one works as desired.
         i.e. `(ask mike ’say ’(hello))` -> `(hello hello)`
         then `(ask mike 'repeat)` -> `(hello hello)`
-## Week 8
+## [Week 8](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week9)
 - [x] 1 this is same as SICP Exercise 3.10.
 - [x] 2 trivial by using `init-amount` and `balance` correspondingly.
 - [x] 3 trivial by adding one local variable `transactions` and update it when necessary.
@@ -916,7 +919,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   - sol
     > substitute into an unevaluated part of a special form.
     i.e. `⟨name ⟩` in SICP p299.
-## Week 9
+## [Week 9](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week10)
 - [x] 1
   - > Append (without the !) makes copies of the two pairs that are part of the list x.
     "that are part of the list x" should be "including x"
@@ -950,6 +953,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   - a. just `stream-map` based on self.
   - b. use `(iter stream idx)` where `idx` starts from 1.
 ## [Week 12](https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week12)
+[logo manual](https://people.eecs.berkeley.edu/~bh/usermanual)
 - [x] 1
   `list-of-values` (just one different naming but the goal is same to eval), `eval-...` and `(driver-loop)`
 - [x] 2
@@ -983,6 +987,38 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
       TODO "Logo procedures aren't just another data type"
       - "procedure" can't be assigned to "variable".
     - Sol says about differences but just similarities with Scheme.
+## Week 13
+no corresponding solution
+Most of them have been shown in notes Week 12.
+
+No related doc for stk by googling 'stk "get-last-mapreduce-output"'.
+- [ ] 1 see [line_count_parallel]
+- [ ] 2a see notes Week 12 `wordcount-mapper`.
+  - This implies `mapreduce` will automatically combine all results of `reduce` to one stream. 
+- [ ] 2b `(stream-accumulate find-max-reducer ...)`
+- [ ] 2c 
+  ```scheme
+  ;; modified based on notes
+  (define (my-mapper input-kv-pair)
+    (if (= 1 (kv-value input-kv-pair))
+      (list input-kv-pair)
+      '()))
+
+  ;; since each word will only have one count, so + 0 does nothing at all.
+  (define used-only-once (mapreduce my-mapper + 0 wordcounts))
+  ```
+- [ ] 3
+  - a
+    ```scheme
+    (define (match-mapreduce pattern dir-name)
+      (define (filter-pattern input-kv-pair)
+        (if (match? pattern (kv-value input-kv-pair))
+          input-kv-pair
+          '()))
+      (mapreduce filter-pattern cons '() dir-name))
+    ```
+  - b
+    pomp * etc.
 # @CS 61A notes
 ## skipped underlined words
 - p2
@@ -998,7 +1034,7 @@ See https://people.eecs.berkeley.edu/~bh/61a-pages/Solutions/week7
   > (accumulate reducer base-case (map mapper data))
   See p26 where we actually combine related kv-pairs sharing the key into one *bucket*. Then `(reduce reducer base-case (map kv-value subset)` only for *value*s. Same as p85
   > Since all the data seen by a single reduce process have the same key, the reducer doesn’t deal with keys at all.
-- p56
+- ~~p56~~
   ~~> how the Scheme *interpreter* uses mutable pairs to *implement environments*~~
 - ~~p60~~
   > This idea of using a *non-functional implementation* for something that has functional behavior will be very useful later when we look at *streams*.
@@ -1346,7 +1382,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > A better way would be to count each play separately
   i.e. `(lambda (kv-pair) (list (make-kv-pair (kv-key kv-pair) 1)))`
   > then add those results if desired
-  `(stream-accumulate + 0 (stream-map kv-value will))`
+  `(stream-accumulate + 0 (stream-map kv-value will))` <a id="line_count_parallel"></a>
 - > The Scheme interface to mapreduce recognizes the special cases of cons and cons-stream as reducers and does what you intend, even though it wouldn’t actually work without this special handling, both because cons-stream is a special form and because the iterative implementation of mapreduce would do the combining in the wrong order.
   I can't get the `mapreduce` code, so skipped understanding this block.
   same for
@@ -1370,6 +1406,11 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   [see](https://www.geeksforgeeks.org/differences-between-black-box-testing-vs-white-box-testing/#)
 - > Debug by subtraction
   https://bjc.edc.org/March2019/bjc-r/cur/programming/2-complexity/4-abstraction/5-debugging-recap.html?topic=nyc_bjc%2F2-conditionals-abstraction.topic&course=bjc4nyc.html&novideo&noassignment
+- > introduce bugs *on purpose* to analyze results *downstream*
+  [See](https://www.reddit.com/r/SoftwareEngineering/comments/1gepi0y/why_do_we_introduce_bugs_on_purpose_to_analyze/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+  - https://en.wikipedia.org/wiki/Dependency_injection
+    where injector is similar to constructor in SICP.
+- 
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -2899,7 +2940,7 @@ Emm... still duplicate of much book contents but relates with env model...
       Anyway, [see](https://stackoverflow.com/q/79098453/21294350)
   - same as book but use `(map-streams + ...)`.
     > We can define the Fibonacci numbers in the same style:
-#### @TODO "Bonus Problem"
+#### @@TODO "Bonus Problem"
 # chapter 4
 ## book
 - > with the same general techniques used by designers of all complex systems
@@ -3105,6 +3146,7 @@ This is much more trivial than the book exercises.
 [special_form]:#special_form
 [Lexical_scoping_vs_Dynamic_scoping]:#Lexical_scoping_vs_Dynamic_scoping
 [free_variable_def]:#free_variable_def
+[line_count_parallel]:#line_count_parallel
 
 [ucb_sicp_review]:https://people.eecs.berkeley.edu/~bh/sicp.html
 

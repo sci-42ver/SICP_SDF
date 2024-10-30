@@ -1,22 +1,22 @@
-; (define (eval exp env)
-;   (cond ((self-evaluating? exp) exp)
-;         ((variable? exp) (lookup-variable-value exp env))
-;         ((quoted? exp) (text-of-quotation exp))
-;         ((assignment? exp) (eval-assignment exp env))
-;         ((definition? exp) (eval-definition exp env))
-;         ((if? exp) (eval-if exp env))
-;         ((lambda? exp)
-;          (make-procedure (lambda-parameters exp)
-;                          (lambda-body exp)
-;                          env))
-;         ((begin? exp) 
-;          (eval-sequence (begin-actions exp) env))
-;         ((cond? exp) (eval (cond->if exp) env))
-;         ((application? exp)
-;          (apply (eval (operator exp) env)
-;                 (list-of-values (operands exp) env)))
-;         (else
-;          (error "Unknown expression type -- EVAL" exp))))
+(define (eval exp env)
+  (cond ((self-evaluating? exp) exp)
+        ((variable? exp) (lookup-variable-value exp env))
+        ((quoted? exp) (text-of-quotation exp))
+        ((assignment? exp) (eval-assignment exp env))
+        ((definition? exp) (eval-definition exp env))
+        ((if? exp) (eval-if exp env))
+        ((lambda? exp)
+         (make-procedure (lambda-parameters exp)
+                         (lambda-body exp)
+                         env))
+        ((begin? exp) 
+         (eval-sequence (begin-actions exp) env))
+        ((cond? exp) (eval (cond->if exp) env))
+        ((application? exp)
+         (apply (eval (operator exp) env)
+                (list-of-values (operands exp) env)))
+        (else
+         (error "Unknown expression type -- EVAL" exp))))
 
 ;; > have saved a reference to the underlying apply
 (define apply-in-underlying-scheme apply)
@@ -265,6 +265,8 @@
         (list '<= <=)
         (list '+ +)
         (list 'display display)
+        ;; 4.26. See 4.14 for why we don't define here.
+        ; (list 'map map)
         ))
 (define (primitive-procedure-names)
   (map car
@@ -307,9 +309,10 @@
 ;; CS 61A
 ;; > moral number 2 is not to try to trace a procedure in the evaluator that has an environment as an argument!
 ; (trace eval)
-(define (test x)
-  (* x x))
-;; MIT/GNU Scheme can debug this circular list although unable to display that.
-(define base (list 1 2))
-(set-cdr! base base)
-; (display base) ; infinite loop
+
+; (define (test x)
+;   (* x x))
+; ;; MIT/GNU Scheme can debug this circular list although unable to display that.
+; (define base (list 1 2))
+; (set-cdr! base base)
+; ; (display base) ; infinite loop

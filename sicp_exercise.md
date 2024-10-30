@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.24 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.25 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2226,7 +2226,20 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       "recursive calls" in `eval-sequence` is already done in book `analyze`.
 - [x] 24
   - repo doesn't compare but just shows each part time used by analyze and eval.
-- 
+- [ ] 25
+  - > What happens if we aempt to evaluate (factorial 5)?
+    keep ~~expanding~~ evaluating `(* n (factorial (- n 1)))` in each recursive call...
+  - > Will our definitions work in a normal-order language?
+    -> if (primitive) then will stop when base.
+  - same as meteorgan's.
+- [ ] 26
+  - Alyssa's is just complement and in favor of Ben's
+  - > not a procedure that could be used in conjunction
+    can be done with thunk.
+  - > Fill in the details on both ...
+    Ben: just as derived expression of if.
+  - > have unless available as a procedure
+    debug?
 ### @TODO
 - ~~17~~
   - > Design a way...
