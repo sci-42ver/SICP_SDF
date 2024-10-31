@@ -268,6 +268,13 @@
         ;; 4.26. See 4.14 for why we don't define here.
         ; (list 'map map)
         ; (list 'nil '())
+
+        ;; 4.29
+        (list 'remainder remainder)
+        (list '/ /)
+        ;; 4.30
+        (list 'list list)
+        (list 'newline newline)
         ))
 (define (primitive-procedure-names)
   (map car

@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.25 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.31 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2226,7 +2226,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       "recursive calls" in `eval-sequence` is already done in book `analyze`.
 - [x] 24
   - repo doesn't compare but just shows each part time used by analyze and eval.
-- [ ] 25
+- [x] 25
   - > What happens if we aempt to evaluate (factorial 5)?
     keep ~~expanding~~ evaluating `(* n (factorial (- n 1)))` in each recursive call...
   - > Will our definitions work in a normal-order language?
@@ -2240,7 +2240,59 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       Actually we can be transform that to procedure with something similar to thunk.
   - > it might be useful to have unless available as a procedure
     debug?
+    - *wrong*
 - [ ] 27
+  - Here `set!` has the original behavior.
+    2
+    `(id (id 10))` -> `x` (i.e. (id 10)) -> `x` 10
+    10
+    2
+    - *wrong*
+    - also see repo based on `driver-loop`.
+- [x] 28
+  - just use `id` in 27 with `x` as one lambda func.
+    Then `(w foo)` needs forcing `w`.
+    - meteorgan's is also fine based on *delayed arg* same as the above. (repo similar)
+- [x] 29
+  - 100, 1, due to memoization
+  - hinted by the example, `(square (fib 100))` (`fib` from section 2.2)
+- [x] 30
+  - > Since the value of an expression in a sequence other than the last one is not used
+    so "the last one" may be forced later, so not necessarily force that in seq.
+  - a. `(newline)` [returns "an unspecified value"](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Output-Procedures.html#index-newline), so maybe thunk?
+    - > which gives an important example of a sequence with side effects:
+      > Explain why Ben is right about the behavior of for-each.
+      Hinted by b., since here "side effects" are primitives, so automatically force.
+    - repo shows one *full trace* although for comparison checking `newline` is enough.
+  - b. 
+    - p1: 
+      - original: Here `cons` will force x, then x will be bound to `'(1 2)`.
+      - Cy's: same as p2 but without the `p` wrapper, again `(actual-value (set! x (cons x '(2))) ...)`
+    - p2:
+      - original: here `e` thunk won't be forced. So `x` is just the input thunk.
+      - Cy's: 
+        `(eval 'e ...)` -> e-thunk -(`force-it`)> `(actual-value (set! x (cons x '(2))) ...)`
+        just as p1 to eval `(set! x (cons x '(2)))` and then force it (the latter has no effects at all).
+        so `'(1 2)`
+  - c.
+    since just adds one `force-it` which will only have effects for thunk *but not for others*.
+    But a. has seq
+    1. `if` which at last returns `'done`
+    2. `(begin ...)`: just force proc, but `proc` returns one "unspecified value" by `display`.
+    3. `proc`: again `(newline)` -> unspecified value.
+    4. `(for-each proc (cdr items))` back to 1.
+    - same as wiki meteorgan's.
+  - d.
+    by
+    > delay evaluation of procedure arguments *until the actual argument values are needed*
+    so when assignment can be used is actually unable to predict.
+    Then the safe action is to always not delay that, i.e. Cy's approach.
+    Or use more complex approach to bookkeep one table which pairs assignment with variable and evaluate all related assignments when that variable is evaluated.
+- [x] 31
+  - possible changes implied by the exercise
+    `define` syntax, eval or apply.
+    - same for wiki and repo (~~by searching "definition" and inspecting `eval`~~ see "changed procedures:"), only `apply` is changed.
+      The basic ideas are same.
 ### @TODO
 - ~~17~~
   - > Design a way...

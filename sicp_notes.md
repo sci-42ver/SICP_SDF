@@ -17,6 +17,7 @@ review the top 3 comment seq's.
 Review of the solution at the top:
 review history comments.
 Review one history comment
+Review the top comment and the 2 tests. Give one sample implementation.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -92,7 +93,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.1.7 (included).
+- up to section 4.2.1 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -240,6 +241,9 @@ checked up to section 4.1 (included) and exercise checking up to 4.1.7 (included
 - ~~> He used *this framework* to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)~~
   maybe here "framework" is used to "cannot be computed" -> "can be formulated as a [program](https://en.wikipedia.org/wiki/Halting_problem#Proof_concept)" failure.
 - ~~> so that sequential definition isn't equivalent to simultaneous definition, see exercise 4.19.~~
+- > ere are also languages (see Exercise 4.31) that give programmers de-tailed control over the strictness of the procedures they define.
+- > we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)
+  Same problems shown also in Exercise 3.51, 52.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -255,6 +259,7 @@ checked up to section 4.1 (included) and exercise checking up to 4.1.7 (included
 - > However, we will see in section 5.5.6 that moving to a model of simultaneous scoping for internal definitions avoids some nasty difficulties that would otherwise arise in implementing a compiler.
 - > This technique is an integral part of the compilation process, which we shall discuss in chapter 5.
 - > As we will show in section 5.5.6, one can determine the position in the environment structure where the value of the variable will be found
+- > allows this structure to be garbage-collected and its space recycled, as we will discuss in section 5.3.
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247
