@@ -93,7 +93,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.2.1 (included).
+- up to section 4.2 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -3042,6 +3042,32 @@ Emm... still duplicate of much book contents but relates with env model...
   so `even?` example is fine since `lambda` can be evaluated even if its body implies mutual recursion.
   [similar to](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-7.html#TAG:__tex2page_index_284) but not consider Exercise 4.19 Eva's
   >it is an error if it is not possible to evaluate each <expression> of every internal definition in a <body> *without assigning or referring to* the value of the corresponding <variable> or the <variable> of any of the definitions that *follow* it in <body>.
+### 4.2
+- > The delayed arguments are not evaluated; instead, they are transformed into objects called thunks.
+  This thunk is not exactly same as [MIT/GNU Scheme version](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Arity.html).
+- > One design choice we have available is whether or not to memoize thunks, as we did with delayed objects in section 3.5.1.
+  Here we incorporate that into the data structure while section 3.5.1 uses local states.
+- > With lazy evaluation, streams and lists can be identical, so there is no need for special forms or for separate list and stream operations.
+  Notice here `cons` as one procedure is not same as `cons-stream` since the latter will always evaluate car part.
+  "identical": i.e. all arguments are delayed.
+- > In terms of these basic operations, the standard definitions of the list operations will work with infinite lists (streams) as well as finite ones, and the stream operations can be implemented as list operations.
+  if `cons...` are used as compound procedures, the list is `(lambda (m) (m thunk1 thunk2))`
+  then `(car z)` will force z (i.e. the above `(lambda (m) ...)`) and then apply `z` to one argument where `m` (i.e. `(lambda (p q) p)`) is again forced. Then return thunk1 which may be forced when `driver-loop`.
+  - cdr is similar to return thunk2.
+  - So "work with infinite lists (streams) as well as finite ones".
+  - `scale-list` is from ~~`scale-stream`~~ p144.
+  - `add-lists`: similar to Exercise 3.50.
+- > This permits us to create delayed versions of more general kinds of list structures, not just sequences. Hughes 1990 discusses some applications of ``lazy trees.''
+  ~~Since one can put one infinite thing at `car`.~~
+  IMHO if tree can be stream, then all work fine.
+  > Higher-order functions reptree and *maptree* allow us to construct and manipulate game trees with ease. More importantly, *lazy evaluation permits* us to modularize evaluate in this way. Since gametree has a potentially infinite result, this program would *never terminate* without lazy evaluation.
+  So `maptree` can be `stream-map`.
+  - How to implement `prune`, see .
+#### @TODO
+- > Notice that we can install these definitions in the lazy evaluator simply by typing them at the driver loop.
+  Not in `primitive-procedures` since that will implicitly evaluate arguments.
+  - TODO
+    footnote 40
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
