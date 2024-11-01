@@ -2241,6 +2241,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - > it might be useful to have unless available as a procedure
     debug?
     - *wrong*
+  - TODO 
+    See `4_31_dot_list_for_4_26.scm`: how to get `apply` being nested?
 - [ ] 27
   - Here `set!` has the original behavior.
     2

@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "lib.scm")
+; (load "lib.scm")
 
 (define (and? exp)
   (tagged-list? exp 'and))
@@ -49,6 +49,12 @@
           )
         )))
 
+;; from lib.scm
+(define (true? x)
+  (not (eq? x false)))
+(define (false? x)
+  (eq? x false))
+
 (define (and->cond exp)
   (test-ops (operands exp) true false? false))
 (define (or->cond exp)
@@ -75,7 +81,7 @@
 (define (display-ret ret)
   (display (list "return" ret))
   ret)
-;; here just use scheme internal eval to test although this is not one full test for nested and.
+;; here just use scheme internal eval to test although this is not one full test since it doesn't test nested and.
 ;; But based on induction, if non-nested and work, then nested one should also work.
 (define e 2)
 (define test-exp1 '(and (display-ret 1) (display-ret e) (display-ret #f) (display-ret e)))
@@ -101,6 +107,10 @@
 ; (return #f)#f
 ; (return 3)(return 9)9
 
+;; from lib.scm
+(define (make-if predicate consequent alternative)
+  (list 'if predicate consequent alternative))
+
 ;; use MIT/GNU Scheme internal eval.
 (define (expand-and-predicates predicates env)
   (if (no-predicate? predicates) 
@@ -112,7 +122,7 @@
         ;; to avoid expanding and then doing eval for all elements unnecessarily. 
         (if first 
           ;; since we don't introduce more variables here, so no "name shadowing". 
-          (make-if  
+          (make-if
             first 
             (if (null? rest) 
               ;; "returns the correct value". 
@@ -148,3 +158,28 @@
 ; (return #f)(return 2)(if #f #f 2)
 ; (return #f)(return #f)(if #f #f (if #f #f false))
 ; (return 3)3
+
+;; implementation inside eval
+; (load "lib.scm")
+
+(define (eval exp env)
+  (cond ((self-evaluating? exp) exp)
+        ((variable? exp) (lookup-variable-value exp env))
+        ((quoted? exp) (text-of-quotation exp))
+        ((assignment? exp) (eval-assignment exp env))
+        ((definition? exp) (eval-definition exp env))
+        ((if? exp) (eval-if exp env))
+        ((lambda? exp)
+         (make-procedure (lambda-parameters exp)
+                         (lambda-body exp)
+                         env))
+        ((begin? exp) 
+         (eval-sequence (begin-actions exp) env))
+        ((cond? exp) (eval (cond->if exp) env))
+        ;; added
+        ((and? exp) (eval (expand-and-predicates (and-predicates exp) env) env))
+        ((application? exp)
+         (apply (eval (operator exp) env)
+                (list-of-values (operands exp) env)))
+        (else
+         (error "Unknown expression type -- EVAL" exp))))

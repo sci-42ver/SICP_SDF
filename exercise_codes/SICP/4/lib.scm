@@ -243,6 +243,9 @@
                              the-empty-environment)))
     (define-variable! 'true true initial-env)
     (define-variable! 'false false initial-env)
+    ;; 4.26
+    ; (define-variable! '#t true initial-env)
+    ; (define-variable! '#f false initial-env)
     initial-env))
 
 (define (primitive-procedure? proc)
@@ -268,7 +271,8 @@
         ;; 4.26. See 4.14 for why we don't define here.
         ; (list 'map map)
         ; (list 'nil '())
-
+        (list 'length length)
+        
         ;; 4.29
         (list 'remainder remainder)
         (list '/ /)
