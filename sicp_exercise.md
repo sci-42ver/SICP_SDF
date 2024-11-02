@@ -2080,6 +2080,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - see https://stackoverflow.com/q/79098453/21294350
     - > They are paired up properly
       maybe done by `(extend-environment ⟨variables⟩ ⟨ values⟩ ⟨base-env ⟩)` in section 4.1.
+    - also see https://stackoverflow.com/q/131433/21294350
+      - https://web.archive.org/web/20150321052219/http://schemecookbook.org/Cookbook/GettingStartedMacros
+        - Only Dybvig, https://web.archive.org/web/20150316032601/http://library.readscheme.org/page3.html and the last are valid.
+      - https://web.archive.org/web/20090317073256/http://docs.plt-scheme.org/guide/syntax-case.html
 - [ ] 10
   - IMHO this is already done in former exercises like Exercise 4.5.
   - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.
@@ -2295,6 +2299,13 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     `define` syntax, eval or apply.
     - same for wiki and repo (~~by searching "definition" and inspecting `eval`~~ see "changed procedures:"), only `apply` is changed.
       The basic ideas are same.
+- [ ] 32
+  - just car is different
+    let `car` be one computation-heavy element.
+    - [same for scala](https://stackoverflow.com/a/60129204/21294350)
+  - > ; in lazy evaluators, you don't have to worry about the order of definitions 
+    right.
+    - repo same as wiki meteorgan's.
 ### @TODO
 - ~~17~~
   - > Design a way...

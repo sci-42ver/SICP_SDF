@@ -77,16 +77,8 @@
 
 ; (demo-tree)
 ; (prune 3 (demo-tree))
-(custom-cons 0 
-  (list 
-    (custom-cons 1   
-          (list 
-            (custom-cons 3 
-                  (list 
-                    (custom-cons 5 (list (custom-cons 7 '()) (custom-cons 8 '()))) 
-                    (custom-cons 6 '()))) 
-            (custom-cons 4 '()))) 
-    (custom-cons 2 '())))
+
+;; TODO see custom-cons-debug.scm
 (prune 3
   (custom-cons 0 
         (list 

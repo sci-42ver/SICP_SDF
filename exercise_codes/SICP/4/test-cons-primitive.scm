@@ -60,6 +60,7 @@
     (define (scale-list items factor)
       (map (lambda (x) (* x factor))
            items))
+    ;; in recursive calls, list2 may be (add-lists ones integers), so (car list2) is (+ (car list1) (car list2)). (just show symbol. So 2 list2's are not same.)
     (define (add-lists list1 list2)
       (cond ((null? list1) list2)
             ((null? list2) list1)
@@ -77,9 +78,138 @@
 ;; (cdr thunk-add-lists-2) -(Thunks for (cdr list1) (cdr list2) are forced, i.e. (cdr ones)-thunk ...)> similarly thunk-add-lists-2-0...
 
 (define test-program
-  (append test-lib '(list-ref integers 17)))
+  (append test-lib 
+    ; '((list-ref integers 17))
+    '((list-ref integers 2)) ; to have one small demo log.
+    ; '(list-ref integers 17)
+    ))
 
-; (trace actual-value)
-(trace force-it)
+(trace actual-value)
+; (trace force-it) ; test-cons-primitive.log
 
-(run-program-list test-program the-global-environment)
+(run-program-list-force test-program the-global-environment)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; log partial analysis
+;; IGNORE these since the evaluator logic is more important.
+;; test-cons-primitive-actual-val.log with '((list-ref integers 17))
+; 1. 17 is got from thunk which is val of n.
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: n
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: 17
+;           #0=(((integers ones add-lists scale-list map list-ref false true car...]
+; [17
+;       <== #[compound-procedure 14 actual-value]
+;     Args: 17
+;           #0=(((integers ones add-lists scale-list map list-ref false true car...]
+; [17                                                                                                                                                                                          
+;       <== #[compound-procedure 14 actual-value]
+;     Args: n
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+;; test-cons-primitive-actual-val-small.log with '((list-ref integers 2))
+; 2. delayed evaluation of (- n 1)-thunk.
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: n
+;           (((items n) (thunk (cdr items) (((items n) (thunk integers #0=(((int...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (- n 1)
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+; ...
+; [1
+;       <== #[compound-procedure 14 actual-value]
+;     Args: (- n 1)
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+; [1
+;       <== #[compound-procedure 14 actual-value]                                                                                                                                              
+;     Args: n
+;           (((items n) (thunk (cdr items) (((items n) (thunk integers #0=(((int...]
+; 3. notice here keeping expanding thunks, so (car (cdr (cdr integers))) corresponding to 2 cdr
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: car
+;           (((items n) (thunk (cdr items) (((items n) (thunk (cdr items) (((ite...]
+; [#0=(procedure (z) ((z (lambda (p q) p))) #1=(((integers ones add-lists scale-...
+;       <== #[compound-procedure 14 actual-value]
+;     Args: car
+;           (((items n) (thunk (cdr items) (((items n) (thunk (cdr items) (((ite...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: z
+;           (((z) (thunk items (((items n) (thunk (cdr items) (((items n) (thunk...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: items
+;           (((items n) (thunk (cdr items) (((items n) (thunk (cdr items) (((ite...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (cdr items)
+;           (((items n) (thunk (cdr items) (((items n) (thunk integers #0=(((int...]
+;...
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (cdr items)                                                                                                                                                                        
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+;...
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: items
+;           (((items n) (thunk integers #0=(((integers ones add-lists scale-list...]
+; [Entering #[compound-procedure 14 actual-value]                                                                                                                                              
+;     Args: integers
+;           #0=(((integers ones add-lists scale-list map list-ref false true car...]
+; 4. See notes. Force m
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: m
+;           (((m) (thunk (lambda (p q) q) (((z) (evaluated-thunk #0=(procedure (...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (lambda (p q) q)
+;           (((z) (evaluated-thunk #0=(procedure (m) ((m x y)) (((x y) (thunk 1 ...]
+; ...
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: y
+;           (((m) (evaluated-thunk (procedure (p q) (q) (((z) (evaluated-thunk #...]
+; 5. i.e. above, force list1
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (null? list1)
+;           (((list1 list2) (thunk ones #0=(((integers ones add-lists scale-list...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: null?
+;           (((list1 list2) (thunk ones #0=(((integers ones add-lists scale-list...]
+; [(primitive #[compiled-procedure 17 ("list" #x5) #x1c #xe2d9c4])
+;       <== #[compound-procedure 14 actual-value]
+;     Args: null?
+;           (((list1 list2) (thunk ones #0=(((integers ones add-lists scale-list...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: list1
+;           (((list1 list2) (thunk ones #0=(((integers ones add-lists scale-list...]                                                                                                           
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: ones
+;           #0=(((integers ones add-lists scale-list map list-ref false true car...]
+; 6. see above
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (add-lists (cdr list1) (cdr list2))
+;           #0=(((list1 list2) (evaluated-thunk #1=(procedure (m) ((m x y)) (((x...]
+; 7. car part
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (+ (car list1) (car list2))
+;           #0=(((list1 list2) (evaluated-thunk #1=(procedure (m) ((m x y)) (((x...]
+; 8. this is first (car list2). (1 + + ...) so the most inner (car list2) will be (car (cdr integers)) which is just the 1st +...
+;; So we evaluate that by 1+1.
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: (car list2)
+;           #0=(((list1 list2) (evaluated-thunk #1=(procedure (m) ((m x y)) (((x...]
+; ...
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: x
+;           (((m) (evaluated-thunk (procedure (p q) (p) (((z) (evaluated-thunk #...]
+; [Entering #[compound-procedure 14 actual-value]
+;     Args: 1
+;           #0=(((integers ones add-lists scale-list map list-ref false true car...]
+; ...
+; [2
+;       <== #[compound-procedure 14 actual-value]
+;     Args: (+ (car list1) (car list2))
+; 8. Notice here ones is always passed to cdr of ones. So to get car of (cdr (cdr ... (cdr ones))) is much easier than to get (cdr (cdr ... (cdr integers)))
+; [1
+;       <== #[compound-procedure 14 actual-value]                                                                                                                                              
+;     Args: (car list1)
+;           #0=(((list1 list2) (evaluated-thunk #1=(procedure (m) ((m x y)) (((x...]
+; [3
+;       <== #[compound-procedure 14 actual-value]
+;     Args: (+ (car list1) (car list2))
+;           #0=(((list1 list2) (evaluated-thunk #1=(procedure (m) ((m x y)) (((x...]

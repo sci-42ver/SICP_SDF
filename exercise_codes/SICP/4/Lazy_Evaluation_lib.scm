@@ -1,6 +1,7 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
 
+;; actual-value only for operator, args of primitive, driver-loop output and if predicate.
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
         ((variable? exp) (lookup-variable-value exp env))

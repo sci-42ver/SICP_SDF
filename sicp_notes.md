@@ -1,3 +1,4 @@
+@molbdnilo Thanks. So this is where `define-syntax` and `define` differ. Maybe syntactic environment https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Syntactic-Binding-Constructs.html needs to be used differently from environment. The latter is taught in SICP while the former won't as Shawn https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e#comment139473850_79098453 "I don't think syntax macros had been invented yet when SICP was written" implies.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -3052,17 +3053,22 @@ Emm... still duplicate of much book contents but relates with env model...
   "identical": i.e. all arguments are delayed.
 - > In terms of these basic operations, the standard definitions of the list operations will work with infinite lists (streams) as well as finite ones, and the stream operations can be implemented as list operations.
   if `cons...` are used as compound procedures, the list is `(lambda (m) (m thunk1 thunk2))`
-  then `(car z)` will force z (i.e. the above `(lambda (m) ...)`) and then apply `z` to one argument where `m` (i.e. `(lambda (p q) p)`) is again forced. Then return thunk1 which may be forced when `driver-loop`.
+  then `(car z)` will *force* `z` (i.e. the above `(lambda (m) ...)`) and then apply `z` to one argument where `m` (i.e. `(lambda (p q) p)`) is again *forced*. Then return thunk1 `(thunk y env)` which may be forced when `driver-loop`. i.e.
+  > In fact, even accessing the car or cdr of a lazy pair *need not force the value of a list element*.
   - cdr is similar to return thunk2.
   - So "work with infinite lists (streams) as well as finite ones".
   - `scale-list` is from ~~`scale-stream`~~ p144.
   - `add-lists`: similar to Exercise 3.50.
-- > This permits us to create delayed versions of more general kinds of list structures, not just sequences. Hughes 1990 discusses some applications of ``lazy trees.''
+- > This permits us to create delayed versions of more general kinds of list structures, not just sequences. Hughes 1990 discusses some applications of ``*lazy trees*.''
   ~~Since one can put one infinite thing at `car`.~~
   IMHO if tree can be stream, then all work fine.
   > Higher-order functions reptree and *maptree* allow us to construct and manipulate game trees with ease. More importantly, *lazy evaluation permits* us to modularize evaluate in this way. Since gametree has a potentially infinite result, this program would *never terminate* without lazy evaluation.
   So `maptree` can be `stream-map`.
-  - How to implement `prune`, see .
+  - How to implement `prune`, see `lazy-tree-test.scm`.
+- > For instance, we can implement procedures to integrate lists and solve differential equations as we originally intended in section 3.5.4:
+  https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-24.html#%_sec_3.5.4
+  see
+  > when it is required to generate more than the first element of the output stream:
 #### @TODO
 - > Notice that we can install these definitions in the lazy evaluator simply by typing them at the driver loop.
   Not in `primitive-procedures` since that will implicitly evaluate arguments.

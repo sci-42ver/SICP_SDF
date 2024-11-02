@@ -24,6 +24,13 @@
     program-lst)
   )
 
+(define (run-program-list-force program-lst env)
+  (for-each 
+    (lambda (exp)
+      (user-print-general (force-it (eval exp env)))) 
+    program-lst)
+  )
+
 ;; https://stackoverflow.com/q/2195105/21294350
 ;; Or use MIT/GNU Scheme internal func https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Machine-Time.html#index-measure_002dinterval
 (define (implemented-measure-interval hairy-computation start-time)
