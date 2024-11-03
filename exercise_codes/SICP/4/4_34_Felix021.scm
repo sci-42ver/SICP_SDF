@@ -44,9 +44,10 @@
             (begin 
               (display " ") 
               (disp-cons cdr-value (+ depth 1))) 
-            (begin 
-              (display " . ") 
-              (display cdr-value))) 
+            (if (not (null? cdr-value))
+              (begin 
+                (display " . ") 
+                (display cdr-value)))) 
           (display ")")))))) 
 
 (define (user-print-wrapper object depth)
@@ -69,22 +70,23 @@
 (load "test-lib.scm")
 (define user-print-general user-print)
 
+;; http://community.schemewiki.org/?sicp-ex-4.30
 (run-program-list 
   '((cons 1 2)
-    ;; integers should be with the same structure, i.e. one non-nested list.
+    ;; `integers` is with the same structure, i.e. one non-nested list.
     (define ones (cons 1 ones))
     ones
-    ;; infinite car
-    ; p158
+    ;; SICP p158
     (define (accumulate op initial sequence)
       (if (null? sequence)
         initial
         (op (raw-car sequence)
             (accumulate op initial (raw-cdr sequence)))))
+    ;; so many cars
     (define many-cars (accumulate (lambda (elm res) (cons res elm)) ones (iota 20)))
     many-cars
-    ; '(a b (c d))
     (cons 'a (cons 'b (cons (cons 'c (cons 'd '())) '())))
     (cons 'a (cons 'b (cons 'c '())))
     )
   the-global-environment)
+; (1 . 2)ok(1 (1 (1 (1 (1 (1 (1 (1 (1 (1 ... )))))))))))okok((((((((((... ) . 9) . 8) . 7) . 6) . 5) . 4) . 3) . 2) . 1) . 0)(a (b ((c (d)))))(a (b (c)))

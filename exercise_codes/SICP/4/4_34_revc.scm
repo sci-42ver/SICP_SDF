@@ -38,7 +38,7 @@
   (tagged-list? object 'pair?)) 
 
 ;;; print pair of META-CIRCULAR 
-(define (print-pair-caller object) 
+(define (print-pair object) 
 
   (define counter 0)                    ; the number of pairs which were revisited 
 
@@ -60,13 +60,12 @@
       (if val 
         (set-cdr! val v)
         (set! visited (cons (cons k v) visited))))
-    ; (set! visited (cons (cons k v) visited))
     )   ; an interface to visited for convenience 
   (define (get k) 
     (let ((val (assq k visited)))
       (and val (cdr val))))     ; an interface to visited for convenience 
-  ; (define (remove k) (set! visited (delq k visited)) (display (get k))) ; an interface to visited for convenience 
-  (define (delete k) (set! visited (remove (lambda (elm) (eq? k (car elm))) visited)) (display (get k)))
+  ;; use the primitive remove in MIT/GNU Scheme.
+  (define (delete k) (set! visited (remove (lambda (elm) (eq? k (car elm))) visited)))
   
   (define (convert-printable-pair object) 
     ; (bkpt "debug")
@@ -89,58 +88,25 @@
       (cond ((get object) 
               ; (bkpt "revisit") 
               (visit-again! object))      ; visit again! return a string like "#{counter}" 
-            (else 
+            (else
               ; (bkpt "debug")
               (put object 0)                           ; the first visit! 
-              ; (let* ((x (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR")) 
-              ;       (y (thunk-or-value (eval 'y (procedure-environment (cdr object))) "CDR"))) 
-              ;   ;; the above eval may visit this object.
-              ;   (if (zero? (get object))                       ; no inner elements refer to it 
-              ;     (begin 
-              ;       (newline)
-              ;       (display "remove")
-              ;       (newline)
-              ;       (remove object)                          ; no tagging required 
-              ;       (list 'just-pair object x y)) 
+              ;; Here which one of x/y is run first doesn't influence the result since they doesn't have the nesting relation.
+              (let ((x (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR")) 
+                    (y (thunk-or-value (eval 'y (procedure-environment (cdr object))) "CDR"))) 
+                ;; the above eval may visit this object.
+                (if (zero? (get object))                       ; no inner elements refer to it 
+                  (begin 
+                    ; (newline)
+                    ; (display "remove")
+                    ; (newline)
+                    (delete object)                          ; no tagging required 
+                    (list 'just-pair object x y)) 
 
-              ;     (begin 
-              ;       (put object counter) 
-              ;       (set! counter (+ counter 1))             ; increment counter 
-              ;       (list 'be-referred-as object x y))))
-              
-              (let ((x (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR")))
-                (let ((y (thunk-or-value (eval 'y (procedure-environment (cdr object))) "CDR")))
-                  ;; the above eval may visit this object.
-                  (if (zero? (get object))                       ; no inner elements refer to it 
-                    (begin 
-                      (newline)
-                      ; (display (list "remove"))
-                      ; (bkpt "debug")
-                      (newline)
-                      (delete object)                          ; no tagging required 
-                      (list 'just-pair object x y)) 
-
-                    (begin 
-                      (put object counter) 
-                      (set! counter (+ counter 1))             ; increment counter 
-                      (list 'be-referred-as object x y)))
-                  ))
-
-              ; (define x (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR")) 
-              ; (define y (thunk-or-value (eval 'y (procedure-environment (cdr object))) "CDR")) 
-              ;   ;; the above eval may visit this object.
-              ; (if (zero? (get object))                       ; no inner elements refer to it 
-              ;     (begin 
-              ;       (newline)
-              ;       (display "remove")
-              ;       (newline)
-              ;       (remove object)                          ; no tagging required 
-              ;       (list 'just-pair object x y)) 
-
-              ;     (begin 
-              ;       (put object counter)
-              ;       (set! counter (+ counter 1))             ; increment counter 
-              ;       (list 'be-referred-as object x y)))
+                  (begin 
+                    (put object counter) 
+                    (set! counter (+ counter 1))             ; increment counter 
+                    (list 'be-referred-as object x y))))
                     )))   ; return the processed pair 
       object))                                                ; not pair, return directly 
 
@@ -174,13 +140,19 @@
             (else (display left))) 
 
       (cond ((not (referer? pair)) 
-             (cond ((pair? x) (print-pair x #t)) 
-                   (else (user-print x))) 
+             (cond 
+              ((compound-procedure? x) (user-print x))
+              ;; just-pair ...
+              ((pair? x) (print-pair x #t)) 
+              (else (user-print x))) 
 
-             (display middle) 
+             (display middle)
+            ;  (bkpt "debug")
 
              (cond ((be-referred? y) (print-pair y #t)) 
-                   ((referer? y) (display ". ") (print-pair y #f)) 
+                   ((referer? y) (display ". ") (print-pair y #f))
+                   ((compound-procedure? y) (user-print y))
+                   ;; notice here internal ()'s are dropped.
                    ((pair? y) (print-pair y #f)) 
                    ((null? y) (display "")) 
                    (else (display ". ") (user-print y))) 
@@ -191,13 +163,15 @@
   (print-pair (convert-printable-pair object) #t)) 
 
 (define (user-print object) 
-  (cond ((meta-pair? object) (print-pair-caller object)) ; the clause for pair of META-CIRCULAR 
+  (cond ((meta-pair? object) (print-pair object)) ; the clause for pair of META-CIRCULAR 
         ((compound-procedure? object) 
          (display (list 'compound-procedure 
                         (procedure-parameters object) 
                         (procedure-body object) 
                         '<procedure-env>))) 
-        (else (display object))))
+        (else 
+          ; (bkpt "debug")
+          (display object))))
 ;;; Exercise 4.34 additional procedures 
 (eval '(define (list-ref items n) 
          (if (= n 0) 
@@ -237,26 +211,28 @@
 
 ;; must force, otherwise displaying thunk will cause the loop.
 (run-program-list-force 
-  '((cons 1 2)
-    ;; integers should be with the same structure, i.e. one non-nested list.
-    (define ones (cons 1 ones))
-    ones
-    ;; infinite car
-    ; p158
-    (define (accumulate op initial sequence)
-      (if (null? sequence)
-        initial
-        (op (raw-car sequence)
-            (accumulate op initial (raw-cdr sequence)))))
-    (define many-cars (accumulate (lambda (elm res) (cons res elm)) ones (iota 20)))
-    many-cars
-    ; '(a b (c d))
-    (cons 'a (cons 'b (cons (cons 'c (cons 'd '())) '())))
-    (cons 'a (cons 'b (cons 'c '())))
+  '(
+    ; (cons 1 2)
+    ; ;; integers should be with the same structure, i.e. one non-nested list.
+    ; (define ones (cons 1 ones))
+    ; ones
+    ; ;; infinite car
+    ; ; p158
+    ; (define (accumulate op initial sequence)
+    ;   (if (null? sequence)
+    ;     initial
+    ;     (op (raw-car sequence)
+    ;         (accumulate op initial (raw-cdr sequence)))))
+    ; (define many-cars (accumulate (lambda (elm res) (cons res elm)) ones (iota 20)))
+    ; many-cars
+    ; ; '(a b (c d))
+    ; (cons 'a (cons 'b (cons (cons 'c (cons 'd '())) '())))
+    ; (cons 'a (cons 'b (cons 'c '())))
 
     ; (define c1 (cons 1 1))
     ; (car c1)
-    (define c2 (cons c1 2)) 
+    (define c2 (cons c1 (lambda (x) x))) 
+    ; (define c2 (cons c1 2)) 
     (define c3 (cons c2 3)) 
     (define c1 (cons c2 c3))
     (cdr c2)
@@ -271,6 +247,8 @@
     ;; explicitly evaluate all vals in *the related env*
     ;; See (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR").
     (car c2)
+    ;; fine
+    c2
     (car c3)
     (cdr c2)
     (cdr c3)
@@ -286,6 +264,7 @@
     c3
     c1
     c2
+    ; #0=((#0# #0# . 3) . 2)
     )
   the-global-environment)
 
@@ -295,3 +274,6 @@
 (define c1 (cons c2 c3))
 (set-car! c2 c1)
 (set-car! c3 c2)
+c1
+c2
+c3

@@ -83,7 +83,7 @@
     (define many-cars (accumulate (lambda (elm res) (cons res elm)) ones (iota 20)))
     many-cars
     ; '(a b (c d))
-    (cons 'a (cons 'b (cons (cons 'c (cons 'd '())) '())))
+    (cons 'a (cons 'b (cons (cons (cons 'c (cons 'd '())) (cons 'd '())) '())))
     (cons 'a (cons 'b (cons 'c '())))
     )
   E0)
