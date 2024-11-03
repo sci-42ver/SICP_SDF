@@ -2,93 +2,149 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "../lib.scm")
 
-(define (has-cycle? tree)
-  ;; Helpers 
-  (define (iterator value idx) 
-    (cons value idx)) 
-  (define (update-iterator it value idx) 
-    (set-car! it value) 
-    (set-cdr! it idx)) 
-  (define (iterator-id it) 
-    (cdr it)) 
-  (define (iterator-value it) 
-    (car it)) 
-  (define (iterator-same-pos? it1 it2) 
-    (eq? (iterator-id it1) (iterator-id it2))) 
-  (define (iterator-eq? it1 it2) 
-    (and (iterator-same-pos? it1 it2) 
-         (eq? (iterator-value it1) (iterator-value it2)))) 
-  (define (iterator-same-value? it1 it2) 
-    (eq? (iterator-value it1) (iterator-value it2))) 
+(define (has-cycle? tree) 
+  ;; Helpers
+  (define node-value cdr)
+  (define node-path-from-root car)
+  (define (make-node path val) 
+    (assert (number? path))
+    (cons path val))
+  ;; 0. 000 means keeping car, 001 means cdr,car...
+  ;; 0.1 So here all path are stored as the above number.
+  ;; 1. Here I parse number from right since IMHO normal calculation follows this pattern so that that is more convenient
+  (define (walk-based-on-idx idxed-node idx walked-steps node-path-len)
+    (let ((node (node-value idxed-node))
+          (path-num (node-path-from-root idxed-node)))
+      (define (add-path orig-path addend orig-path-len)
+        (+ (* addend (expt 2 orig-path-len)) orig-path)
+        )
+      (define (iter node idx walked-steps addend-path-idx)
+        (if (= 0 walked-steps)
+          (make-node (add-path path-num addend-path-idx node-path-len) node)
+          (if (pair? node)
+            (iter 
+              ((if (even? idx)
+                car
+                cdr)
+                node) 
+              (quotient idx 2) (- walked-steps 1) addend-path-idx)
+            #f)))
+      (iter node idx walked-steps idx)))
+  (define (forward-n-steps n node node-path-len)
+    (filter-map (lambda (idx) (walk-based-on-idx node idx n node-path-len)) (iota (expt 2 n))))
+  (define (fast-nodes-forward-2steps fast-nodes node-path-len-from-root)
+    (reduce append '() (map (lambda (node) (forward-n-steps 2 node node-path-len-from-root)) fast-nodes)))
+  (define (match-idxed-code root idxed-node)
+    (assert (pair? idxed-node))
+    (eq? root (node-value idxed-node)))
+  (define (filter-branches idxed-nodes path-num-end end-digit-num)
+    (define (pred idxed-node path-num-end)
+      (let ((path-num (node-path-from-root idxed-node)))
+        (= (remainder path-num (expt 2 end-digit-num)) path-num-end)))
+    (filter (lambda (node) (pred node path-num-end)) idxed-nodes))
+  (define (drop-first-path idxed-node)
+    (let ((node (node-value idxed-node))
+          (path-num (node-path-from-root idxed-node)))
+      (make-node (quotient path-num 2) node)))
+  (define (drop-first-path-step-for-all idxed-nodes)
+    (map (lambda (node) (drop-first-path node)) idxed-nodes))
+  (define (filter-left-left idxed-nodes)
+    ;; 00
+    (filter-branches idxed-nodes 0 2)
+    )
+  (define (filter-left-right idxed-nodes)
+    ;; 10
+    (filter-branches idxed-nodes 2 2)
+    )
+  (define (filter-right-left idxed-nodes)
+    ;; 01
+    (filter-branches idxed-nodes 1 2)
+    )
+  (define (filter-right-right idxed-nodes)
+    ;; 11
+    (filter-branches idxed-nodes 3 2)
+    )
 
+  ;; 0. From original
   ;; slow-it - tracks each node (1, 2, 3, 4...) 
   ;; fast-it - tracks only even nodes (2, 4...)  
-
+  ;; 0.0
   ;; Here root is just slow-it which has run clock-cnt steps.
-  ;; Then list all possible fast-it and check whether they are equal.
-  (define (all-fast-nodes root clock-cnt)
-    (assert (pair? root))
-    ;; 000 means keeping car, 001 means cdr,car...
-    (define (walk-based-on-idx node idx walked-steps)
-      (if (= 0 walked-steps)
-        node
-        (if (pair? node)
-          (walk-based-on-idx 
-            ((if (even? idx)
-              car
-              cdr)
-              node) 
-            (quotient idx 2) (- walked-steps 1))
-          #f)))
-    (if (> clock-cnt 0)
-      (map (lambda (idx) (walk-based-on-idx root idx clock-cnt)) (iota (expt 2 clock-cnt)))
-      '()))
-  (define (dfs root clock-cnt)
+  ;; Then list all possible fast-it by left-fast-nodes etc and check whether they are equal.
+  ;; 1.
+  ;; when car, 
+  ;; root -> (car root)
+  ;; fast-node: (path-from-root node)
+  ;;; IMHO first append is better, since both are about left-fast-nodes.
+  ;; left-fast-nodes -> list of ((remove-car-path-then-choose-left-then-append path-from-root) (forward node)) from left-fast-nodes
+  ;; i.e. choose 00 ending.
+  ;; right-fast-nodes -> list of ((remove-car-path-then-choose-right-then-append path-from-root) (forward node)) from left-fast-nodes
+  ;; i.e. choose 10 ending.
+  ;;; Then cdr is similar.
+  ;;; Then we don't need to expand clock-cnt steps but just 2 steps. Here I assume time complexity is considered more than space.
+  ;; 1.1
+  ;; left-fast-node has path-num from idxed-root inside itself.
+  ;; root has no path-num.
+  (define (dfs root left-fast-nodes right-fast-nodes clock-cnt)
     (displayln (list "clock-cnt" clock-cnt))
     (if (not (pair? root))
       #f
-      (if (any (lambda (node) (eq? root node)) (all-fast-nodes root clock-cnt))
+      (if 
+        (or
+          (any (lambda (idxed-node) (match-idxed-code root idxed-node)) left-fast-nodes)
+          (any (lambda (idxed-node) (match-idxed-code root idxed-node)) right-fast-nodes))
         #t
-        (let ((clock-cnt-updated (+ 1 clock-cnt)))
+        (let ((clock-cnt-updated (+ 1 clock-cnt))
+              (left (car root))
+              (right (cdr root))
+              (left-forwarded-fast-nodes (fast-nodes-forward-2steps left-fast-nodes clock-cnt))
+              (right-forwarded-fast-nodes (fast-nodes-forward-2steps right-fast-nodes clock-cnt))
+              )
+          ; (bkpt "debug")
           (or 
-            (dfs (car root) clock-cnt-updated) 
-            (dfs (cdr root) clock-cnt-updated)))))
+            (dfs left 
+              ;; first filter, then `drop-first-path-step-for-all` may  probably have less to process.
+              ;; This is more efficient than the alternative order of these 2 operations.
+              (drop-first-path-step-for-all (filter-left-left left-forwarded-fast-nodes))
+              (drop-first-path-step-for-all (filter-left-right left-forwarded-fast-nodes))
+              clock-cnt-updated)
+            (dfs right 
+              (drop-first-path-step-for-all (filter-right-left right-forwarded-fast-nodes))
+              (drop-first-path-step-for-all (filter-right-right right-forwarded-fast-nodes))
+              clock-cnt-updated) 
+            ))
+        ))
     )
-    ; (if (not (pair? root)) ; leaf as the base case.
-    ;   false 
-    ;   (let* ((clock-cnt-updated (+ 1 clock-cnt)) ; put first to ensure the first set is when clock-cnt-updated=2 instead of clock-cnt=0.
-    ;          (slow-it-updated 
-    ;            ;; Here the minimal step is 2 clock-cnt's.
-    ;            ;; 0. That is due to if update at the same time for slow-it fast-it.
-    ;            ;; 1. Still work since x_i=x_{2i} -> x_{2i}=x_{4i}, so if x_{2i}!=x_{4i} -> x_i!=x_{2i} -> not have cycle.
-    ;            ;; And trivially x_{2i}=x_{4i} -> have cycle.
-    ;            (if 
-    ;              (and (even? clock-cnt-updated) 
-    ;                   (iterator-same-pos? slow-it fast-it)) 
-    ;              ; (odd? clock-cnt-updated)
-    ;              (begin
-    ;                (displayln "update slow-it")
-    ;                (iterator root clock-cnt-updated))
-    ;              slow-it))
-    ;          (fast-it-updated
-    ;            (if (even? clock-cnt-updated) 
-    ;              (iterator root (+ (iterator-id fast-it) 1))
-    ;              fast-it))
-    ;          )
-    ;     (if 
-    ;       (iterator-eq? slow-it fast-it) 
-    ;       ; (iterator-same-value? slow-it fast-it)
-    ;       true 
-    ;       (or (dfs (car root) slow-it-updated fast-it-updated clock-cnt-updated) 
-    ;           (dfs (cdr root) slow-it-updated fast-it-updated clock-cnt-updated)))))
-  (trace dfs)
+  ;; clock-cnt=0
+  ;; This is to make dfs have the same start as wikipedia "Floyd's "tortoise and hare" cycle" image.
+  (define (dfs-starter root clock-cnt)
+    (if (not (pair? root))
+      #f
+      (let* ((clock-cnt-updated (+ 1 clock-cnt))
+            (left (car root))
+            (right (cdr root))
+            (left-forwarded-fast-nodes (forward-n-steps 1 (make-node 0 left) 1))
+            (right-forwarded-fast-nodes (forward-n-steps 1 (make-node 1 right) 1))
+            )
+        ; (bkpt "debug")
+        (or 
+            (dfs left 
+              (drop-first-path-step-for-all (filter-left-left left-forwarded-fast-nodes))
+              (drop-first-path-step-for-all (filter-left-right left-forwarded-fast-nodes))
+              clock-cnt-updated)
+            (dfs right 
+              (drop-first-path-step-for-all (filter-right-left right-forwarded-fast-nodes))
+              (drop-first-path-step-for-all (filter-right-right right-forwarded-fast-nodes))
+              clock-cnt-updated) 
+            )
+        )
+      ))
+  ; (trace dfs)
+  ; (trace dfs-starter)
   ; (dfs tree (iterator tree 0) (iterator '() 0) 0)
-  (dfs tree 0)
+  (dfs-starter tree 0)
   )
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "3_18_19_tests.scm")
-(full-test-with-3-32-test has-cycle?)
-; (assert (has-cycle? cycle-1))
-
-;; test from 
+(full-test-with-3-32-and-4-34-tests has-cycle?)
