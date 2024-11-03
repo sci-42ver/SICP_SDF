@@ -57,10 +57,12 @@
 
 (3_32_test)
 (load "3_19_AntonKolobov_mod.scm")
-;; TODO I don't know why insertion above will cause the loop...
-(if (has-cycle? the-agenda)
-  'skipped
-  (propagate))
+;; TODO I don't know why 3_23_roytobin insertion above will cause the loop...
+the-agenda
+; (if (has-cycle? the-agenda)
+;   'skipped
+;   (propagate))
+
 ;; See repo which doesn't use deque for LIFO.
 
 ; (3 (3 (#[compound-procedure 14] #[compound-procedure 15] #[compound-procedure 16] #[compound-procedure 17]) 

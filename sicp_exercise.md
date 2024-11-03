@@ -2308,6 +2308,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - repo same as wiki meteorgan's.
 - [ ] 33
 - [ ] 34
+  - The `4_34_revc.scm` test plus revc's are *almost* complete.
+    The logic of revc is correct IMHO. 
 ### @TODO
 - ~~17~~
   - > Design a way...

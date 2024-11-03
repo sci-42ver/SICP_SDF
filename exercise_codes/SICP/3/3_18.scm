@@ -1,3 +1,4 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; See mbndrk
 ;; similar to exercise 3.17 
 ;; wrong
 (define (has-cycle? x) 
@@ -12,11 +13,11 @@
 ;; similar to book test
 ; (define cycle (cons 1 2))
 ; (set-cdr! cycle (car cycle))
+; ;Value: (1 . 1)
+;; similar to normal-list in 3_18_19_tests.scm
 
 ; (has-cycle? cycle)
 ;; wrong.
-; (define normal-list (list 1 1))
-; (has-cycle? normal-list)
 
 ;; See wiki the above lacks many cases.
 ;; 1. `(not (pair? lst))` for normal case like `(1 2)`
@@ -24,7 +25,7 @@
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "../lib.scm")
-;; wiki anonymous 2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; wiki anonymous 2
 (define (contains-cycle? x) 
   (define(inner return) 
     (let((C '())) 
@@ -78,7 +79,7 @@
 ;               '(54 0 37 -3 245 19))
 ;     #t))
 
-;; wiki gws
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; wiki gws
 (define (cycle? x) 
   (define visited nil) 
   (define (iter x) 
@@ -111,7 +112,7 @@
 ;; fail since the loop does cdr->car (here we get back) -> cdr ... This is not cdr-ing down.
 ; (cycle? cycle-1)
 
-;; wiki mbndrk
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; wiki mbndrk
 ;; Main idea: DFS.
 (load "../set-lib.scm")
 (define (inf_loop? L) 
