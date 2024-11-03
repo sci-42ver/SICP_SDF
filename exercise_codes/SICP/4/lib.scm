@@ -279,6 +279,9 @@
         ;; 4.30
         (list 'list list)
         (list 'newline newline)
+        ;; 4.34
+        (list 'fold fold)
+        (list 'iota iota)
         ))
 (define (primitive-procedure-names)
   (map car

@@ -1,0 +1,210 @@
+(cd "~/SICP_SDF/exercise_codes/SICP/4")
+(load "Lazy_Evaluation_lib.scm")
+
+;; Exercise 4.34 
+
+(define primitive-procedures 
+  (list (list 'car-in-underly-scheme car)   ; preserved but renamed 
+        (list 'cdr-in-underly-scheme cdr)   ; preserved but renamed 
+        (list 'cons-in-underly-scheme cons) ; preserved but renamed 
+        (list 'null? null?) 
+        (list 'list list) 
+        (list '+ +) 
+        (list '- -) 
+        (list '* *) 
+        (list '/ /) 
+        (list '= =) 
+        (list 'newline newline) 
+        (list 'display display) 
+        ;;      more primitives 
+        )) 
+
+(define the-global-environment (setup-environment)) 
+
+;;; represent pair of META-CIRCULAR as pair of SCHEME which is composed of a tag 'cons 
+;;; and a lexical closure(i.e. a procedure of META-CIRCULAR). 
+(eval '(define (cons x y) 
+         (cons-in-underly-scheme 'pair? (lambda (m) (m x y)))) the-global-environment) 
+
+(eval '(define (car z) 
+         ((cdr-in-underly-scheme z) (lambda (p q) p))) the-global-environment) 
+
+(eval '(define (cdr z) 
+         ((cdr-in-underly-scheme z) (lambda (p q) q))) the-global-environment) 
+
+;;; predicate that check if an object is a pair of META-CIRCULAR 
+(define (meta-pair? object) 
+  (tagged-list? object 'pair?)) 
+
+;;; print pair of META-CIRCULAR 
+(define (print-pair-caller object) 
+
+  (define counter 0)                    ; the number of pairs which were revisited 
+
+  ;; use a pair as key and the correspoding number of revisited times as value 
+  ;; when the recursion to CAR and CDR of some pair ends, check if VALUE > 0, 
+  ;; change VALUE to counter, and then increment counter by 1 
+  ;; NOTE: We do not add things which are not pair into hashtable 
+  
+  ;; modified
+
+  ; (define visited (make-hash-table))
+  ; ;;;;;;;;; modify the interface
+  ; (define (put k v) (hash-table-set! visited k v))   ; an interface to visited for convenience 
+  ; (define (get k) (hash-table-ref/default visited k #f))     ; an interface to visited for convenience 
+  ; (define (remove k) (hash-table-delete! visited k)) ; an interface to visited for convenience 
+  
+  (define visited (list))
+  ;;;;;;;;; modify the interface
+  (define (put k v) (set! visited (cons (cons k v) visited)))   ; an interface to visited for convenience 
+  (define (get k) 
+    (let ((val (assq k visited)))
+      (and val (cdr val))))     ; an interface to visited for convenience 
+  (define (remove k) (set! k (delq visited k))) ; an interface to visited for convenience 
+  
+  
+  (define (convert-printable-pair object) 
+    ; (bkpt "debug")
+    ;; if object is evaluated-thunk, then return its value, otherwise return a tag like #<Thunk {alternative}> 
+    (define (thunk-or-value object alternative) 
+      (if (evaluated-thunk? object) 
+        (convert-printable-pair (thunk-value object)) 
+        (string-append "#<thunk " alternative ">"))) 
+
+    ;; we visit some pair in visited table again, so change the its value to the desired string 
+    (define (visit-again! object) 
+      (put object (+ 1 (get object))) 
+      (list 'refer-to object '*CAR* '*CDR*)) 
+
+    (if (meta-pair? object)
+      (begin 
+      ; (bkpt "debug")
+      (cond ((get object) 
+              ; (bkpt "debug") 
+              (visit-again! object))      ; visit again! return a string like "#{counter}" 
+            (else 
+              ; (bkpt "debug")
+              (put object 0)                           ; the first visit! 
+              (let ((x (thunk-or-value (eval 'x (procedure-environment (cdr object))) "CAR")) 
+                    (y (thunk-or-value (eval 'y (procedure-environment (cdr object))) "CDR"))) 
+                ;; the above eval may visit this object.
+                (if (zero? (get object))                       ; no inner elements refer to it 
+                  (begin 
+                    (remove object)                          ; no tagging required 
+                    (list 'just-pair object x y)) 
+
+                  (begin 
+                    (put object counter) 
+                    (set! counter (+ counter 1))             ; increment counter 
+                    (list 'be-referred-as object x y)))))))   ; return the processed pair 
+      object))                                                ; not pair, return directly 
+
+  (define (be-referred? object) 
+    (tagged-list? object 'be-referred-as)) 
+
+  (define (referer? object) 
+    (tagged-list? object 'refer-to)) 
+
+  ;; print printable pair 
+  ;; We need consider three cases: 
+  ;; 1. a pair refers to its outer list, which will be printed as #{counter} where counter is the corresponding 
+  ;; serial number of its outer list. 
+  ;; 2. a pair is referenced by its inner elements, which will be printed as #{counter}=(X . Y) where counter is 
+  ;; its serial number 
+  ;; 3. a normal pair which does not refer to another pair and is not referenced by others, that will be printed 
+  ;; as (X . Y) 
+  ;; NOTE: if Y is a pair, then print-pair won't print the preceding ". "  and the parentheses enclosing it. 
+
+  (define (print-pair pair with-paren) 
+    (let* ((left (if with-paren "(" "")) 
+           (right (if with-paren ")" "")) 
+           (val (get (cadr pair))) 
+           (x (list-ref pair 2)) 
+           (y (list-ref pair 3)) 
+           (tag (if val (string-append "#" (number->string val)) val)) 
+           (middle (if (null? y) "" " "))) 
+
+      (cond ((be-referred? pair) (display tag) (display "=") (display left)) 
+            ((referer? pair) (display tag) (display "#")) 
+            (else (display left))) 
+
+      (cond ((not (referer? pair)) 
+             (cond ((pair? x) (print-pair x #t)) 
+                   (else (display x))) 
+
+             (display middle) 
+
+             (cond ((be-referred? y) (print-pair y #t)) 
+                   ((referer? y) (display ". ") (print-pair y #f)) 
+                   ((pair? y) (print-pair y #f)) 
+                   ((null? y) (display "")) 
+                   (else y (display ". ") (display y))) 
+
+             (display right)) 
+            ))) 
+
+  (print-pair (convert-printable-pair object) #t)) 
+
+(define (user-print object) 
+  (cond ((meta-pair? object) (print-pair-caller object)) ; the clause for pair of META-CIRCULAR 
+        ((compound-procedure? object) 
+         (display (list 'compound-procedure 
+                        (procedure-parameters object) 
+                        (procedure-body object) 
+                        '<procedure-env>))) 
+        (else (display object))))
+;;; Exercise 4.34 additional procedures 
+(eval '(define (list-ref items n) 
+         (if (= n 0) 
+           (car items) 
+           (list-ref (cdr items) (- n 1)))) the-global-environment) 
+
+(eval '(define (map proc items) 
+         (if (null? items) 
+           '() 
+           (cons (proc (car items)) 
+                 (map proc (cdr items))))) the-global-environment) 
+
+(eval '(define (scale-list items factor) 
+         (map (lambda (x) (* x factor)) 
+              items)) the-global-environment) 
+
+(eval '(define (add-lists list1 list2) 
+         (cond ((null? list1) list2) 
+               ((null? list2) list1) 
+               (else (cons (+ (car list1) (car list2)) 
+                           (add-lists (cdr list1) (cdr list2)))))) the-global-environment) 
+
+(eval '(define ones (cons 1 ones)) the-global-environment) 
+
+(eval '(define integers (cons 1 (add-lists ones integers))) the-global-environment) 
+
+(eval '(define (for-each proc items) 
+         (if (null? items) 
+           'done 
+           (begin (proc (car items)) 
+                  (for-each proc (cdr items))))) the-global-environment) 
+
+;; added
+(user-print (eval '(cons 1 2) the-global-environment))
+(load "test-lib.scm")
+(define user-print-general user-print)
+(run-program-list 
+  '((cons 1 2)
+    ; ;; integers should be with the same structure, i.e. one non-nested list.
+    ; (define ones (cons 1 ones))
+    ; ones
+    ; ;; infinite car
+    ; ; p158
+    ; (define (accumulate op initial sequence)
+    ;   (if (null? sequence)
+    ;     initial
+    ;     (op (raw-car sequence)
+    ;         (accumulate op initial (raw-cdr sequence)))))
+    ; (define many-cars (accumulate (lambda (elm res) (cons res elm)) ones (iota 20)))
+    ; many-cars
+    ; ; '(a b (c d))
+    ; (cons 'a (cons 'b (cons (cons 'c (cons 'd '())) '())))
+    ; (cons 'a (cons 'b (cons 'c '())))
+    )
+  the-global-environment)

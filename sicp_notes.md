@@ -213,7 +213,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 4.1 (included) and exercise checking up to 4.1.7 (included)
+checked up to section 4.1 (included) and exercise checking up to 4.2 (included)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
 - > In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
 - > nondeterministic evaluation in Chapter 4.

@@ -1,3 +1,4 @@
+;; https://stackoverflow.com/q/79150263/21294350
 (define (prune max-depth tree)
   (if (= 0 max-depth)
     (cons-stream (stream-car tree) the-empty-stream)
