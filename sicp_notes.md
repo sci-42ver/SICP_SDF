@@ -1,4 +1,4 @@
-@molbdnilo Thanks. So this is where `define-syntax` and `define` differ. Maybe syntactic environment https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Syntactic-Binding-Constructs.html needs to be used differently from environment. The latter is taught in SICP while the former won't as Shawn https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e#comment139473850_79098453 "I don't think syntax macros had been invented yet when SICP was written" implies.
+@Flexo-Savethedatadump One small question. "unless it's a family tree": But the top 3 answers of that reference QA implies "family tree" "contains no cycles". That is obvious since "no one can be his own ancestor via any method" as pgod says. Then what is that sentence's meaning?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.

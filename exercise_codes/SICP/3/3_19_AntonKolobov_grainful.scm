@@ -97,6 +97,7 @@
         (let ((clock-cnt-updated (+ 1 clock-cnt))
               (left (car root))
               (right (cdr root))
+              ;; Same as wikipedia to add 2 steps for hare each iteration.
               (left-forwarded-fast-nodes (fast-nodes-forward-2steps left-fast-nodes clock-cnt))
               (right-forwarded-fast-nodes (fast-nodes-forward-2steps right-fast-nodes clock-cnt))
               )

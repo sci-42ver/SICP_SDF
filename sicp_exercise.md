@@ -1575,6 +1575,13 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - cycle with $k,\lambda,\mu$ definitions <-> $x_i=x_{i+k\lambda},\forall i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large (<- based on "cycle with $k,\lambda,\mu$ definitions") -> $x_i=x_{2i}$ (<- should be based on "$x_i=x_{i+k\lambda},\forall i\ge\mu$").
       So $v=k\lambda$.
       Then the first $x_\mu=x_{\mu+v}\leftrightarrow x_\mu=x_{\mu+\lambda}$ based on the definition of $\lambda$.
+    - The above seems to only think about 1d
+      - algorithm about general graph including the ["alleged binary tree"](https://stackoverflow.com/q/7140215/21294350) here.
+        - https://stackoverflow.com/a/261595/21294350 not O(1)
+        - https://stackoverflow.com/q/11355382/21294350 (I only check the question title)
+          ~~needs to traverse the graph TODO~~
+          needs to keep table of *all* edges to check whether duplicity, so not O(1) IMHO.
+        - 
 - [ ] 20
   - `(define x (cons 1 2))`: binds `cons` in global
     and then creates `E1` "binding the formal parameters" with "enclosing environment" global.
@@ -2309,7 +2316,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 33
 - [ ] 34
   - The `4_34_revc.scm` test plus revc's are *almost* complete.
-    The logic of revc is correct IMHO. 
+    The logic of revc is correct IMHO.
 ### @TODO
 - ~~17~~
   - > Design a way...
