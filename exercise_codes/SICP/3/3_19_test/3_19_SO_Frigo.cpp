@@ -1,3 +1,4 @@
+// https://stackoverflow.com/a/7383418/21294350
 #include <cstdio>
 #include <iostream>
 #include <queue>
@@ -102,6 +103,12 @@ class Flattener
     bool findNodeWithLeftSubtree ()
     {
       //	Find a node with a left subtree using Floyd's cycle detection algorithm
+      
+      // added:
+      // When parent is not null, parent==current means
+      // 1. current is parent's child
+      // 2. parent is current's rightmost child.
+      // So both imply Cycle.
       turtle = parent;
       while( current->left == null and current->right != null ){
         if( current == turtle ){
@@ -116,7 +123,9 @@ class Flattener
         if( turtle != null ){
           turtle = turtle->right;
         }else{
-          turtle = root;
+          // implies parent=null, so current=root->right->right
+          // modified.
+          turtle = root->right;
         }
       }
       return current->left != null;
@@ -134,6 +143,9 @@ class Flattener
       //	The rightmost node is buried in the right subtree of topmost node. Find it using Floyd's cycle detection algorithm applied to right childs.
       bottom = top->right;
       turtle = top;
+      // If bottom->right=null, either leaf after 2 steps or only with 1 step.
+      // For the latter so we won't check bottom == turtle
+      // For the former, leaf can't be equal to subtree.
       while( bottom->right != null ){
         if( bottom == turtle ){
           throw new CycleException();
@@ -149,10 +161,15 @@ class Flattener
     void moveSubtree ()
     {
       //	Update root; if the current node is the root then the top is the new root
+      
+      // Added: Here top is the top of the left subtree of current.
+      // Since top will be added above current, i.e. root. So root is changed.
       if( root == current ){
         root = top;
       }
       //	Add subtree below parent
+      
+      // Added: current is not root.
       if( parent != null ){
         parent->right = top;
       }
@@ -239,14 +256,37 @@ void add_cycle (Node<T>* root, int32 maxNodes, int32 add_depth)
   int32 nodes = 1;
   // just one rough calculation for test temporarily.
   while( nodes < std::log(maxNodes) / std::log(2) ){
-    node=node->left;
+    // node=node->left;
+    // if (nodes == add_depth) {
+    //   node->left=root;
+    // }
+    // nodes++;
+
+    // see md. This will loop...
+    node=node->right;
     if (nodes == add_depth) {
-      node->left=root;
+      node->right=root;
     }
     nodes++;
   }
 }
 
+template <class T>
+Node<T>* TestTree1 ()
+{
+  Node<T>* root = new Node<T>();
+  root->left = new Node<T>();
+  root->right = new Node<T>();
+  root->left->right = new Node<T>();
+  root->left->right->left = new Node<T>();
+  root->left->right->right = new Node<T>();
+  root->left->right->right->left = new Node<T>();
+  root->left->right->right->right = new Node<T>();
+  
+  root->right->left = new Node<T>();
+  root->right->right = new Node<T>();
+  return root;
+}
 
 int32 main (int32 argc, char* argv[])
 {
@@ -255,9 +295,13 @@ int32 main (int32 argc, char* argv[])
   typedef Node<int32> Node;
 
   //	Make binary tree and label it in-order
-  Node* root = makeCompleteBinaryTree<int32>(1 << 24);
+  // Node* root = makeCompleteBinaryTree<int32>(1 << 24);
+  // inorderLabel(root);
+  // add_cycle ( root, 1 << 24, 4);
+
+  Node* root = TestTree1<int32>();
   inorderLabel(root);
-  add_cycle ( root, 1 << 24, 4);
+  root->right->right=root;
 
   //	Try to flatten it
   try{
