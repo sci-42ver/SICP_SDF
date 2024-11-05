@@ -1569,19 +1569,42 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       so no `set!`.
     - TODO
       > In other words, we have to throw into our "local storage" *only the pointer* to that sublist
+  - IMHO DFS works for [the general case](https://stackoverflow.com/q/79155452/21294350)
+  - BFS
+    DMIA only has https://www.geeksforgeeks.org/detect-cycle-in-a-directed-graph-using-bfs/ related with bfs to check cycle.
+    But that needs all `Nodes` which is inappropriate here.
+    - https://favtutor.com/blogs/detect-cycle-in-directed-graph#:~:text=Detecting%20cycles%20in%20directed%20graphs%20can%20also%20be%20done%20using,a%20cycle%20in%20the%20graph.
+      ~~is more straightforward for the case here where each car/cdr adds one level.~~
+      > However, B is already in the visited set, and its parent node is not E, but A.
+      is wrong.
+      Think about A->B->E->D->C (here D->C is fine).
+                      ->C
 - [ ] 19
   since we need to track what *has been* encountered, how to achieve "a constant amount of space"?
-  - https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare
+  - TODO change "See the following."
+  - https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare (*1d*)
     - cycle with $k,\lambda,\mu$ definitions <-> $x_i=x_{i+k\lambda},\forall i\ge\mu$ (i.e. we keep following the cycle.) -> $\exists i=k\lambda\ge\mu$ since k can be arbitrarily large (<- based on "cycle with $k,\lambda,\mu$ definitions") -> $x_i=x_{2i}$ (<- should be based on "$x_i=x_{i+k\lambda},\forall i\ge\mu$").
       So $v=k\lambda$.
       Then the first $x_\mu=x_{\mu+v}\leftrightarrow x_\mu=x_{\mu+\lambda}$ based on the definition of $\lambda$.
-    - The above seems to only think about 1d
+    - The above seems to only think about *1d*
       - algorithm about general graph including the ["alleged binary tree"](https://stackoverflow.com/q/7140215/21294350) here.
         - https://stackoverflow.com/a/261595/21294350 not O(1)
         - https://stackoverflow.com/q/11355382/21294350 (I only check the question title)
           ~~needs to traverse the graph TODO~~
           needs to keep table of *all* edges to check whether duplicity, so not O(1) IMHO.
-        - 
+      - complexity
+        > O(1) storage space.
+        trivial as wiki "Note that the space is constant ..." says.
+        > O(λ + μ) operations of these types
+        This is said in [reference p238](https://www.ush.it/team/ascii/CRC.Algorithmic.Cryptanalysis.Jun.2009.eBook-ELOHiM.pdf)
+        > Once Y is defined, Floyd’s algorithm looks for the *first index t such that Yt = Xt*. Clearly, this can be done in time O(t) using a very small amount of memory
+        i.e. $x_t=x_{2t}$, so $t=kλ$
+        We can show if $t=λ + μ$, then turtle goes back to the loop start. So if it keeps going, then turtle can meet hare. So O(λ + μ).
+  - [O(1) possibly for 2d](https://stackoverflow.com/q/79155452/21294350)
+    - originally Matt Timmermans says about destroyed pointer which *may* mean [Dangling pointer](https://en.wikipedia.org/wiki/Dangling_pointer)
+      > pointers that do not point to a valid object of the appropriate type.
+      That includes [Null pointer](https://www.ibm.com/docs/en/xl-c-aix/13.1.0?topic=pointers-null), i.e. `Node<T>* root=NULL`.
+      pointer pointing to NULL may mean `*root=NULL`.
 - [ ] 20
   - `(define x (cons 1 2))`: binds `cons` in global
     and then creates `E1` "binding the formal parameters" with "enclosing environment" global.

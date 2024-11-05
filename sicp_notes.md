@@ -1,4 +1,8 @@
 @Flexo-Savethedatadump One small question. "unless it's a family tree": But the top 3 answers of that reference QA implies "family tree" "contains no cycles". That is obvious since "no one can be his own ancestor via any method" as pgod says. Then what is that sentence's meaning?
+
+2. "destroyed pointers": Do you mean Dangling pointer https://en.wikipedia.org/wiki/Dangling_pointer? Sorry if my phrasing above is lengthy and hard to grasp the main ideas. No nodes are destroyed. They are only restructured similar to how the threaded binary tree does by assigning null pointer the pointer some node can be useful further.
+
+1. "Right-link the end node to itself." for the left child seems to be in conflict with "right-link the previous child's right-end-node to the current child. " Could you give one simple example (better with one ASCII figure) to show how this works? Thanks in advance. 2. "the last level start": does this mean leftmost node, i.e. inorder starting node? But that has no inorder predecessor. 3. I don't know what "invert" and "target" mean in the last paragraph. I will try to understand point 2,3 after understanding point 1, i.e. the contents before Section Recovery.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.

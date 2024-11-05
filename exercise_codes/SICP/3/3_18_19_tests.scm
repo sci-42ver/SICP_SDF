@@ -111,3 +111,28 @@ x
   (assert (func c2))
   (assert (func c3))
   )
+
+;; test from 3_23_wtative.scm
+; (#0=((a) (z . #0#)) (z . #0#))
+;; . will be recognized as the delimeter of pair.
+(define deq1-with-cycle '(((a) (z . sharp3-0)) (z . sharp3-0)))
+(define sharp3-0 (car deq1-with-cycle))
+(set-cdr! (cadr deq1-with-cycle) sharp3-0)
+(set-cdr! (cadr sharp3-0) sharp3-0)
+deq1-with-cycle
+
+; (((#0=(a b c . #0#))) (#0#))
+(define deq2-with-cycle '((((a b c . sharp4-0))) (sharp4-0)))
+(define sharp4-0 (caaar deq2-with-cycle))
+(set-cdr! (cddr sharp4-0) sharp4-0)
+(set-car! (cadr deq2-with-cycle) sharp4-0)
+deq2-with-cycle
+
+; #0=(a b c . #0#)
+(define deq3-with-cycle sharp4-0)
+(define (full-test-with-3.23-3.32-4.34-tests func)
+  (full-test-with-3-32-and-4-34-tests func)
+  (assert (func deq1-with-cycle))
+  (assert (func deq2-with-cycle))
+  (assert (func deq3-with-cycle))
+  )

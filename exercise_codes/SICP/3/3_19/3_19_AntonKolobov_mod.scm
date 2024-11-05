@@ -79,7 +79,7 @@
           true 
           (or (dfs (car root) slow-it-updated fast-it-updated clock-cnt-updated) 
               (dfs (cdr root) slow-it-updated fast-it-updated clock-cnt-updated)))))) 
-  (trace dfs)
+  ; (trace dfs)
   (dfs tree (iterator tree 0) (iterator '() 0) 0))
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")

@@ -139,6 +139,8 @@
 ; (inf_loop? deq)
 (load "3_19_AntonKolobov_mod.scm")
 (assert (has-cycle? deq))
+deq
+; (#0=((a) (z . #0#)) (z . #0#))
 
 ;; cycle
 (define new-deq (make-deque))
@@ -150,10 +152,17 @@
 
 (load "3_19_AntonKolobov_mod.scm")
 (define (newline-display exp) 
-  (and (not (has-cycle? exp))
+  (and (or (not (has-cycle? exp))
+          ;; if have cycle, then display msg (assume that doesn't return #f...) and return #f to avoid further display.
+          (and (display "has cycle") #f))
        (newline) 
        (display exp)))
 (newline-display (front-deque new-deq))
+(front-deque new-deq) ; cycle
+; #0=(a b c . #0#)
+(newline-display new-deq)
+new-deq
+; (((#0=(a b c . #0#))) (#0#))
 (3_23_test)
 
 ;; too heavy test and the assumption is different about `empty-deque?` etc.

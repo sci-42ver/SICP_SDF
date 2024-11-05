@@ -12,6 +12,8 @@
   ;; 0. 000 means keeping car, 001 means cdr,car...
   ;; 0.1 So here all path are stored as the above number.
   ;; 1. Here I parse number from right since IMHO normal calculation follows this pattern so that that is more convenient
+  ;;; idxed-node walks walked-steps steps by parsing idx to know how to walk.
+  ;;; node-path-len is the distance between hare and tortoise to help updating path in idxed-node.
   (define (walk-based-on-idx idxed-node idx walked-steps node-path-len)
     (let ((node (node-value idxed-node))
           (path-num (node-path-from-root idxed-node)))
@@ -65,26 +67,6 @@
     (filter-branches idxed-nodes 3 2)
     )
 
-  ;; 0. From original
-  ;; slow-it - tracks each node (1, 2, 3, 4...) 
-  ;; fast-it - tracks only even nodes (2, 4...)  
-  ;; 0.0
-  ;; Here root is just slow-it which has run clock-cnt steps.
-  ;; Then list all possible fast-it by left-fast-nodes etc and check whether they are equal.
-  ;; 1.
-  ;; when car, 
-  ;; root -> (car root)
-  ;; fast-node: (path-from-root node)
-  ;;; IMHO first append is better, since both are about left-fast-nodes.
-  ;; left-fast-nodes -> list of ((remove-car-path-then-choose-left-then-append path-from-root) (forward node)) from left-fast-nodes
-  ;; i.e. choose 00 ending.
-  ;; right-fast-nodes -> list of ((remove-car-path-then-choose-right-then-append path-from-root) (forward node)) from left-fast-nodes
-  ;; i.e. choose 10 ending.
-  ;;; Then cdr is similar.
-  ;;; Then we don't need to expand clock-cnt steps but just 2 steps. Here I assume time complexity is considered more than space.
-  ;; 1.1
-  ;; left-fast-node has path-num from idxed-root inside itself.
-  ;; root has no path-num.
   (define (dfs root left-fast-nodes right-fast-nodes clock-cnt)
     (displayln (list "clock-cnt" clock-cnt))
     (if (not (pair? root))
@@ -101,7 +83,6 @@
               (left-forwarded-fast-nodes (fast-nodes-forward-2steps left-fast-nodes clock-cnt))
               (right-forwarded-fast-nodes (fast-nodes-forward-2steps right-fast-nodes clock-cnt))
               )
-          ; (bkpt "debug")
           (or 
             (dfs left 
               ;; first filter, then `drop-first-path-step-for-all` may  probably have less to process.
@@ -127,7 +108,6 @@
             (left-forwarded-fast-nodes (forward-n-steps 1 (make-node 0 left) 1))
             (right-forwarded-fast-nodes (forward-n-steps 1 (make-node 1 right) 1))
             )
-        ; (bkpt "debug")
         (or 
             (dfs left 
               (drop-first-path-step-for-all (filter-left-left left-forwarded-fast-nodes))
@@ -140,12 +120,9 @@
             )
         )
       ))
-  ; (trace dfs)
-  ; (trace dfs-starter)
-  ; (dfs tree (iterator tree 0) (iterator '() 0) 0)
   (dfs-starter tree 0)
   )
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "3_18_19_tests.scm")
-(full-test-with-3-32-and-4-34-tests has-cycle?)
+(full-test-with-3.23-3.32-4.34-tests has-cycle?)
