@@ -1,8 +1,18 @@
-@Flexo-Savethedatadump One small question. "unless it's a family tree": But the top 3 answers of that reference QA implies "family tree" "contains no cycles". That is obvious since "no one can be his own ancestor via any method" as pgod says. Then what is that sentence's meaning?
+Could you say more about "the *first* right child" meaning and the validation process?
 
-2. "destroyed pointers": Do you mean Dangling pointer https://en.wikipedia.org/wiki/Dangling_pointer? Sorry if my phrasing above is lengthy and hard to grasp the main ideas. No nodes are destroyed. They are only restructured similar to how the threaded binary tree does by assigning null pointer the pointer some node can be useful further.
+One small question additional: do you imply BFS, i.e. level-order traversal, by your section titles? That seems to have no best space complexity O(1) since it needs queue to store what to be checked next (at least https://en.wikipedia.org/wiki/Breadth-first_search#Time_and_space_complexity doesn't record one O(1) space complexity method that is same as what I learnt when learning discrete mathematics).
 
-1. "Right-link the end node to itself." for the left child seems to be in conflict with "right-link the previous child's right-end-node to the current child. " Could you give one simple example (better with one ASCII figure) to show how this works? Thanks in advance. 2. "the last level start": does this mean leftmost node, i.e. inorder starting node? But that has no inorder predecessor. 3. I don't know what "invert" and "target" mean in the last paragraph. I will try to understand point 2,3 after understanding point 1, i.e. the contents before Section Recovery.
+Thanks so much. With your codes I understood your ideas and I thought your codes are right. Here gives some infos for future readers. 1. level meaning: here level n means all nodes with n-1 left walks instead of the normal level meaning in the original binary tree related with depth. Then "the first right child" is inside that level context. Also this will ensure *all nodes will be visited* if no cycle which matters for cycle detection.
+
+2. how validation process checks cycle: just as Level 1 and point 1 in Level n say. That is done in one *1d* list by keeping going right each time. Here "previously visited" means all levels with reconstruction finished. 3. "the last level start": means the first left node of nodes in the last level. This is straightforward if knowing level meaning.
+
+4. "invert": It means "traverse the path from the root to the last level start, and use the left-link *of* each successor" to point "back to its predecessor". Better to see codes from `let savedLeft = levelStart.left;` to the 2nd `levelStart.left = savedLeft;`. This "invert" process is needed IMHO due to that each level is constructed based on the previous one level. So if we destroy the former level before the next level, there is no easy way to know how the next level is constructed and then restore it (maybe there is some clever way to do that...).
+
+5. IMHO your process is not BFS at least for the node traversal order if based on wikipedia definition. Maybe you mean BFS based on your level definition, i.e. checking all nodes in one level by `(next = findLeftLink(next!.right!))`.
+
+6. How O(1) space complexity is ensured: IMHO just checking `let` usage where tracking `next` can help understanding the codes. `let` uses [lexical-scoping and Block-scoped variable capturing](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoped-variable-capturing) same as Scheme although Scheme allows Re-declarations (at least for MIT/GNU Scheme).
+
+Some links for someone not knowing some syntaxes in typescript: ?: https://stackoverflow.com/a/23557094/21294350, what to be considered as false https://stackoverflow.com/a/44017547/21294350, === and !== https://stackoverflow.com/a/42517860/21294350, ?. https://stackoverflow.com/questions/15260732/does-typescript-support-the-operator-and-whats-it-called, ! postfix https://stackoverflow.com/a/42274019/21294350.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -23,6 +33,7 @@ Review of the solution at the top:
 review history comments.
 Review one history comment
 Review the top comment and the 2 tests. Give one sample implementation.
+remove one wrong comment contents and add one notice
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -92,7 +103,7 @@ Review the top comment and the 2 tests. Give one sample implementation.
             then?
 ## @check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 4.1 included and chapter 3.
+- up to section 4.2 included and chapter 3.
 ### TODO
 - chapter 3
   - > a more mechanistic but less theoretically tractable environment model of computation
@@ -217,16 +228,52 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 4.1 (included) and exercise checking up to 4.2 (included)
+checked up to section 4.2 (included) and exercise checking up to 4.2 (included)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
-- > In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.
+- ~~> In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.~~
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
 - ~~> is can serve as a framework for ex-perimenting with evaluation rules, as we shall do later in this chapter.~~
   see section 4.2
-- > We will return to this issue in section 4.1.6, after we learn more about evaluation.
-- > *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.
+- ~~> It makes perfect sense, for instance, to *compute the length of a list without knowing the values* of the individual elements in the list. We will exploit this idea in section 4.2.3 to implement the streams of chapter 3 as lists formed of non-strict cons pairs.~~
+  based on
+  ```scheme
+  ; https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-15.html#%_sec_2.2
+  (define (length items)
+    (if (null? items)
+        0
+        (+ 1 (length (cdr items)))))
+  ```
+  If `(cdr items)` is `(cons ...)` (one procedure in lazy evaluator, so "without knowing the values ..."), then keep cdr.
+  Or `'()-thunk`, so 0.
+  ~~As [lazy_cdr] implies, all the actual values are encapsulated in thunk without evaluating (i.e. only `(actual-value (cdr ...))` can get the val).~~
+- ~~> The successful evaluation of the try expression discussed in section 4.2.1~~
+  It obviously needs `force-it` later for `(= a 0)`.
+- ~~> Sometimes we can use internal definitions to get *the same effect as with let*.~~
+  ```scheme
+  (let ((x 3)
+    (y (+ x 2)))
+    ...)
+  ```
+  won't since `(y (+ x 2))` must be 5 for `define` but may throw error for `let`.
+  - > We prefer, however, to use let in situations like this and to use *internal define only for internal procedures*
+    - > Understanding internal definitions well enough to be sure a program means *what we intend it to mean* requires a more elaborate model of the evaluation process than we have presented in this chapter.
+      i.e. env model
+      > More generally, in block structure, the scope of a local name is the *entire procedure body* in which the define is evaluated.
+      but for `define`
+      > the body of f *starting at the point where the define* for odd? occurs.
+    - > e subtleties *do not arise with internal definitions of procedures*, however. We will return to this issue in section 4.1.6, after we learn more about evaluation.
+      Since the lambda val can always be evaluated.
+      > Hence, odd? will have been defined by the time even? is executed.
+      So *later defined* `odd?` proc can be used by `even?` before. But for values that is impossible for applicative order (~~see Exercise 4.19 which doesn't allow using external definitions to ensure "scope" above, i.e. `b` should use the latter `a`~~). All these are based on "obey these restrictions".
+      - Also see [r7rs](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-7.html#TAG:__tex2page_sec_5.3.2)
+        > The variables defined by internal definitions are *local to the <body>*
+        > ... equivalent to ...
+        - > without assigning or referring to the value of the corresponding <variable>
+          i.e. `foo` defined by itself?
+- ~~> *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.~~
+  i.e. ["free variables"](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#:~:text=A%20free%20variable%20is%20a,this%20or%20any%20container%20expression.) (not formal parameters and locally defined variables) in env.
 - > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
 - >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works.
   > is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
@@ -234,21 +281,28 @@ checked up to section 4.1 (included) and exercise checking up to 4.2 (included)
 - > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
 - > For the interpreter we implement in Chapter 4, the code is in fact shared.
 - > In Section 4.3 we will study a language for expressing nondeterministic computations.
-- > In Section 4.2, we’ll develop a framework that unifies lists and streams.
-- > The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)
-- > In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way
+- ~~> In Section 4.2, we’ll develop a framework that unifies lists and streams.~~
+- ~~> The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)~~
+  Also see the above "section 4.1.6" quotes. They are all about the scope of `define`.
+  For here, i.e. whether `(delay dy)` can use the latter `(define dy ...)`.
+  If not, that means
+  > extending the environment frame one definition at a time
+  the frame can be only based on the *already existing* ones, although MIT/GNU Scheme doesn't do that as the standard requires.
+- ~~> Converting to *normal-order evaluation* provides a uniform and elegant way ... In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way~~
 - > In Section 4.3, we will look at nondeterminism from yet another point of view.
 - ~~> This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)~~
   - i.e. use one table inside. So just `put` and then `get` can automatically work.
-- > We will see what the problem is and how to solve it in section 4.1.6.
-  IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.
-- > by binding them in the global environment. See Section 4.1.4.
+- ~~> We will see what the problem is and how to *solve it* in section 4.1.6.~~
+  ~~IMHO just change `(eval (definition-value exp) env)` to incorporate `eval-definition`.~~
+  "problem" is about "simultaneous scope".
+- ~~> We will support the use of the variables true and false in expressions to be evaluated by binding them in the global environment. See Section 4.1.4.~~
 - ~~> He used *this framework* to demonstrate that there are well-posed problems that cannot be computed by Turing machines (see exercise 4.15)~~
   maybe here "framework" is used to "cannot be computed" -> "can be formulated as a [program](https://en.wikipedia.org/wiki/Halting_problem#Proof_concept)" failure.
 - ~~> so that sequential definition isn't equivalent to simultaneous definition, see exercise 4.19.~~
-- > ere are also languages (see Exercise 4.31) that give programmers de-tailed control over the strictness of the procedures they define.
-- > we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)
+- ~~> ere are also languages (see Exercise 4.31) that give programmers de-tailed control over the strictness of the procedures they define.~~
+- ~~> we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)~~
   Same problems shown also in Exercise 3.51, 52.
+- > By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go even farther in this direction in section 4.4.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -3059,7 +3113,7 @@ Emm... still duplicate of much book contents but relates with env model...
   if `cons...` are used as compound procedures, the list is `(lambda (m) (m thunk1 thunk2))`
   then `(car z)` will *force* `z` (i.e. the above `(lambda (m) ...)`) and then apply `z` to one argument where `m` (i.e. `(lambda (p q) p)`) is again *forced*. Then return thunk1 `(thunk y env)` which may be forced when `driver-loop`. i.e.
   > In fact, even accessing the car or cdr of a lazy pair *need not force the value of a list element*.
-  - cdr is similar to return thunk2.
+  - cdr is similar, returning thunk2. <a id="lazy_cdr"></a>
   - So "work with infinite lists (streams) as well as finite ones".
   - `scale-list` is from ~~`scale-stream`~~ p144.
   - `add-lists`: similar to Exercise 3.50.
@@ -3073,11 +3127,28 @@ Emm... still duplicate of much book contents but relates with env model...
   https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-24.html#%_sec_3.5.4
   see
   > when it is required to generate more than the first element of the output stream:
-#### @TODO
-- > Notice that we can install these definitions in the lazy evaluator simply by typing them at the driver loop.
+#### TODO
+- ~~> Notice that we can install these definitions in the lazy evaluator simply by typing them at the driver loop.~~
   Not in `primitive-procedures` since that will implicitly evaluate arguments.
-  - TODO
-    footnote 40
+  - ~~TODO~~
+    ~~footnote 40~~
+### 4.3
+- > We saw how to handle this with finite sequence operations in section 2.2.3 and with infinite streams in section 3.5.3.
+  See `prime-sum-pairs`
+  ```scheme
+  (stream-map make-pair-sum
+    ;; from book
+    (stream-filter (lambda (pair)
+                 (prime? (+ (car pair) (cadr pair))))
+               ;; incorporated with the latter contents
+               (pairs integers integers)))
+  ```
+  - notice the pattern for `(pairs integers integers)` in section 2.2.3 is by constructing a list of row lists and then get one matrix form similar to [upper triangular matrix](https://math.stackexchange.com/q/4994400/1059606). So `flatmap`
+    But the pattern here is different, where we `interleave` between 2 *infinite* lists to ensure both can be visited. We also uses *induction* to get one bigger triangle from one smaller triangle (This can't be done in section 2.2.3 since we needs to add one *diagonal*).
+  - > Whether we actually generate the entire sequence of pairs first as in chapter 2, or interleave the generating and filtering as in chapter 3, is immaterial to the essential image of how the computation is organized.
+    As the above shows ~~the *basic programming structure*~~ computation process for *each number* are same for both, i.e. "Sequences as Conventional Interfaces" filter and then map.
+- > declarative descriptions and imperative specifications
+  So "Nondeterministic Computing" is [totally *declarative*](https://codefresh.io/learn/infrastructure-as-code/declarative-vs-imperative-programming-4-key-differences/#:~:text=In%20declarative%20programming%2C%20state%20is,hand%2C%20requires%20explicit%20state%20management.).
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).

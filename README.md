@@ -40,6 +40,11 @@
   to Oct 13, one CS61A week
   to Oct 15, one lec, 2 recs and partly section 4.1.
   From Oct 10 to Oct 25, section 4.1... (too slow)
+  to Oct 28, 2 lecs and related recs plus CS_61A/week12 (*should be faster* since one chapter half month is one reasonable speed, so each section has at most 4 days to read...).
+  to Oct 30, CS_61A/week13.
+  to Nov 2, section 4.2 with 2 exercises left.
+  to Nov 3, section 4.2.
+  to Nov 5, check the solution for the [general 3.19](https://stackoverflow.com/q/79155452/21294350) which is related with 4.34 implicitly (I should ask the question in QA after being stuck for a too long time like many hours... especially when that answer doesn't get many upvotes).
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF

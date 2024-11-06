@@ -1605,6 +1605,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       > pointers that do not point to a valid object of the appropriate type.
       That includes [Null pointer](https://www.ibm.com/docs/en/xl-c-aix/13.1.0?topic=pointers-null), i.e. `Node<T>* root=NULL`.
       pointer pointing to NULL may mean `*root=NULL`.
+    - TODO
+      > use the left-link
+      > 3. in the previous paragraph, we inverted...
 - [ ] 20
   - `(define x (cons 1 2))`: binds `cons` in global
     and then creates `E1` "binding the formal parameters" with "enclosing environment" global.

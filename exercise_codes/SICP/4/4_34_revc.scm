@@ -101,6 +101,7 @@
                     ; (display "remove")
                     ; (newline)
                     (delete object)                          ; no tagging required 
+                    ;; Notice only (get object) will be used when print.
                     (list 'just-pair object x y)) 
 
                   (begin 
@@ -277,3 +278,36 @@
 c1
 c2
 c3
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; expected stream-like results from revc 
+;;; (search ";;;;;;;;;;;;;;" where the 3,4th are only about normal list which is also thought in other implementations)
+;;; 1
+(cd "~/SICP_SDF/exercise_codes/SICP/3")
+(load "book-stream-lib.scm")
+ones
+(stream-ref ones 4)
+;; Better than MIT/GNU Scheme.
+; ones
+; ;;; L-Eval input: 
+; (cdr ones) 
+
+; ;;; L-Eval value: 
+; #0=(1 . #0#) 
+
+;;; 2
+;; same as MIT/GNU Scheme.
+(stream-ref integers 20)
+integers
+;  ;;; L-Eval input: 
+;  (list-ref integers 20) 
+  
+;  ;;; L-Eval value: 
+;  21 
+  
+;  ;;; L-Eval input: 
+;  integers 
+  
+;  ;;; L-Eval value: 
+;  (1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 . #<thunk CDR>)
+
+;;; 2
