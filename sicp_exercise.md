@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.37 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.38 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2368,9 +2368,64 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     trivial since here we won't enumerate unnecessarily for `k`.
     same as wiki meteorgan.
     - see wiki uuu's for more detailed infos.
-- [ ] 38
+- [x] 38
   - With `try-again`, this will be easy.
+  - As `4_36.rkt` says, Racket lacks `try-again` to get more results.
 - [ ] 39
+  - > Does the order of the restrictions in the multiple-dwelling procedure affect the answer?
+    No trivially.
+  - > Does it affect the time to find an answer?
+    there are 5^5 cases. Assume one of the following runs first:
+    `(distinct? (list baker cooper fletcher miller smith))`: -> 5!, so 5!/5^5=24/625 by `from fractions import Fraction;import math;Fraction(math.factorial(5),1)/Fraction(5**5,1)` in python.
+    `(not (= baker 5))`: just 4/5
+    the 2nd `(not (= fletcher 1))`: *3/4
+    `(> miller cooper)` ~~based on cooper still has 5 cases (i.e. not run `(not (= cooper 1))`)~~: (1+...+4)/5^2=2/5 (So we can do this first to be faster)
+    `(not (= (abs (- smith fletcher)) 1))`: (5^5-8)/5^5
+    - so `(> miller cooper)` can be before `(not (= cooper 1))`
+      then all the rest conditions are not influenced.
+    - meteorgan's is based on the complexity of each operation instaed of how many cases will be checked.
+      Actually the total time is `case-number*average-case-time`.
+      So my method decreases the former while meteorgan's decreases the latter. IMHO *the latter matters more* due to O(1) compared with O(n^2).
+  - comment with not strict calculation ("Assume we want to choose the 1st filter:" isn't met at all... Better to see xdavidliu's.)
+    ```
+    <<<LisScheSic
+    If we just want to decrease the number of constant time testing (i.e. not {{{distinct?}}}), the computation can be done easier without too much combinatorial calculation.
+
+    If we think of each test as one filter procedure to avoid doing latter filter procedure when necessary, then we just need to put the filter procedure which filters much more first. The filter efficiency can be calculated much easier. Assume we want to choose the 1st filter:
+    {{{
+    procedure: output-cases/input-cases
+
+    distinct? ...: 5!/5^5=24/625
+    (not (= baker 5)), (not (= cooper 1)): 4/5
+    ...
+    (> miller cooper): (1+...+4)/5^2=2/5
+    (not (= (abs (- smith fletcher)) 1)): (5^5-8)/5^5
+    }}}
+    So we can put (> miller cooper) before (not (= cooper 1)). Notice these 2 filters only influence miller and cooper.
+
+    Then assume we have K cases left after (require (not (= baker 5))), then with the reordering, (require (not (= cooper 1))) efficiency changes (also for (require (> miller cooper))).
+    >>>
+    ```
+  - repo only has test for 40 with no *detailed* explanation for 39,40.
+- [ ] 40
+  - > For example, most of the restrictions *depend on only one or two* of the person-floor variables, and can thus be imposed before floors have been selected for all the people. 
+    So this avoids the *unnecessary* calculation due to `amb`?
+    > It is very inefficient to *generate all possible assignments* of people to floors and then leave it to backtracking to eliminate them.
+    - see http://community.schemewiki.org/?sicp-ex-4.39 revc's.
+- [x] 41
+  - wiki 
+    - woofy: 
+      - if `(check next who)` succeeds, then dfs. Otherwise try the next subtree in the same level.
+      - `(place who floor result)` means place who at floor based on the former people locations in `result`.
+      - `(cons floor result)`: is the reversed order, so `(- head who)` where we only checks based on former floors as 4.40 does.
+      - Comparison
+        - Shaw's is similar but lacks modularity as "ugly" implies.
+          - "Another ugly solution." is just avoids `flatmap` by using `set!`.
+    - timothy235's just adds `(map list ...)` after getting candidates like those in my `4_41.scm`.
+      - Its `in-permutations` returns one *stream* which is unnecessary for here we must check *all* cases.
+        [for/list](https://docs.racket-lang.org/reference/for.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._for%2Flist%29%29)
+- [ ] 42
+  - `(and (= v (cadr kv)) (iter (cdr next)))` is more conservative. Actually, those left have been checked by the former iterations.
 ### @TODO
 - ~~17~~
   - > Design a way...

@@ -7,6 +7,8 @@
 
 ;; 4.22 to support multiple-dwelling 
 (load "4_22.scm")
+;; for and/or -> if
+(load "4_4_analyze.scm")
 (define (analyze exp)
   (cond ((self-evaluating? exp) 
          (analyze-self-evaluating exp))
@@ -21,6 +23,9 @@
         ;; 9 conditions above
         ;; 4.22
         ((let? exp) (analyze (let->combination exp)))
+        ;; 4.4
+        ((and? exp) (analyze (and->if exp)))
+        ((or? exp) (analyze (or->if exp)))
         ;; add one "special form"
         ((amb? exp) (analyze-amb exp))
         ((application? exp) (analyze-application exp))

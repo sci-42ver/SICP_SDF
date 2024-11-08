@@ -287,6 +287,18 @@
         (list 'not not)
         (list 'abs abs)
         (list '> >)
+        ;; 4.42
+        ;; only binary which is enough
+        ;; Notice short circuit will not work.
+        ; (list 'and (lambda (x y) (and x y)))
+        ; (list 'or (lambda (x y) (or x y)))
+        ;; no short circuit
+        (list 'not (lambda (x) (not x)))
+
+        (list 'caar caar)
+        (list 'cadar cadar)
+        (list 'eq? eq?)
+        (list 'cadr cadr)
         ))
 (define (primitive-procedure-names)
   (map car

@@ -1,6 +1,7 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 ; (load "lib.scm")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; special forms
 (define (and? exp)
   (tagged-list? exp 'and))
 ;; see wiki woofy better to pass env down.
@@ -21,8 +22,11 @@
 ;; ((and? exp) (eval-and (operands exp)))
 ;; or is similar
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; derived expressions
 ;; derived expressions. sc->short circuit.
 ;; without using derivation.
+
+;; This is actually not derived expression.
 (define (test-ops ops null-val stop-test? sc-ret)
   (if (null? ops)
       null-val                          ; no else clause
@@ -36,7 +40,8 @@
 
 (define (make-test-clause test? elm consequent)
   (list (list test? elm) consequent))
-;; see wiki, if is more appropriate for "short circuit" to avoid unnecessary later clauses.
+;; 0. see wiki, if is more appropriate for "short circuit" to avoid unnecessary later clauses.
+;; 1. similar structure as the above.
 (define (test-ops ops null-val stop-test? sc-ret)
   (if (null? ops)
       null-val                          ; no else clause
@@ -60,6 +65,7 @@
 (define (or->cond exp)
   (test-ops (operands exp) false true? true))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; special forms
 ;; woofy modification
 (define (and? exp) (tagged-list? exp 'and)) 
 (define (and-predicates exp) (cdr exp)) 
@@ -78,6 +84,7 @@
         )
       )))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; test
 (define (display-ret ret)
   (display (list "return" ret))
   ret)
@@ -107,6 +114,7 @@
 ; (return #f)#f
 ; (return 3)(return 9)9
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; wiki LisScheSic's to manipulate with Shade's problems.
 ;; from lib.scm
 (define (make-if predicate consequent alternative)
   (list 'if predicate consequent alternative))
