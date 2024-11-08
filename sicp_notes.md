@@ -1,18 +1,36 @@
-Could you say more about "the *first* right child" meaning and the validation process?
+Anyone visiting this QA should check Matt Timmermans's answer which IMHO is the only one right answer to have one possible O(1) space implementation for "alleged binary tree" cycle detection here at least when I wrote this comment.
 
-One small question additional: do you imply BFS, i.e. level-order traversal, by your section titles? That seems to have no best space complexity O(1) since it needs queue to store what to be checked next (at least https://en.wikipedia.org/wiki/Breadth-first_search#Time_and_space_complexity doesn't record one O(1) space complexity method that is same as what I learnt when learning discrete mathematics).
+This question is a bit ambiguous actually by saying "a DAG *or* a graph" since the method is different for directed or undirected graph. Since it is about programming algorithm, here OP may probably mean DAG which is more commonly used in data structure.
 
-Thanks so much. With your codes I understood your ideas and I thought your codes are right. Here gives some infos for future readers. 1. level meaning: here level n means all nodes with n-1 left walks instead of the normal level meaning in the original binary tree related with depth. Then "the first right child" is inside that level context. Also this will ensure *all nodes will be visited* if no cycle which matters for cycle detection.
+@Stef Thanks for your phrasing that O(log(n)) space complexity due to storing O(1) additional nodes whose has O(log(n)) bits should be considered as O(1). But by searching "bit" in the reference QA, that seems not to be what causes O(log(n)) space complexity. Anyway, I thought Matt Timmermans's answer is right. That's a very ingenious idea by viewing tree differently and can use 1d cycle detection method!
 
-2. how validation process checks cycle: just as Level 1 and point 1 in Level n say. That is done in one *1d* list by keeping going right each time. Here "previously visited" means all levels with reconstruction finished. 3. "the last level start": means the first left node of nodes in the last level. This is straightforward if knowing level meaning.
+Anyone visiting this QA should check Matt Timmermans's answer which IMHO is the only one right answer to have one possible O(1) space implementation for "alleged binary tree" cycle detection here at least when I wrote this comment.
 
-4. "invert": It means "traverse the path from the root to the last level start, and use the left-link *of* each successor" to point "back to its predecessor". Better to see codes from `let savedLeft = levelStart.left;` to the 2nd `levelStart.left = savedLeft;`. This "invert" process is needed IMHO due to that each level is constructed based on the previous one level. So if we destroy the former level before the next level, there is no easy way to know how the next level is constructed and then restore it (maybe there is some clever way to do that...).
+@Stef Thanks for your phrasing that O(log(n)) space complexity due to storing O(1) additional nodes whose has O(log(n)) bits should be considered as O(1). But by searching "bit" in the reference QA, that seems not to be what causes O(log(n)) space complexity. Anyway, I thought Matt Timmermans's answer is right. That's a very ingenious idea by viewing tree differently and can use 1d cycle detection method!
 
-5. IMHO your process is not BFS at least for the node traversal order if based on wikipedia definition. Maybe you mean BFS based on your level definition, i.e. checking all nodes in one level by `(next = findLeftLink(next!.right!))`.
+@MattTimmermans For DAG (IMHO the Scheme list is implicitly directed, so we should think about DAG in SICP exercise 3.18,19), your codes won't work due to it checking whether there is one duplicate visit *globally* (e.g. `root.left=a_tree, root.right=a_tree` will be thought cyclic but that is not true for DAG). Anyway, your codes work for undirected binary tree well IMHO.
 
-6. How O(1) space complexity is ensured: IMHO just checking `let` usage where tracking `next` can help understanding the codes. `let` uses [lexical-scoping and Block-scoped variable capturing](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoped-variable-capturing) same as Scheme although Scheme allows Re-declarations (at least for MIT/GNU Scheme).
+Then Frigo's method to check duplicity in *inorder traversal globally* will also not work for DAG. The OP says "a DAG or a graph" which should be explicitly restricted more since directed and undirected graph should be differentiated and manipulated with different algorithms.
 
-Some links for someone not knowing some syntaxes in typescript: ?: https://stackoverflow.com/a/23557094/21294350, what to be considered as false https://stackoverflow.com/a/44017547/21294350, === and !== https://stackoverflow.com/a/42517860/21294350, ?. https://stackoverflow.com/questions/15260732/does-typescript-support-the-operator-and-whats-it-called, ! postfix https://stackoverflow.com/a/42274019/21294350.
+:57735362 "The algorithm I posted checks to see if a directedgraph with max out-degree 2 is a binary tree." IMHO your codes can only check for undirected case as my above "root.left=a_tree, root.right=a_tree" and also your offered 2nd test example. Actually your codes detect the cross edge instead of the back edge.
+
+But only the back edge implies the cycle as https://courses.cs.washington.edu/courses/cse417/21wi/lecture/06-DFS-model.pdf p3 shows (I proved that when I learned discrete mathematics a bit long time ago although the memory is a bit ambiguous now)
+
+@MattTimmermans "You shouldn't open a new question just to rephrase an existing question. You can use comments for that.": But my comment is buried in "Show 18 more comments" stackoverflow.com/questions/…. The question is long time before and the clarification will be noticed by only a few people who directly wants the answer of that QA maybe.
+
+:57736489 1. "For directed graphs, "is a tree" is a different question than "has a cycle".": Yes. That's true since tree needs "a child can *only have one parent*" (otherwise we may have 2 roots) https://stackoverflow.com/a/7707983/21294350. This restriction doesn't hold for undirected graphs maybe due to we can choose root more freely there (maybe there is one strict proof to prove that. I am a bit rusty for my graph knowledge learnt in discrete mathematics).
+
+2. "it has no cycles in the sense of an undirected graph.": OK, fine. IMHO it is better to point out that in your answer since actually it may throw the wrong cycle assertion when the graph is actually DAG.
+
+2.a. Thanks for your implementation although "in the sense of an undirected graph" is not what I wanted (anyway that is due to my poor description of my question before). One last question: is there one way to do in O(1) space complexity to check whether one alleged directed binary tree is actually not acyclic, i.e. in the context of SICP exercise 3.19 where (a-tree . a-tree) is acyclic (can be checked in MIT/GNU Scheme interpreter) but your codes will assert it has cycle.
+
+:57736625 OK. I found that comment now and upvoted for that comment to let people *directly* see it without expanding all comments. If so, IMHO my original posted question https://stackoverflow.com/questions/79155452/can-we-check-whether-one-alleged-binary-tree-contains-a-cycle-in-o1-space-wi is *different* from this since it is about alleged *directed* binary tree instead of just rephrasing. I planned to reopen and explicitly say about the difference with this QA. If you agree, I will do that.
+
+:57736630 SICP has one ebook html version https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-22.html#%25_sec_3.3 which is also shown in my posted question. As my QA says, SICP requires the solution for 1d directed path case, but I generalize that exercise to 2d directed graph (max out-degree is 2) and ask for *possibility* of the O(1) space complexity solution.
+
+to explicitly specify the undirected condition (shown in OP's comment) since that matters for the solution to be differentiated from solutions for the directed version.
+
+@greybeard At least for Matt Timmermans's implementation, the cycle test there doesn't hold for directed graph since it recognizes one cross edge instead of back edge https://en.wikipedia.org/wiki/Depth-first_search#Output_of_a_depth-first_search (In your case, it will assert cycle existence for forward edge when c->d where d has been visited by a->b->d if we think that `a.left=b, a.right=c, b.right=d, c.left=d`). But only back edge implies cycle in directed graph https://chat.stackoverflow.com/transcript/message/57736404#57736404 (actually that's in p4. I have one typo).
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -34,6 +52,7 @@ review history comments.
 Review one history comment
 Review the top comment and the 2 tests. Give one sample implementation.
 remove one wrong comment contents and add one notice
+review the top 2 comment seqs.
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -109,7 +128,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.2 (included).
+- up to section 4.3.1 (included).
 ## @@to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -228,7 +247,7 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 4.2 (included) and exercise checking up to 4.2 (included)
+checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
 - ~~> In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.~~
 - > nondeterministic evaluation in Chapter 4.
@@ -303,6 +322,8 @@ checked up to section 4.2 (included) and exercise checking up to 4.2 (included)
 - ~~> we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)~~
   Same problems shown also in Exercise 3.51, 52.
 - > By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go even farther in this direction in section 4.4.
+- > Section 4.3.1 introduces amb and explains how it supports nondeterminism through the evaluator's automatic search mechanism. Section 4.3.2 presents examples of nondeterministic programs, and section 4.3.3 gives the details of how to implement the amb evaluator by modifying the ordinary Scheme evaluator.
+- > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -3149,6 +3170,24 @@ Emm... still duplicate of much book contents but relates with env model...
     As the above shows ~~the *basic programming structure*~~ computation process for *each number* are same for both, i.e. "Sequences as Conventional Interfaces" filter and then map.
 - > declarative descriptions and imperative specifications
   So "Nondeterministic Computing" is [totally *declarative*](https://codefresh.io/learn/infrastructure-as-code/declarative-vs-imperative-programming-4-key-differences/#:~:text=In%20declarative%20programming%2C%20state%20is,hand%2C%20requires%20explicit%20state%20management.).
+- > we reach a dead end, we can revisit a previous choice point and proceed along a different branch.
+  i.e. [backtracking](https://en.wikipedia.org/wiki/Backtracking#Pseudocode)
+  where `s ← first(P, c)` and `backtrack(P, s)` implies DFS due to `s` being "extension", i.e. next depth.
+  and `reject(P, c)` implies prune, i.e. "whole *sub-tree* rooted at c is skipped (pruned)".
+  - > If a choice results in a failure, then the evaluator automagically46 backtracks to the most recent choice point and tries the next alternative. If it runs out of alternatives at any choice point, the evaluator will back up to the previous choice point and resume from there.
+    i.e. `reject(P, c)` -> caller's `backtrack(P, s)` where `s` is one subtree of caller's `c` -> `s ← next(P, s)`
+    "runs out of alternatives at any choice point": `while s ≠ NULL do` is finished, so return to caller.
+- > This objection should be taken in the context of history.
+  i.e. now CPU is not expensive, so that's fine to "require millions of processors" maybe (at least more reasonable than before).
+  > It is hard to underestimate the cost of mass-produced electronics.
+  just means the contents before *overestimates* "the cost of mass-produced electronics".
+- > with search and automatic backtracking
+  this can ensure visiting all possible cases due to [the relation with spanning tree](https://cs.stackexchange.com/a/101145/161388)
+- > Edinburgh and Marseille of the elegant language Prolog
+  i.e. [dialect](https://en.wikipedia.org/wiki/Prolog)
+#### @TODO
+- > an-element-of fails if the list is empty.
+  So `amb` will adds one `'()` for that place in `(amb (car items) (an-element-of (cdr items)))`?
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).

@@ -10,7 +10,7 @@
         (let-inits expr)))
 
 ;; add to analyse
-((let? exp) (analyze-let exp))
+; ((let? exp) (analyze-let exp))
 
 ;; similar to wiki meteorgan's.
 (define (analyze-let expr)

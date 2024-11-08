@@ -136,3 +136,13 @@ deq2-with-cycle
   (assert (func deq2-with-cycle))
   (assert (func deq3-with-cycle))
   )
+
+;; avoid cross edge
+;; https://chat.stackoverflow.com/transcript/message/57736403#57736403
+;; example from https://chat.stackoverflow.com/transcript/message/57736614#57736614
+(define a-tree (list 1 2))
+(define tree-with-cross-edge (cons a-tree a-tree))
+(define (full-test-with-3.23-3.32-4.34-tests-plus-cross-edge-test func)
+  (full-test-with-3.23-3.32-4.34-tests func)
+  (assert (not (func tree-with-cross-edge)))
+  )

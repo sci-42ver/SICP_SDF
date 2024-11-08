@@ -16,6 +16,7 @@
       (display object)
       )))
 
+;; see http://community.schemewiki.org/?sicp-ex-4.26 which explicitly uses this.
 (define (run-program-list program-lst env)
   (for-each 
     (lambda (exp) 

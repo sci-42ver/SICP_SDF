@@ -150,4 +150,4 @@
 
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "3_18_19_tests.scm")
-(full-test-with-3.23-3.32-4.34-tests has-cycle?)
+(full-test-with-3.23-3.32-4.34-tests-plus-cross-edge-test has-cycle?)

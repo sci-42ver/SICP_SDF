@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.34 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.37 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1600,14 +1600,19 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         > Once Y is defined, Floyd’s algorithm looks for the *first index t such that Yt = Xt*. Clearly, this can be done in time O(t) using a very small amount of memory
         i.e. $x_t=x_{2t}$, so $t=kλ$
         We can show if $t=λ + μ$, then turtle goes back to the loop start. So if it keeps going, then turtle can meet hare. So O(λ + μ).
-  - [O(1) possibly for 2d](https://stackoverflow.com/q/79155452/21294350)
+  - [O(1) ~~possibly~~ for 2d](https://stackoverflow.com/q/79155452/21294350)
     - originally Matt Timmermans says about destroyed pointer which *may* mean [Dangling pointer](https://en.wikipedia.org/wiki/Dangling_pointer)
       > pointers that do not point to a valid object of the appropriate type.
       That includes [Null pointer](https://www.ibm.com/docs/en/xl-c-aix/13.1.0?topic=pointers-null), i.e. `Node<T>* root=NULL`.
       pointer pointing to NULL may mean `*root=NULL`.
     - TODO
-      > use the left-link
-      > 3. in the previous paragraph, we inverted...
+      ~~> use the left-link~~
+      ~~> 3. in the previous paragraph, we inverted...~~
+    - Stef means for many nodes, node-id may be huge (i.e. `O(log(n))`) even if we have O(1) additional nodes. So space -> `O(log(n))*O(1)=O(log(n))` although Matt Timmermans disagrees.
+    - Matt Timmermans's and Frigo's doesn't consider DAG which needs [back edge](https://courses.cs.duke.edu/cps130/fall17/lecture12note.pdf) to have one cycle which is learnt in DMIA/mcs.
+      They all think about the tree *globally* which is wrong (see [this](https://chat.stackoverflow.com/transcript/message/57735243#57735243) and its next comment).
+      - Frigo's is *possibly* right for undirected IMHO since at last all elements will be connected with inorder traversal. At least we can check cycle for that in O(1).
+        Anyway Matt Timmermans's is right IMHO with recovery added.
 - [ ] 20
   - `(define x (cons 1 2))`: binds `cons` in global
     and then creates `E1` "binding the formal parameters" with "enclosing environment" global.
@@ -2343,6 +2348,29 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 34
   - The `4_34_revc.scm` test plus revc's are *almost* complete.
     The logic of revc is correct IMHO.
+- [ ] 35
+  use iteration to create one procedure `integers-between`, then `(an-element-of (integers-between i j))`
+  - wiki (same as repo) is more elegant by incorporating iteration into `amb`.
+- [ ] 36
+  Only with `amb` test I found the infinity problem.
+  - > That is, write a procedure for which repeatedly typing try-again would in principle eventually generate all Pythagorean triples.
+    ~~so we need to add one operation to avoid duplicately generate the same Pythagorean triple.~~
+    - see book
+      > The *amb evaluator that we will develop and work with* in this section implements a systematic search as follows: When the evaluator encounters an application of amb, it *initially selects the first* alternative. This selection may itself *lead to a further choice*. The evaluator will *always initially choose the first* alternative at each choice point. If a choice results in a failure, then the evaluator automagically backtracks to the most recent choice point and tries the next alternative. If it runs out of alternatives at any choice point, the evaluator will *back up to the previous choice point* and resume from there.
+      automagically is just by call stack.
+      - So for here, take [example](https://mathworld.wolfram.com/PythagoreanTriple.html)
+        > For example, there are four distinct integer triangles with hypotenuse 65, since
+        then we have (16,63,65) and then proceed for `k` by dfs, but that will go to infinite...
+      - wiki 
+        xdavidliu's avoids the above problem since `k` won't be infinite unnecessarily which actually can be decided uniquely by `i,j`.
+- [ ] 37
+  - > Consider the number of possibilities
+    trivial since here we won't enumerate unnecessarily for `k`.
+    same as wiki meteorgan.
+    - see wiki uuu's for more detailed infos.
+- [ ] 38
+  - With `try-again`, this will be easy.
+- [ ] 39
 ### @TODO
 - ~~17~~
   - > Design a way...

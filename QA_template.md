@@ -60,7 +60,3 @@ Is there one way to solve with the above tricky problem using python?
   [3]: https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/27
   [4]: https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps01/ps.pdf
   [5]: https://github.com/sci-42ver/SDF_exercise_solution/blob/ea5c53e090c23245d89b9963e1a238e5cd1bfb03/software/sdf/combinators/function-combinators.scm#L41-L47
-
----
-
-@Shawn Thanks for your reply. I haven't learnt python systematically but just learnt it by reading the doc and other tutorials while using it. As https://www.geeksforgeeks.org/g-fact-41-multiple-return-values-in-python/# shows, it is ok to use list although it may be not conventional. Both can be unpacked.

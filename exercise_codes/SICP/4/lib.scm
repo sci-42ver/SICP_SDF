@@ -282,6 +282,11 @@
         ;; 4.34
         (list 'fold fold)
         (list 'iota iota)
+        ;; 4.38
+        (list 'member member)
+        (list 'not not)
+        (list 'abs abs)
+        (list '> >)
         ))
 (define (primitive-procedure-names)
   (map car
