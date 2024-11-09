@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.38 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.42 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -1613,6 +1613,24 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       They all think about the tree *globally* which is wrong (see [this](https://chat.stackoverflow.com/transcript/message/57735243#57735243) and its next comment).
       - Frigo's is *possibly* right for undirected IMHO since at last all elements will be connected with inorder traversal. At least we can check cycle for that in O(1).
         Anyway Matt Timmermans's is right IMHO with recovery added.
+    - https://stackoverflow.com/a/79171460/21294350
+      - related states
+        > We continuously track the "current node"
+      - TODO
+        > when *left chain* ends with T.
+        > The open stack is *the chain of left links* from the current node to B.
+        > its *predecessor* on the open stack (the one with a left link that points to it) is either its left or right *child*.
+        - > The top-most node on the open stack has no predecessor, and its left link is overwritten to point to its parent,
+          root seems to have no parent.
+        - > check a discovered not to see if it's open or complete.
+          now?
+        - > so we need a single separate pointer to remember its actual left child.
+          shouldn't it be `B` but `B` has no child?
+      - > The right link will only hold a left child when the left child is complete
+        implies we have inorder traversal.
+      - TODO new
+        - > so we need a single separate pointer to remember its actual left child.
+          "The top-most node" seems to be one leaf.
 - [ ] 20
   - `(define x (cons 1 2))`: binds `cons` in global
     and then creates `E1` "binding the formal parameters" with "enclosing environment" global.
@@ -2411,7 +2429,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - > For example, most of the restrictions *depend on only one or two* of the person-floor variables, and can thus be imposed before floors have been selected for all the people. 
     So this avoids the *unnecessary* calculation due to `amb`?
     > It is very inefficient to *generate all possible assignments* of people to floors and then leave it to backtracking to eliminate them.
-    - see http://community.schemewiki.org/?sicp-ex-4.39 revc's.
+    - *see* http://community.schemewiki.org/?sicp-ex-4.39 revc's.
 - [x] 41
   - wiki 
     - woofy: 
@@ -2424,8 +2442,22 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - timothy235's just adds `(map list ...)` after getting candidates like those in my `4_41.scm`.
       - Its `in-permutations` returns one *stream* which is unnecessary for here we must check *all* cases.
         [for/list](https://docs.racket-lang.org/reference/for.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._for%2Flist%29%29)
-- [ ] 42
+- [x] 42
   - `(and (= v (cadr kv)) (iter (cdr next)))` is more conservative. Actually, those left have been checked by the former iterations.
+- [ ] 43
+  See code "correction".
+  - My original comment
+    > (list barnacle moore hall downing mar): this is implicitly got by method of exclusion based on the other 4 fathers' yacht names (the same trick is also done by davl). We can also *replace* that with implication in "Gabrielle's father owns the yacht that is named after Dr. Parker's daughter.". That implies Gabrielle's father can't be Dr. Parker.
+    So that implication is done by `(require (eq? parker (cadr (assq gab yacht-names))))` where if `parker=gab` (i.e. parker's daughter is gab) then `(eq? gab mar)` must be false.
+    - rest comments
+      ```
+      Also see revc's which is based on iterating through daughters instead of fathers with similar basic ideas.
+
+      Thomas (04-2020)'s uses triples which may be unnecessarily complexer IMHO.
+
+      SteeleDynamics's doesn't use the nested lets but with the full solutions including "if we are not told that Mary Ann's last name is Moore." that can be got with  small modifications.
+      ```
+  - 
 ### @TODO
 - ~~17~~
   - > Design a way...

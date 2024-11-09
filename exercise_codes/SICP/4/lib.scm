@@ -299,6 +299,12 @@
         (list 'cadar cadar)
         (list 'eq? eq?)
         (list 'cadr cadr)
+        ;; 4.43
+        (list 'memq memq)
+        (list 'assq assq)
+        ; (list 'reverse reverse)
+        ; (list 'map map)
+        (list 'member member)
         ))
 (define (primitive-procedure-names)
   (map car

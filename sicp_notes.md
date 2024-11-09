@@ -1,3 +1,6 @@
+Do you mean "completed nodes" for nodes whose 2 possible subtrees have been checked? If so, assume that we do inorder traversal. For one normal directed binary tree, then we keep car until we reach the leftmost leaf. Then we can construct the "open stack" stack1 similar to Recovery left link lists in https://stackoverflow.com/a/79155823/21294350 (IMHO `B` is always the root, is it that case?). Then use "Floyd's algorithm to detect cycles" to check left link lists. Then we go back to check the right child of `C.left` in the stack1 and constructs stack2.
+
+Then if no cycle for stack2, we mark `C.left.left` as `T` in the stack2. But that will *lose track of* the original left child of `C.left` in the stack2. Could you say more about "completed nodes" and its update process?
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
