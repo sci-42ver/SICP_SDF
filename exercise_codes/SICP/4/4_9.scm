@@ -18,8 +18,9 @@
 ; becomes named let
 ;; > iterative processes can be expressed
 ;; IMHO the procedure name has no convenient way to avoid name clash/shadow. Just use the normal loop name.
-;; TODO compared with 4.8 where loop name is offered, so it can't clash with variable since they all may be used in body.
+;; IGNORE: TODO compared with 4.8 where loop name is offered, so it can't clash with variable since they all may be used in body.
   ;; but here how to do that? 
+  ;; See https://stackoverflow.com/q/79108604/21294350
 (let loop
   ;; > the init expressions are stored in the bindings of the variables, and then the iteration phase begins.
   ((vec (make-vector 5))

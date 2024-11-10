@@ -42,7 +42,8 @@
 
 (do "step" 1)
 
-;; TODO how loop is known to be procedure or vec?
+;; IGNORE: TODO how loop is known to be procedure or vec?
+;; See https://stackoverflow.com/q/79098453/21294350
 (define (loop-as-var-test)
   ;; will implicitly always use the above syntax
   (define test (vector 3))

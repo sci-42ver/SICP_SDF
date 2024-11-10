@@ -10,16 +10,16 @@
 ;; output "(test test)"
 ;; So here we only ensure "truly simultaneous scope" but not "simultaneous definition".
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TODO1
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; IGNORE TODO1
 ;; > Our intention here is that the name odd? in the body of the procedure even? should *refer to* the procedure odd? that is defined *after even?*.
 ;; Can be done by the book *unassigned* version, i.e. 
 ;; > we see that the *only* satisfactory interpretation of the two defines is to regard them as if the names even? and odd? were being added to the environment simultaneously.
 ;; IGNORE: IMHO the environment model already meets that requirement since `odd?` is just one pair (proc,env) which when evaluated will search for the env where proc is created.
   ;; So 
-;; See
+;; "being added to the environment simultaneously" meaning: See
 ;; > As it happens, our interpreter will evaluate calls to f correctly, but for an ``accidental'' reason: Since the definitions of the internal procedures *come first*
 ;; So if we define even? and then call something like (even? 4), then "sequential evaluation" will fail.
-;; But "simultaneous" will work since simultaneous will call set! all together.
+;; But "simultaneous" will work by throwing one error about "unassigned" since simultaneous will call set! all together.
 (define f 
   (lambda (x)
     (let ((even? '*unassigned*)

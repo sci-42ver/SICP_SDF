@@ -78,7 +78,7 @@
 ; (demo-tree)
 ; (prune 3 (demo-tree))
 
-;; TODO see custom-cons-debug.scm
+;; see custom-cons-debug.scm for the reason of the error here.
 (prune 3
   (custom-cons 0 
         (list 
@@ -90,3 +90,4 @@
                           (custom-cons 6 '()))) 
                   (custom-cons 4 '()))) 
           (custom-cons 2 '()))))
+;Variable reference to a syntactic keyword: custom-cons

@@ -63,8 +63,8 @@
                     ;; it has "(unary-map cdr items)" being one evaled list.
                     ;; Then when apply-primitive-procedure apply, it will call the same apply again...
                     ;; So we have (apply (procedure ...) ((procedure ...) true ...) env)
-                    ;; TODO Then ((procedure ...) true ...) will be reevaluated...
-                    ;; 2.1 So we use direct-apply.
+                    ;; Then ((procedure ...) true ...) will be reevaluated...
+                    ;; 2.1 So we use direct-apply for avoid that evaluation.
                     ;; 2.2 Here explicitly set items to one list.
                     ;; Otherwise, items (proc #f ((#t #f #t #t))) -> (proc #t (#f #t #t))
                     (direct-apply map (cons proc (cons #t (list (unary-map cdr items)))) (cadddr map))
