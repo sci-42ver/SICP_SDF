@@ -305,6 +305,13 @@
         ; (list 'reverse reverse)
         ; (list 'map map)
         (list 'member member)
+        ;; 4.44
+        (list 'pair? pair?)
+        (list 'append append)
+        (list 'equal? equal?)
+        (list '< <)
+        (list 'error error)
+        (list 'reverse reverse)
         ))
 (define (primitive-procedure-names)
   (map car
