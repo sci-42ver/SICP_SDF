@@ -81,5 +81,5 @@
       (newline))
     test-lst
     ))
-(show-expand and->if test-lst)
-(show-expand or->if test-lst)
+; (show-expand and->if test-lst)
+; (show-expand or->if test-lst)

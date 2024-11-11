@@ -312,6 +312,16 @@
         (list '< <)
         (list 'error error)
         (list 'reverse reverse)
+        ;; 4.45 
+        ;; no use
+        ; (list 'load load)
+        ;; 4.48
+        (list 'assert (lambda (x) (assert x)))
+        (list '>= >=)
+        ; (list '` quasiquote)
+        ; (list ',@ unquote-splicing)
+        ; (list 'quasiquote quasiquote)
+        ; (list 'unquote-splicing unquote-splicing)
         ))
 (define (primitive-procedure-names)
   (map car

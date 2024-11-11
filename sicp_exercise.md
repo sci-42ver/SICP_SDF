@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.44 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.47 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2458,6 +2458,24 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       SteeleDynamics's doesn't use the nested lets but with the full solutions including "if we are not told that Mary Ann's last name is Moore." that can be got with  small modifications.
       ```
   - 
+- [ ] 44
+- [x] 45
+  - repo skipped this.
+- [x] 46
+- [ ] 47
+  - > wouldn't work if the operands were evaluated in some other
+    since we need `(parse-word prepositions)` etc to consume word *before* `(parse-noun-phrase)` that is needed for the sentence structure.
+    - same as meteorgan's and repo.
+  - > left recursion elimination
+    - > A => Ax | r
+      [this](https://en.wikipedia.org/wiki/Left_recursion#Direct_left_recursion) shows infinite recursion for `A => Ax`.
+      If `A => Ax | r` or `A => r | Ax`, when r will be never met, then also infinite recursion which is same as wiki
+      > Because the second branch of amb expression will call (parse-verb-phrase) again, this will lead to infinite loop.
+    - > to: ...
+      same as [this](https://en.wikipedia.org/wiki/Left_recursion#Removing_direct_left_recursion)
+      Work due to
+      > (we have choices to stop or to go deeper).
+- [ ] 48
 ### @TODO
 - ~~17~~
   - > Design a way...

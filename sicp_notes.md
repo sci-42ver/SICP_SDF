@@ -59,12 +59,13 @@ review the top 2 comment seqs.
   - maths will help understand something like 
     1. Figure 1.5
   - It may be better to have learnt *abstract algebra* since exercise 2.38 needs it.
-# @book reading order
+# @%book reading order
+(@ means we need to check this regularly. @% means that check is about SICP book instead of CS61A notes. @%% means that check need to be done more frequently.)
 - The reading order:
   book with footnotes -> em -> exercise -> check "to reread after reading later chapters" and update this section in this doc *after reading each section*. -> check whether *underlined* words in the *chapter and section prefaces* have been understood.
 
   After reading the book, check "What we should achieve".
-## @Recheck 
+## @%Recheck 
 - ~~https://stackoverflow.com/a/78626541/21294350 https://stackoverflow.com/questions/78597962/1-01e-100-1-in-mit-scheme/78626541#comment138620089_78597962~~
   ~~> "*streams* of decimal digits"~~ (finished)
 - https://stackoverflow.com/questions/78762534/how-to-make-set-change-the-variable-in-let-scheme/78762839#comment138867441_78762839
@@ -90,16 +91,16 @@ review the top 2 comment seqs.
             but how to interpret 
             > We do not, for example, ordinarily regard a rational number as a change-able object with identity, such that we could change the numerator and still have “the same” rational number.
             then?
-## @check *underlined* words in the *chapter and section prefaces*
+## @%%check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
 - up to section 4.2 included and chapter 3.
 ### TODO
 - chapter 3
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
-## @@*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.3.1 (included).
-## @@to reread after reading later chapters (strikethrough to mark already read)
+## @%%*em* tracking when reading the book (Read *before doing the related exercises*)
+- up to section 4.3.2 "Parsing natural language" (excluded).
+## @%%to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
@@ -1347,7 +1348,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - "lazy evaluation" is just ["call-by-need"](https://en.wikipedia.org/wiki/Lazy_evaluation).
 - > Why isn’t it a problem with let?
   since `let` is just application of `lambda` whose argument calculation order doesn't matter since they have *no dependency with each other*.
-  [see](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Procedure-Call-Syntax.html)
+  [see][scheme_operand_ordering_undetermined] <a id="scheme_operand_ordering_undetermined"></a>
   > and the order of evaluation is unspecified.
 - > Time-varying information.
   see
@@ -3155,9 +3156,26 @@ Emm... still duplicate of much book contents but relates with env model...
   this can ensure visiting all possible cases due to [the relation with spanning tree](https://cs.stackexchange.com/a/101145/161388)
 - > Edinburgh and Marseille of the elegant language Prolog
   i.e. [dialect](https://en.wikipedia.org/wiki/Prolog)
-#### @TODO
 - > an-element-of fails if the list is empty.
-  So `amb` will adds one `'()` for that place in `(amb (car items) (an-element-of (cdr items)))`?
+  ~~So `amb` will adds one `'()` for that place in `(amb (car items) (an-element-of (cdr items)))`?~~
+  Then
+  > The computation *aborts* and no value is produced.
+  i.e. not continue running.
+- > our amb evaluator must undo the effects of set! operations when it backtracks.
+  this is actually only needed when that value, i.e. `*unparsed*` here, is used later for *another amb traversal*. But here we just does `(require (null? *unparsed*))` which is only worked when *all previous `require`s* in `parse-word` are met and then `(set! *unparsed* (cdr *unparsed*))`. So if no "undo", here `(require (null? *unparsed*))` is *also* not met.
+  But for one *general* case, we should do that just like restoring the stack when back to the caller.
+  - See
+    > Automatic search and backtracking really pay off, however, when we consider more complex grammars where there are *choices* for how the units can be *decomposed*.
+- > a verb may be followed by any number of prepositional phrases
+  [See](https://www.brandeis.edu/writing-program/resources/faculty/handouts/prepositions.html#:~:text=This%20sentence%20has%20two%20prepositional,that%20begins%20%E2%80%9Cin%E2%80%9D).)
+  > adverb, modifying the verb “look.” The phrase answers the *adverb* question *where*
+  > *adjectival* phrase, modifying the noun “drawer.”
+- > the professor is lecturing with the cat
+  i.e. "The professor lectures with the cat to the student"
+#### @%%TODO
+- How footnote 51 is done?
+- > The evaluators in sections 4.1 and 4.2 do not determine what order operands are evaluated in. We will see that the amb evaluator evaluates them from left to right.
+  4.1 and 4.2 are all based on `apply`->`list-of-values/list-of-arg-values...` which uses `cons` for operand evaluation which [has no  ordering imposition][scheme_operand_ordering_undetermined].
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
@@ -3251,8 +3269,9 @@ This is much more trivial than the book exercises.
 - CS 61A notes 
   - paragraph "recursive descent compiler ...".
   - automatic analysis in compiler
+- [left recursion elimination](http://community.schemewiki.org/?sicp-ex-4.47)
 
-# @TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+# @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
 <!-- in-page link -->
 [SDF_Inheritance]:#SDF_Inheritance
@@ -3292,5 +3311,6 @@ This is much more trivial than the book exercises.
 <!-- gnu scheme doc -->
 [scheme_stream_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Streams.html#index-cons_002dstream
 [scheme_promise_doc]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Promises.html#index-force
+[scheme_operand_ordering_undetermined]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Procedure-Call-Syntax.html
 
 [6_001_sp_2007_rec]:https://people.csail.mit.edu/dalleyg/6.001/SP2007/
