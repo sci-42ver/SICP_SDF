@@ -118,6 +118,8 @@
 (define (parse-adjs specific-parse-proc connector-proc)
   ;; Same as parse, reinit when doing one new parse-adjs.
   (set! *old-rank-number* 0)
+  ;;; check 4.47 problem existence by searching internal definitions. This probably works since we probably write recursion based on that assumption.
+  ;; Same as the book original one, immediate abortion when connector-proc/specific-parse-proc fails.
   (define (list-of phrase-lst)
     (amb phrase-lst
          (append 
@@ -135,6 +137,7 @@
         (parse-word nouns)))
 
 (define (parse-noun-phrase)
+  ;; unchanged
   (define (maybe-extend noun-phrase)
     (amb noun-phrase
          (maybe-extend (list 'noun-phrase
@@ -142,6 +145,7 @@
                              (parse-prepositional-phrase)))))
   (amb 
     (maybe-extend (parse-simple-noun-phrase))
+    ;; added
     (maybe-extend (parse-attributive-adjective-noun-phrase))
     )
   )
@@ -151,10 +155,21 @@
 (define verbs (append verbs '(appears)))
 (define nouns (append nouns '(cloud west)))
 (parse '(the blue beautiful cloud appears in the west))
-; (sentence (attributive-adjective-noun-phrase (article the) (adjective (normal-adjective blue) (normal-adjective beautiful)) (noun cloud)) (verb-phrase (verb appears) (prep-phrase (prep in) (simple-noun-phrase (article the) (noun west)))))
+'(sentence 
+  (attributive-adjective-noun-phrase 
+    (article the)
+    (adjective (normal-adjective blue) (normal-adjective beautiful)) 
+    (noun cloud)) 
+  (verb-phrase (verb appears) (prep-phrase (prep in) (simple-noun-phrase (article the) (noun west)))))
 ;; test ordering
 (parse '(the blue interesting cloud appears in the west))
+'(sentence 
+  (attributive-adjective-noun-phrase (article the) 
+    (adjective (normal-adjective blue) (normal-adjective interesting)) (noun cloud)) 
+  (verb-phrase (verb appears) (prep-phrase (prep in) (simple-noun-phrase (article the) (noun west)))))
 (parse '(the blue interesting large cloud appears in the west))
+;; has
+'(adjective (normal-adjective blue) (normal-adjective interesting) (normal-adjective large))
 (parse '(the blue large interesting cloud appears in the west)) ; fail
 (define (original-demo-test)
   (assert 
@@ -180,6 +195,7 @@
   ;; > When two or more adjectives come after one of these verbs, they should be separated by and ("The sky looked dark and stormy")
   (parse-adjs parse-predicative-adjective (lambda () (list (parse-word predicative-adjective-connector)))))
 (define (parse-predicative-verb-with-adj)
+  ;; same structure as maybe-extend. So no 4.47 problem existence.
   (define (maybe-add verb-phrase)
     (amb verb-phrase
          (maybe-add (list 'predicative-verb-phrase
@@ -195,6 +211,7 @@
   (maybe-extend 
     (amb 
       (parse-word verbs)
+      ;; similar to parse-noun-phrase.
       (parse-predicative-verb-with-adj)
       )))
 
@@ -202,6 +219,13 @@
 (define nouns (append nouns '(sky)))
 ;; here use look due to the above predicative-verbs as one demo.
 (parse '(the blue beautiful sky look dark and stormy in the west))
+'(sentence 
+  (attributive-adjective-noun-phrase (article the) (adjective (normal-adjective blue) (normal-adjective beautiful)) (noun sky)) 
+  (verb-phrase 
+    (predicative-verb-phrase 
+      (predicative-verb look) 
+      (adjective (normal-adjective dark) (predicative-adjective-connector and) (normal-adjective stormy))) 
+    (prep-phrase (prep in) (simple-noun-phrase (article the) (noun west)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; adverb
 ;; https://dictionary.cambridge.org/us/grammar/british-grammar/adverbs-and-adverb-phrases-position
@@ -224,10 +248,37 @@
 ;; "Position with here and there" is related with pronoun, skipped.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Compound sentence
-;; Compound sentence https://www.grammarly.com/blog/sentences/compound-sentence/
-;; > Compound sentences are easy to identify because they usually use a coordinating conjunction, which you may remember as FANBOYS: for, and, nor, but, or, yet, and so. 
-;; > However, compound sentences can also use a *semicolon* to connect two clauses, in which case no conjunction is necessary.
-;; See this for all cases https://www.sjsu.edu/writingcenter/docs/handouts/Independent%20Clauses%20in%20Compound%20Sentences.pdf which is better
+;; IGNORE: This is already contained in the 2nd link. Compound sentence https://www.grammarly.com/blog/sentences/compound-sentence/
+  ;; > Compound sentences are easy to identify because they usually use a coordinating conjunction, which you may remember as FANBOYS: for, and, nor, but, or, yet, and so. 
+  ;; > However, compound sentences can also use a *semicolon* to connect two clauses, in which case no conjunction is necessary.
+  ;; i.e.
+  ;; > When creating compound sentences, there are two punctuation rules
+;;; Notice
+;; 0. Not have run-on sentence https://www.niu.edu/writingtutorial/punctuation/run-on-sentences.shtml
+;; 1. I don't know what "confusingly long compound sentences" means.
+;; Compound-Complex Sentences means Complex for "dependent clauses" like "... if ..."
+;;; (Can be implemented similar to parse-adjs above) examples
+;; "Compound sentence examples" only shows the cases where 2 independent clauses.
+;; "three independent clauses" or more see https://academicmarker.com/grammar-practice/sentences/sentence-structures/simple-and-compound-sentences/how-can-form-accurate-compound-sentences/
+;; Implementation:
+;; connector-proc just outputs (list (parse-word ,) (parse-word coordinating-conjunctions))
+;; specific-parse-proc -> parse-sentence.
+;; So (list-of (specific-parse-proc)) where append we add compound-sentence tag.
+;;; IGNORE: Why but is related with Compound sentence instead of complex sentence https://www.grammarly.com/blog/sentences/complex-sentence/
+;; > A dependent clause, also known as a subordinate clause, is a clause that *cannot stand alone* as a complete sentence.
+;; See https://prowritingaid.com/can-you-start-a-sentence-with-and-or-but#:~:text=But%20is%20another%20coordinating%20conjunction,stand%20alone%20as%20complete%20sentences.
+;; > But is another coordinating conjunction. Like and, it’s perfectly acceptable to begin a sentence with but. But can *also act like a subordinating conjunction*.
+;; 0. independent clause -> "But if you aren’t feeling well, I understand."
+;; 1. dependent clause https://ell.stackexchange.com/q/359171/248956
+;; writing recommendation
+;; > In any sort of *formal* writing, do not use and or but to begin a sentence because they create sentence fragments.
+
+
+;;; See this for all cases "four techniques" https://www.sjsu.edu/writingcenter/docs/handouts/Independent%20Clauses%20in%20Compound%20Sentences.pdf which is better
 ;; for -> 9. day, for he
-;; nor -> needs change the ordering https://harpercollege.pressbooks.pub/lessonsonverbs/chapter/lesson-5-word-order-in-nor/
+;; nor -> needs change the ordering (skipped due to it needs something like "did" or "does" extracted from verb)
+;; https://harpercollege.pressbooks.pub/lessonsonverbs/chapter/lesson-5-word-order-in-nor/
 ;; see https://www.hancockcollege.edu/writing/documents/FANBOYS.pdf for more examples.
+;;; implementation for "four techniques"
+;; Similar to the above with amb extension for "(list (parse-word ,) (parse-word coordinating-conjunctions))"
+;; "show contrast or relation between two ideas." etc can't be implemented with just sentences offered without *semantic analysis* which is beyond what this subsection teaches.
