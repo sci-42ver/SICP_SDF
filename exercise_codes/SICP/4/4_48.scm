@@ -57,11 +57,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; main
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Adjective
-;; https://www.britannica.com/dictionary/eb/qa/where-to-place-adjectives#:~:text=Adjectives%20can%20be%20placed%20either,He%20made%20a%20delicious%20dinner.
+;; https://www.britannica.com/dictionary/eb/qa/where-to-place-adjectives
 ;; Adjective
 ;; 0. for noun: *multiple* adjectives placed in front of nouns
 ;; 0.a. ordering.
-;; 0.b. (skipped. see below.) can also after (i.e. "POSTPOSITIVE") https://www.ucl.ac.uk/internet-grammar/adjectiv/postpos.htm#:~:text=Adjectives%20in%20the%20first%20position,Instead%2C%20they%20follow%20a%20verb.
+;; 0.b. (skipped. see below.) can also after (i.e. "postpositive") https://www.ucl.ac.uk/internet-grammar/adjectiv/postpos.htm
 ;; 1. See the following "verb with Adjective" for adjectives *after* the verb.
 
 ;; So in summary, we only consider 
@@ -80,7 +80,7 @@
 ;; skipped due to "pronoun" and "superlative"
 ; (define postpositive-adjectives '(postpositive-adjective useful possible))
 
-;; i.e. dark thing, thing is dark
+;; i.e. both "dark thing" and "thing is dark" are fine
 (define normal-adjectives '(normal-adjective blue beautiful dark stormy))
 
 ;; IGNORE: Since these adjectives are not describing with each other, so maybe-extend is not appropriate IMHO.
@@ -118,8 +118,9 @@
 (define (parse-adjs specific-parse-proc connector-proc)
   ;; Same as parse, reinit when doing one new parse-adjs.
   (set! *old-rank-number* 0)
-  ;;; check 4.47 problem existence by searching internal definitions. This probably works since we probably write recursion based on that assumption.
+  ;;; 0. check 4.47 problem existence by searching internal definitions. This probably works since we probably write recursion based on that assumption.
   ;; Same as the book original one, immediate abortion when connector-proc/specific-parse-proc fails.
+  ;;; 1. Similar to maybe-extend. But here we consider these words (instead of phrases) as the parallel relation instead of nested relations by adding one tag each recursion.
   (define (list-of phrase-lst)
     (amb phrase-lst
          (append 
@@ -195,7 +196,8 @@
   ;; > When two or more adjectives come after one of these verbs, they should be separated by and ("The sky looked dark and stormy")
   (parse-adjs parse-predicative-adjective (lambda () (list (parse-word predicative-adjective-connector)))))
 (define (parse-predicative-verb-with-adj)
-  ;; same structure as maybe-extend. So no 4.47 problem existence.
+  ;; 0. same structure as maybe-extend. So no 4.47 problem existence.
+  ;; 1. Similar to wiki parse-simple-verb.
   (define (maybe-add verb-phrase)
     (amb verb-phrase
          (maybe-add (list 'predicative-verb-phrase
@@ -260,25 +262,27 @@
 ;;; (Can be implemented similar to parse-adjs above) examples
 ;; "Compound sentence examples" only shows the cases where 2 independent clauses.
 ;; "three independent clauses" or more see https://academicmarker.com/grammar-practice/sentences/sentence-structures/simple-and-compound-sentences/how-can-form-accurate-compound-sentences/
-;; Implementation:
+;; Implementation similar to parse-adjs above:
 ;; connector-proc just outputs (list (parse-word ,) (parse-word coordinating-conjunctions))
 ;; specific-parse-proc -> parse-sentence.
-;; So (list-of (specific-parse-proc)) where append we add compound-sentence tag.
+;; Then use (list-of (list 'compound-sentence (specific-parse-proc))).
 ;;; IGNORE: Why but is related with Compound sentence instead of complex sentence https://www.grammarly.com/blog/sentences/complex-sentence/
 ;; > A dependent clause, also known as a subordinate clause, is a clause that *cannot stand alone* as a complete sentence.
 ;; See https://prowritingaid.com/can-you-start-a-sentence-with-and-or-but#:~:text=But%20is%20another%20coordinating%20conjunction,stand%20alone%20as%20complete%20sentences.
 ;; > But is another coordinating conjunction. Like and, it’s perfectly acceptable to begin a sentence with but. But can *also act like a subordinating conjunction*.
 ;; 0. independent clause -> "But if you aren’t feeling well, I understand."
 ;; 1. dependent clause https://ell.stackexchange.com/q/359171/248956
+  ;; These don't have many examples. https://www.grammarly.com/blog/parts-of-speech/subordinating-conjunctions/ https://spcollege.libguides.com/c.php?g=254288&p=1695264  https://www.monmouth.edu/resources-for-writers/documents/conjunctions.pdf/ 
 ;; writing recommendation
 ;; > In any sort of *formal* writing, do not use and or but to begin a sentence because they create sentence fragments.
 
 
 ;;; See this for all cases "four techniques" https://www.sjsu.edu/writingcenter/docs/handouts/Independent%20Clauses%20in%20Compound%20Sentences.pdf which is better
 ;; for -> 9. day, for he
-;; nor -> needs change the ordering (skipped due to it needs something like "did" or "does" extracted from verb)
+;; nor -> needs change the ordering (implementation is skipped due to it needs something like "did" or "does" extracted from verb)
 ;; https://harpercollege.pressbooks.pub/lessonsonverbs/chapter/lesson-5-word-order-in-nor/
 ;; see https://www.hancockcollege.edu/writing/documents/FANBOYS.pdf for more examples.
 ;;; implementation for "four techniques"
 ;; Similar to the above with amb extension for "(list (parse-word ,) (parse-word coordinating-conjunctions))"
-;; "show contrast or relation between two ideas." etc can't be implemented with just sentences offered without *semantic analysis* which is beyond what this subsection teaches.
+;;; "show contrast or relation between two ideas." etc can't be implemented with just sentences offered without *semantic analysis* which is beyond what this subsection teaches.
+;; As footnote 53 says "interpretation of meaning".

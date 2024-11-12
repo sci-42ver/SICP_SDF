@@ -322,6 +322,9 @@
         ; (list ',@ unquote-splicing)
         ; (list 'quasiquote quasiquote)
         ; (list 'unquote-splicing unquote-splicing)
+        ;;
+        (list 'list-ref list-ref)
+        (list 'random random)
         ))
 (define (primitive-procedure-names)
   (map car

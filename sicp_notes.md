@@ -1,6 +1,4 @@
-Do you mean "completed nodes" for nodes whose 2 possible subtrees have been checked? If so, assume that we do inorder traversal. For one normal directed binary tree, then we keep car until we reach the leftmost leaf. Then we can construct the "open stack" stack1 similar to Recovery left link lists in https://stackoverflow.com/a/79155823/21294350 (IMHO `B` is always the root, is it that case?). Then use "Floyd's algorithm to detect cycles" to check left link lists. Then we go back to check the right child of `C.left` in the stack1 and constructs stack2.
-
-Then if no cycle for stack2, we mark `C.left.left` as `T` in the stack2. But that will *lose track of* the original left child of `C.left` in the stack2. Could you say more about "completed nodes" and its update process?
+@TimR Thanks. Actually examples help understanding the original problem. I have updated my question with one example and describe the question more detailedly instead of just asking one example. If there are still problems with my question, please tell me. Thanks in advance.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -295,6 +293,7 @@ checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included
 - > By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go even farther in this direction in section 4.4.
 - > Section 4.3.1 introduces amb and explains how it supports nondeterminism through the evaluator's automatic search mechanism. Section 4.3.2 presents examples of nondeterministic programs, and section 4.3.3 gives the details of how to implement the amb evaluator by modifying the ordinary Scheme evaluator.
 - > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
+- > Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -3172,6 +3171,10 @@ Emm... still duplicate of much book contents but relates with env model...
   > *adjectival* phrase, modifying the noun “drawer.”
 - > the professor is lecturing with the cat
   i.e. "The professor lectures with the cat to the student"
+- > flexible command languages
+  maybe due to "interpretation of meaning".
+- > applications of simple grammars to command languages.
+  BNF or [creation](https://www.amzi.com/manuals/amzi/pro/ref_dcg.htm#:~:text=DCG%20can%20be%20used%20to,exit.)
 #### @%%TODO
 - How footnote 51 is done?
 - > The evaluators in sections 4.1 and 4.2 do not determine what order operands are evaluated in. We will see that the amb evaluator evaluates them from left to right.
