@@ -57,6 +57,7 @@
                                   env))))
 
 (define (eval-if exp env)
+  ;; Use actual-value since true? is the internal evaluator procedure which doesn't allow thunk argument.
   (if (true? (actual-value (if-predicate exp) env))
       (eval (if-consequent exp) env)
       (eval (if-alternative exp) env)))

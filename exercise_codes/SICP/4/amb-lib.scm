@@ -5,7 +5,7 @@
 (define (amb? exp) (tagged-list? exp 'amb))
 (define (amb-choices exp) (cdr exp))
 
-;; 4.22 to support multiple-dwelling 
+;; 4.22 to support let used in multiple-dwelling as the book footnote 56 says
 (load "4_22.scm")
 ;; for and/or -> if
 (load "4_4_analyze.scm")
@@ -69,6 +69,8 @@
              fail))))
 
 (define (analyze-sequence exps)
+  ;; only this part is changed since only this manipulates with the actual proc1~n.
+  ;; same as analyze-lib.scm, "evaluated sequentially from left to right" https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Sequencing.html#index-begin
   (define (sequentially a b)
     (lambda (env succeed fail)
       (a env
@@ -124,10 +126,19 @@
                          env
                          (lambda (args fail3)
                            (execute-application
+                            ;; Here proc is (make-procedure vars bproc env).
                             proc args succeed fail3))
                          fail2))
              fail))))
 
+;; 0. analyze-lib uses map which uses cons in the book not ensuring the order, also for the internal implementation https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Mapping-of-Lists.html#index-map
+;; > The dynamic order in which procedure is applied to the elements of the lists is unspecified.
+;; 0.a. Here `(car aprocs)` and `(lambda (arg fail2) ...)` implies the latter is delayed in lambda, so "evaluated sequentially from left to right".
+;; 1. How get-args return args
+;; when aprocs is (a), then assume succeed1 is passed at the 1st call of get-args.
+;; (Here fail index analysis is skipped.)
+;; Then (succeed2 '() fail) -> (succeed1 (cons arg '()) fail3) -> (execute-application proc (cons arg '()) succeed fail3)
+;; Then use induction for the cases with more than 1 arg.
 (define (get-args aprocs env succeed fail)
   (if (null? aprocs)
       (succeed '() fail)

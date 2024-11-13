@@ -62,6 +62,7 @@
   (maybe-extend (parse-simple-noun-phrase)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; main
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; also see https://wizardbook.wordpress.com/2011/01/15/exercise-4-45/
 ;; I won't give one maths proof that there are actually only 5 possible interpretations.
 (parse '(The professor lectures to the student in the class with the cat))
 ;; this means professor and cat "lectures" in the class to the student which may be outside.

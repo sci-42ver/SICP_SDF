@@ -249,6 +249,12 @@
 
 ;; "Position with here and there" is related with pronoun, skipped.
 
+;; multiple adverbs see https://english.stackexchange.com/a/275608
+;; > separated by a comma or "and"
+;; The order depends on the context...
+;; > So it sounds right to my ear to have "This car is fully electrically powered" or "This car is fully powered electrically"
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Compound sentence
 ;; IGNORE: This is already contained in the 2nd link. Compound sentence https://www.grammarly.com/blog/sentences/compound-sentence/
   ;; > Compound sentences are easy to identify because they usually use a coordinating conjunction, which you may remember as FANBOYS: for, and, nor, but, or, yet, and so. 

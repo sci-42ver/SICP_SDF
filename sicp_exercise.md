@@ -2279,11 +2279,12 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - Wrong
       *See wiki meteorgan's*
       > In Alyssa's analyze-sequence, execute-sequence is running in runtime.
-      So the book one has no recursive calls when executing that seq.
+      So the book one has *no recursive calls* when executing that seq.
       i.e.
       > does *more of the work* of evaluating a sequence at analysis time
       > rather than having the *calls* to the individual execution procedures *built in* ... the sequence itself has not been.
       "recursive calls" in `eval-sequence` is already done in book `analyze`.
+      - All in all, `execute-sequence` is unexpectedly introduced into the latter eval process while the book only has proc1~n.
 - [x] 24
   - repo doesn't compare but just shows each part time used by analyze and eval.
 - [x] 25
@@ -2461,6 +2462,12 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 44
 - [x] 45
   - repo skipped this.
+  - https://wizardbook.wordpress.com/2011/01/15/exercise-4-45/
+    - > The problem is that swindle *doesn’t “remember”* the value of the top level definition of *unparsed* when it *backtracks* to the next value of the amb expression after meeting a failure.
+      i.e. the book
+      > evaluator automagically46 backtracks to the most recent choice point
+    - > On to the actual exercise. I *still have to use (driver-loop) to be able to use try-again* but at least I can set up all of the parsing procedures through (interpret …) without having to type them.
+      so not feasible at all since most of time we need `try-again`.
 - [x] 46
 - [ ] 47
   - > wouldn't work if the operands were evaluated in some other

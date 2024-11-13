@@ -322,9 +322,11 @@
         ; (list ',@ unquote-splicing)
         ; (list 'quasiquote quasiquote)
         ; (list 'unquote-splicing unquote-splicing)
-        ;;
+        ;; 4.49
         (list 'list-ref list-ref)
         (list 'random random)
+        ;; amb-process-demo.scm
+        (list 'set-cdr! set-cdr!)
         ))
 (define (primitive-procedure-names)
   (map car

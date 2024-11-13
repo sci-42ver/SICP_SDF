@@ -3175,10 +3175,96 @@ Emm... still duplicate of much book contents but relates with env model...
   maybe due to "interpretation of meaning".
 - > applications of simple grammars to command languages.
   BNF or [creation](https://www.amzi.com/manuals/amzi/pro/ref_dcg.htm#:~:text=DCG%20can%20be%20used%20to,exit.)
+#### 4.3.3
+- > data-representation procedures
+  i.e. 4.1.3
+- > the success is propagated:
+  just as `fail` may undo something, we *may* do some extra thing in `succeed` besides `(lambda (value fail) value)`.
+- > since we can assume that internal def-initions are scanned out
+  IMHO here why we don't need to undo (internal) def-initions is not due to "``scan out'' and eliminate all the internal definitions" by transforming them to 
+  one `let` equivalent form, but due to this is *automatically* done by *env model*.
+  ```scheme
+  (define (global-foo)
+    1)
+  (define (global-bar)
+    ;; actually local. This won't influence the outer global-foo value.
+    (define (global-foo)
+      2)
+    (global-foo))
+  (global-bar) ; 2
+  (global-foo) ; 1
+  
+  ;; set!
+  (define global-foo 1)
+  (define (global-bar)
+    ;; actually local. This won't influence the outer global-foo value.
+    (define global-foo 2)
+    global-foo)
+  (define (global-bar-with-set!)
+    ;; Will change the outer global-foo value.
+    (set! global-foo 2)
+    global-foo)
+  (global-bar) ; 2
+  global-foo ; 1
+  (global-bar-with-set!) ; 2
+  global-foo ; 2
+  ```
+- > The failure continuation that is passed along with the value of the assignment ... *restores the old value*
+  "the value of the assignment": i.e. `'ok`
+  This is used when
+  > Along with that value, the success continuation is passed another failure continuation, which is to be called subsequently if the use of that value leads to *a dead end*.
+- > That is, a successful assignment provides a failure continuation that will intercept a subsequent failure; whatever failure would otherwise have called fail2 calls this procedure instead
+  subsequent failure -> fail2
+  intercept -> undo the assignment *before* actually calling fail2.
+- `succeed` is called when the value can be *decided* like Simple expressions, `(succeed 'ok fail2)`, `(succeed (cons arg args) ...)`, `(succeed (apply-primitive-procedure proc args) ...)`.
+- > Along with that value, the success continuation is passed another failure continuation, which is to be called subsequently if the use of that value leads to a dead end.
+  See `(fail)` in `(analyze-amb exp)` which means this amb has failed, so we need to call `(fail)` which is passed by the caller (that caller decides the callee's `fail` implies DFS).
+  > It is the job of the failure continuation to try another branch of the nondeterministic process.
+  > Together with this value, the evaluator constructs and *passes along a failure continuation* that can be called later to choose a *different alternative*.
+  > The failure continuation in hand at that point will cause *the most recent choice point* to choose another alternative.
+  > Failure continuations are also invoked by the driver loop in response to a try-again request, to find *another value* of the expression.
+  see fail000 in amb-process-demo.scm.
+  > If there are no more alternatives to be considered at that choice point, a failure at an earlier choice point is triggered,
+  > in order to propagate the failure back to the previous choice point or to the top level.
+  see fail00
+- > Failures are initiated only when a dead end is encountered.
+  i.e. called.
 #### @%%TODO
-- How footnote 51 is done?
-- > The evaluators in sections 4.1 and 4.2 do not determine what order operands are evaluated in. We will see that the amb evaluator evaluates them from left to right.
+- ~~How footnote 51 is done?~~
+  See `old-value` in `analyze-assignment`.
+  - See the 2nd example in `amb-process-demo.scm` which shows
+    > undoes the side effect and *propagates* the failure.
+    > The failure continuation that is passed along with the value of the assignment (marked with the comment ``*2*'' below) restores the old value of the variable *before continuing the failure*. ... intercept a subsequent failure
+- ~~> The evaluators in sections 4.1 and 4.2 do not determine what order operands are evaluated in. We will see that the amb evaluator evaluates them from left to right.~~
   4.1 and 4.2 are all based on `apply`->`list-of-values/list-of-arg-values...` which uses `cons` for operand evaluation which [has no  ordering imposition][scheme_operand_ordering_undetermined].
+  - > the amb evaluator evaluates them from left to right.
+    done by `((car aprocs) env ...)`.
+  - Also see the 1st example in `amb-process-demo.scm`
+- ~~> the analyzing evaluator of section 4.1.7, because the execution procedures in that evaluator provide a *convenient framework for implementing backtracking.*~~
+  - See `Lazy_Evaluation_analyze_lib.scm`.
+    After all, "analyzing" is used for its effefficiency due to avoiding duplicate analyze's, so lazy can be also combined with that.
+  - Here since we need 2 more continuation args, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
+    But if using the initial version evaluator, (take `eval-assignment` for example which has no anonymous procedures, others should be similar) the *non-anonymous* proc `set-variable-value!` needs to change the interface.
+- ~~> In summary, failure continuations are constructed by...~~
+  IMHO This means new failure continuations instead of just passing most of time like `fail000` from `(succeed000 '() fail000)` back to succeed.
+- ~~> Failure continuations are also called during processing of a failure:~~
+  1. See `(lambda () (set-variable-value! ...) fail-y)` in amb-process-demo.scm
+  2. See fail000 -> fail00.
+- ~~> as the execution procedures call each other.~~
+  e.g. `sequentially`
+- ~~when this occurs?~~
+  > If the execution of pproc *fails*
+  - the most trivial case will be `(if (amb) ...)`.
+- > whatever failure would otherwise have called fail2
+  may mean the other exp's in `(analyze-sequence exps)` which probably *just* does `(fail2)`.
+- ~~> Here we see the essence of the interpretation process and *the reason for keeping track of the continuations*.~~
+  "essence of the interpretation process": "cycles through the execution procedures for *all the possible* values".
+  - "the reason for keeping track of the continuations": i.e.
+    > in order to propagate the failure back to the previous choice point or to the top level.
+    Also see 
+- ~~> In this case, however, we have completed a successful evaluation, so we can invoke the ``failure'' alternative branch in order to search for *additional successful evaluations*.~~
+  > The intent is that calling try-again should *go on to the next untried alternative* in the nondeterministic evaluation.
+  see fail000.
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
