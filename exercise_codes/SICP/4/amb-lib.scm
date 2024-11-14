@@ -22,7 +22,8 @@
         ((cond? exp) (analyze (cond->if exp)))
         ;; 9 conditions above
         ;; 4.22
-        ((let? exp) (analyze (let->combination exp)))
+        ((let? exp) (analyze-let exp))
+        ((let*? exp) (analyze-let* exp))
         ;; 4.4
         ((and? exp) (analyze (and->if exp)))
         ((or? exp) (analyze (or->if exp)))

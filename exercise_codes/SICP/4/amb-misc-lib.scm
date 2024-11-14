@@ -16,11 +16,11 @@
 
 ;; from book chapter 2
 ;; See 4_26: general map in evaluator is complex due to using apply inside.
-(define nil '())
+; (define nil '())
 (define unary-map
   (lambda (proc items)
     (if (null? items)
-      nil
+      '()
       (cons (proc (car items))
             (unary-map proc (cdr items))))))
 
@@ -28,10 +28,16 @@
   (lambda (proc items1 items2)
     (define (iter proc items1 items2)
       (if (null? items1)
-        nil
+        '()
         (cons (proc (car items1) (car items2))
               (binary-map proc (cdr items1) (cdr items2)))))
     (if (not (= (length items1) (length items2)))
       (error (list "wrong arg" items1 items2))
       (iter proc items1 items2))
     ))
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+    initial
+    (op (car sequence)
+        (accumulate op initial (cdr sequence)))))

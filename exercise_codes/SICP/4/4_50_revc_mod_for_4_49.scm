@@ -1,6 +1,7 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; See > Show how this ...
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; copy these before the exercise in this subsection.
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "4_50_revc_mod_lib.scm")
 (driver-loop)
 
 (define (require p)
@@ -55,39 +56,25 @@
                              (parse-prepositional-phrase)))))
   (maybe-extend (parse-simple-noun-phrase)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; main
-;; wiki list-amb is better to have one "systematic search" and ensures each time (generate) will have the same result.
-;; TODO Here random may be better for 4.50 as footnote implies.
-(define (parse-word word-list)
-  (list (car word-list) (list-ref (cdr word-list) (random (- (length word-list) 1)))))
-(define (generate)
-  (parse-sentence))
-(generate)
-(generate)
-try-again
-
-;; wiki
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; > Show how this can help with Alyssa's problem in exercise 4.49.
+;; just uses ramb in list-amb
 (define (list-amb li) 
   (if (null? li) 
-      (amb) 
-      (amb (car li) (list-amb (cdr li)))))
-(define (parse-word word-list)
-  (list (car word-list) (list-amb (cdr word-list))))
-(generate)
-(generate)
-try-again
-
-;;; wiki test
+      (ramb)
+      ;; modified
+      (let ((rest (cdr li)))
+        (ramb (<Prob> (car li) 1) (<Prob> (list-amb rest) (length rest))))
+      ))
 (define (parse-word word-list)
   (require (not (null? *unparsed*)))
   (require (memq (car *unparsed*) (cdr word-list)))
   (let ((found-word (car *unparsed*)))
     (set! *unparsed* (cdr *unparsed*))
-    (list-amb (cdr word-list))))   ;; change
-(parse '(the student for the student studies for the student))
-try-again
+    ; (list (car word-list) (list-amb (cdr word-list)))
+    ;; to say the results more conveniently.
+    (list-amb (cdr word-list))
+    ))   ;; change
 
-;;; also see 4_50_revc_mod_for_4_49.scm
 ;;; test
 ;; use more nouns to see the difference https://www.talkenglish.com/vocabulary/top-1500-nouns.aspx
 (define nouns '(noun student professor cat class history way art world information map)) ;  10 nouns
@@ -123,15 +110,39 @@ try-again
 (parse '(the student for the student studies for the student))
 (parse '(the student for the student studies for the student))
 (parse '(the student for the student studies for the student))
-;; All are "(((the student) (for (the student))) (studies (for (the student))))"...
 
-;; donald
-;; Wrong.
-(define (parse-word word-list) 
-  ; (require (not (null? *unparsed*))) 
-  ; (set! *unparsed* (cdr *unparsed*))
-  (list (car word-list) (amb (cdr word-list))))
-(generate)
-(generate)
-try-again
-try-again
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;help with Alyssa’s problem;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+
+;; same as wiki 4.49 with just different naming.
+(define (an-element-of items) 
+  (require (not (null? items))) 
+  (ramb (car items) (an-element-of (cdr items)))) 
+
+(define (generate-word word-list) 
+  (require (not (null? *unparsed*))) 
+  (let ((word (an-element-of (cdr word-list)))) 
+    (set! *unparsed* (cdr *unparsed*)) 
+    (list (car word-list) word))) 

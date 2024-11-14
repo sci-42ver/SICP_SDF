@@ -2483,6 +2483,13 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       Work due to
       > (we have choices to stop or to go deeper).
 - [ ] 48
+- [ ] 49
+- [ ] 50
+  - wiki
+    - meteorgan
+      - `delete!` is similar to `filter`.
+      - `(or (= k 0) (null? lst))` is safer to allow `(>= k (length lst))`
+    - I checked the context of "delete", "remove" since I uses the internal `delete` procedure.
 ### @TODO
 - ~~17~~
   - > Design a way...

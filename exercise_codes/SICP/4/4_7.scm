@@ -11,6 +11,7 @@
     (define (make-lets exprs)
       (if (null? exprs)
         body
+        ;; Here we can't do as make-lambda. See the 3rd exp in (test)
         (list 'let (list (car exprs)) (make-lets (cdr exprs)))))
     (make-lets inits)))
 
@@ -31,6 +32,36 @@
       (let*->nested-lets '(let* () x y))))
   )
 (test)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; one weird workaround for the above "the 3rd exp in (test)".
+(define (let*-body expr) (cddr expr))
+(define (let*->nested-lets expr)
+  (let ((inits (let*-inits expr))
+        (body (let*-body expr)))
+    (define (make-lets exprs)
+      (if (null? exprs)
+        (cons 'let (cons '() body))
+        (let ((rest (cdr exprs)))
+          ; (cons 'let 
+          ;   (cons (list (car exprs)) 
+          ;     (if (null? rest)
+          ;       (make-lets rest)
+          ;       (list (make-lets rest)))))
+          (list 'let (list (car exprs)) (make-lets (cdr exprs)))
+          )))
+    (make-lets inits)))
+(define (test2)
+  (assert 
+    (equal? '(let ((x 3)) (let ((y (+ x 2))) (let ((z (+ x y 5))) (let () (* x z))))) 
+      (let*->nested-lets test-exp)))
+  (assert 
+    (equal? '(let ((x 1)) (let ((y 2)) (let () x y))) 
+      (let*->nested-lets '(let* ((x 1) (y 2)) x y))))
+  (assert 
+    (equal? '(let () x y) 
+      (let*->nested-lets '(let* () x y))))
+  )
+(test2)
 
 ;; same as wiki mazj.
 (define (let*-body expr) (cddr expr))

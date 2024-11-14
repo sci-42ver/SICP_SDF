@@ -326,7 +326,11 @@
         (list 'list-ref list-ref)
         (list 'random random)
         ;; amb-process-demo.scm
-        (list 'set-cdr! set-cdr!)
+        ; (list 'set-cdr! set-cdr!)
+        ;; 4.50
+        (list 'delete delete)
+        (list 'list? list?)
+        ; (list 'reverse reverse)
         ))
 (define (primitive-procedure-names)
   (map car
