@@ -1,4 +1,4 @@
-@TimR Thanks. Actually examples help understanding the original problem. I have updated my question with one example and describe the question more detailedly instead of just asking one example. If there are still problems with my question, please tell me. Thanks in advance.
+@Lambie What is "a mistake in a text from a blog"? Sorry if I misunderstood your meanings but my question is not based on that quillbot blog which is just shown in p.s. part. And the quillbot blog doesn't have errors as my above comment says. I will clarify that in the question.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -92,13 +92,13 @@ add one description based on the reference from the book
             then?
 ## @%%check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 4.2 included and chapter 3.
+- up to section 4.3 included and chapter 3.
 ### TODO
 - chapter 3
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @%%*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.3.2 "Parsing natural language" (excluded).
+- up to section 4.3 (included).
 ## @%%to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -217,12 +217,14 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included)
+checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
 - ~~> In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.~~
 - > nondeterministic evaluation in Chapter 4.
 - > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
 - chapter 1 footnote 20
+  > e idea is to make interpreters sophisticated enough so that, *given “what is” knowledge specified by the programmer, they can generate “how to”* knowledge auto-matically. is cannot be done in general, but there are important areas where progress has been made. We shall revisit this idea in Chapter 4.
+  see 4.3.
 - ~~> is can serve as a framework for ex-perimenting with evaluation rules, as we shall do later in this chapter.~~
   see section 4.2
 - ~~> It makes perfect sense, for instance, to *compute the length of a list without knowing the values* of the individual elements in the list. We will exploit this idea in section 4.2.3 to implement the streams of chapter 3 as lists formed of non-strict cons pairs.~~
@@ -264,12 +266,14 @@ checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included
 - ~~> *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.~~
   i.e. ["free variables"](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#:~:text=A%20free%20variable%20is%20a,this%20or%20any%20container%20expression.) (not formal parameters and locally defined variables) in env.
 - > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
-- >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works.
-  > is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
+- >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works. e quotation mark is *just a single-character abbreviation* for wrapping the next complete expression with quote to form (quote ⟨ expression ⟩). is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
+  see 4.1 where (read) will transform `'` to `quote` automatically.
+  "data object": list where almost all data in Scheme is *connected* by *just* `cons`.
 - > For the interpreter we implement in Chapter 4, the code is in fact shared
 - > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
 - > For the interpreter we implement in Chapter 4, the code is in fact shared.
-- > In Section 4.3 we will study a language for expressing nondeterministic computations.
+- ~~> at is, they are described not by single-valued functions, but by functions whose results are sets of possible values. In Section 4.3 we will study a language for expressing nondeterministic computations.~~
+  Better see Exercise 4.45 etc. Here it just means the sequential order is (amb)iguous.
 - ~~> In Section 4.2, we’ll develop a framework that unifies lists and streams.~~
 - ~~> The problem has to do with subtle differences in the ways that Scheme implementations handle internal definitions. (See section 4.1.6.)~~
   Also see the above "section 4.1.6" quotes. They are all about the scope of `define`.
@@ -278,7 +282,17 @@ checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included
   > extending the environment frame one definition at a time
   the frame can be only based on the *already existing* ones, although MIT/GNU Scheme doesn't do that as the standard requires.
 - ~~> Converting to *normal-order evaluation* provides a uniform and elegant way ... In Section 4.2, aer we have studied the eval-uator, we will see how to transform our language in just this way~~
-- > In Section 4.3, we will look at nondeterminism from yet another point of view.
+- ~~> Observe that, for any two streams, there is in general more than one acceptable order of interleaving. ... The merge relation illustrates the same essential nondeterminism, from the functional perspective. In Section 4.3, we will look at nondeterminism from yet another point of view.~~
+  See "stream_implies_functional".
+  - > more than one acceptable order
+    See above
+  - > illustrates the same essential nondeterminism, from the functional perspective.
+    means "we can see *time-related problems* creeping into functional models as well." where time-related problems mean "constraining *the order of events* and of synchronizing multiple processes".
+    i.e. "functional" still has "nondeterminism" when meeting
+    > In such a language, all procedures implement *well-defined mathematical functions* of their arguments, whose behavior does not change.
+  - > we will look at nondeterminism from yet another point of view.
+    where we have no functional since `try-again` make the original procedure maybe having one different result.
+    IMHO that nondeterminism just means alternative implied by `amb`.
 - ~~> This allows a user to add new types of expressions that eval can distinguish, without modifying the definition of eval itself. (See exercise 4.3.)~~
   - i.e. use one table inside. So just `put` and then `get` can automatically work.
 - ~~> We will see what the problem is and how to *solve it* in section 4.1.6.~~
@@ -292,9 +306,12 @@ checked up to section 4.2 (included) and exercise checking up to 4.3.1 (included
 - ~~> we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)~~
   Same problems shown also in Exercise 3.51, 52.
 - > By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go even farther in this direction in section 4.4.
-- > Section 4.3.1 introduces amb and explains how it supports nondeterminism through the evaluator's automatic search mechanism. Section 4.3.2 presents examples of nondeterministic programs, and section 4.3.3 gives the details of how to implement the amb evaluator by modifying the ordinary Scheme evaluator.
+- ~~> Section 4.3.1 introduces amb and explains how it supports nondeterminism through the evaluator's automatic search mechanism. Section 4.3.2 presents examples of nondeterministic programs, and section 4.3.3 gives the details of how to implement the amb evaluator by modifying the ordinary Scheme evaluator.~~
+  - > explains how it supports nondeterminism through the evaluator's automatic search mechanism
+    search "search".
+  - 
 - > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
-- > Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.
+- ~~> Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.~~
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -2450,8 +2467,8 @@ not use
   i.e. [prospective](https://softwarefordays.com/post/fp-advantages-synopsis/#:~:text=John%20Backus%20%E2%80%9Cgave%20high%20visibility,%2B%2B%20and%20thirteen%20before%20Java.)
 - > Observe that, for any two streams, there is in general more than one acceptable or-der of interleaving
   maybe due to that we only ensure "meeting" results are reasonable.
-- >  us, technically, “merge” is a relation rather than a function—the answer is not a deterministic function of the inputs.
-  [see](https://qr.ae/p2Usss)
+- > Thus, technically, “merge” is a relation rather than a function—the answer is not a deterministic function of the inputs.
+  [see](https://qr.ae/p2Usss) and [many-to-many relation](https://www.cuemath.com/algebra/relations-in-math/)
   > many-to-many mappings
 - > e merge rela-tion illustrates the same essential nondeterminism, from the functional perspective
   i.e. although this function has one deterministic result when rerun, but this result can be nondeterministic.
@@ -2473,6 +2490,8 @@ not use
   "simulated time" -> "time in the world".
   Here if we run the program, it is unknown when `cdr` of `cons-stream` will be calculated, so "decouple".
   - > On the other hand, if we look closely, we can see time-related problems creeping into *functional models* as well ... it must interleave the two transaction streams in some way that is constrained by *``real time''* as perceived by Peter and Paul
+    Here stream "do not include any provision for assignment or mutable data.", so functional. <a id="stream_implies_functional"></a>
+    > If the user could step back from the interaction and think *in terms of streams* of balances rather than individual transactions, the system would appear *stateless*.
 - > Unifying the object view with the functional view may have little to do with programming, but rather with fundamental epistemological issues.
   object -> assignment -> not functional.
 ## lec
@@ -3125,6 +3144,7 @@ Emm... still duplicate of much book contents but relates with env model...
   - ~~TODO~~
     ~~footnote 40~~
 ### 4.3
+Better to read following the order 4.3.1->3->2 where 4.3.2 is put at last to ensure the comprehension of amb (Here I just check all `(amb` contexts in the book and exercises before 4.3.3 have been understood for their underlying logic after reading 4.3.3). See amb review.
 - > We saw how to handle this with finite sequence operations in section 2.2.3 and with infinite streams in section 3.5.3.
   See `prime-sum-pairs`
   ```scheme
@@ -3135,10 +3155,18 @@ Emm... still duplicate of much book contents but relates with env model...
                ;; incorporated with the latter contents
                (pairs integers integers)))
   ```
-  - notice the pattern for `(pairs integers integers)` in section 2.2.3 is by constructing a list of row lists and then get one matrix form similar to [upper triangular matrix](https://math.stackexchange.com/q/4994400/1059606). So `flatmap`
-    But the pattern here is different, where we `interleave` between 2 *infinite* lists to ensure both can be visited. We also uses *induction* to get one bigger triangle from one smaller triangle (This can't be done in section 2.2.3 since we needs to add one *diagonal*).
+  - notice the pattern for `(pairs integers integers)` (i.e. `(1,1),(2,1),(2,2),...`) in section 2.2.3 is by constructing a list of row lists and then get one matrix form same as [lower triangular matrix](https://math.stackexchange.com/q/4994400/1059606). So `flatmap`
+    But the pattern (i.e. upper triangular matrix) here is different, where we `interleave` between 2 *infinite* lists to ensure both can be visited. We also uses *induction* to get one bigger triangle from one smaller triangle (This can't be done in section 2.2.3 since we needs to add one *diagonal*).
   - > Whether we actually generate the entire sequence of pairs first as in chapter 2, or interleave the generating and filtering as in chapter 3, is immaterial to the essential image of how the computation is organized.
     As the above shows ~~the *basic programming structure*~~ computation process for *each number* are same for both, i.e. "Sequences as Conventional Interfaces" filter and then map.
+    - > e nondeterministic approach evokes a different image.
+      Based on 4.3.3 implementation and `prime-sum-pairs-amb.scm`, it traverses same as section 2.2.3 and also does "generating and filtering as in chapter 3" since we will abort when finding one (next) valid candidate.
+      So here different means:
+      1. "choose (in some way) a number" and return *one pair* instead of one list of pairs.
+      2. > It might seem as if this procedure *merely restates the problem*, rather than specifying a way to solve it.
+          The main logic is *hidden* in amb-eval which actually combines chapter 2 and 3 as the above says.
+- > our programs have different possible execution histories
+  i.e. `try-again` always backtrack and get one different result, so the different "execution history".
 - > declarative descriptions and imperative specifications
   So "Nondeterministic Computing" is [totally *declarative*](https://codefresh.io/learn/infrastructure-as-code/declarative-vs-imperative-programming-4-key-differences/#:~:text=In%20declarative%20programming%2C%20state%20is,hand%2C%20requires%20explicit%20state%20management.).
 - > we reach a dead end, we can revisit a previous choice point and proceed along a different branch.
@@ -3210,6 +3238,8 @@ Emm... still duplicate of much book contents but relates with env model...
   (global-bar-with-set!) ; 2
   global-foo ; 2
   ```
+- why we need `fail2` for `sequentially` (others should be similar)
+  This will matter like when `a` is assignment, then `succeed` there is used when `(succeed 'ok ...)`. Assume `fail` is same as `fail2'` in assignment. Then `fail2` (i.e. `do-restoration... (fail)` where `fail` is that in `sequentially`) is different from `fail`.
 - > The failure continuation that is passed along with the value of the assignment ... *restores the old value*
   "the value of the assignment": i.e. `'ok`
   This is used when
@@ -3230,6 +3260,17 @@ Emm... still duplicate of much book contents but relates with env model...
   see fail00
 - > Failures are initiated only when a dead end is encountered.
   i.e. called.
+#### amb review after reading 4.3.3
+what amb should achieve (for how is achieved, please check codes...)
+- just trying all possible candidates combination
+  - `(list (amb 1 2 3) (amb 'a 'b))`
+    the rest book codes
+    `grep \(amb -r ./[^4a]*` in ~/SICP_SDF/exercise_codes/SICP/4
+    - [see](https://unix.stackexchange.com/a/572040/568529) or `man uniq`
+      > 'uniq' does not detect repeated lines *unless they are adjacent*.  You may want to sort the input first, or use 'sort -u' without 'uniq'.
+      4.35~4.49 by `grep \(amb -r ./4_[^5]* --color=never | awk '{$1="";print $0}' | sort -u` (see [awk related](https://stackoverflow.com/a/2961994/21294350)) and `grep "(amb $" -r ./4_[^5]* --color=never`.
+- do fail when necessary
+  - > we can think of (amb) as an expression that when evaluated causes the computation to ``fail''
 #### @%%TODO
 - ~~How footnote 51 is done?~~
   See `old-value` in `analyze-assignment`.

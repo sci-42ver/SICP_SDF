@@ -12,6 +12,13 @@
 (define (an-element-of items)
   (require (not (null? items)))
   (amb (car items) (an-element-of (cdr items))))
+(define (an-integer-starting-from n)
+  (amb n (an-integer-starting-from (+ n 1))))
+;; from 4.35.
+(define (an-integer-between low high)  
+  (require (<= low high))  
+  (amb low (an-integer-between (+ low 1) high)))
+
 ;; from 1_24_scale.scm
 (define (fast-prime? n times)
   (define (fermat-test n)
@@ -31,17 +38,14 @@
          (fast-prime? (inexact->exact n) (- times 1)))
         (else false)))
 (define times 100)
+(define (prime? n)
+  (fast-prime? n times))
 (define (prime-sum-pair list1 list2)
   (let ((a (an-element-of list1))
         (b (an-element-of list2)))
     ;; modified
     (require (fast-prime? (+ a b) times))
     (list a b)))
-
-;; from 4.35.
-(define (an-integer-between low high)  
-  (require (<= low high))  
-  (amb low (an-integer-between (+ low 1) high)))
 
 ;; from book chapter 2
 ;; See 4_26: general map in evaluator is complex due to using apply inside.
