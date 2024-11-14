@@ -21,6 +21,7 @@ Review one history comment
 Review the top comment and the 2 tests. Give one sample implementation.
 remove one wrong comment contents and add one notice
 review the top 2 comment seqs.
+add one description based on the reference from the book 
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.

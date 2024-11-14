@@ -331,6 +331,13 @@
         (list 'delete delete)
         (list 'list? list?)
         ; (list 'reverse reverse)
+        ;; 4.52
+        (list 'even? even?)
+        ;; 4.53
+        (list 'inexact->exact inexact->exact)
+        (list 'exp exp)
+        (list 'round round)
+        
         ))
 (define (primitive-procedure-names)
   (map car
