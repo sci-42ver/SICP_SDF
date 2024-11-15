@@ -82,8 +82,9 @@
      (emit-cwv-form temps assignments values-form))
 
     ;; ... see
-    ;; > Suppose our pattern is (foo var #t ((a . b) c) ...) and it is matched
-    ;; where ... is only matched with `((a . b) c)`.
+    ;; > Suppose our pattern is (foo var #t ((a . b) c) ...) and it is matched ...... This pattern would match:
+    ;; where ... is only matched with `((a . b) c)`, i.e.
+    ;; > The ... *operator* modifies how the *PREVIOUS* form is interpreted by the macro language.
     ((gen-temps-and-sets (variable . more) (temps ...) (assignments ...) values-form)
      (gen-temps-and-sets
         more

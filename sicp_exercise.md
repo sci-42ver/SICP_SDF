@@ -2382,6 +2382,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         then we have (16,63,65) and then proceed for `k` by dfs, but that will go to infinite...
       - wiki 
         xdavidliu's avoids the above problem since `k` won't be infinite unnecessarily which actually can be decided uniquely by `i,j`.
+  - see repo for how racket implements `amb` and then we can manually define `try-again` based on that.
 - [ ] 37
   - > Consider the number of possibilities
     trivial since here we won't enumerate unnecessarily for `k`.
@@ -2389,7 +2390,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - see wiki uuu's for more detailed infos.
 - [x] 38
   - With `try-again`, this will be easy.
-  - As `4_36.rkt` says, Racket lacks `try-again` to get more results.
+  - ~~As `4_36.rkt` says, Racket lacks `try-again` to get more results.~~
 - [ ] 39
   - > Does the order of the restrictions in the multiple-dwelling procedure affect the answer?
     No trivially.

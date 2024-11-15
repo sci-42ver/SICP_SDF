@@ -3164,6 +3164,8 @@ Emm... still duplicate of much book contents but relates with env model...
   - ~~TODO~~
     ~~footnote 40~~
 ### 4.3
+~~Use `(amb)` to implement `try-again`~~.
+
 Better to read following the order 4.3.1->3->2 where 4.3.2 is put at last to ensure the comprehension of amb (Here I just check all `(amb` contexts in the book and exercises before 4.3.3 have been understood for their underlying logic after reading 4.3.3). See amb review.
 - > We saw how to handle this with finite sequence operations in section 2.2.3 and with infinite streams in section 3.5.3.
   See `prime-sum-pairs`
@@ -3307,11 +3309,12 @@ what amb should achieve (for how is achieved, please check codes...)
     After all, "analyzing" is used for its effefficiency due to avoiding duplicate analyze's, so lazy can be also combined with that.
   - Here since we need 2 more continuation args, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
     But if using the initial version evaluator, (take `eval-assignment` for example which has no anonymous procedures, others should be similar) the *non-anonymous* proc `set-variable-value!` needs to change the interface.
-- ~~> In summary, failure continuations are constructed by...~~
-  IMHO This means new failure continuations instead of just passing most of time like `fail000` from `(succeed000 '() fail000)` back to succeed.
-- ~~> Failure continuations are also called during processing of a failure:~~
-  1. See `(lambda () (set-variable-value! ...) fail-y)` in amb-process-demo.scm
-  2. See fail000 -> fail00.
+- ~~failure continuation~~
+  - ~~> In summary, failure continuations are constructed by...~~
+    IMHO This means new failure continuations instead of just passing most of time like `fail000` from `(succeed000 '() fail000)` back to succeed.
+  - ~~> Failure continuations are also called during processing of a failure:~~
+    1. See `(lambda () (set-variable-value! ...) fail-y)` in amb-process-demo.scm
+    2. See fail000 -> fail00.
 - ~~> as the execution procedures call each other.~~
   e.g. `sequentially`
 - ~~when this occurs?~~
