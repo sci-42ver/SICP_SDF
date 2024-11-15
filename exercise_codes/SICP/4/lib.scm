@@ -337,7 +337,8 @@
         (list 'inexact->exact inexact->exact)
         (list 'exp exp)
         (list 'round round)
-        
+        ;; lec19
+        (list 'write-line write-line)
         ))
 (define (primitive-procedure-names)
   (map car

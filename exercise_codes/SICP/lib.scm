@@ -1,5 +1,6 @@
 (define (average x y)
   (/ (+ x y) 2))
+;; Also see ~/SICP_SDF/SDF_exercises/common-lib/utils.scm
 (define (displayln x)
   (newline)
   (display x))

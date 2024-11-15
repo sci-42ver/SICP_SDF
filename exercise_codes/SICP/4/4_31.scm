@@ -1,3 +1,5 @@
+;; Also see Lect_lazy.pdf which shares basic ideas with here.
+
 ;; > Design and implement the changes required to produce such an extension to Scheme.
 ;; 0. Based on Lazy_Evaluation_lib.scm since we *may* have delayed variables, so choose the more conservative version.
 ;; 1. all procedure definitions by set!/define at last becomes lambda.
@@ -59,6 +61,7 @@
 (define (non-memo-thunk? obj)
   (tagged-list? obj 'non-memo-thunk))
 
+;; i.e. delay-it. Same basic ideas.
 (define (interpret-var-for-val var val env)
   (if (pair? var)
     (cond

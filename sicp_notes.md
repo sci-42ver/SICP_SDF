@@ -1,3 +1,19 @@
+IMHO this is not duplicate due to "is it really all that helpful?" which is answered by detly in that answer's last paragraph.
+
+Thanks. The last section gives one good explanation of why "but" is considered as "coordinating conjunction" since "*But* we lost the match, everyone enjoyed the trip to the final." is very weird. I upvoted for you. But as prowritingaid blog says, "but" can be also a subordinating conjunction. Is that right or wrong actually? If right, could you give one example for that and shows the difference between the case where "but" is a subordinating conjunction and the corresponding coordinating case?
+
+1. Maybe you have one typo, i.e. "you *won't* find sentences do start with but, and." Anyway I understood your answer. Maybe the prowritingaid blog is wrong since "The blog didn't provide an explanation or *an example supporting it*." 2. Could you give one reference for your last section's "We typically avoid starting sentences with coordinating conjunctions"? That will be better. Anyway It is also fine if without the reference.
+
+2. Re to the 2nd: ""Can stream work fine" is way too general" Sorry. What I meant is for lazy tree structure in the reference paper which has one *given data structure* so may be not that general.
+
+3. Re to the 3rd: wikipedia "dovetailing" https://en.wikipedia.org/wiki/Dovetailing_(computer_science) means changing the visiting order from the normal DFS (implied by applicative order) to BFS which "a single step is performed for every program" (i.e. data here). This is similar to "interleaving" taught in SICP section 3.5. "diagonalization" gives almost all about matrices with only one video https://www.youtube.com/watch?v=SMXAJpaoM1w about Diagonalization argument.
+
+"Omega monad" has one related haskell package (I haven't learnt about that language) where omega means order type related with set ordering, maybe ω in https://math.stackexchange.com/q/4178796/1059606. The reference link in https://stackoverflow.com/q/23515191/21294350 uses diagonalization visiting order which is used in Diagonalization argument.
+
+All in all, you may mean *changing the visiting order* to solve with "infinite width" problem. But "this won't work for one infinite width tree with one level as one strictly-increasing sequence." means we have one actual infinite stream like *natural number* which is possible as one tree level and trying to get `maximize` for that. Emm... but this is also unsolved even in maths. Maybe my example is so weird but that's what I meant for that sentence in my question post.
+
+Even if we change the visiting order for that infinite width level, at last we need to visit *all* elements in that level to get the `maximize` result for elements in that level.
+
 @Lambie What is "a mistake in a text from a blog"? Sorry if I misunderstood your meanings but my question is not based on that quillbot blog which is just shown in p.s. part. And the quillbot blog doesn't have errors as my above comment says. I will clarify that in the question.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
@@ -3138,6 +3154,27 @@ Emm... still duplicate of much book contents but relates with env model...
   https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-24.html#%_sec_3.5.4
   see
   > when it is required to generate more than the first element of the output stream:
+- [lazy vs eager](https://stackoverflow.com/a/75682308/21294350)
+  - When lazy is worse
+    > Lazy evaluation is generally regarded as worse for performance than eager evaluation; it usually involves *allocation of memory structures* that "remember" the operation for later
+    > if the *operation is very small* and would only produce an immediate value (things like a machine integer, rather than a heap-allocated object), then the overhead of laziness is still only a constant factor but that constant factor is *quite large relative to the "intrinsic"* cost of the operation; ... if your program is mostly doing this kind of thing then lazy evaluation does make a significant *negative difference*.
+    - > Lazy evaluation also makes it very easy to lose track of the exact *order* various operations will be executed in
+      > If two pieces of code will be executed and *both change a shared variable*, you need to be able to easily and *accurately predict the order* ... impure code
+      said in book Exercise 3.51, 52.
+  - lazy advantages
+    - > eager evaluation may encounter errors or infinite loops that lazy evaluation would avoid.
+      when "errors or infinite loops" won't happen due to `if` etc.
+    - > lazily evaluated code might be able to process this whole data set *without* ever needing it *all to be resident in memory* at once;
+      > Code that produces a data structure can be written in a simple direct style to produce "all" of it, even if that is *infinite*. Code that consumes the data structure simply examines *as much of the structure as it wants* to
+      > might need the producer to be capable of *resuming production from a previous partial* result, etc. This can easily *add a lot of complexity to code implementing a fairly simple* idea
+      > lazy evaluation can be particularly ergonomic in cases where an eager algorithm needs a lot more code to explicitly manage *when and how much of a very large data set is in memory* at once.
+    - > move-tree for analysis of a game like chess
+      IMHO same as [this](https://stackoverflow.com/q/79150263/21294350)
+    - > You can design good solutions to this problem that still leave the *eager* producer and eager consumer reasonably *decoupled*, but designing a good interface that is flexible enough for *all uses while still being performant* can be a tricky problem
+      OP doesn't say about that solution for "eager producer and eager consumer".
+    - TODO
+      > in a language where everything is lazy you can make your own control structures. In Haskell things analogous to while loops and for-each loops can be simply implemented as ordinary library code
+      maybe just as the book Exercise 4.9 says.
 #### TODO
 - ~~> Notice that we can install these definitions in the lazy evaluator simply by typing them at the driver loop.~~
   Not in `primitive-procedures` since that will implicitly evaluate arguments.
@@ -3312,8 +3349,14 @@ what amb should achieve (for how is achieved, please check codes...)
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
 - > Names
   i.e. name in name collision.
-- [Lexical analyzer](https://en.wikipedia.org/wiki/Lexical_analysis), Parser: analyze where () is implicitly implied in Scheme implementation in 4.1.
-  Printer: `user-print`
+- [Lexical analyzer see "The lexical analysis of this expression yields the following sequence of tokens:"](https://en.wikipedia.org/wiki/Lexical_analysis#Lexical_token_and_lexical_tokenization), Parser: ~~analyze~~ where () is implicitly implied in Scheme implementation in 4.1.
+  Printer: ~~`user-print`~~ `display` in the underlying scheme.
+  - Parser also see book "Parsing natural language" and the [corresponding parse tree, i.e. "like diagramming sentences in elementary school"](https://en.wikipedia.org/wiki/Parse_tree#Constituency-based_parse_trees).
+    > attempting to parse the input, that is, to match the input *against some grammatical structure.*
+    ~~IMHO This is just what syntax procedures like `definition-variable` does.~~
+    ~~is done by `(read)`~~
+    "grammatical structure" -> [nonterminal](https://stackoverflow.com/a/3614928/21294350) (I only checked point3) <a id="lexer_vs_parser"></a>
+    - Then we can recognize `list` in Evaluator.
 - > Arithmetic calculator
   already shown in `(application? exp)` case of `eval`.
 - > How many times is eval called in these two evaluations?
@@ -3353,8 +3396,38 @@ IMHO lexical vs. dynamic scoping is the only one concept up to now not taught in
 - when will Dynamic Scoping help
   [see](https://www.geeksforgeeks.org/static-and-dynamic-scoping/#)
   > such as recursive functions or code with complex control flow
+### 19 lazy
+- Eager evaluation and
+  > Why is normal order useful?
+  see above "lazy vs eager".
+- > Normal Order Example
+  when not using lazy-memo.
+- > Remember – this is just tree structure!!
+  i.e. one tree with only right children~~totally right~~?
+- > Can have problems if mutation is allowed
+  since the value foo that mutation procedure may have different values when called with different times like `(begin (set! val (+ val 1)) val)` defined as `(inc val)` (see `thunk-no-mutate.scm`).
+- `(memoize proc)` is from Exercise 3.27 p369 with the same basic ideas.
+  - `foo` is `(lambda (arg) ...)` inside 2 levels of `lambda` with the 2nd implied by `let`.
+- > don't need actual value in assignment...
+  since that `(assignment-variable exp)` has not been used.
+- > Need to force evaluation on branching operations (e.g. if)
+  Here `true?` is the *underlying* Scheme procedure, so need manual `actual-value`.
+- > What if we want evaluation on each use?
+  [Here](https://stackoverflow.com/a/3242990/21294350) the getter procedure for one real-life environmental object has *no mutation*, but "evaluation on each use" may be better.
+  > 
+  - TODO #2?
+  - > 16 potential inputs
+    i.e. 
+    > the *"furthest" ADC read from the most recent* is discarded ... cached 0x210 to 0x21F, and then I read *0x222*, I drop the 0x210 result
+    ~~here may mean timestamp.~~
+    - > The drawback here is that if environmental conditions change a lot, that already-slow calculation runs a little slower.
+      As the above shows, the drop may be done frequently, so the advantages are amortized by that frequent insertion and drop overhead.
+  - > Creating a lookup table *ahead of time is ridiculous*.
+    since that may be more conservative unnecessarily where "(a large range of floating point values)" may be only used *partly*.
+  - > But no user requires or expects the device to work well when conditions change rapidly, and they'd much rather it works better when things are steady. So I make a *tradeoff* in computational behaviour that reflects these requirements: I want this calculation to be nice and fast when things are *stable*, and I *don't care about when they aren't.*
 ## rec
-skip Analysis & Quiz II Review due to no related lecs.
+skip Analysis & Quiz II Review due to no related lecs and also just has `analyze-let` which is already done in the book exercise for Analysis.
+https://people.csail.mit.edu/jastr/6001/fall07/r17.pdf is skipped due to that is just OOP IMHO, i.e. project4
 ### sp rec19
 With lec17, both overlap too much with the book (almost already contained)...
 - [`setf` implementation](https://stackoverflow.com/a/44700342) skipped due to about Common LISP.
@@ -3367,6 +3440,7 @@ With lec17, both overlap too much with the book (almost already contained)...
 ### rec18
 This is less appropriate here. But [6_001_sp_2007_rec] doesn't have one corresponding one.
 This is much more trivial than the book exercises.
+### rec20 since "6.001 Spring 2007 Lazy Evaluation recitation" has no valid results
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)
@@ -3401,6 +3475,7 @@ This is much more trivial than the book exercises.
   - paragraph "recursive descent compiler ...".
   - automatic analysis in compiler
 - [left recursion elimination](http://community.schemewiki.org/?sicp-ex-4.47)
+- lexer_vs_parser above.
 
 # @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 
