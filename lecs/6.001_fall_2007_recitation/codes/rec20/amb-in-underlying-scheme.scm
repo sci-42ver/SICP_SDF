@@ -94,7 +94,7 @@
 (list (amb 1 2) (amb 3 4))
 (amb) 
 ; (2 3)
-;; 1. set! can't restore, since that needs changing set! to get that old-value.
+;; 1. set! can't restore, since that needs changing set! to get that old-value (maybe can be implemented by redefining set!... skip that since the logic is same as the book one).
 ;; As the above shows, amb just tries for different candidates.
 (define global-x '(0))
 (define (test y)

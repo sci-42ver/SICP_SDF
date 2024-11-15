@@ -1,3 +1,6 @@
+Here I give one *quick reference* for someone wanting to know what `set!` does above (actually just same as "`call/cc cont2` is being performed, we perform the jump to (r1 val) where val is the continuation of r2" said by hxngsun. Notice these comments are posted before one helpful edit of the answer). Here the 1st `(call/cc superfluous-computation)` passes the 1st `(set! do-other-stuff1 _)` to `do-other-stuff2` of `superfluous-computation` Then `(call/cc (set! do-other-stuff1 _))` will pass `(set! do-other-stuff3 _)` in `superfluous-computation` to `_` in the former.
+
+So we *finishes* the 1st `set!` in `hefty-computation`. Then the rest is similar. (Here I give one manual index for `do-other-stuff` to help differentiating them. I borrowed `_` notation from [this QA answer](https://stackoverflow.com/a/612839/21294350) which just means same as `c` in `(lambda (c) (c e2))` from [wikipedia](https://en.wikipedia.org/wiki/Call-with-current-continuation))
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
