@@ -218,33 +218,42 @@
 (define (driver-loop-take-input input-seq)
   (define (internal-loop try-again input-seq)
     (if (null? input-seq)
-      'finished
-      (let ((input (car input-seq)))
-        (if (eq? input 'try-again)
-            (try-again)
-            (begin
-              (newline)
-              (display ";;; Starting a new problem ")
-              (ambeval input
-                        the-global-environment
-                        ;; ambeval success
-                        (lambda (val next-alternative)
-                          (announce-output output-prompt)
-                          (user-print val)
-                          ;;; TODO Notice here `next-alternative` may have the failure here.
-                          ;; So 4_38.scm will output one more ";;; There is no current problem" (see `(trace internal-loop)` results).
-                          (internal-loop next-alternative (cdr input-seq)))
-                        ;; ambeval failure
-                        (lambda ()
-                          (announce-output
-                          ";;; There are no more values of")
-                          (user-print input)
-                          (driver-loop-take-input (cdr input-seq)))))))
+      (prompt-for-input input-prompt) ; to have the same behavior as the above.
+      (begin
+        (prompt-for-input input-prompt)
+        (let ((input (car input-seq)))
+          ;; to have the same behavior as the above.
+          (display input)
+          (if (eq? input 'try-again)
+              (try-again)
+              (begin
+                (newline)
+                (display ";;; Starting a new problem ")
+                (ambeval input
+                          the-global-environment
+                          ;; ambeval success
+                          (lambda (val next-alternative)
+                            (announce-output output-prompt)
+                            (user-print val)
+                            ;;; IGNORE: Notice here `next-alternative` may have the failure here.
+                            ;; So 4_38.scm will output one more ";;; There is no current problem" (see `(trace internal-loop)` results).
+                            ;; That is due to when we call `next-alternative` which will normally try the next candidate,
+                            ;; but if no candidate is left, then the upper fail is called, i.e. the following ";;; There are no more values of".
+                            ;; But that is wrapped in lambda which uses the *old* input-seq.
+                            ;; IMHO the normal calling seq will be internal-loop->internal-loop->internal-loop...->driver-loop-take-input to take the next problem input.
+                            ;; So use cddr may be feasible.
+                            (internal-loop next-alternative (cdr input-seq)))
+                          ;; ambeval failure
+                          (lambda ()
+                            (announce-output
+                            ";;; There are no more values of")
+                            (user-print input)
+                            (driver-loop-take-input (cddr input-seq))))))))
       )
     )
   ; (assert (pair? input-seq))
   (assert (list? input-seq))
-  (trace internal-loop)
+  ; (trace internal-loop)
   (internal-loop
     (lambda ()
      (newline)

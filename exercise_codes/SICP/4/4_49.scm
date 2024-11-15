@@ -57,7 +57,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; main
 ;; wiki list-amb is better to have one "systematic search" and ensures each time (generate) will have the same result.
-;; TODO Here random may be better for 4.50 as footnote implies.
+;; Here random may be better for 4.50 as footnote implies. But this won't work for the structure like an-integer-between as revc says.
 (define (parse-word word-list)
   (list (car word-list) (list-ref (cdr word-list) (random (- (length word-list) 1)))))
 (define (generate)
