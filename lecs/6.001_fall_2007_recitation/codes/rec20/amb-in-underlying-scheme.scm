@@ -86,16 +86,23 @@
 ;; Then induction. 
   ;; Notice as ... implies, K-SUCCESS is unchanged just as analyze-amb does since the continuation wanting one value from amb is *same*.
   ;; The only difference is just expression same as choices->(cdr choices) in the book.
-(amb)
+; (amb)
 
 ;; Notice
 ;; 0. from left to right is not ensured. But CALL-WITH-CURRENT-CONTINUATION still implies DFS just like stack https://stackoverflow.com/a/612839/21294350.
 (list (begin (display "left") 1) (begin (display "right") 2))
+;; explicit reset fail.
+(define fail 
+  (lambda () 
+    (error "Amb tree exhausted"))) 
 (list (amb 1 2) (amb 3 4))
 (amb) 
 ; (2 3)
 ;; 1. set! can't restore, since that needs changing set! to get that old-value (maybe can be implemented by redefining set!... skip that since the logic is same as the book one).
 ;; As the above shows, amb just tries for different candidates.
+(define fail 
+  (lambda () 
+    (error "Amb tree exhausted")))
 (define global-x '(0))
 (define (test y)
   (define (demo-set! x)
@@ -104,6 +111,10 @@
   (demo-set! y))
 (test (amb 1 2))
 (amb)
+; (amb) ; maybe (1 4) i.e. the above next candidate of (list (amb 1 2) (amb 3 4)).
+;; So global fail is not feasible at all...
+;; Anyway that is not functional programming...
+
 ; (2 1 0)
 ;; no restoration.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; checking TODO in notes 4.3
@@ -116,6 +127,9 @@
 ;; 3.b. The passing along property for "as the execution procedures call each other." can be also implemented by *global* fail.
 ;; Here I just give one demo where a in sequentially can influence the fail of b.
 ;; That's obvious since fail is *global*.
+(define fail 
+  (lambda () 
+    (error "Amb tree exhausted")))
 (define (y-fail-then-x-fail)
   (define x (amb 1 2))
   (define y (amb 3 4))
@@ -130,27 +144,43 @@
   ; (iter 5)
 
   ; (error "test")
-  (for-each
-    (lambda (ignore)
-      (write-line (cons x y))
-      (amb))
-    (iota 10))
-  (amb)
-  (amb)
-  (amb)
+  ; (for-each
+  ;   (lambda (ignore)
+  ;     (write-line (cons x y))
+  ;     (amb))
+  ;   (iota 1))
+
+  ; (write-line (cons x y))
+  ; (amb)
+
+  (cons x y)
   (amb)
   )
-;; TODO why here always outputs (1 4)
+;; here may outputs weird (1 4) etc if not explicitly resetting fail.
 (y-fail-then-x-fail)
+; error thrown here. Reasons see lecs/6.001_fall_2007_recitation/codes/rec20/amb-in-underlying-scheme-minimal-debug.scm
+
+(define fail 
+  (lambda () 
+    (error "Amb tree exhausted"))) 
+;Amb tree exhausted
 (define x (amb 1 2))
 (define y (amb 3 4))
+(cons x y)
 (amb)
 (amb)
+;; Here after x has exhausted it will call the former fail ";Amb tree exhausted"
+;; instead of trying for y...
+; (amb) ;Amb tree exhausted
+(define fail 
+  (lambda () 
+    (error "Amb tree exhausted")))
+(define x (amb 1 2))
 (amb)
-(amb) ;Amb tree exhausted
+; (amb)
 
 ;; > If the execution of pproc *fails*
-(if (amb) "1" "2")
+; (if (amb) "1" "2")
 
 ;; > *the reason for keeping track of the continuations*
 ;; here is non-local exit (no need to "propagate" step by step). See lecs/6.001_fall_2007_recitation/codes/rec20/call-cc-complex.scm
@@ -168,3 +198,20 @@
               (SET! VALUE-LIST (CONS VALUE VALUE-LIST)) 
               (FAIL)) 
             (REVERSE VALUE-LIST))))))   ; Order it nicely. 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; encure understanding call/cc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 1. https://stackoverflow.com/q/28645071/21294350
+;; i.e. ((lambda () (cc #f))) -> (cc #f) -> ((cdr (cons 3 5)))
+; ((cdr (or (call/cc (lambda (cc) (cons 2 (lambda () (cc #f))))) (cons 3 5))))
+;; 
+(define cc (cdr (or (call/cc (lambda (cc) (cons 2 (lambda () (cc #f))))) (cons 3 5))))
+(cc) ; (define cc 5)
+cc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 2 https://stackoverflow.com/q/28191524/21294350
+;; trivial by just accumulating (+ 1 and then at last 0.
+;; so 4 and 2014+4.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 3 https://stackoverflow.com/q/16529475/21294350
+;; trivial by just return 2.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 4 https://stackoverflow.com/q/11641926/21294350 
+;; trivial
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; some links https://stackoverflow.com/a/2786098/21294350
