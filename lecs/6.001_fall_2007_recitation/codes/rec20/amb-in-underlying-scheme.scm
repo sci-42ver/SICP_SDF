@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; from rec
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; from rec (not work when transforming from define-macro to define-syntax)
 (define amb-fail '*)
 (define initialize-amb-fail
   (lambda ()
@@ -106,7 +106,58 @@
 (amb)
 ; (2 1 0)
 ;; no restoration.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; checking TODO in notes 4.3
+;; 3. In summary, 
+;; 3.a. "Execution procedures and continuations" bullet point part
+;; only "assignment" can't be implemented by just the above amb syntax.
+;; "the top-level driver" is implemented by the top-level fail.
+;; "try-again" can be implemented as (amb) ~~since here fail is *global*.~~ since (amb) just calls the *passed* fail (i.e. global fail here) same as try-again.
+  ;; So "back to the previous choice point" can be also implemented.
+;; 3.b. The passing along property for "as the execution procedures call each other." can be also implemented by *global* fail.
+;; Here I just give one demo where a in sequentially can influence the fail of b.
+;; That's obvious since fail is *global*.
+(define (y-fail-then-x-fail)
+  (define x (amb 1 2))
+  (define y (amb 3 4))
+  ;; just use for-each etc since not in amb-eval
+  ; (define (iter n)
+  ;   (if (> n 0)
+  ;     (begin
+  ;       (write-line (cons x y))
+  ;       (amb)
+  ;       (iter (- n 1))) 
+  ;     ))
+  ; (iter 5)
 
+  ; (error "test")
+  (for-each
+    (lambda (ignore)
+      (write-line (cons x y))
+      (amb))
+    (iota 10))
+  (amb)
+  (amb)
+  (amb)
+  (amb)
+  )
+;; TODO why here always outputs (1 4)
+(y-fail-then-x-fail)
+(define x (amb 1 2))
+(define y (amb 3 4))
+(amb)
+(amb)
+(amb)
+(amb) ;Amb tree exhausted
+
+;; > If the execution of pproc *fails*
+(if (amb) "1" "2")
+
+;; > *the reason for keeping track of the continuations*
+;; here is non-local exit (no need to "propagate" step by step). See lecs/6.001_fall_2007_recitation/codes/rec20/call-cc-complex.scm
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; "amb review after reading 4.3.3" is trivially implemented by the recursive structure of syntax.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; from wiki
 ;; here is similar to Exercise 4.53.
 (define-syntax amb-possibility-list 
   (syntax-rules () 

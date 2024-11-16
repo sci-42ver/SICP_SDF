@@ -1,6 +1,12 @@
-Here I give one *quick reference* for someone wanting to know what `set!` does above (actually just same as "`call/cc cont2` is being performed, we perform the jump to (r1 val) where val is the continuation of r2" said by hxngsun. Notice these comments are posted before one helpful edit of the answer). Here the 1st `(call/cc superfluous-computation)` passes the 1st `(set! do-other-stuff1 _)` to `do-other-stuff2` of `superfluous-computation` Then `(call/cc (set! do-other-stuff1 _))` will pass `(set! do-other-stuff3 _)` in `superfluous-computation` to `_` in the former.
+As one reference if someone wonders why c is kept unchanged in "E[ (call/cc F) ] c = E[ (F c) ] c": IMHO that is due to what `call/cc` does is pass the continuation and then go *back*. So `c` is unchanged.
 
-So we *finishes* the 1st `set!` in `hefty-computation`. Then the rest is similar. (Here I give one manual index for `do-other-stuff` to help differentiating them. I borrowed `_` notation from [this QA answer](https://stackoverflow.com/a/612839/21294350) which just means same as `c` in `(lambda (c) (c e2))` from [wikipedia](https://en.wikipedia.org/wiki/Call-with-current-continuation))
+Here I give one *quick reference* for someone wanting to know what the original `set!` version does above. (actually just same as "`call/cc cont2` is being performed, we perform the jump to (r1 val) where val is the continuation of r2" said by hxngsun. Notice these comments are posted before one helpful edit of the answer.) Here the 1st `(call/cc superfluous-computation)` assigns `^h1` corresponding to `(set! do-other-stuff _h1)` to `do-other-stuff` arg of `superfluous-computation` (Here I use `^h1` to mean `(lambda (c) (set! do-other-stuff c))` corresponding to `_h1` part).
+
+Then `(call/cc ^h1)` will pass `^s1` for `(set! do-other-stuff _s1)` of `superfluous-computation` to `^h1`, i.e. calling `(^h1 ^s1)`. So the `do-other-stuff` local binding in `hefty-computation` is reset to `^s1`. (Here I borrowed `_` notation from [this QA answer](https://stackoverflow.com/a/612839/21294350) which just means same as `c` in `(lambda (c) (c e2))` from [wikipedia](https://en.wikipedia.org/wiki/Call-with-current-continuation). So the continuation location is just before `_`. The suffix like s1 means the "1"st `(set! do-other-stuff ...)` in "s"uperfluous-computation.)
+
+Then `(call/cc ^s1)` will call `(^s1 ^h2)` and then *continue* runnning from the *former* location in `superfluous-computation` (i.e. have run "Straight up." part). The rest afterwards to `display` "Quarter after." etc is similar.
+
+Notice this `set!` is significant otherwise all calls of `(call/cc do-other-stuff)` in `hefty-computation` are actually `(call/cc superfluous-computation)`, i.e. all outputing "Straight up." and then calling back with `(call/cc do-other-stuff)`.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -3307,11 +3313,12 @@ what amb should achieve (for how is achieved, please check codes...)
   - > the amb evaluator evaluates them from left to right.
     done by `((car aprocs) env ...)`.
   - Also see the 1st example in `amb-process-demo.scm`
-- ~~> the analyzing evaluator of section 4.1.7, because the execution procedures in that evaluator provide a *convenient framework for implementing backtracking.*~~
-  - See `Lazy_Evaluation_analyze_lib.scm`.
-    After all, "analyzing" is used for its effefficiency due to avoiding duplicate analyze's, so lazy can be also combined with that.
-  - Here since we need 2 more continuation args, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
-    But if using the initial version evaluator, (take `eval-assignment` for example which has no anonymous procedures, others should be similar) the *non-anonymous* proc `set-variable-value!` needs to change the interface.
+- ~~why choose to base on *analyzing* evaluator~~
+  - ~~> the analyzing evaluator of section 4.1.7, because the execution procedures in that evaluator provide a *convenient framework for implementing backtracking.*~~
+    - See `Lazy_Evaluation_analyze_lib.scm`.
+      After all, "analyzing" is used for its effefficiency due to avoiding duplicate analyze's, so lazy can be also combined with that.
+    - Here since we need 2 more continuation args, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
+      But if using the initial version evaluator, (take `eval-assignment` for example which has no anonymous procedures, others should be similar) the *non-anonymous* proc `set-variable-value!` needs to change the interface.
 - ~~failure continuation~~
   - ~~> In summary, failure continuations are constructed by...~~
     IMHO This means new failure continuations instead of just passing most of time like `fail000` from `(succeed000 '() fail000)` back to succeed.

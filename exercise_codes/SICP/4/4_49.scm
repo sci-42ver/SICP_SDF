@@ -86,6 +86,8 @@ try-again
     (list-amb (cdr word-list))))   ;; change
 (parse '(the student for the student studies for the student))
 try-again
+;; the last is changed to professor.
+; (sentence (noun-phrase (simple-noun-phrase the student) (prep-phrase for (simple-noun-phrase the student))) (verb-phrase studies (prep-phrase for (simple-noun-phrase the professor))))
 
 ;;; also see 4_50_revc_mod_for_4_49.scm
 ;;; test
