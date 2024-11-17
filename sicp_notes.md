@@ -1,22 +1,3 @@
-@FumbleFingers Okay. I don't know why just asking one problem about the sentence structure without saying detailedly about the contents inside that sentence is not feasible. Since 2 readers have complained about that, maybe I should give one concrete example sentence. Sorry for the before words maybe nonsense. I have updated my question just now.
-
-Josh Segall's comment says the essential problem of the above while the answer just points that out without explanation maybe due to triviality.
-
-@TimR Sorry. I encountered with this problem when I wrote one post which is *a bit long*. So I can't give one full background for the 1st quote in my post. You can think of "Say something about expression" as one placeholder which will be populated with many contents about `expression` object. This is same for "notice1 about expression" and "notice2 about expression" which just mean "notice here the expression is transformed to one ..." which is one notice about expression.
-
-@SquareCrow `(x 4)` can be just thought as `((lambda (c) (+ 2 c)) 4)` (i.e. replace _ in `(+ 2 _)` with 4 if using the above notation) as the 2nd wikipedia reference in the question post shows. Similar to what Ellen Spertus says, if `(+ 2 ...)` is in one *procedure* like `(define (foo) (+ 1 2) (+ 2 ...))`, then that continuation will be `((lambda (c) (+ 1 2) (+ 2 c)) 4)`.
-
-"the current continuation is like the current state of the stack": this is also said in r7rs "an *entire (default) future* for the computation" https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_sec_6.10.
-
-As one reference if someone wonders why c is kept unchanged in "E[ (call/cc F) ] c = E[ (F c) ] c": IMHO that is due to what `call/cc` does is pass the continuation and then go *back*. So `c` is unchanged.
-
-Here I give one *quick reference* for someone wanting to know what the original `set!` version does above. (actually just same as "`call/cc cont2` is being performed, we perform the jump to (r1 val) where val is the continuation of r2" said by hxngsun. Notice these comments are posted before one helpful edit of the answer.) Here the 1st `(call/cc superfluous-computation)` assigns `^h1` corresponding to `(set! do-other-stuff _h1)` to `do-other-stuff` arg of `superfluous-computation` 
-
-(1. Here I use `^h1` to mean `(lambda (_h1) ... (set! do-other-stuff _h1) (display "Hefty computation (b)") ...)` which can be thought as one procedure, i.e. continuation, representing the call stack as [QA1](https://stackoverflow.com/a/612839/21294350) says. `_` notation is also borrowed from there. 2. The suffix like s1 means the "1"st `(set! do-other-stuff ...)` in "s"uperfluous-computation.)
-
-Then `(call/cc ^h1)` will pass `^s1` for `(set! do-other-stuff _s1)` of `superfluous-computation` to `^h1`, i.e. calling `(^h1 ^s1)`. So the `do-other-stuff` local binding in `hefty-computation` is reset to `^s1`. Then `(call/cc ^s1)` will call `(^s1 ^h2)` and then *continue* runnning from the *former* location in `superfluous-computation` (i.e. have run "Straight up." part). The rest afterwards to `display` "Quarter after." etc is similar.
-
-Notice this `set!` is significant otherwise all calls of `(call/cc do-other-stuff)` in `hefty-computation` are actually `(call/cc superfluous-computation)`, i.e. all outputing "Straight up." and then calling back with `(call/cc do-other-stuff)`.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -52,6 +33,9 @@ add one description based on the reference from the book
 ### lacked by the book but included in 6.001 lec
 - lec11
   - Stack example
+## Help for using Scheme interpreter with Shell
+- see
+  - https://stackoverflow.com/a/78596355/21294350 and [`<<<`](https://askubuntu.com/a/678919) to pass program by the string. `$()` is also interpreted by bash before passing the result to Scheme.
 # Scheme func notices
 - `atan`
   > the value returned will be the one in the range minus pi (exclusive) to pi (inclusive).

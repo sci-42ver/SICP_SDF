@@ -11,7 +11,7 @@
 ;; See r16 with exercise_codes/SICP/3/cons-stream-as-syntax.scm
 ; (define-macro amb
 ;               (lambda alts
-;; just same as racket implementation where it uses ... instead of map.
+;; just *same* as racket implementation where it uses ... instead of map.
 ;; > ((pattern3) ...)
 ;; this from hipster link will match () so same for "alt ..." in racket
 (define-syntax amb

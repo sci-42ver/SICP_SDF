@@ -37,6 +37,7 @@
   (fast-prime? n times))
 
 ;; similar to Exercise 4.36, we should bound the latter lets range based on the 1st.
+;; similar to https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html but infinite.
 (define (prime-sum-pairs)
   ;; lower triangular matrix pattern as 2.2.3.
   (let ((a (an-integer-starting-from 1)))

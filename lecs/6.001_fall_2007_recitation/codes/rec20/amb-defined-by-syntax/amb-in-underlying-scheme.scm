@@ -1,7 +1,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; https://deadbeef.me/2016/01/ambiguous-function#:~:text=Definition,value%20of%20any%20expression%20operand. -> http://community.schemewiki.org/?amb
 (define fail 
   (lambda () 
-    (error "Amb tree exhausted"))) 
+    (error "Amb tree exhausted")))
+;; from sfu. IMHO since here cc is just nothing at all, so just return 'no-choise.
+;;; initializing fail
+(call/cc
+ (lambda (cc)
+   (set! fail
+         (lambda ()
+           (cc 'no-choise)))))
 
 ;;; Also see https://wiki.c2.com/?AmbSpecialForm
 ;; 0. (amb ?x ?y) uses only one call/cc since it wraps ?y and (set! *failure* old-failure) together,
@@ -26,25 +33,8 @@
     ((amb ?x ?rest ...)
      (amb ?x (amb ?rest ...)))))
 
-;;; https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
-;; One interesting course.
-(define-syntax amb
-  (syntax-rules ()
-    ((_) (fail))
-    ((_ a) a)
-    ((_ a b ...)
-     (let ((fail0 fail))
-       (call/cc
-         (lambda (cc)
-           (set! fail
-             (lambda ()
-               (set! fail fail0)
-               ;; similar to the induction in c2.
-               (cc (amb b ...))))
-           ;; since this is at tail, IMHO directly a is also fine just as c2 link.
-           (cc a)))))))
-
 ;;; Also see https://rosettacode.org/wiki/Amb (rosettacode always have many implementations!!!)
+;; trivially same as schemewiki
 (define-syntax amb 
   (syntax-rules () 
     ((AMB) (FAIL))                      ; Two shortcuts. 
@@ -79,6 +69,9 @@
 (define (require condition) 
   (if (not condition) 
     (fail)))
+;; or use or as sfu link shows.
+(define (assert pred)
+  (or pred (amb)))
 
 ; ;; when use ' to debug.
 ; (amb 1 2)
@@ -106,7 +99,7 @@
 (amb) 
 ; (2 3)
 ;; 1. set! can't restore, since that needs changing set! to get that old-value (maybe can be implemented by redefining set!... skip that since the logic is same as the book one).
-;; As the above shows, amb just tries for different candidates.
+;; As the above shows, amb just tries for different candidates without caring value restoration.
 (define fail 
   (lambda () 
     (error "Amb tree exhausted")))
@@ -205,6 +198,15 @@
                  (SET! VALUE-LIST (CONS VALUE VALUE-LIST)) 
                  (FAIL)) 
                (REVERSE VALUE-LIST))))))   ; Order it nicely. 
+;; same as https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
+(define-syntax set-of
+  (syntax-rules ()
+    ((_ s)
+      (let ((acc '()))
+        (amb (let ((v s))
+               (set! acc (cons v acc))
+               (fail))
+             (reverse! acc))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; encure understanding call/cc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 1. https://stackoverflow.com/q/28645071/21294350

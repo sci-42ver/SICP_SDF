@@ -18,6 +18,12 @@
 (define (an-integer-between low high)  
   (require (<= low high))  
   (amb low (an-integer-between (+ low 1) high)))
+;; same as https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
+(define (number-between a b)
+  (let loop ((i a))
+    (if (> i b)
+        (amb)
+      (amb i (loop (1+ i))))))
 
 ;; from 1_24_scale.scm
 (define (fast-prime? n times)
@@ -74,3 +80,25 @@
     initial
     (op (car sequence)
         (accumulate op initial (cdr sequence)))))
+
+;;; https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
+(define (all-different? . ls)
+  (let loop ((obj (car ls)) (ls (cdr ls)))
+    (or (null? ls)
+        (and (not (memv obj ls))
+              ;; modified
+             (loop (cadr ls) (cddr ls))))))
+
+;; this is same as https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Machine-Time.html#index-with_002dtimings
+(define-syntax cpu-time/sec
+  (syntax-rules ()
+    ((_ s)
+     (with-timings
+     (lambda () s)
+       (lambda (run-time gc-time real-time)
+     (write (internal-time/ticks->seconds run-time))
+     (write-char #\space)
+     (write (internal-time/ticks->seconds gc-time))
+     (write-char #\space)
+     (write (internal-time/ticks->seconds real-time))
+     (newline))))))
