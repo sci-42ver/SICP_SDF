@@ -3,6 +3,48 @@
   (lambda () 
     (error "Amb tree exhausted"))) 
 
+;;; Also see https://wiki.c2.com/?AmbSpecialForm
+;; 0. (amb ?x ?y) uses only one call/cc since it wraps ?y and (set! *failure* old-failure) together,
+;; i.e. all what to do wrapped in one procedure. so we don't need to go back to the continuation
+;; 1. (amb ?x ?rest ...) is similar to an-element-of.
+;; 2. Anyway, the basic ideas are same.
+(define (*failure*) (error "Failure"))
+
+(define-syntax amb
+  (syntax-rules ()
+    ((amb) (*failure*))
+    ((amb ?x) ?x)
+    ((amb ?x ?y)
+     (let ((old-failure *failure*))
+       ((call-with-current-continuation
+          (lambda (cc)
+            (set! *failure* 
+              (lambda () 
+                (set! *failure* old-failure)
+                (cc (lambda () ?y))))
+            (lambda () ?x))))))
+    ((amb ?x ?rest ...)
+     (amb ?x (amb ?rest ...)))))
+
+;;; https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
+;; One interesting course.
+(define-syntax amb
+  (syntax-rules ()
+    ((_) (fail))
+    ((_ a) a)
+    ((_ a b ...)
+     (let ((fail0 fail))
+       (call/cc
+         (lambda (cc)
+           (set! fail
+             (lambda ()
+               (set! fail fail0)
+               ;; similar to the induction in c2.
+               (cc (amb b ...))))
+           ;; since this is at tail, IMHO directly a is also fine just as c2 link.
+           (cc a)))))))
+
+;;; Also see https://rosettacode.org/wiki/Amb (rosettacode always have many implementations!!!)
 (define-syntax amb 
   (syntax-rules () 
     ((AMB) (FAIL))                      ; Two shortcuts. 
@@ -21,9 +63,12 @@
                        (LAMBDA (K-FAILURE)       ; K-FAILURE will try the next 
                                (SET! FAIL              ;   possible expression. 
                                      (LAMBDA () 
-                                      ; (K-FAILURE #f)
-                                      (K-FAILURE 'anything-is-fine-here)
-                                      )) 
+                                             ; (K-FAILURE #f)
+                                             (K-FAILURE 'anything-is-fine-here)
+                                             )
+                                     ;; rosettacode is wrong for this part. The rest is same as here.
+                                     ; K-FAILURE
+                                     ) 
                                (K-SUCCESS              ; Note that the expression is 
                                  (LAMBDA ()             ;   evaluated in tail position 
                                          expression))))       ;   with respect to AMB. 
@@ -38,16 +83,16 @@
 ; ;; when use ' to debug.
 ; (amb 1 2)
 '((call-with-current-continuation (lambda (k-success) 
-  (call-with-current-continuation (lambda (k-failure) (set! fail (lambda () (k-failure #f))) (k-success (lambda () 1)))) 
-  (call-with-current-continuation (lambda (k-failure) (set! fail (lambda () (k-failure #f))) (k-success (lambda () 2)))) 
-  (set! fail fail-save) fail-save)))
+                                    (call-with-current-continuation (lambda (k-failure) (set! fail (lambda () (k-failure #f))) (k-success (lambda () 1)))) 
+                                    (call-with-current-continuation (lambda (k-failure) (set! fail (lambda () (k-failure #f))) (k-success (lambda () 2)))) 
+                                    (set! fail fail-save) fail-save)))
 
 (list (amb 1 2)) ; call "K-SUCCESS" and *return*
 (amb) 
 ;; call (FAIL) -> ((LAMBDA () (K-FAILURE #f))) -> (K-FAILURE #f), so we continue run ... part, i.e. next candidate.
 ;; Then induction. 
-  ;; Notice as ... implies, K-SUCCESS is unchanged just as analyze-amb does since the continuation wanting one value from amb is *same*.
-  ;; The only difference is just expression same as choices->(cdr choices) in the book.
+;; Notice as ... implies, K-SUCCESS is unchanged just as analyze-amb does since the continuation wanting one value from amb is *same*.
+;; The only difference is just expression same as choices->(cdr choices) in the book.
 ; (amb)
 
 ;; Notice
@@ -85,7 +130,7 @@
 ;; only "assignment" can't be implemented by just the above amb syntax.
 ;; "the top-level driver" is implemented by the top-level fail.
 ;; "try-again" can be implemented as (amb) ~~since here fail is *global*.~~ since (amb) just calls the *passed* fail (i.e. global fail here) same as try-again.
-  ;; So "back to the previous choice point" can be also implemented.
+;; So "back to the previous choice point" can be also implemented.
 ;; 3.b. The passing along property for "as the execution procedures call each other." can be also implemented by *global* fail.
 ;; Here I just give one demo where a in sequentially can influence the fail of b.
 ;; That's obvious since fail is *global*.
@@ -154,12 +199,12 @@
 (define-syntax amb-possibility-list 
   (syntax-rules () 
     ((AMB-POSSIBILITY-LIST expression) 
-    (LET ((VALUE-LIST '())) 
-      ;; This requires that AMB try its sub-forms left-to-right. 
-      (AMB (let ((VALUE expression)) 
-              (SET! VALUE-LIST (CONS VALUE VALUE-LIST)) 
-              (FAIL)) 
-            (REVERSE VALUE-LIST))))))   ; Order it nicely. 
+     (LET ((VALUE-LIST '())) 
+          ;; This requires that AMB try its sub-forms left-to-right. 
+          (AMB (let ((VALUE expression)) 
+                 (SET! VALUE-LIST (CONS VALUE VALUE-LIST)) 
+                 (FAIL)) 
+               (REVERSE VALUE-LIST))))))   ; Order it nicely. 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; encure understanding call/cc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 1. https://stackoverflow.com/q/28645071/21294350
@@ -177,3 +222,43 @@ cc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 4 https://stackoverflow.com/q/11641926/21294350 
 ;; trivial
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; some links https://stackoverflow.com/a/2786098/21294350
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; rosettacode
+(let ((w-1 (amb "the" "that" "a"))
+      (w-2 (amb "frog" "elephant" "thing"))
+      (w-3 (amb "walked" "treaded" "grows"))
+      (w-4 (amb "slowly" "quickly")))
+  (define (joins? left right)
+    (equal? (string-ref left (- (string-length left) 1)) (string-ref right 0)))
+  (if (joins? w-1 w-2) '() (amb))
+  (if (joins? w-2 w-3) '() (amb))
+  (if (joins? w-3 w-4) '() (amb))
+  (list w-1 w-2 w-3 w-4))
+;; i.e.
+;;; The list can contain as many lists as desired.
+(define words (list '("the" "that" "a")
+                    '("frog" "elephant" "thing")
+                    '("walked" "treaded" "grows")
+                    '("slowly" "quickly")))
+(define (joins? a b)
+  (char=? (string-ref a (sub1 (string-length a))) (string-ref b 0)))
+
+;; added
+(define (sub1 x)
+  (- x 1))
+(define (an-element-of items)
+  (require (not (null? items)))
+  (amb (car items) (an-element-of (cdr items))))
+
+(let ((sentence (map an-element-of words))) ; modified
+  ; (fold (lambda (x y)
+  ;         (require (joins? x y))
+  ;         y)
+  ;       (car sentence) (cdr sentence))
+  (fold
+    (lambda (latest prev)
+      (require (joins? prev latest))
+      latest)
+    (car sentence)
+    (cdr sentence))
+  sentence)

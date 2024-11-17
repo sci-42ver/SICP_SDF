@@ -1,3 +1,9 @@
+@FumbleFingers Okay. I don't know why just asking one problem about the sentence structure without saying detailedly about the contents inside that sentence is not feasible. Since 2 readers have complained about that, maybe I should give one concrete example sentence. Sorry for the before words maybe nonsense. I have updated my question just now.
+
+Josh Segall's comment says the essential problem of the above while the answer just points that out without explanation maybe due to triviality.
+
+@TimR Sorry. I encountered with this problem when I wrote one post which is *a bit long*. So I can't give one full background for the 1st quote in my post. You can think of "Say something about expression" as one placeholder which will be populated with many contents about `expression` object. This is same for "notice1 about expression" and "notice2 about expression" which just mean "notice here the expression is transformed to one ..." which is one notice about expression.
+
 @SquareCrow `(x 4)` can be just thought as `((lambda (c) (+ 2 c)) 4)` (i.e. replace _ in `(+ 2 _)` with 4 if using the above notation) as the 2nd wikipedia reference in the question post shows. Similar to what Ellen Spertus says, if `(+ 2 ...)` is in one *procedure* like `(define (foo) (+ 1 2) (+ 2 ...))`, then that continuation will be `((lambda (c) (+ 1 2) (+ 2 c)) 4)`.
 
 "the current continuation is like the current state of the stack": this is also said in r7rs "an *entire (default) future* for the computation" https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-8.html#TAG:__tex2page_sec_6.10.
