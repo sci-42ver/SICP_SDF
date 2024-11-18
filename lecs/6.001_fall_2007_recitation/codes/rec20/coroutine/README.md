@@ -1,0 +1,2 @@
+- Compare with Generators (also see SICP )
+  > Coroutines are functions or procedures that save control state between calls (as opposed to, but very similar to, Generators, such as Random Number Generators, that save data state between calls).

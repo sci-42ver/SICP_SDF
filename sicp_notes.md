@@ -1,3 +1,4 @@
+(TO post as the comment in https://stackoverflow.com/questions/5521508/coroutines-in-scheme-r5rs) This is one old question. Now https://wiki.c2.com/?SchemeCoroutineExample `(define (coroutine routine) ...` gives one  good explanation with one Scheme implementation of `coroutine` and examples to show how it works.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -3441,6 +3442,8 @@ This is much more trivial than the book exercises.
 - > by incorporating a limited form of normal-order evaluation
 # TODO after lambda calculus
 - [consistent_renaming] An5Drama's question 3.
+- lecs/6.001_fall_2007_recitation/codes/rec20/call-cc/delimited-continuation/indirect-shift-reset.scm
+  What is `*meta-continuation*` purpose and then why use `*abort`?
 # TODO after numerical analysis (Most of applications in SICP are about numerical analysis)
 - Why Newton’s method [only get to the local root](https://math.stackexchange.com/a/961171/1059606) but not global although intuitively it is that case.
   - Also see [one interesting problem](https://qr.ae/psBzi8)
