@@ -81,3 +81,33 @@
   (write-line "this won't be run")
   (write-line (amb))
   )
+
+;; from lecs/6.001_fall_2007_recitation/codes/rec20/amb-defined-by-syntax/amb-in-underlying-scheme.scm
+;; not use define to avoid the above situation where (amb) will retry the entire problem. See lecs/6.001_fall_2007_recitation/codes/rec20/amb-defined-by-syntax/amb-retry-procedure/amb-in-underlying-scheme-minimal-debug.scm
+; (define (set!-test)
+(define-syntax set!-test
+  (syntax-rules ()
+    ((_)
+      ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Pattern-Language.html#index-syntax_002drules
+      ;; Here the *entire* template must be wrapped in the parenthesis or just "an identifier, a constant"
+      ;; This seems to not said in https://hipster.home.xs4all.nl/lib/scheme/gauche/define-syntax-primer.txt which said more about examples until "The template has either (begin form . forms)".
+      ;; But this again is one procedure application...
+      (let ()
+        (define global-x '(0))
+        (define (test y)
+          (define (demo-set! x)
+            ;; since this is one special form, we can't pass one proc.
+            ; (set! global-x (cons x global-x))
+            (amb-set! global-x (cons x global-x))
+            (write-line "finish amb-set!")
+            global-x)
+          (demo-set! y))
+        (write-line (test (amb 1 2)))
+        (write-line (amb))
+        (write-line "finish all")
+        ; (assert (eq? '(1 0) (test (amb 1 2))))
+        ; (assert (eq? '(2 0) (amb)))
+        )
+      )
+    )
+  )

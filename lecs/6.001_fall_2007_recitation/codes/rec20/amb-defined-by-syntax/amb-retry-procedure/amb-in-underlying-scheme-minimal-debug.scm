@@ -33,6 +33,8 @@
 ;; > The continuation represents an entire (default) future for the computation.
 ;; Actually here continuation is not (define x _) but (lambda () (define x _) (define y ...) ...)
 ;; The behavior is similar to Exercise 4.53.
+;; When running the 1st (amb) which will call the *former* changed fail, which will call *cc there*.
+;; Then it returns *back* to (define y (amb 3 4)) and then *rerun* (amb) later.
 (define (y-fail-then-x-fail)
   (define x (amb 1 2))
   (define y (amb 3 4))
