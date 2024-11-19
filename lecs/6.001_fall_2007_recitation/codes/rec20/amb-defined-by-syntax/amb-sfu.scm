@@ -20,6 +20,17 @@
            ;; since this is at tail, IMHO directly a is also fine just as c2 link.
            (cc a)))))))
 
-(cd "~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec20/")
-(load "amb-test1.scm")
-(test)
+; (cd "~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec20/")
+; (load "amb-test1.scm")
+; (test)
+
+;; from exercise_codes/SICP/4/amb-misc-lib.scm
+(define (require p)
+  (if (not p) (amb)))
+(define (an-element-of items)
+  (require (not (null? items)))
+  (amb (car items) (an-element-of (cdr items))))
+(define (reset-fail)
+  (set! fail 
+    (lambda () 
+      (error "Amb tree exhausted"))))

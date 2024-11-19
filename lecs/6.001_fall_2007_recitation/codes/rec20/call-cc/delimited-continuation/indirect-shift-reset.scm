@@ -100,14 +100,14 @@
 (* 2 (+ 1 (+ 1 5)))
 ;; here the 2nd reset will store *META-CONTINUATION* from the 1st reset.
 ;; Then (k (t (t 5))) can follow the analysis of ";;; how nested k work"
-;; Then we return (+ 1 (* 3 (* 3 5))) to the 2nd reset and then the 1st implied by queue.
+;; Then we return (+ 1 (* 3 (* 3 5))) to the 2nd reset and then the 1st implied by stack.
 (* 2 (reset (+ 1 (shift k (reset (* 3 (shift t (k (t (t 5))))))))))
 ; (* 2 (+ 1 (* 3 (* 3 5))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; wikipedia demo
 (define null '())
 ;; Here similar to (* 2 (reset (+ 1 (shift k (k (k 5))))))
-;; (cons 1 _) will be saved in the queue-like(FIFO) *META-CONTINUATION*
+;; (cons 1 _) will be saved in the stack-like(FIFO) *META-CONTINUATION*
 ;; (k 'ignored) again will go to the reset loc (begin _ ...).
 ;; Then we calculate (shift k (cons 2 (k 'ignored))) in (begin _ ...) which *isn't nested in* the former shift.
 ;; So RESULT in (LET ((RESULT (k 'ignored))) here will become the ending null.
@@ -129,7 +129,7 @@
 ;; > effectively re-installs the continuation after returning to the reset
 ;; 1. > once the entire computation within shift is completed, the continuation is discarded, and execution restarts outside reset
 ;; > the shift expression has terminated, and the rest of the reset expression is discarded.
-;; "discarded" is done by the above queue restoration and that K is totally dropped when shift is finished by yielding control by K in (*META-CONTINUATION* RESULT).
+;; "discarded" is done by the above stack restoration and that K is totally dropped when shift is finished by yielding control by K in (*META-CONTINUATION* RESULT).
 ;; "the rest of the reset expression is discarded." is done by K in reset.
 ;; 2. > `Composable' means that the procedure will return
 ;; implied by (RESET (K 5)) which *inserts*/returns 6 or something based on delimiter loc at that place. 

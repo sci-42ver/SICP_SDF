@@ -1,10 +1,3 @@
-In newer python, IMHO `target.switch(value)` can be implemented by one dispatcher as the 3rd example in PEP 342 https://peps.python.org/pep-0342/#examples shows.
-
-1. In newer python, IMHO `target.switch(value)` can be implemented by one dispatcher as the 3rd example in PEP 342 https://peps.python.org/pep-0342/#examples shows. 2. What cdunn2001 is also said in https://www.lua.org/pil/9.1.html "only suspend its execution when it is *not inside any auxiliary function*, that is, when it has *no pending calls* in its control stack."
-
-3. what user746461 says is inappropriate IMHO since we can construct one `yield from` sequence or there are multiple `yield-from` in one function. Then all these calls can be *remembered* to be run immediately or later. This is also implied in this abstract of one pycon presentation https://us.pycon.org/2012/schedule/presentation/104/. Anyway it is just one pedantic problem of semi-coroutine definition which is said to be  maybe varied by lua doc.
-
-Anyway `yield from` is one "transparent, *bidirectional* connection" https://stackoverflow.com/a/26109157/21294350 where where bidirectional implies manipulated of "pending calls".
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -3438,6 +3431,9 @@ With lec17, both overlap too much with the book (almost already contained)...
 This is less appropriate here. But [6_001_sp_2007_rec] doesn't have one corresponding one.
 This is much more trivial than the book exercises.
 ### rec20 since "6.001 Spring 2007 Lazy Evaluation recitation" has no valid results
+- > As such let’s represent a solution as a list of n elements: each element represents the row that that column’s queen is in.
+  same ideas as wiki `queens-iterate-cols`
+  - Here `(except 1st-elem (enumerate-interval 1 max-row))` to implement `distinct?` but diagonal needs the more detailed iter.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

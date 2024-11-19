@@ -81,6 +81,10 @@
     (op (car sequence)
         (accumulate op initial (cdr sequence)))))
 
+(define (enumerate-interval l u)
+  (if (> l u) '()
+    (cons l (enumerate-interval (+ l 1) u))))
+
 ;;; https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html
 (define (all-different? . ls)
   (let loop ((obj (car ls)) (ls (cdr ls)))

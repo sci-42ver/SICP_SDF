@@ -36,6 +36,15 @@
 (define (an-element-of items)
   (require (not (null? items)))
   (amb (car items) (an-element-of (cdr items))))
+(define unary-map
+  (lambda (proc items)
+    (if (null? items)
+      '()
+      (cons (proc (car items))
+            (unary-map proc (cdr items))))))
+(define (enumerate-interval l u)
+  (if (> l u) '()
+    (cons l (enumerate-interval (+ l 1) u))))
 
 ;; 0. here just do filter for all board-size^board-size cases without using induction.
 ;; i.e. just avoids flatmap (induction)
@@ -71,7 +80,14 @@
   ;; For simplicity, col is assumed to increase by one each step.
   ;; 1. amb is not procedure. so how to do (amb (to-args (all-combinations board-size))) where to-args is what to be done when apply.
   ;; As r20 hints, use an-element-of
-  (let ((rows (an-element-of (all-combinations board-size))))
+  ; (let ((rows (an-element-of (all-combinations board-size))))
+  ;; hinted by rec20
+  (define (generate-board size)
+    (unary-map
+      (lambda (x)
+        (an-element-of (enumerate-interval 1 size)))
+      (enumerate-interval 1 size)))
+  (let ((rows (generate-board board-size)))
     (require (distinct? rows))
     (require (check-diagonal rows))
     rows
