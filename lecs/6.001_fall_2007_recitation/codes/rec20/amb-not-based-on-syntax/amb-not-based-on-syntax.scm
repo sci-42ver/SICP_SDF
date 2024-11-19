@@ -1,10 +1,13 @@
 ;; https://rosettacode.org/wiki/Amb
+;; https://matt.might.net/articles/programming-with-continuations--exceptions-backtracking-search-threads-generators-coroutines/
 (define %fail-stack '())
 
 (define (%fail!)
   (if (null? %fail-stack)
       (error 'amb "Backtracking stack exhausted!")
+      ;; > The top of the fail stack contains the next continuation to be invoked
       (let ((backtrack (car %fail-stack)))
+        ;; > pops the fail stack and invokes the result
         (set! %fail-stack (cdr %fail-stack))
         (backtrack backtrack) ; just continue to use cc
         )))
@@ -25,6 +28,7 @@
     (if (null? choices)
         (%fail!)
         (let ((choice (car choices)))
+          ;; > The amb procedure pushes a new continuation on top of the fail stack
           (set! %fail-stack (cons cc %fail-stack))
           (set! choices (cdr choices))
           choice))))

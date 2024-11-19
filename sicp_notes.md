@@ -1,4 +1,10 @@
-(TO post as the comment in https://stackoverflow.com/questions/5521508/coroutines-in-scheme-r5rs) This is one old question. Now https://wiki.c2.com/?SchemeCoroutineExample `(define (coroutine routine) ...` gives one  good explanation with one Scheme implementation of `coroutine` and examples to show how it works.
+In newer python, IMHO `target.switch(value)` can be implemented by one dispatcher as the 3rd example in PEP 342 https://peps.python.org/pep-0342/#examples shows.
+
+1. In newer python, IMHO `target.switch(value)` can be implemented by one dispatcher as the 3rd example in PEP 342 https://peps.python.org/pep-0342/#examples shows. 2. What cdunn2001 is also said in https://www.lua.org/pil/9.1.html "only suspend its execution when it is *not inside any auxiliary function*, that is, when it has *no pending calls* in its control stack."
+
+3. what user746461 says is inappropriate IMHO since we can construct one `yield from` sequence or there are multiple `yield-from` in one function. Then all these calls can be *remembered* to be run immediately or later. This is also implied in this abstract of one pycon presentation https://us.pycon.org/2012/schedule/presentation/104/. Anyway it is just one pedantic problem of semi-coroutine definition which is said to be  maybe varied by lua doc.
+
+Anyway `yield from` is one "transparent, *bidirectional* connection" https://stackoverflow.com/a/26109157/21294350 where where bidirectional implies manipulated of "pending calls".
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.

@@ -11,6 +11,10 @@
 ;;; > (The reset inside the lambda expression is the only difference between this and the control/prompt operators.)
 ;; skipped. Anyway, 
 ;; > They have since been used in a large number of domains, particularly in defining new control operators
+;;; "static" meaning in wikipedia
+;; i.e. static scope for env captured. See sds,+BRICS-RS-05-36.pdf p9 "*grafts* itself to the current context C1 0 " for dynamic.
+;; This is implied by that we *directly* uses call/cc "current-continuation".
+
 ; http://mumble.net/~campbell/scheme/shift-reset.scm
 ;;; -*- Mode: Scheme -*-
 

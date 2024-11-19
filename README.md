@@ -45,6 +45,13 @@
   to Nov 2, section 4.2 with 2 exercises left.
   to Nov 3, section 4.2.
   to Nov 5, check the solution for the [general 3.19](https://stackoverflow.com/q/79155452/21294350) which is related with 4.34 implicitly (I should ask the question in QA after being stuck for a too long time like many hours... especially when that answer doesn't get many upvotes).
+  to Nov 8, Exercise 4.42 and check the possible solution for the general 3.19 by Matt_Timmermans which is deleted later however.
+  to Nov 12, section 4.3.3 (too slow...)
+  to Nov 14, section 4.3
+  to Nov 15, one lec
+  to Nov 16, learn more about `call/cc`
+  to Nov 17, give amb based on `sc-macro-transformer`
+  to Nov 18, check coroutine said in c2 wiki and delimited continuation said in wikipedia coroutine.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF

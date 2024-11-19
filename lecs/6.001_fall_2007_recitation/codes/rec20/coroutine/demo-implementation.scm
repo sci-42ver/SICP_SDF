@@ -20,7 +20,6 @@
 ;; > But that’s not the sort of coroutine I’m talking about here.
 ;; b.3.1.1 yield from
 ;; > And so, the real reason to use “yield from” is when you have a coroutine that acts as an agent between its caller and other coroutines.
-;; 
 ;; https://wiki.c2.com/?SchemeCoroutineExample
 (define (coroutine routine)
   (let ((current routine)

@@ -78,4 +78,12 @@ see `_i.close` context in the reference.
 1.b. TBD https://stackoverflow.com/a/51899033/21294350
 1.c. writer_wrapper implementation shows the behavior of *passing along*.
 2. https://discuss.python.org/t/what-is-yield-from/40197/2 is much lessinformative. 
+3. One more realistic example https://stackoverflow.com/a/19302694/21294350
+```
+g=doStuff()
+res=next(g) # return takesTwoSeconds()
+res=g.send(res) # pass to result explicitly and get takesTenSeconds(result * 10)
+g.send(res)
+# Same as callback to construct one calculation sequence.
+```
 """
