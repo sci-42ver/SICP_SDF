@@ -1478,7 +1478,27 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   [See](https://www.reddit.com/r/SoftwareEngineering/comments/1gepi0y/why_do_we_introduce_bugs_on_purpose_to_analyze/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
   - https://en.wikipedia.org/wiki/Dependency_injection
     where injector is similar to constructor in SICP.
-- 
+## Week 14
+- > because it’s Louis that this doesn’t work
+  TODO said in one schemewiki solution
+  also said in [wikipedia](https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs#Characters)
+- > In section 3.5.4 they solve a similar problem by making the stream programmer use explicit delay invocations.
+  If you has done exercises there, then the explicit `delay` may be probably still in memory.
+  Anyway, see
+  > In section 3.5.4 they solve a similar problem by making the stream programmer use explicit delay invocations.
+- > The metacircular evaluator can’t use Scheme’s built-in delay because that would make a thunk in the underlying Scheme environment, and we want a thunk in the metacircular environment.
+  Since we can only pass the literal exp like symbol `'a`, then `(force (delay 'a))` does nothing at all.
+- > This is one more example of the idea of *level confusion*
+  - ~~[see](https://circleofa.org/library/level-confusion/)~~
+    ~~> the belief that what is amiss on one level can adversely affect another~~
+    i.e. part influences the whole possibly.
+  - IMHO this is appropriate here
+    > The confusion specifically enters in when students mistakenly *attribute the characteristics of one level to the other.*
+    i.e. it is one error to attribute thunk to underlying instead of metacircular.
+### @TODO
+- > This isn’t quite true, and I’ll fix it in a few paragraphs.
+  i.e. delay-it
+  TODO then why directly `(LIST-OF-DELAYED-VALUES (operands exp) env)))` while the book just passes `exp` (maybe to avoid doing unnecessary redundant things?)
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -3296,6 +3316,12 @@ what amb should achieve (for how is achieved, please check codes...)
       4.35~4.49 by `grep \(amb -r ./4_[^5]* --color=never | awk '{$1="";print $0}' | sort -u` (see [awk related](https://stackoverflow.com/a/2961994/21294350)) and `grep "(amb $" -r ./4_[^5]* --color=never`.
 - do fail when necessary
   - > we can think of (amb) as an expression that when evaluated causes the computation to ``fail''
+- see the following 
+  1. "How footnote 51 is done?" (assignment restoration)
+  2. "evaluates them from left to right"
+  3. "failure continuation", i.e. book "Execution procedures and continuations" list.
+    in a nutshell, i.e. backtracking and assignment restoration.
+  4. "passing the continuations around"
 #### @%%TODO
 - ~~How footnote 51 is done?~~
   See `old-value` in `analyze-assignment`.
@@ -3319,13 +3345,14 @@ what amb should achieve (for how is achieved, please check codes...)
   - ~~> Failure continuations are also called during processing of a failure:~~
     1. See `(lambda () (set-variable-value! ...) fail-y)` in amb-process-demo.scm
     2. See fail000 -> fail00.
-- ~~> as the execution procedures call each other.~~
+- ~~> passing the continuations around as the execution procedures call each other.~~
   e.g. `sequentially`
 - ~~when this occurs?~~
   > If the execution of pproc *fails*
   - the most trivial case will be `(if (amb) ...)`.
-- > whatever failure would otherwise have called fail2
-  may mean the other exp's in `(analyze-sequence exps)` which probably *just* does `(fail2)`.
+- ~~> whatever failure would otherwise have called fail2~~
+  ~~may mean the other exp's in `(analyze-sequence exps)` which probably *just* does `(fail2)`.~~
+  "otherwise" just means the case without this "assignment" change of "failure continuation".
 - ~~> Here we see the essence of the interpretation process and *the reason for keeping track of the continuations*.~~
   "essence of the interpretation process": "cycles through the execution procedures for *all the possible* values".
   - "the reason for keeping track of the continuations": i.e.

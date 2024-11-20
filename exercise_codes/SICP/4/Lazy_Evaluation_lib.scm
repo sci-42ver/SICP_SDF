@@ -56,6 +56,18 @@
             (list-of-delayed-args (rest-operands exps)
                                   env))))
 
+;;; Why some special forms don't need force.
+;; IGNORE: self-evaluating? is not used with one primitive. So force later.
+  ;; begin? is only used implicitly for cond which can't be delayed when used as one arg.
+  ;; lambda? is forced only when it's needed, i.e. in apply
+  ;; definition?: can't be used as arg like `(display (define x 2))`
+  ;; 
+;; Just check whether one clause in eval cond may error.
+;; self-evaluating?, variable?, quoted? are all fine to return thunk.
+;; assignment?, definition? are fine to be assigned thunk.
+;; lambda?, begin? are fine to have thunk inside.
+;; cond? is just if? with begin?.
+
 (define (eval-if exp env)
   ;; Use actual-value since true? is the internal evaluator procedure which doesn't allow thunk argument.
   (if (true? (actual-value (if-predicate exp) env))

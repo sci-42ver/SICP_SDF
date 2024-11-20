@@ -1,3 +1,7 @@
+#lang racket
+(require racket/control)
+;; both [] or () are ok https://docs.racket-lang.org/guide/syntax-overview.html "parentheses and square brackets"
+
 (define fail 
   (lambda () 
     (error "Amb tree exhausted")))
@@ -47,13 +51,7 @@
               ;; return old-value same as the behavior in MIT/GNU Scheme
               (cc old-value)
               )))))))
-; (define x 2)
-; (amb-set! x 2)
 
-(cd "~/SICP_SDF/lecs/6.001_fall_2007_recitation/codes/rec20/")
-(load "amb-test1.scm")
-; (test)
-; (set!-test)
 (define global-x '(0))
 (define (test y)
   (define (demo-set! x)
@@ -66,13 +64,8 @@
 (amb)
 ; (2 0)
 
-;; from exercise_codes/SICP/4/amb-misc-lib.scm
-(define (require p)
-  (if (not p) (amb)))
-(define (an-element-of items)
-  (require (not (null? items)))
-  (amb (car items) (an-element-of (cdr items))))
-(define (reset-fail)
-  (set! fail 
-    (lambda () 
-      (error "Amb tree exhausted"))))
+(list (amb 1 2) (amb 3 4))
+;; 0. from left to right
+;; 1. due to call/cc, here (amb) goes back to (list (amb 1 2) (amb 3 4)), and then finish evaluation there.
+;; So output '(1 4) instead of #t.
+(equal? '(1 4) (amb))

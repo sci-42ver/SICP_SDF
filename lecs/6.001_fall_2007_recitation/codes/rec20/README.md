@@ -1,5 +1,6 @@
 I checked the dir tree here. All file contents have been understood.
 ## amb
+The final feasible implementation is shown in `amb-sfu.rkt` which has ensured all requirements in "amb review after reading 4.3.3" including 4.3-@%%TODO are met. Also see http://community.schemewiki.org/?sicp-ex-4.36 LisScheSic's 1st comment.
 - [sfu](https://www.sfu.ca/~tjd/383summer2019/scheme-amb.html)
   - prime? is similar to book p66 except with the possible step 2 (TODO in my memory the book also uses this possible step somewhere).
   - All implementations *have been compared* with at least one of others.

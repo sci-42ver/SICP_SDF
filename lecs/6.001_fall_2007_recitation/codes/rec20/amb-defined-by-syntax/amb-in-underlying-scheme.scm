@@ -14,7 +14,7 @@
 ;; 0. (amb ?x ?y) uses only one call/cc since it wraps ?y and (set! *failure* old-failure) together,
 ;; i.e. all what to do wrapped in one procedure. so we don't need to go back to the continuation
 ;; 1. (amb ?x ?rest ...) is similar to an-element-of.
-;; 2. Anyway, the basic ideas are same.
+;; 2. Anyway, the basic ideas are *same*.
 (define (*failure*) (error "Failure"))
 
 (define-syntax amb
@@ -43,7 +43,8 @@
     ;; See exercise_codes/SICP/4/4_9_name_collision.scm for ... meaning.
     ((AMB expression ...) 
      (LET ((FAIL-SAVE FAIL)) 
-          ;; notice there is one parenthesis pair outside CALL-WITH-CURRENT-CONTINUATION,
+          ;;; notice about why K-SUCCESS returns one thunk while K-FAILURE doesn't
+          ;; Here there is one parenthesis pair outside CALL-WITH-CURRENT-CONTINUATION,
           ;; so we use FAIL-SAVE and (LAMBDA () expression) to return one *thunk*.
           ;; But the 2nd call/cc has no that parenthesis pair, so pass #f (anything other is also fine since its purpose is to return back and run ...) 
           ;; instead of one thunk to K-FAILURE.
@@ -85,7 +86,7 @@
 ;; call (FAIL) -> ((LAMBDA () (K-FAILURE #f))) -> (K-FAILURE #f), so we continue run ... part, i.e. next candidate.
 ;; Then induction. 
 ;; Notice as ... implies, K-SUCCESS is unchanged just as analyze-amb does since the continuation wanting one value from amb is *same*.
-;; The only difference is just expression same as choices->(cdr choices) in the book.
+;; The only difference is just expression implicitly functioning same as choices->(cdr choices) in the book.
 ; (amb)
 
 ;; Notice
