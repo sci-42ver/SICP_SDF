@@ -1,7 +1,8 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "book-stream-lib.scm")
 
-;; from https://stackoverflow.com/q/14640833/21294350
+;; from https://stackoverflow.com/q/14640833/21294350. Also see non-memo https://stackoverflow.com/a/24529585/21294350
+;; This https://stackoverflow.com/q/79053667/21294350 may say too much redundant...
 (define (memo-func function)
   (let ((already-run? false)
         (result false))

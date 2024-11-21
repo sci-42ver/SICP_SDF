@@ -92,6 +92,7 @@
       ;; Here the *entire* template must be wrapped in the parenthesis or just "an identifier, a constant"
       ;; This seems to not said in https://hipster.home.xs4all.nl/lib/scheme/gauche/define-syntax-primer.txt which said more about examples until "The template has either (begin form . forms)".
       ;; But this again is one procedure application...
+      ;; 1.a. This is also implicitly shown in (pattern [guard] *exp*) https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html#index-syntax_002dcase
       (let ()
         (define global-x '(0))
         (define (test y)

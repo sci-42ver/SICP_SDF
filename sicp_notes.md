@@ -1,3 +1,4 @@
+As one notice for what `aif` means: that is anaphoric macro https://en.wikipedia.org/wiki/Anaphoric_macro#cite_note-3.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -3498,6 +3499,8 @@ This is much more trivial than the book exercises.
   - automatic analysis in compiler
 - [left recursion elimination](http://community.schemewiki.org/?sicp-ex-4.47)
 - lexer_vs_parser above.
+## (maybe related with compiler) analytic philosophy and computer science
+- https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
 
 # @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 

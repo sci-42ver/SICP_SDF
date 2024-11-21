@@ -9,6 +9,12 @@
   - exercise solutions
   - 6.5150 ps solution
   - TODO 6.5150 project demo
+# Q&A
+- What Scheme implementation should I use?
+  I just follow the 6.5150 (6.945)/6.5151 (6.905) to use MIT/GNU Scheme. That's fine.
+  I may also use Racket libs for some SICP exercises.
+- What doc should I read?
+  Maybe [this](https://stackoverflow.com/q/79098453/21294350) is helpful. So you can also try guile implementation although I am not familiar with that.
 # How long I have taken to read these books
 ## SICP
 - From Jun 2 to Jul 2, chapter 1 is finished.
