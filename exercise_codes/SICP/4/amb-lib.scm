@@ -262,3 +262,18 @@
     input-seq))
 
 ; (driver-loop)
+
+(define (driver-loop-wrapper)
+  ;; added
+  (if (not (assq 'not primitive-procedures))
+    (set! primitive-procedures (cons (list 'not not) primitive-procedures))
+    )
+  
+  (set! the-global-environment (setup-environment))
+  (ambeval '(define (require p) (if (not p) (begin (write-line "retry") (amb)) p)) ; mod
+	   the-global-environment
+     ;; mod
+	   (lambda (a b) 'ignored)
+	   (lambda () 'ignored)
+     )
+  (driver-loop))

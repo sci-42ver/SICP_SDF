@@ -13,82 +13,82 @@
          random
          (map (lambda (thunk)
                 (cons (list (uncode (procedure-body thunk)))
-		      (make-virtual-env (procedure-environment thunk)) ))
+                      (make-virtual-env (procedure-environment thunk)) ))
               thunks ))
   'okay )
 
 
 (define (run-concurrently select . exprs)
   (apply run-concurrently-with-env
-	 select
-	 (map (lambda (x)
-		(cons x (make-virtual-env (global-environment))) )
-	      exprs )))
+         select
+         (map (lambda (x)
+                (cons x (make-virtual-env (global-environment))) )
+              exprs )))
 
 
 (define (run-concurrently-with-env select . exprs-with-envs)
   (let ((threads
-	 (map (lambda (exp-env)
-		(list (call/cc
-		       (lambda (cont)
-			 (let ((scheduler (call/cc cont)))
-			   (scheduler (myeval (car exp-env)
-					      (cdr exp-env)
-					      scheduler )))))))
-	      exprs-with-envs )))
+          (map (lambda (exp-env)
+                 (list (call/cc
+                         (lambda (cont)
+                           (let ((scheduler (call/cc cont)))
+                             (scheduler (myeval (car exp-env)
+                                                (cdr exp-env)
+                                                scheduler )))))))
+               exprs-with-envs )))
     (let loop ()
       (let ((active-threads
-             (filter (lambda (x) (continuation? (car x))) threads) ))
+              (filter (lambda (x) (continuation? (car x))) threads) ))
         (if (null? active-threads)
-            (map car threads)
-            (let ((active (list-ref active-threads
-                                    (select (length active-threads)) )))
-              (set-car! active (call/cc (car active)))
-              (loop) ))))))
+          (map car threads)
+          (let ((active (list-ref active-threads
+                                  (select (length active-threads)) )))
+            (set-car! active (call/cc (car active)))
+            (loop) ))))))
 
 
 (define (make-virtual-env real-env)
   (cons
-   `((quote    **macro** ,macro-quote)
-     (lambda   **macro** ,macro-lambda)
-     (let      **macro** ,macro-let)
-     (set!     **macro** ,macro-set!)
-     (define   **macro** ,macro-define)
-     (if       **macro** ,macro-if)
-     (cond     **macro** ,macro-cond)
-     (and      **macro** ,macro-and)
-     (or       **macro** ,macro-or)
-     (set-car! **prim**  ,prim-set-car!)
-     (set-cdr! **prim**  ,prim-set-cdr!)
-     (begin    **prim**  ,prim-begin)
-     (test-and-set! **prim** ,prim-test-and-set!) )
-   real-env ))
+    `((quote    **macro** ,macro-quote)
+      (lambda   **macro** ,macro-lambda)
+      (let      **macro** ,macro-let)
+      (set!     **macro** ,macro-set!)
+      (define   **macro** ,macro-define)
+      (if       **macro** ,macro-if)
+      (cond     **macro** ,macro-cond)
+      (and      **macro** ,macro-and)
+      (or       **macro** ,macro-or)
+      (set-car! **prim**  ,prim-set-car!)
+      (set-cdr! **prim**  ,prim-set-cdr!)
+      (begin    **prim**  ,prim-begin)
+      (test-and-set! **prim** ,prim-test-and-set!) )
+    real-env ))
 
 
 (define (env-lookup-raw sym env scheduler)
   (call/cc scheduler)
   (let ((virtual (assq sym (car env))))
     (if virtual
-        (cdr virtual)
-        (eval sym (cdr env)) )))
+      (cdr virtual)
+      (eval sym (cdr env)) )))
 
 
 (define (env-lookup sym env scheduler)
   (let* ((val (env-lookup-raw sym env scheduler))
          (proc-body (procedure-body val)) )
     (if (and proc-body (not (eq? (cadr proc-body) '**args**)))
-        (myeval (uncode proc-body)
-                (make-virtual-env (procedure-environment val))
-                scheduler )
-        val )))
+      (myeval (uncode proc-body)
+              (make-virtual-env (procedure-environment val))
+              scheduler )
+      val )))
 
 
 (define (env-set! sym val env scheduler)
   (call/cc scheduler)
   (let ((virtual (assq sym (car env))))
     (if virtual
-        (set-cdr! virtual val)
-        (eval `(set! ,sym ',val) (cdr env)) )))
+      (set-cdr! virtual val)
+      (eval `(set! ,sym ',val) (cdr env)) )))
 
 
 (define (env-define! sym val env scheduler)
@@ -98,30 +98,30 @@
 
 (define (get-special-form name env scheduler)
   (if (symbol? name)
-      (let ((val (env-lookup-raw name env scheduler)))
-        (if (and (pair? val) (eq? (car val) '**macro**))
-            val
-            #f ))
-      #f ))
+    (let ((val (env-lookup-raw name env scheduler)))
+      (if (and (pair? val) (eq? (car val) '**macro**))
+        val
+        #f ))
+    #f ))
 
 
 (define (myeval expr env scheduler)
   (cond ((pair? expr)
          (let ((special (get-special-form (car expr) env scheduler)))
            (if special
-               ((cadr special) (cdr expr) env scheduler)
-               (let ((evaluated (eval-seq expr env scheduler)))
-                 (myapply (car evaluated) (cdr evaluated) scheduler) ))))
+             ((cadr special) (cdr expr) env scheduler)
+             (let ((evaluated (eval-seq expr env scheduler)))
+               (myapply (car evaluated) (cdr evaluated) scheduler) ))))
         ((symbol? expr)
-	 (env-lookup expr env scheduler) )
+         (env-lookup expr env scheduler) )
         (else (eval expr)) ))
 
 
 (define (eval-seq exprs env scheduler)
   (if (null? exprs)
-      '()
-      (let ((val (myeval (car exprs) env scheduler)))
-	(cons val (eval-seq (cdr exprs) env scheduler)) )))
+    '()
+    (let ((val (myeval (car exprs) env scheduler)))
+      (cons val (eval-seq (cdr exprs) env scheduler)) )))
 
 
 (define (myapply func args scheduler)
@@ -162,10 +162,10 @@
 
 (define (macro-define args env scheduler)
   (if (pair? (car args))
-      (macro-define `(,(caar args) (lambda ,(cdar args) ,@(cdr args)))
-		    env scheduler )
-      (let ((val (myeval (cadr args) env scheduler)))
-        (env-define! (car args) val env scheduler) )))
+    (macro-define `(,(caar args) (lambda ,(cdar args) ,@(cdr args)))
+                  env scheduler )
+    (let ((val (myeval (cadr args) env scheduler)))
+      (env-define! (car args) val env scheduler) )))
 
 
 (define (macro-set! args env scheduler)
@@ -179,10 +179,10 @@
 
 (define (macro-if args env scheduler)
   (if (myeval (car args) env scheduler)
-      (myeval (cadr args) env scheduler)
-      (if (pair? (cddr args))
-	  (myeval (caddr args) env scheduler)
-	  'okay )))
+    (myeval (cadr args) env scheduler)
+    (if (pair? (cddr args))
+      (myeval (caddr args) env scheduler)
+      'okay )))
 
 
 (define (macro-cond args env scheduler)
@@ -195,20 +195,20 @@
 
 (define (macro-and args env scheduler)
   (if (null? args)
-      #t
-      (let ((val (myeval (car args) env scheduler)))
-        (if (null? (cdr args))
-            val
-            (and val (macro-and (cdr args) env scheduler)) ))))
+    #t
+    (let ((val (myeval (car args) env scheduler)))
+      (if (null? (cdr args))
+        val
+        (and val (macro-and (cdr args) env scheduler)) ))))
 
 
 (define (macro-or args env scheduler)
   (if (null? args)
-      #f
-      (let ((val (myeval (car args) env scheduler)))
-        (if (null? (cdr args))
-            val
-            (or val (macro-or (cdr args) env scheduler)) ))))
+    #f
+    (let ((val (myeval (car args) env scheduler)))
+      (if (null? (cdr args))
+        val
+        (or val (macro-or (cdr args) env scheduler)) ))))
 
 
 (define (prim-set-car! args scheduler)
@@ -238,8 +238,8 @@
 
 (define (last-pair lst)
   (if (null? (cdr lst))
-      lst
-      (last-pair (cdr lst)) ))
+    lst
+    (last-pair (cdr lst)) ))
 
 
 (load "~cs61a/lib/serial.scm")

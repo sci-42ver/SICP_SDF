@@ -16,18 +16,18 @@
   (define (make-listener-with callback)
     (lambda ()
       (let loop ()
-	(mutex-lock! mutex)
-	(cond ((eq? (hash-table-ref listened-ports-table port)
-		    #f)
-	       (print "Listener thread " (current-thread) " stops listening on port: " port)
-	       (thread-terminate! (current-thread)))
-	      ((and (port-open? port)
-		    (char-ready? port))
-	       (print (current-thread)": Got request, executing callback")
-	       (callback)))
-	(mutex-unlock! mutex)
-	(sleep 1000)
-	(loop))))
+        (mutex-lock! mutex)
+        (cond ((eq? (hash-table-ref listened-ports-table port)
+                    #f)
+               (print "Listener thread " (current-thread) " stops listening on port: " port)
+               (thread-terminate! (current-thread)))
+              ((and (port-open? port)
+                    (char-ready? port))
+               (print (current-thread)": Got request, executing callback")
+               (callback)))
+        (mutex-unlock! mutex)
+        (sleep 1000)
+        (loop))))
   (if handler
     (let ((listener (make-thread (make-listener-with handler))))
       (hash-table-set! listened-ports-table port #t)
@@ -59,38 +59,38 @@
   (set! socket-to-server (make-client-socket server-address port))
   (set! port-to-server (socket-output socket-to-server))
   (set! port-from-server (socket-input socket-to-server))
-  
+
   (format logging "Sending 'hello' request to server.~%")
   (if (not
-       (send-request (make-request whoiam 'server 'hello nil)
-		     port-to-server))
-      (close-connection)
-      (begin
-	(format logging "Waiting for 'welcome' from server.~%")
-	(let ((req (get-request port-from-server)))
-	  (if (not req)
-	      (close-connection)
-	      (begin
-		(format logging "Response received: ~S~%" req)
-		(cond ((equal? 'sorry (request-action req))
-		       (format #t "Another client using same login!~%")
-		       (close-connection))
-		      
-		      ((equal? 'welcome (request-action req))
-		       (format logging "Received 'welcome' message.~%")
-		       (format logging "Sending 'thanks'.~%")
-		       (if (not
-			    (send-request (make-request whoiam 'server 'thanks nil)
-					  port-to-server))
-			   (close-connection)
-			   ;; Finally, can set up the handler
-			   (begin
-			     (setup-request-handler port-from-server)
-			     (format logging "(im-enroll) done.~%~%")) ))
-		      
-		      (else
-		       (format #t "Bad response from server: ~S" req)
-		       (close-connection)))) ))))
+        (send-request (make-request whoiam 'server 'hello nil)
+                      port-to-server))
+    (close-connection)
+    (begin
+      (format logging "Waiting for 'welcome' from server.~%")
+      (let ((req (get-request port-from-server)))
+        (if (not req)
+          (close-connection)
+          (begin
+            (format logging "Response received: ~S~%" req)
+            (cond ((equal? 'sorry (request-action req))
+                   (format #t "Another client using same login!~%")
+                   (close-connection))
+
+                  ((equal? 'welcome (request-action req))
+                   (format logging "Received 'welcome' message.~%")
+                   (format logging "Sending 'thanks'.~%")
+                   (if (not
+                         (send-request (make-request whoiam 'server 'thanks nil)
+                                       port-to-server))
+                     (close-connection)
+                     ;; Finally, can set up the handler
+                     (begin
+                       (setup-request-handler port-from-server)
+                       (format logging "(im-enroll) done.~%~%")) ))
+
+                  (else
+                    (format #t "Bad response from server: ~S" req)
+                    (close-connection)))) ))))
   'okay)
 
 
@@ -102,23 +102,23 @@
   (define (request-handler)
     (let ((req (get-request port-from-server)))
       (if (not req)
-	  (close-connection)
-	  (begin
-	    (format logging "Received request: ~S~%" req)
-	    (cond
-	     ((equal? 'receive-msg (request-action req))
-	      (received-msg (request-src req) (request-data req)))
-	     ((equal? 'client-list (request-action req))
-	      (update-client-list (request-data req)))
-	     ((equal? 'goodbye (request-action req))
-	      (close-connection))
-	     (else
-	      (format #t "Unknown action requested: ~A~%" (request-action req))
-	      (close-connection)))) ))
+        (close-connection)
+        (begin
+          (format logging "Received request: ~S~%" req)
+          (cond
+            ((equal? 'receive-msg (request-action req))
+             (received-msg (request-src req) (request-data req)))
+            ((equal? 'client-list (request-action req))
+             (update-client-list (request-data req)))
+            ((equal? 'goodbye (request-action req))
+             (close-connection))
+            (else
+              (format #t "Unknown action requested: ~A~%" (request-action req))
+              (close-connection)))) ))
     ;; if there is more data to handle.
     (if (and (not (port-closed? port-from-server))
-	     (char-ready? port-from-server))
-	(request-handler)))
+             (char-ready? port-from-server))
+      (request-handler)))
   ;; Now set up handler
   (when-port-readable port-from-server request-handler))
 
@@ -130,8 +130,8 @@
 (define (im who message)
   ;;;Send message to who.
   (if (not
-       (send-request (make-request whoiam who 'send-msg message) port-to-server))
-      (close-connection)))
+        (send-request (make-request whoiam who 'send-msg message) port-to-server))
+    (close-connection)))
 
 (define (update-client-list client-list)
   ;;;Deal with a new client list.
@@ -143,12 +143,12 @@
   ;;;Closes connection to the server.
   (format logging "Closing down socket and ports...")
   (if (and port-from-server (not (port-closed? port-from-server)))
-      (begin (print "Calling when-port-readable with #f")
-	     (when-port-readable port-from-server #f)))
+    (begin (print "Calling when-port-readable with #f")
+           (when-port-readable port-from-server #f)))
   (set! port-from-server #f)
   (set! port-to-server #f)
   (if (and socket-to-server (not (socket-down? socket-to-server)))
-      (socket-shutdown socket-to-server #f))
+    (socket-shutdown socket-to-server #f))
   (set! socket-to-server #f)
   (set! clients #f)
   ;Change to GUI in future.
@@ -159,6 +159,6 @@
   (if (not socket-to-server) (error "Already logged out!"))
   (format logging "Letting server know that I'm logging out.~%")
   (if (not
-       ;; server will send goodbye
-       (send-request (make-request whoiam 'server 'logout nil) port-to-server))
-      (close-connection)))
+        ;; server will send goodbye
+        (send-request (make-request whoiam 'server 'logout nil) port-to-server))
+    (close-connection)))

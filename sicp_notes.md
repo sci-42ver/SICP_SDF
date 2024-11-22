@@ -1,3 +1,7 @@
+Currently, 1. For the 2nd question, IMHO Guile `syntax-case` doc https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html is very readable for its format and elegant examples with related explanation. It also refers to one book by Kent Dybvig who is also said by Nathan Shively-Sanders. 2. For the 1st, IMHO "examples and explanations" from JRM's Syntax-rules Primer are enough. For "explanation", It is better to compare it with others like `syntax-case`. The Racket (i.e. PLT Scheme formerly) guide doc https://docs.racket-lang.org/guide/syntax-case.html say a bit about this.
+
+Continued... The Racket reference doc shows more about API but also shows the relation implicitly https://docs.racket-lang.org/reference/stx-patterns.html#%28form._%28%28lib._racket%2Fprivate%2Fstxcase-scheme..rkt%29._syntax-rules%29%29. This is also said in Guile `syntax-case` doc.  Finally, IMHO Guile comparison between them are more readable https://www.gnu.org/software/guile/manual/html_node/Syntax-Rules.html#Further-Information.
+
 As one notice for what `aif` means: that is anaphoric macro https://en.wikipedia.org/wiki/Anaphoric_macro#cite_note-3.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
@@ -1496,10 +1500,67 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   - IMHO this is appropriate here
     > The confusion specifically enters in when students mistakenly *attribute the characteristics of one level to the other.*
     i.e. it is one error to attribute thunk to underlying instead of metacircular.
+- > The rest of the implementation is straightforward.
+  i.e. 
+  > we should later evaluate it
+  So `(actual-value (thunk-exp obj) (thunk-env obj))` if non-memo and misc syntax procedures.
+- > Their way is more efficient
+  same for delayed situation, but more efficient for primitive since no extra wrap and unwrap of thunks.
+- https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/lazy.scm
+  same as book
+- https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/ambeval.scm
+  adds `let?` part as the book requires. The others are same by `diff`.
+  - TODO `ch4.scm`
+  - > ;; Has Not to support Require; various stuff for code in text (including
+    > ;;  support for Prime?)
+    require is trivial since it needs `(amb)` which is not in underlying Scheme
+    `prime?` definition is complexer and not *directly* offered by underlying Scheme, but IMHO it is fine since it only takes one *number* in instead of proc which may have tag unrecognized by underlying Scheme as said for `map`.
+- > One approach to solving problems of this sort is to represent the solution space as a stream
+  This is also said in 3_general_methods_to_find_solution.
+- > it’s what happens when you call amb with no arguments, or when all the arguments you gave have been tried and there are no more left.
+  As book "Failures are initiated only when a dead end is encountered. This occurs" says, also  maybe `try-again`.
+- > because a will never have any value other than 1, because the second amb never fails. This is analogous to the problem of trying to *append infinite streams*; in that case we could solve the problem with interleave but it’s harder here.
+  IGNORE: We can do something similar to Exercise 4.53, but then we won't stop except that ~~we use `delay` here~~ we explicitly set one limit. However we then doesn't generate one *infinite* result.
+  same as Exercise 4.36.
+  "it’s harder here." is due to the fail passing machanism is maintained *internally* in evaluator, so we can't change fail order explicitly, i.e. "interleave" the try for `a, b`.
+- > they want to be able to jump right back to the previous amb, without having to propagate the failure explicitly through several intervening calls to eval.
+  Here "propagate" means successive calls while the book "propagates the failure." means pass, i.e. argument pass.
+- > continuation
+  See [`call/cc`](http://community.schemewiki.org/?LisScheSic)
+- https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/vambeval.scm
+  - ~~`icdiff ambeval.scm vambeval.scm | less_n`~~
+    - `prompt-for-input` etc are just from 4.1 `lib.scm`.
+  - `icdiff mceval.scm vambeval.scm | less_n` (better to see this since they have the *similar structure*)
+    - The diffs after `eval-amb` are from `ambeval.scm`.
+    - Compared with the corresponding procedures in `ambeval.scm`:
+      - `eval-amb` is just removing the *possible* `analyze` wrapper and then use `ambeval` or `eval-sequence` etc for `(car choices)` part to *do analyze implicitly* there. Actually this is same as the difference between `analyze.scm` and `mceval.scm` (e.g. `analyze-if` vs `eval-if`).
+        - Same for
+          1. `eval-assignment` but also *moves the outer `var` let inside* since it is not needed outside. This is same for `eval-definition, eval-application`, 
+          2. `eval-sequence`. 
+            Here `sequentially` to analyze sequence is removed.
+          3. `eval-if, get-args, execute-application`
+      - `ambeval` incorporates "Simple expressions" like `analyze-self-evaluating` into itself with *just mere expansion*.
+        - > Most kinds of evaluation always succeed, so they invoke their success continuation and pass on the failure one
+          same as the book says.
+      - For derived expression, similarly do recursive calls for `ambeval`.
+      - So all in all, the same basic ideas.
+- > too-simplified version of eval-if in this form
+  as http://community.schemewiki.org/?sicp-ex-4.50 revc's implementation implies.
+  - See `vambeval-with-3-evals-in-if.scm`
+    > what if the evaluation of the predicate fails? We don’t then want to evaluate the consequent or the alternative.
+    The problem is not that. The problem is predicate will always *finish* `eval-if` evaluation.
+    - > So instead, we just evaluate the predicate, giving it a success continuation that will evaluate the consequent or the alternative, supposing that evaluating the predicate succeeds.
+      This uses `succeed` for the *actual value* of the `if` form instead of for predicate unexpectedly.
+      - This is similar to avoiding *early* return for `call/cc`.
+    - 
 ### @TODO
-- > This isn’t quite true, and I’ll fix it in a few paragraphs.
+- ~~> This isn’t quite true, and I’ll fix it in a few paragraphs.~~
   i.e. delay-it
-  TODO then why directly `(LIST-OF-DELAYED-VALUES (operands exp) env)))` while the book just passes `exp` (maybe to avoid doing unnecessary redundant things?)
+  - then why directly `(LIST-OF-DELAYED-VALUES (operands exp) env)))` while the book just passes `exp` (maybe to avoid doing unnecessary redundant things?)
+    see
+    > but I think this way makes the issues clearer because it’s more nearly parallel to the division of labor between eval and apply in the vanilla metacircular evaluator.
+- > (stream-filter Fermat? (pairs (pairs integers integers) ...))
+  I don't know what this Fermat? means? It is https://en.wikipedia.org/wiki/Fermat_primality_test#Concept ?
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -3192,6 +3253,7 @@ Emm... still duplicate of much book contents but relates with env model...
 
 Better to read following the order 4.3.1->3->2 where 4.3.2 is put at last to ensure the comprehension of amb (Here I just check all `(amb` contexts in the book and exercises before 4.3.3 have been understood for their underlying logic after reading 4.3.3). See amb review.
 - > We saw how to handle this with finite sequence operations in section 2.2.3 and with infinite streams in section 3.5.3.
+  <a id="3_general_methods_to_find_solution"></a>
   See `prime-sum-pairs`
   ```scheme
   (stream-map make-pair-sum
@@ -3211,6 +3273,9 @@ Better to read following the order 4.3.1->3->2 where 4.3.2 is put at last to ens
       1. "choose (in some way) a number" and return *one pair* instead of one list of pairs.
       2. > It might seem as if this procedure *merely restates the problem*, rather than specifying a way to solve it.
           The main logic is *hidden* in amb-eval which actually combines chapter 2 and 3 as the above says.
+      - Also see CS 61A notes
+        > it has the same delaying effect as cons-stream
+        which is trivial due to the order from left to right.
 - > our programs have different possible execution histories
   i.e. `try-again` always backtrack and get one different result, so the different "execution history".
 - > declarative descriptions and imperative specifications
@@ -3338,8 +3403,9 @@ what amb should achieve (for how is achieved, please check codes...)
   - ~~> the analyzing evaluator of section 4.1.7, because the execution procedures in that evaluator provide a *convenient framework for implementing backtracking.*~~
     - See `Lazy_Evaluation_analyze_lib.scm`.
       After all, "analyzing" is used for its effefficiency due to avoiding duplicate analyze's, so lazy can be also combined with that.
-    - Here since we need 2 more continuation args, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
+    - Here since we need *2 more continuation args*, just changing `(lambda (env) ...)` to `(lambda (env continuation1 continuation2) ...)` is really easy.
       But if using the initial version evaluator, (take `eval-assignment` for example which has no anonymous procedures, others should be similar) the *non-anonymous* proc `set-variable-value!` needs to change the interface.
+      - Also see https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/vambeval.scm which has the similar structure as `amb-lib.scm`.
 - ~~failure continuation~~
   - ~~> In summary, failure continuations are constructed by...~~
     IMHO This means new failure continuations instead of just passing most of time like `fail000` from `(succeed000 '() fail000)` back to succeed.

@@ -21,7 +21,8 @@
 (define (let-inits expr) (map cadr (cadr expr))) 
 (define (let-body expr) (cddr expr)) 
 
-(define (let->combination expr) 
+(define (let->combination expr)
+  ;; same as https://people.eecs.berkeley.edu/~bh/61a-pages/Lib/ambeval.scm make-combination
   (cons (make-lambda (let-vars expr) (let-body expr)) 
         (let-inits expr)))
 
@@ -76,6 +77,7 @@
 ;   (fib-iter))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; let* from 4_7
+;; get-args idea is similar to this.
 (define (let*? expr) (tagged-list? expr 'let*)) 
 (define (let*-body expr) (sequence->exp (cddr expr))) 
 (define (let*-inits expr) (cadr expr)) 

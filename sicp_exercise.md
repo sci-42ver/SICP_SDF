@@ -2140,6 +2140,15 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       - https://web.archive.org/web/20150321052219/http://schemecookbook.org/Cookbook/GettingStartedMacros
         - Only Dybvig, https://web.archive.org/web/20150316032601/http://library.readscheme.org/page3.html and the last are valid.
       - https://web.archive.org/web/20090317073256/http://docs.plt-scheme.org/guide/syntax-case.html
+        i.e. current Racket.
+      - helpful links
+        - https://www.greghendershott.com/fear-of-macros/Transform_.html#%28part._.What_is_a_syntax_transformer_%29
+          shows definition same as `syntax-case` in guile doc.
+        - https://stackoverflow.com/questions/131433/sources-for-learning-about-scheme-macros-define-syntax-and-syntax-rules#comment137193921_133356 https://github.com/mnieper/scheme-macros is more helpful for newbie.
+          like https://github.com/mnieper/scheme-macros?tab=readme-ov-file#incrementing-a-variable says well about hygiene.
+    - I don't know why I didn't find [this pdf](http://www.phyast.pitt.edu/~micheles/syntax-rules.pdf) when I first read the above QA comment.
+      Maybe I *haven't noticed that*.
+    - Also see this email https://lists.gnu.org/archive/html/guile-user/2010-03/msg00052.html related with guile and that guide by Shawn.
 - [ ] 10
   - IMHO this is already done in former exercises like Exercise 4.5.
   - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.
