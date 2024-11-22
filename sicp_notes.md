@@ -1092,6 +1092,18 @@ No related doc for stk by googling 'stk "get-last-mapreduce-output"'.
     ```
   - b
     pomp * etc.
+## Week 14
+- [x] 1 
+  - 27 same as wiki
+    - > therefore a promise to compute (id 10)
+      i.e. a thunk
+  - 29 same as my thoughts in sicp_exercise.md but uses `n-copies`.
+    - the rest is same as meteorgan's.
+- [x] 2
+  - `(square 5 (lambda (x) (square x (lambda (x) x))))`
+    -> `(square 25 (lambda (x) x))` -> 625
+  - foo -> 25
+  - trivial
 # @CS 61A notes
 ## skipped underlined words
 - p2
@@ -1552,7 +1564,6 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
     - > So instead, we just evaluate the predicate, giving it a success continuation that will evaluate the consequent or the alternative, supposing that evaluating the predicate succeeds.
       This uses `succeed` for the *actual value* of the `if` form instead of for predicate unexpectedly.
       - This is similar to avoiding *early* return for `call/cc`.
-    - 
 ### @TODO
 - ~~> This isn’t quite true, and I’ll fix it in a few paragraphs.~~
   i.e. delay-it
