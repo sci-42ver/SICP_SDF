@@ -3073,6 +3073,7 @@ test
   Done in SDF by checking type in `generic-move!`.
 - > 'CREATION-SITE
   Done in SDF with one different naming property `origin`.
+#### So I skipped [6.037 Lecture 6: Language design and implementation](https://web.mit.edu/6.001/6.037/l6.pdf) whose [rec](https://web.mit.edu/6.001/6.037/rec6-soln.pdf) is not complex where the latter 2 is about changing *state*.
 ### rec16
 almost same as spring lec20
 - [ ] `memoization_check.scm`
@@ -3108,7 +3109,22 @@ Emm... still duplicate of much book contents but relates with env model...
       Anyway, [see](https://stackoverflow.com/q/79098453/21294350)
   - same as book but use `(map-streams + ...)`.
     > We can define the Fibonacci numbers in the same style:
-#### @@TODO "Bonus Problem"
+#### "Bonus Problem"
+1. All of source22 dir is from https://people.csail.mit.edu/dalleyg/6.001/SP2007/source22.zip which just contains solutions and related contents (i.e. `streams.scm`).
+2. remove `^M` from codes: see [this `dos2unix`](https://stackoverflow.com/questions/19406418/remove-m-characters-from-file-using-sed#comment87439527_19406418) or `tr` with [inplace](https://unix.stackexchange.com/a/536656/568529) function
+3. `diff project5-eval.scm source22/meta.scm | less_n`
+  - `m-eval, m-apply` are same by `icdiff`
+  - `eval-if` is changed and then add "testing (GED)" part.
+- See bonus-problem.scm "see sol" for what needs to be done.
+  Or see `icdiff source22/meta.scm source22/streams-with-thunks.scm | less_n` (actually just see GED contexts).
+- > thunks are not first-class objects, so there's no way to use real Scheme's force-it
+  IMHO the problem is similar to `map` where the primitive `force` can't recognize thunk here ~~(but `force-it` can)~~.
+  And thunks are [first-class objects](https://en.wikipedia.org/wiki/First-class_citizen).
+  - > By making stream-cdr a special form, m-apply automatically calls
+    maybe one typo, "By making stream-cdr a" primitive.
+  - > cannot be a compound procedure
+    ~~TODO i.e. as the above says, ``~~
+    See `streams-with-thunks.scm`, here `cadr` is primitive so same for evaluator and underlying Scheme. Then `force-it` receives the *same* thing. So `(lambda (exp) (force-it (cdr exp)))` does same as the original `cdr` version (I use `cadr` in codes due to `tree-map`).
 # chapter 4
 ## book
 - > with the same general techniques used by designers of all complex systems
@@ -3455,6 +3471,9 @@ what amb should achieve (for how is achieved, please check codes...)
     - So the above "we are usually concerned with" may be better to be "we usually use". 
 - > provide more detailed “how to” knowledge
   e.g. in `adder`, we have 3 clauses instead of 1.
+- > Because of this, most programming languages are strongly biased toward unidirectional computations (computations with well-defined inputs and outputs)
+  since bidirectional can't give the following uniquely
+  > a means of computing that value
 - > is does not mean, however, that the user is released altogether from the responsibility of providing imperative knowledge.
   needs to manipulate dispatcher.
   OR
@@ -3600,7 +3619,12 @@ This is much more trivial than the book exercises.
 ## (maybe related with compiler) analytic philosophy and computer science
 - https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
 
-# @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+# @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+- 5,6 have been checked.
+- 6.001 2007 only has Guest lecture pdf's and those lecs after Lecture 22 not offered.
+  - TODO check 6.001 2005 L22,23,26. But "Explicit control evaluator" in 6.001 2007 has no corresponding part in 6.001 2005.
+    - [6.001 2005 rec](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/recitations/) lacks many rec's.
+      > presenting *some* of the 6.001 recitations
 
 <!-- in-page link -->
 [SDF_Inheritance]:#SDF_Inheritance

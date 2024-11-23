@@ -190,8 +190,33 @@
           ;        play with the DrScheme implementation of streams to see the results of
           ;        it hiding the representation.  Hint 2: consider using a version of
           ;        tree-map or tree-fold.
-          (display output)
+
+          ;; https://docs.racket-lang.org/reference/streams.html
+          ;; Racket uses "#<stream>" similar to Guile representation for syntax object.
+          ;; This is different from MIT/GNU Scheme ({1 ...} . 3), i.e. Racket defaults to be same as as exercise_codes/SICP/4/Lazy_Evaluation_lib.scm and so revc's in http://community.schemewiki.org/?sicp-ex-4.34
+          ;; also see https://srfi.schemers.org/srfi-41/srfi-41.html
+          (user-print output)
           (driver-loop)))))
+
+(define (user-print object)
+  (display (list "result:" (tree-map obj-filter object)))
+  )
+
+;; from rec14
+; (trace tree-map)
+(define (leaf? obj) (not (pair? obj)))
+(define (tree-map f tree)
+  (if (or (evaluated-thunk? tree) (thunk? tree) (leaf? tree)) ; mod
+    (f tree)
+    (map (lambda (e) (tree-map f e))
+         tree)))
+
+;; simplified from 4.34
+(define (obj-filter object)
+  (cond 
+    ((thunk? object) 'thunk)  
+    ((evaluated-thunk? object) 'evaluated-thunk)  
+    (else object)))
 
 (define (prompt-for-input string)
   (newline) (newline) (display string) (newline))
@@ -222,6 +247,7 @@
   (list var val))
 (define binding-variable car)
 (define binding-value cadr)
+(define rest cdr)
 (define (binding-search var frame)
   (if (null? frame)
       #f
@@ -314,8 +340,11 @@
         ;        real Scheme's force-it in a lambda expression for this interpreter.
         ;        By making stream-cdr a special form, m-apply automatically calls
         ;        force-it for us, so this primitive is really simple.
-        (list 'stream-cdr cdr) 
+        ; (list 'stream-cdr cdr) 
+        ;; Use cadr due to delay use list
+        (list 'stream-cdr (lambda (exp) (force-it (cadr exp))))
         ; ... more primitives
+        (list 'user-print user-print)
         ))
 
 (define (primitive-procedure-names) (map car (primitive-procedures)))
@@ -378,6 +407,7 @@
 	   result))
 	((evaluated-thunk? obj) (thunk-value obj))
 	(else obj)))
+; (trace force-it)
 
 (define (evaluated-thunk? obj)
   (tagged-list? obj 'evaluated-thunk))
@@ -400,7 +430,8 @@
 (define (cons-stream-car-part exp) (second exp))
 (define (cons-stream-cdr-part exp) (third  exp))
 (define (eval-cons-stream exp env)
-  (cons (m-eval (cons-stream-car-part exp) env)
+  ;; use list instead of cons since delay-it returns one list and to help tree-map usage.
+  (list (m-eval (cons-stream-car-part exp) env)
         (delay-it (cons-stream-cdr-part exp) env)))   
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -431,13 +462,16 @@
                                    (stream-cdr s2))))))
 
 (display "testing ones------------------------------------------") (newline)
+(user-print (list 1 (delay-it 'ones 'env)))
+; (trace user-print)
 (evl '((define ones (cons-stream 1 ones))
-       (display ones) (newline)                ; -> (1 #thunk)
-       (display (stream-car ones)) (newline)   ; -> 1
-       (display (stream-cdr ones)) (newline))) ; -> (1 #evaluated-thunk)
+       (user-print ones) (newline)                ; -> (1 #thunk)
+       (user-print (stream-car ones)) (newline)   ; -> 1
+       (user-print (stream-cdr ones)) (newline))) ; -> (1 #evaluated-thunk)
 
 (display "testing ints------------------------------------------") (newline)
 (evl '((define ints (add-streams ones (cons-stream 0 ints)))
-       (display ints) (newline)              ; -> (1 #thunk)
-       (display (stream-cdr ints)) (newline) ; -> (2 #thunk)
-       (print-stream ints 10)))              ; -> (1 2 3 4 5 6 7 8 9 10)
+       (user-print ints) (newline)              ; -> (1 #thunk)
+       (user-print (stream-cdr ints)) (newline) ; -> (2 #thunk)
+       (print-stream ints 10)
+       ))              ; -> (1 2 3 4 5 6 7 8 9 10)

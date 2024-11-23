@@ -27,6 +27,8 @@
 
 (define (cons-stream a b) (cons a (memo-func (lambda () b))))
 
+;; Also see lecs/6.001_spring_2007_recitation/codes/rec22/source22/streams.scm
+;; 1. print-stream are trivial
 (define-syntax cons-stream
   (syntax-rules ()
     ((cons-stream a b)

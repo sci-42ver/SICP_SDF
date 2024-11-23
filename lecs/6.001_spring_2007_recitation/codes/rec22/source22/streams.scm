@@ -49,7 +49,7 @@
 (load "map-streams.scm")
 (load "add-streams.scm")
 
-;; skipped the next 2 and "stream-filter" due to the duplicate of the book codes
+;; The next 2 are already in the book codes
 ; Like list-ref, but for streams.  Returns the idx-th element of a stream. 0-indexed.
 (define (stream-ref stream idx)
   (if (<= idx 0)
@@ -64,6 +64,7 @@
       (cons-stream (* (stream-car stream) factor)
                    (scale-stream (stream-cdr stream) factor))))
 
+;; Also work for circular due to lazy.
 (define (list->stream lst)
   ; Lists are always finite, so we must have a null check
   (if (null? lst)
@@ -71,6 +72,7 @@
       (cons-stream (car lst) 
                    (list->stream (cdr lst)))))
 
+;; trivially not work for infinite since list can't represent infinite
 (define (stream->list stream)
   (if (empty-stream? stream)
       '()
