@@ -172,14 +172,20 @@
                  (make-begin (cdr (first-cond-clause clauses)))
                  (make-cond (rest-cond-clauses clauses)))))))
 
-
+;; see 4_4.scm "dummy"
 (define (eval-or exp env)
   (define (or-helper clauses)
+    ;; > If all expressions evaluate to false, or if there are no expressions
     (if (null? clauses)
-      #t
-      (if (car clauses)
-        (car clauses)
-        (or-helper (cdr clauses)))))
+      #f
+      ;; 0. > If any expression evaluates to a true value
+      ;; 1. from sol 
+      ;; > 'or' evaluating the argument only once
+      ;; Also see Exercise 4.
+      (let ((res (m-eval (car clauses) env)))
+        (if res
+          res
+          (or-helper (cdr clauses))))))
   (or-helper (or-exprs exp)))
 
 
@@ -262,7 +268,9 @@
 ; drop a frame
 (define (extend-environment vars vals base-env)
   (if (= (length vars) (length vals))
-    (append base-env (list (make-frame vars vals)))
+    ;; wrong due to find-in-environment searching order.
+    ; (append base-env (list (make-frame vars vals)))
+    (cons (make-frame vars vals) base-env)
     (if (< (length vars) (length vals))
       (error "Too many args supplied" vars vals)
       (error "Too few args supplied" vars vals))))
@@ -275,7 +283,7 @@
       (error "Unbound variable -- LOOKUP" var))))
 
 (define (set-variable-value! var val env)
-  (let ((binding ((find-in-environment var env))))
+  (let ((binding (find-in-environment var env)))
     (if binding
       (set-binding-value! binding val)
       (error "Unbound variable -- SET" var))))
@@ -305,7 +313,7 @@
         (list '> >)
         (list '= =)
         (list 'display display)
-        (list 'not 'not)
+        (list 'not not)
         (list 'cadr cadr)
         (list 'cddr cddr)        
         (list 'error error)
@@ -354,7 +362,11 @@
      the ways \"or\" should work.
 
      Once you've found the bugs, fix them.
-     "))
+     "
+     ;; use false variable offered in setup-environment
+     (or false (+ 4 5) false (+ 4 9))
+     (or (+ 4 5) false (+ 4 9))
+     ))
 
 (define exercise-3
   '( "Exercise 3: Louis Reasoner complains that the evaluator
@@ -369,7 +381,26 @@
      Next, solve the bug.  Practice writing out the commit message that would
      accompany the fix: it should consisely describe what the observable bugs
      were, and explain your reasoning behind why the fix is the correct one.
-     "))
+     "
+     ;; > explanation ... bug
+     ;; (and a b) -> (not (or (not a) (not b)))
+     ;; Then not can be only #t/#f...
+     ;  (and 3 4) 
+     ;; > tests
+     (not 3)
+     (not (or (not 3) (not 4)))
+     ;; > solve the bug
+     ;; See 4_4 dummy eval-and
+     ;; > Practice writing out the commit message
+     ;; not exactly one programming issue
+     ;; > why the fix is the correct one.
+     ;; Just follow the exercise contract requirements.
+
+     ;; sol
+     ;; > The not primitive is defined incorrectly:
+     ;; only one partial problem.
+     )
+     )
 
 (define exercise-4
 
@@ -405,7 +436,12 @@
     (or (pop-and-add! test-stack) (loop)))
 
   (loop)
-  sum))
+  sum ; should be 36
+  ;; > you may have already resolved the error
+  ;; Yes for or.
+  ;; > 'or' should only evaluate its argument once.
+  ;; If not, the 1st inner (loop) will be calculated twice (also for latter loop).
+  ))
 
 (define exercise-5
   '( "Exercise 5: Figure out what is wrong with the evaluator to cause the following code to not work properly."
@@ -433,3 +469,9 @@
                 (display "    ")
                 (pretty-display  (m-eval exp the-global-environment)))
               (cdr test))))
+
+(run exercise-1)
+(run exercise-2)
+(run exercise-3)
+(run exercise-4)
+(run exercise-5)

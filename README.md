@@ -60,6 +60,7 @@
   to Nov 18, check coroutine said in c2 wiki and delimited continuation said in wikipedia coroutine.
   to Nov 20, give one feasible amb implementation functioning same as the book one.
   to Nov 21, found the guile doc saying much better than MIT/GNU Scheme doc about macro/syntax transformer like `syntax-rules` etc.
+  to Nov 22, finish one rec and lab.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF

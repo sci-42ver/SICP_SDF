@@ -2222,6 +2222,7 @@ It says about `list` which has not been said up to the book corresponding chapte
   i.e.
   > Frequently the same person/people
 ### lec06 (This seems to have no corresponding book chapter) very helpful with Debugging introduction
+No corresponding rec. At least SP rec6,7 have no related contents about debugging.
 - `(prime? temp1 temp2)` has worse complexity $O(n)$
   - B doesn't have 2, 3 and 4.
 - > Why is optimization last on the list?
@@ -2243,6 +2244,10 @@ It says about `list` which has not been said up to the book corresponding chapte
 - > You can keep maybe about 50k LOC in your head at once
   crazy (LOC: line of codes).
 - ["continue to this point"](https://docs.racket-lang.org/drracket/debugger.html#(part._.Definitions_.Window_.Actions))
+##### rec
+Since this is about debugging, I will directly run the codes and *only* check the related codes.
+- Use [Revert](https://docs.racket-lang.org/drracket/Menus.html) to reload files
+- This debugging example is much easier if we do debugging for the exercises before... (I did this after section 4.3)
 ### lec08 (no corresponding rec)
 - > creating a new task-specific language
   i.e. "Levels of language for robust design"
@@ -3439,6 +3444,22 @@ what amb should achieve (for how is achieved, please check codes...)
 - ~~> In this case, however, we have completed a successful evaluation, so we can invoke the ``failure'' alternative branch in order to search for *additional successful evaluations*.~~
   > The intent is that calling try-again should *go on to the next untried alternative* in the nondeterministic evaluation.
   see fail000.
+### 4.4
+- from chapter 1
+  > In mathe-matics we are usually concerned with declarative (what is) descriptions, whereas in computer science we are usually concerned with imperative (how to) descriptions.
+  - See [this](https://math.stackexchange.com/a/3157079/1059606)
+    > one key difference in computer science versus mathematics is that objects in computer science are typically viewed as *mutable* (unless they are declared 'const' or similar), while in mathematics we use names to refer to specific mathematical objects that *cannot change*.
+    ~~So maths always use ["declarative" definition](https://en.wikipedia.org/wiki/Subset). Although the QA's imperative definition is a bit weird, ~~
+    Anyway maths can achieve something *like* imperative (also [see](http://lambda-the-ultimate.org/node/5371#comment-93288))
+    > Notice that we *didn't* "put things in" to an existing set in the sense of *redefining a variable* to stand for a new set after the variable was defined.  Instead, we used *different sets* Xi for each i∈N.
+    - So the above "we are usually concerned with" may be better to be "we usually use". 
+- > provide more detailed “how to” knowledge
+  e.g. in `adder`, we have 3 clauses instead of 1.
+- > is does not mean, however, that the user is released altogether from the responsibility of providing imperative knowledge.
+  needs to manipulate dispatcher.
+  OR
+  > must choose from the set of mathematically equivalent networks a suitable network
+  IMHO similar to choose electronic circuit module.
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).

@@ -67,6 +67,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; special forms
 ;; woofy modification
+;; Also see lecs/6.037_lec_rec/rec/codes/rec5/eval-broken.scm
 (define (and? exp) (tagged-list? exp 'and)) 
 (define (and-predicates exp) (cdr exp)) 
 (define (first-predicate seq) (car seq)) 
@@ -83,6 +84,24 @@
         (else (eval-and-predicates rest env))
         )
       )))
+;; dummy
+;; same as the above
+(define (eval-and exps env) 
+  (cond ((empty-exp? exps) #t) 
+        (else 
+          (let ((first (eval (first-expt exps) env))) 
+            (cond ((last-exp? exps) first) 
+                  (first (eval-and (rest-exp exps) env)) 
+                  (else #f))))))
+
+(define (eval-or exps env) 
+  (cond ((empty-exp? exps) #f) 
+        (else 
+          (let ((first (eval (first-exp exps) env))) 
+            ;; mod
+            (cond (first first) 
+                  (else 
+                    (eval-or (rest-exp exps) env)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; test
 (define (display-ret ret)
