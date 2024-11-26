@@ -2153,7 +2153,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - IMHO this is already done in former exercises like Exercise 4.5.
   - wiki demo of [postfix](https://en.wikipedia.org/wiki/Reverse_Polish_notation) is also fine.
 - [ ] 11
-  - I didn't find this is related with footnote 14.
+  - ~~I didn't find this is related with footnote 14.~~
+    `add-binding-to-frame!`
+    > as it only redefines the binding of the procedure-local variable frame
+    same as LisScheSic's "this won't work..." (I *didn't view all comments* when writing that).
 - [x] 12
   - trivial due to `scan`.
 - [ ] 13
@@ -2510,6 +2513,13 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 54
   - `(not pred-value), (fail2)`.
     - see wiki better same as repo.
+- [ ] 70
+  - As hint says, to avoid constructing the infinite stream unexpectedly.
+    - wiki
+      > so THE-ASSERTIONS will *not be evaluated*
+    - This is different from the sub-section "Infinite loops" where loop is caused by *recursive calls* while here is due to infinite assertion stream.
+    - Here due to delay, `set!` has the same effects as `define` where `(stream-cdr ones)` will go into the infinite loop.
+- [ ] 71
 ### @TODO
 - ~~17~~
   - > Design a way...

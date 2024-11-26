@@ -68,6 +68,9 @@
 (define (simple-query query-pattern frame-stream)
   (stream-flatmap
    (lambda (frame)
+    ;; 0. > Appending these two streams produces a stream that consists of all the ways that the given pattern can be satisfied consistent with the original frame.
+    ;; So here rule won't overload assertion even if they have the same index.
+    ;; 1. Here is based on assertions can't be infinite which is just enumeration.
      (stream-append-delayed
       (find-assertions query-pattern frame)
       (delay (apply-rules query-pattern frame))))
@@ -100,6 +103,7 @@
 (define (negate operands frame-stream)
   (stream-flatmap
    (lambda (frame)
+     ;; negated-query implies only one operand.
      (if (stream-null? (qeval (negated-query operands)
                               (singleton-stream frame)))
          (singleton-stream frame)
@@ -115,6 +119,9 @@
           (instantiate
            call
            frame
+           ;; As (and (salary ?person ?amount) (lisp-value > ?amount 30000)) example shows,
+           ;; We need to know ?amount which is got from the former.
+           ;; Otherwise we can't get what ?amount means.
            (lambda (v f)
              (error "Unknown pat var -- LISP-VALUE" v))))
          (singleton-stream frame)
@@ -124,6 +131,11 @@
 ;;(put 'lisp-value 'qeval lisp-value)
 
 (define (execute exp)
+  ;; https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Variables.html#index-user_002dinitial_002denvironment-2
+  ;; 0. user-initial-environment i.e. the interactive env.
+  ;; > definitions that are typed at, or loaded by, the REP loop occur in the user-initial-environment
+  ;; 1. This means `(define cons +)` won't influence list which is based on cons as SICP says.
+  ;; > the MIT/GNU Scheme system procedures, which are defined in system-global-environment, will *continue to see the original definition*.
   (apply (eval (predicate exp) user-initial-environment)
          (args exp)))
 
@@ -146,9 +158,14 @@
         the-empty-stream
         (singleton-stream match-result))))
 
+;; will only add binding for var? part.
 (define (pattern-match pat dat frame)
   (cond ((eq? frame 'failed) 'failed)
         ((equal? pat dat) frame)
+        ;; > Paerns with doed tails
+        ;; As `(computer . ?type)` shows, here `cdr` is done *in parallel*, so "?type as the list (programmer trainee)".
+        ;; Also see
+        ;; > matches the variable after the dot (which is a cdr of the pattern) against a sublist
         ((var? pat) (extend-if-consistent pat dat frame))
         ((and (pair? pat) (pair? dat))
          (pattern-match (cdr pat)
@@ -161,7 +178,11 @@
 (define (extend-if-consistent var dat frame)
   (let ((binding (binding-in-frame var frame)))
     (if binding
-        (pattern-match (binding-value binding) dat frame)
+        ;; > In a successful pattern match, all pattern variables become bound, and the values to which they are bound contain only constants.
+        ;; The former is implied by the only 2 cases here.
+        ;; The latter is due to dat must be constant implied by "in which both the ``pattern'' and the ``datum'' may contain variables.".
+          ;; Then even if (binding-value binding) is one pat var, it will at last be bound to dat.
+        (pattern-match (binding-value binding) dat frame) ; may return 'failed
         (extend var dat frame))))
 
 ;;;SECTION 4.4.4.4
@@ -196,7 +217,10 @@
 
 (define (unify-match p1 p2 frame)
   (cond ((eq? frame 'failed) 'failed)
+        ;; must be before extend-if-possible so that something like (?y ?y) binding won't be added by extend.
+        ;; > On the other hand, we do not want to reject attempts to bind a variable to itself.
         ((equal? p1 p2) frame)
+        ;; this is prioritized before p2.
         ((var? p1) (extend-if-possible p1 p2 frame))
         ((var? p2) (extend-if-possible p2 p1 frame)) ; {\em ; ***}
         ((and (pair? p1) (pair? p2))
@@ -210,11 +234,20 @@
 (define (extend-if-possible var val frame)
   (let ((binding (binding-in-frame var frame)))
     (cond (binding
+          ;; similar to extend-if-consistent.
            (unify-match
+            ;; This may do
+            ;; > These equations imply that ...
             (binding-value binding) val frame))
           ((var? val)                     ; {\em ; ***}
            (let ((binding (binding-in-frame val frame)))
              (if binding
+                 ;; > we may bind either to the other.
+                 ;; 0. There are not directly related contents in sub-section Unification.
+                 ;; In that sub-section, it always say ?x is bound to some value instead of the other direction.
+                 ;; 1. Assume ?x to be bound with ?y with ?y already bound with ?z which is unbound.
+                 ;; Then here we choose ?x to be bound with ?z. Due to the bidirectional match implied by unification, the other direction is also fine.
+                 ;; 1.a. If ?y is bound to one datum, then again "the bidirectional match" will choose (var? p1/2) correspondingly.
                  (unify-match
                   var (binding-value binding) frame)
                  (extend var val frame))))
@@ -330,6 +363,7 @@
        (stream-car s1)
        (stream-append-delayed (stream-cdr s1) delayed-s2))))
 
+;; same as CS 61A notes p93
 (define (interleave-delayed s1 delayed-s2)
   (if (stream-null? s1)
       (force delayed-s2)
@@ -341,6 +375,7 @@
 (define (stream-flatmap proc s)
   (flatten-stream (stream-map proc s)))
 
+;; stream of streams -> stream.
 (define (flatten-stream stream)
   (if (stream-null? stream)
       the-empty-stream
@@ -542,11 +577,13 @@
 
 ;;;; From instructor's manual
 
+;; Also see book p363.
 (define get '())
 
 (define put '())
 
 (define (initialize-data-base rules-and-assertions)
+  ;; Compared with add-rule!, here we set! THE-RULES/THE-ASSERTIONS at last since there may be multiple assertions/rules.
   (define (deal-out r-and-a rules assertions)
     (cond ((null? r-and-a)
            (set! THE-ASSERTIONS (list->stream assertions))

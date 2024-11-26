@@ -332,7 +332,7 @@ Interestingly this chapter compares the computer system with many other systems 
 - > We first generalize arithmetic to deal with symbolic algebraic expressions, and then to functions
   See `extract-dx-part`
 ## comparison with SICP
-Here I is mainly based on SICP "Data-Directed Programming" since that is more structural than explicit dispatch and based on data instead of proc dispatching (similar to `operation-applicability` dispatching in `operation-union-dispatch` here).
+Here I am mainly based on SICP "Data-Directed Programming" since that is more structural than explicit dispatch and based on data instead of proc dispatching (similar to `operation-applicability` dispatching in `operation-union-dispatch` here).
 - 3.1
   - it mainly uses `make-arithmetic` (* means they are largely different.)
     1. `name` is only for debugging or `arithmetic->package`.

@@ -1,8 +1,3 @@
-Currently, 1. For the 2nd question, IMHO Guile `syntax-case` doc https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html is very readable for its format and elegant examples with related explanation. It also refers to one book by Kent Dybvig who is also said by Nathan Shively-Sanders. 2. For the 1st, IMHO "examples and explanations" from JRM's Syntax-rules Primer are enough. For "explanation", It is better to compare it with others like `syntax-case`. The Racket (i.e. PLT Scheme formerly) guide doc https://docs.racket-lang.org/guide/syntax-case.html say a bit about this.
-
-Continued... The Racket reference doc shows more about API but also shows the relation implicitly https://docs.racket-lang.org/reference/stx-patterns.html#%28form._%28%28lib._racket%2Fprivate%2Fstxcase-scheme..rkt%29._syntax-rules%29%29. This is also said in Guile `syntax-case` doc.  Finally, IMHO Guile comparison between them are more readable https://www.gnu.org/software/guile/manual/html_node/Syntax-Rules.html#Further-Information.
-
-As one notice for what `aif` means: that is anaphoric macro https://en.wikipedia.org/wiki/Anaphoric_macro#cite_note-3.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -319,6 +314,7 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
   - 
 - > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
 - ~~> Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.~~
+- > some of the work of coarse matching can be done when the data base is constructed ... Our implementation, described in Section 4.4.4, contains a simple-minded form of such an optimization.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -1400,8 +1396,8 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > universality
   i.e. Universal Turing machine
 - see book
-  > e key idea of *data-directed programming* is to handle generic opera-tions in programs by dealing explicitly with operation-and-type tables,
-  so "data" -> "table".
+  > e key idea of *data-directed programming* is to handle generic opera-tions in programs by dealing explicitly with *operation-and-type tables*
+  so "data" -> "table". (i.e. data-directed dispatch said in section 4.4)
 - > You might want to compare it to the one-screenful substitution-model interpreter you saw in week 6.
   i.e. highlighted words. In a nutshell, just add `env`.
 - > they’d still be teaching you where the semicolons go.
@@ -2425,7 +2421,9 @@ not use
   For Figure 3.22, i.e. the 1st row.
 - TODO
   - > event-driven simulation
-  - When is `(propagate)` run?
+  - ~~When is `(propagate)` run?~~
+    `(propagate)` is manipulating the scheduled things in `the-agenda` just as codes show. 
+    This is different from [Carry-lookahead adder](https://en.wikipedia.org/wiki/Carry-lookahead_adder#Implementation_details) which uses `P,G` to do calculation beforehand to decrease delay.
 - [half adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Half_adder) where [XOR](https://en.wikipedia.org/wiki/XOR_gate#AND-OR-Invert) is different from book.
   Here D gets 3 cases (0,1) or (1,1) and the AND-invert removes (1,1) then. This is similar for wikipedia where the 1st OR-Invert allows (1.0) or (1,1) and then the AND gate needs 0 which  excludes (1,1).
 - > Figure 3.28
@@ -3461,6 +3459,7 @@ what amb should achieve (for how is achieved, please check codes...)
   > The intent is that calling try-again should *go on to the next untried alternative* in the nondeterministic evaluation.
   see fail000.
 ### 4.4
+Like before, I only checked the first sentence for each paragraph if that is enough to get the main ideas. Additionally, I checked the context of "Section 4.a...."
 - from chapter 1
   > In mathe-matics we are usually concerned with declarative (what is) descriptions, whereas in computer science we are usually concerned with imperative (how to) descriptions.
   - See [this](https://math.stackexchange.com/a/3157079/1059606)
@@ -3479,9 +3478,132 @@ what amb should achieve (for how is achieved, please check codes...)
   OR
   > must choose from the set of mathematically equivalent networks a suitable network
   IMHO similar to choose electronic circuit module.
+- > expressions can have more than one value, and, as a result, the compu-tation is dealing with relations rather than with single-valued functions.
+  [See](https://cseweb.ucsd.edu/classes/wi14/cse105-a/LecDFANFA.pdf) which says "transition system" which is not said in DMIA. So here `(amb foo bar)` has `((foo bar), foo)` and `((foo bar), bar)` which can't be expressed by function but can be by relation.
+- > For any u, v, y, and z ...
+  i.e. 
+  1. u->(car x)
+  2. v->(cdr x)
+  3. y->y
+  4. z->(append (cdr x) y)
+  So (cons u v)->x
+  - Emm... I did the above before reading the footnote.
+- > consider the problem of computing the y such that y2 = x
+  "no clue" since x is unknown. So insufficient info about “what is”.
+- > Earlier in this chapter we explored the technology of implementing interpreters
+  See Interpreter_vs_evaluator
+- > For example, ?y  =  (f ?y) seems to have the fixed point (f (f (f ... ))),
+  i.e.
+  > repeatedly substituting (f ?y) for ?y
+  - > −1 = 1 + 2 + 4 + 8 + . . . .
+    the weirdness is that we drop the *largest tail* element due to infinity.
+- > Logic programming extends this idea by combining a relational vision of programming with a powerful kind of symbolic pattern matching called unification.
+  relation is implied in pattern matching.
+  > But the same two rules are also sufficient for answering the following sorts of questions, which the procedure can't answer:
+  So "Logic programming" also implied bidirectional computation.
+#### codes
+- > We never modify a stored binding and we never store more than one binding for a given variable.
+  They are both achieved by `(pattern-match (binding-value binding) dat frame)` as
+  > ?X remains bound to (f ?y).
+  imply.
+- > The second check deals with attempts to bind a variable to a pattern that includes that variable
+  Here ?x -> ⟨expression involving ?y⟩ which includes val ?y, *i.e.* pat ?x.
+- > Cleverer methods could also take advantage of information in the frame
+  IMHO i.e. manipulate at least one of pat which is done in `qeval` when fetching. Maybe better if those pat has some *partial order* so that the *1st* pat always gives the coarse restriction like the `car` part.
+  - Or combined with
+    > try also to optimize the case where the car of the paern is not a constant symbol.
+    ~~expand~~ replace the `car` part which may be pat with the val from binding?
+    - See `(get-stream '? 'rule-stream)` which can be more fine-grained.
+  - > We avoid building our criteria for indexing (using the car, handling only the case of constant symbols) into the program; instead we call on predicates and selectors that embody our criteria.
+    i.e. we use abstraction `fetch-assertions` to hide the details of criteria.
+    "predicates and selectors" -> `use-index?` etc (here only one pred due to using if instead of `cond` when thinking about complexer cases) and `get-indexed-assertions` etc.
+- > Rule conclusions are arbitrary patterns, however, so they *differ from assertions* in that they can contain *variables*.
+  See
+  > We can think of a *rule* as representing a *large (even infinite) set of assertions*, namely all instantiations of the rule conclusion with variable assignments that satisfy the rule body.
+- > The index will be used to retrieve items that might match a pattern if the pattern starts with a constant symbol.
+  For var, it will be transformed into one list with `car` part `'?` by `expand-question-mark` in preparation.
+- > Stream-flatmap, which is used throughout the query evaluator to map a procedure over a stream of frames and combine the resulting streams of frames
+  "over a stream of frames" is not necessary (see `find-assertions`).
+  What is does is "stream of streams -> stream".
+- reader macro character to check `'`
+  [See](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/fun_set-macro_ro-character.html) where [`(read stream t nil t)`](https://www.lispworks.com/documentation/HyperSpec/Body/f_rd_rd.htm) may just mean read the rest except for the starting char ([t means true](https://www.lispworks.com/documentation/HyperSpec/Body/26_glo_t.htm#t)).
+  > If recursive-p is true, the call to read is expected to be made from within some function ...
+  > If eof-error-p is true, an error of type end-of-file is signaled at the end of file.
+- [Interned symbol](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Symbols.html#FOOT8)
+  > any two interned symbols whose *names are the same*, in the sense of string=?, are the same object (i.e. they are eq? to one another). The term interned refers to the process of interning by which this is accomplished.
+  - > The external representation for uninterned symbols is special
+    So here *all are interned symbols*.
+  - > Although you can use this procedure to create symbols with names containing special characters or lowercase letters, it’s usually a bad idea to create such symbols because they *cannot be read as themselves.*
+    i.e. `(string->symbol "bitBlt")`'s name is "bitBlt" but `'bitBlt`'s name is "bitblt" (see `(symbol->string 'Martin)`).
+    diff from `intern`
+    > Converts string to the *standard alphabetic case* before generating the symbol.
+  - [identifier naming convention](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Identifiers.html)
+    > does not begin with either of the characters ‘#’ or ‘,’.
+- > Frames are represented as lists of bindings, which are variable-value pairs:
+  i.e. same as 4.11. Here this is more convenient due to the *step-by-step* construction of the frame instead of with all argument bindings given.
+#### @%%TODO
+Emm... Reading 4.4.2 without reading the codes doesn't help much...
+Next time better directly reading the codes and check the description when necessary besides the  recommendation that we should check examples like 4.4.1 after reading the codes as section 4.3 implies.
+- 4.4.2 preface underlined
+- pattern variable relation with `syntax-rules`.
+- > extend the given frame via a match to some assertion in the data base
+- Figure 4.4 (2 "as indicated in figure 4.4")
+  - > All these streams are then combined to form one huge stream
+- > This stream of frames is then used to generate a stream of copies of the original query pattern with the variables instantiated by the values in each frame
+  So replace `?x` etc with variable values?
+- > an and query could, in the worst case, have to perform a number of matches that is exponential in the number of queries (see exercise 4.76)
+  and footnote
+- > There is a subtle difference between this filter implementation of not and the usual meaning of not in mathematical logic. See section 4.4.3.
+- > The lisp-value special form is implemented as a similar filter on frame streams.
+- > In order to handle rules in the query language, we must be able to find the rules whose *conclusions* match a given query pattern. Rule conclusions are like assertions except that they can contain variables, so we will need a generalization of pattern matching -- called unification -- in which both the ``pattern'' and the ``datum'' may contain variables.
+  i.e. the original "pattern matching" only has "variables" in "pattern".
+- > The unification algorithm is the most technically difficult part of the query system. ... 
+  until footnote 71.
+- > we produce, for each frame in the input stream, two streams
+  why not stop when the "pattern matcher" has already satisfied results?
+  - footnote 73
+- > the other evaluators
+  i.e. [remaining](https://dictionary.cambridge.org/us/grammar/british-grammar/other-others-the-other-or-another)
+- footnote 74
+- > In a logic programming language, the programmer writes an append ``procedure'' by stating the two rules about append given above.
+  where "Find all x and y" implies relation.
+- > (the car of a cons whose cdr will be the rest of the list)
+  this may mean not `cadr` although in this case "the rest of the list" should be the rest of "the rest of the list".
+  This is also implied by
+  > it makes the next item be the *cdr of the list* structure.
+- footnote 77.
+##### codes
+- `contract-question-mark`
+- ~~`flatten-stream`~~
+  ~~why `(stream-car stream)` is also stream?~~
+- why `(fetch-assertions pattern frame)` pass one unused `frame`.
+- When `(get-stream '? 'rule-stream)` will be non-null.
+- `rename-variables-in` is very similar to the mechanism of `syntax-rules`.
+- what if `fetch-rules` has multiple candidates which seems weird?
+- Why for `not`
+  > we attempt, for *each frame* in the input stream
+  instead of directly "the input stream", i.e. `frame-stream`.
+  - Actually this implicitly needs one context like `(and (supervisor ?x ?y) (not (job ?x (computer programmer))))`
+    ~~So `?x` be bound to ~~
+    Here `(supervisor ?x ?y)` will just filter nothing for `supervisor` assertions and then create bindings for `?x, ?y`. Then `(job ?x (computer programmer))` will use these bindings.
+- > the system is following a well-determined algorithm in unraveling the rules.
+- Why `(use-index? pat)` doesn't use `var?`.
+  - Maybe due to
+    > For this purpose we store all rules whose conclusions start with a variable in a separate stream in our table, indexed by the symbol ?.
+    Only *stored* rules/assertions have variable starting.
+##### exercises like "(see exercise 4.71)"
 ## lec
 ### 17
-- From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350).
+- From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350). <a id="Interpreter_vs_evaluator"></a>
+  > The virtual machine is another way of implementing evaluation, etc.
+  - redex maybe [achieving Evaluation by reduction](https://williamjbowman.com/doc/experimenting-with-redex/sec_eval.html#%28part._.Evaluation_and_.Normalization%29)
+  - denotation by [maths like "ordered pairs"](https://en.wikipedia.org/wiki/Denotational_semantics#Meanings_of_recursive_programs)
+    - > the limit of approximations, where each approximation limits the number of calls to factorial
+      "approximation" is `F` by the following context. 
+      "limits the number of calls" means just 1 due to `lookup`.
+      "limit":
+      > "make a more defined partial factorial function"
+      - TODO Bourbaki–Witt theorem
 - > Names
   i.e. name in name collision.
 - [Lexical analyzer see "The lexical analysis of this expression yields the following sequence of tokens:"](https://en.wikipedia.org/wiki/Lexical_analysis#Lexical_token_and_lexical_tokenization), Parser: ~~analyze~~ where () is implicitly implied in Scheme implementation in 4.1.
