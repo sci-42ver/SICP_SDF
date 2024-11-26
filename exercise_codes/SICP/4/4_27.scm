@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 
 (let ((env the-global-environment))
   (eval '(define count 0) env)

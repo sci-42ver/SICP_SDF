@@ -2,7 +2,7 @@
 ;; Notice not to load lib.scm more than once, otherwise apply-in-underlying-scheme will not be underlying apply.
 (load "4_4.scm")
 ;; to be compatible with the following apply.
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 (define or-predicates and-predicates)
 (define (or? exp)
   (tagged-list? exp 'or))

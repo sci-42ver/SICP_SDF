@@ -2520,6 +2520,11 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - This is different from the sub-section "Infinite loops" where loop is caused by *recursive calls* while here is due to infinite assertion stream.
     - Here due to delay, `set!` has the same effects as `define` where `(stream-cdr ones)` will go into the infinite loop.
 - [ ] 71
+  - > This postpones looping in some cases
+    Maybe `(apply-rules query-pattern frame)` -> the 1st `(apply-a-rule rule pattern frame)` -(see `outranked-by` which also uses `disjoin`)> `(outranked-by ?middle-manager ?boss)` (here `?middle-manager` should be different from `?staff-person`, otherwise `?staff-person` will also be in the infinite loop.).
+    But why infinite loop here since we doesn't call the same thing.
+    - As wiki says, the key is "postpone", which doesn't mean "avoid".
+- 
 ### @TODO
 - ~~17~~
   - > Design a way...

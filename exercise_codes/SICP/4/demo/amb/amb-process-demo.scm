@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Emm.... Although step-by-step tracing helps understanding the logic.
 ;; It is better to understand based on induction and assumption got by that. This is just how the amb-lib is written.
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 
 (trace analyze)
 

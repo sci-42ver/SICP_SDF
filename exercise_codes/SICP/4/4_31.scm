@@ -8,7 +8,7 @@
 ;; Same as Lazy_Evaluation_lib, we only need to consider thunk usage. So just using Lazy_Evaluation_lib is enough.
 
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 (load "test-lib.scm")
 
 ;; from wiki

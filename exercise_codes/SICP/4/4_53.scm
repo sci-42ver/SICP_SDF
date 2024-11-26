@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 ;; from 4.51
 (define (analyze-permanent-assignment exp)
   (let ((var (assignment-variable exp))

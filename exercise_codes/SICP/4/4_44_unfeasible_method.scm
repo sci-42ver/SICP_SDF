@@ -1,7 +1,7 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "4_41.scm")
 ;; put after to avoid overloading apply too early.
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 ;; Let this be primitive, since general map using *apply* is not easy be implemented in evaluator.
 ;; @return columns
 (define combine*

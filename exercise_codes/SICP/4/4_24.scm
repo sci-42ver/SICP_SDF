@@ -33,7 +33,7 @@
 ; (4-24-test test-program-2)
 ;  *** 51.81
 
-(load "analyze-lib.scm")
+(load "lib/analyze/analyze-lib.scm")
 ; (lookup-variable-value '= the-global-environment)
 (4-24-test test-program)
 ;  *** 2.740000000000002

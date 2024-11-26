@@ -1,6 +1,5 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; copy these before the exercise in this subsection.
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 (driver-loop)
 
 (define (require p)
@@ -54,3 +53,7 @@
                              noun-phrase
                              (parse-prepositional-phrase)))))
   (maybe-extend (parse-simple-noun-phrase)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; demo
+(parse '(the student with the cat sleeps in the class))
+; (sentence (noun-phrase (simple-noun-phrase (article the) (noun student)) (prep-phrase (prep with) (simple-noun-phrase (article the) (noun cat)))) (verb-phrase (verb sleeps) (prep-phrase (prep in) (simple-noun-phrase (article the) (noun class)))))

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; copy these before the exercise in this subsection.
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 (driver-loop)
 
 (define (require p)

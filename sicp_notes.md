@@ -3541,6 +3541,13 @@ Like before, I only checked the first sentence for each paragraph if that is eno
     > does not begin with either of the characters ‘#’ or ‘,’.
 - > Frames are represented as lists of bindings, which are variable-value pairs:
   i.e. same as 4.11. Here this is more convenient due to the *step-by-step* construction of the frame instead of with all argument bindings given.
+- `(married Mickey ?who)`
+  1. assertion -> the-empty-stream
+    rule -> `(qeval (married ?y ?x) s( (?who . ?y) (?x . Mickey) '()))` where `s()` means stream.
+  2. For the 2nd qeval, then `(pattern-match query-pat assertion query-frame)` where `?y` is bound to Minnie and then `?x` to be bound with `Mickey` is consistent.
+  3. Then again the rule `?y` is to be bound with `?x`, i.e. `(?y . Mickey)`.
+    Then `(?x . ?y)` -> `(Mickey . ?y)`, i.e. by `(var? p2)` we will have `(?y . Mickey)`. Still  consistent.
+  4. So the 3rd qeval, `(qeval (married ?y ?x) s((?y . Mickey) (?who . ?y) (?x . Mickey) '()))`
 #### @%%TODO
 Emm... Reading 4.4.2 without reading the codes doesn't help much...
 Next time better directly reading the codes and check the description when necessary besides the  recommendation that we should check examples like 4.4.1 after reading the codes as section 4.3 implies.

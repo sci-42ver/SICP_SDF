@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 (load "test-lib.scm")
 
 ;; modified version for run-program-list in the 2nd comment of mine in http://community.schemewiki.org/?sicp-ex-4.26

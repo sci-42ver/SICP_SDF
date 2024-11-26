@@ -1,6 +1,6 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
-(load "analyze-lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
+(load "lib/analyze/analyze-lib.scm")
 
 ;; actual-value only for operator, args of primitive, driver-loop output and if predicate.
 

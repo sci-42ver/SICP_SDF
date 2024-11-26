@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 
 (define (prime-sum-pair list1 list2)
   (let ((a (an-element-of list1))

@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 
 (define car-as-lambda (lambda (z) (z (lambda (p q) p))))
 ; (define car (lambda (z) (z (lambda (p q) p))))

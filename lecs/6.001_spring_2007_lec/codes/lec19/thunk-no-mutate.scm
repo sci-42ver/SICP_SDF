@@ -1,7 +1,7 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/3")
 (load "table-lib.scm")
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "Lazy_Evaluation_lib.scm")
+(load "lib/lazy/Lazy_Evaluation_lib.scm")
 
 (define (memoize f)
   (let ((table (make-table)))

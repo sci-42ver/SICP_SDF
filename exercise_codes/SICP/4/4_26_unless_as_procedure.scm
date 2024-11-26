@@ -1,6 +1,6 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
-(load "analyze-lib.scm")
+(load "lib/analyze/analyze-lib.scm")
 (load "test-lib.scm")
 
 (define (unless condition usual-value exceptional-value)

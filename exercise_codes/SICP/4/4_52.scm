@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 ;; if-fail is similar to if.
 ;; based on analyze-if
 (define if-fail-consequent if-predicate)

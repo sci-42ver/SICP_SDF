@@ -1,6 +1,6 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
-(load "analyze-lib.scm")
+(load "lib/analyze/analyze-lib.scm")
 
 (define (amb? exp) (tagged-list? exp 'amb))
 (define (amb-choices exp) (cdr exp))

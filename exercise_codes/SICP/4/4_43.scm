@@ -4,7 +4,7 @@
 ; (define father-daughter-relation (append minimal-father-daughter-relation '((Moore Mary-Ann))))
 
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 (driver-loop)
 
 ;; always add this

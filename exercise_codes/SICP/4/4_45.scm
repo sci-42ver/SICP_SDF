@@ -1,12 +1,12 @@
 ; (cd "~/SICP_SDF/exercise_codes/SICP/4")
-; (load "amb-lib.scm")
+; (load "lib/amb/amb-lib.scm")
 ;; here load can't pass definitions to (driver-loop)...
 ; (driver-loop)
 ; (load "parse-lib.scm")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; parse
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "amb-lib.scm")
+(load "lib/amb/amb-lib.scm")
 (driver-loop)
 
 (define (require p)

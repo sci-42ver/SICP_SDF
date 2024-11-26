@@ -1,5 +1,5 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
-(load "lib-with-cons-as-proc.scm")
+(load "lib/lazy/lazy-lib-with-cons-as-proc.scm")
 
 (load "test-lib.scm")
 (run-program-list 
