@@ -38,6 +38,7 @@
                             frame
                             (lambda (v f)
                               (contract-question-mark v))))
+             ;; will display none for the-empty-stream.
              (qeval q (singleton-stream '()))))
            (query-driver-loop)))))
 
@@ -688,3 +689,5 @@
           (and (supervisor ?staff-person ?middle-manager)
                (outranked-by ?middle-manager ?boss))))
 ))
+
+(initialize-data-base microshaft-data-base)

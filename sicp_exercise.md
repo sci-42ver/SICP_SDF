@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.54 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.54,4.7 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2519,12 +2519,34 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       > so THE-ASSERTIONS will *not be evaluated*
     - This is different from the sub-section "Infinite loops" where loop is caused by *recursive calls* while here is due to infinite assertion stream.
     - Here due to delay, `set!` has the same effects as `define` where `(stream-cdr ones)` will go into the infinite loop.
+    - Also see repo which means same with one detailed example.
 - [ ] 71
   - > This postpones looping in some cases
     Maybe `(apply-rules query-pattern frame)` -> the 1st `(apply-a-rule rule pattern frame)` -(see `outranked-by` which also uses `disjoin`)> `(outranked-by ?middle-manager ?boss)` (here `?middle-manager` should be different from `?staff-person`, otherwise `?staff-person` will also be in the infinite loop.).
     But why infinite loop here since we doesn't call the same thing.
     - As wiki says, the key is "postpone", which doesn't mean "avoid".
-- 
+      - Then how the example works is just as the book says.
+        > Indeed, whether the system will find the simple answer (married Minnie Mickey) before it goes into the loop depends on implementation details *concerning the order in which the system checks the items in the data base*.
+        ~~i.e. whether `` first or not.~~ See exercise_codes/SICP/4/demo/logic-programming/infinite-loop.scm
+- [x] 72 
+  - By hint, i.e. there are some infinite results.
+    Same as 71, if there are one frame which shows the same infinite results, then it is nonsense to keep using that (also see repo for the detailed example).
+    - as wiki says
+      > The reason is same to why we use interleave in 3.5.3
+      i.e. 
+      > we need to devise an order of combination that ensures that *every element will eventually be reached*
+- [ ] 73
+  - Same as `disjoin` but for frame-stream instead of disjunction.
+    maybe infinite `frame-stream`?
+- [ ] 74
+  - a. `stream-car, (lambda (stream) (not (stream-null? stream)))`
+  - b. `flatten-stream` implicitly does `stream-map` 
+    delay for `interleave-delayed` is implicitly included in `stream-map` which uses `cons-stream`.
+    - After all, `(flatten-stream stream)` -> `(interleave-delayed (stream-car stream) ...)` returns `(cons-stream (stream-car (stream-car stream)) ...)`
+      ... (if stream has at least 2 non-null elements) is `(interleave-delayed (flatten-stream (stream-cdr stream)) the-empty-stream)` which based on induction is `(interleave-delayed (cons-stream (stream-caadr stream) ...2) the-empty-stream)`, i.e. `(cons-stream (stream-caadr stream) ...2)`.
+      ...2 means by induction `(interleave-delayed (flatten-stream (stream-cddr stream)) the-empty-stream)`.
+      So it returns `(cons-stream (stream-caar stream) (stream-caadr stream) ...)` which is same as here.
+- [ ] 75 repo is same as wiki.
 ### @TODO
 - ~~17~~
   - > Design a way...

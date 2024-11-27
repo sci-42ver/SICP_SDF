@@ -315,6 +315,10 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
 - ~~> Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.~~
 - > some of the work of coarse matching can be done when the data base is constructed ... Our implementation, described in Section 4.4.4, contains a simple-minded form of such an optimization.
+- > These two streams are combined (using *stream-append-delayed*, section 4.4.4.6) to make a stream of *all the ways* that the given pattern can be satisfied *consistent with the original frame* (see exercise 4.71).
+- > The output streams for the various disjuncts of the or are computed separately and *merged using the interleave-delayed procedure* from section 4.4.4.6. (See exercises 4.71 and 4.72.)
+  4.72 shows why we don't use `append`.
+- > Unlike ordinary flatmap, however, we accumulate the streams with an *interleaving process, rather than simply appending* them (see exercises 4.72 and  4.73).
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -3543,11 +3547,12 @@ Like before, I only checked the first sentence for each paragraph if that is eno
   i.e. same as 4.11. Here this is more convenient due to the *step-by-step* construction of the frame instead of with all argument bindings given.
 - `(married Mickey ?who)`
   1. assertion -> the-empty-stream
-    rule -> `(qeval (married ?y ?x) s( (?who . ?y) (?x . Mickey) '()))` where `s()` means stream.
-  2. For the 2nd qeval, then `(pattern-match query-pat assertion query-frame)` where `?y` is bound to Minnie and then `?x` to be bound with `Mickey` is consistent.
-  3. Then again the rule `?y` is to be bound with `?x`, i.e. `(?y . Mickey)`.
-    Then `(?x . ?y)` -> `(Mickey . ?y)`, i.e. by `(var? p2)` we will have `(?y . Mickey)`. Still  consistent.
-  4. So the 3rd qeval, `(qeval (married ?y ?x) s((?y . Mickey) (?who . ?y) (?x . Mickey) '()))`
+    rule -> `(qeval (married ?1y ?1x) s((?who . ?1y) (?1x . Mickey) '()))` where `s()` means stream.
+  2. For the 2nd qeval, then `(pattern-match query-pat assertion query-frame)` where `?1y` is bound to Minnie and then `?1x` to be bound with `Mickey` is consistent.
+  3. Then again the rule `?1y` is to be bound with `?2x`.
+    Then `(?1x . ?2y)` -> `(Mickey . ?2y)`, i.e. by `(var? p2)` we will have `(?2y . Mickey)`. Still consistent.
+  4. So the 3rd qeval, `(qeval (married ?2y ?2x) s((?2y . Mickey) (?1y . ?2x) (?who . ?1y) (?1x . Mickey) '()))`. So `(married ?2y ?2x)` means `(married Mickey ?who)` where ?who is got by 2 transformations.
+    > which this time is equivalent to (married Mickey ?who).
 #### @%%TODO
 Emm... Reading 4.4.2 without reading the codes doesn't help much...
 Next time better directly reading the codes and check the description when necessary besides the  recommendation that we should check examples like 4.4.1 after reading the codes as section 4.3 implies.
