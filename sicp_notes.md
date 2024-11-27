@@ -315,10 +315,11 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
 - ~~> Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.~~
 - > some of the work of coarse matching can be done when the data base is constructed ... Our implementation, described in Section 4.4.4, contains a simple-minded form of such an optimization.
-- > These two streams are combined (using *stream-append-delayed*, section 4.4.4.6) to make a stream of *all the ways* that the given pattern can be satisfied *consistent with the original frame* (see exercise 4.71).
-- > The output streams for the various disjuncts of the or are computed separately and *merged using the interleave-delayed procedure* from section 4.4.4.6. (See exercises 4.71 and 4.72.)
+- ~~> These two streams are combined (using *stream-append-delayed*, section 4.4.4.6) to make a stream of *all the ways* that the given pattern can be satisfied *consistent with the original frame* (see exercise 4.71).~~
+- ~~> The output streams for the various disjuncts of the or are computed separately and *merged using the interleave-delayed procedure* from section 4.4.4.6. (See exercises 4.71 and 4.72.)~~
   4.72 shows why we don't use `append`.
-- > Unlike ordinary flatmap, however, we accumulate the streams with an *interleaving process, rather than simply appending* them (see exercises 4.72 and  4.73).
+- ~~> Unlike ordinary flatmap, however, we accumulate the streams with an *interleaving process, rather than simply appending* them (see exercises 4.72 and  4.73).~~
+- > an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
