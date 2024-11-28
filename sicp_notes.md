@@ -318,8 +318,11 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - ~~> These two streams are combined (using *stream-append-delayed*, section 4.4.4.6) to make a stream of *all the ways* that the given pattern can be satisfied *consistent with the original frame* (see exercise 4.71).~~
 - ~~> The output streams for the various disjuncts of the or are computed separately and *merged using the interleave-delayed procedure* from section 4.4.4.6. (See exercises 4.71 and 4.72.)~~
   4.72 shows why we don't use `append`.
+- ~~> This postpones looping in some cases (see exercise 4.71).~~
+  see sicp_exercise.md
 - ~~> Unlike ordinary flatmap, however, we accumulate the streams with an *interleaving process, rather than simply appending* them (see exercises 4.72 and  4.73).~~
-- > an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).
+- ~~> an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).~~
+- > Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5

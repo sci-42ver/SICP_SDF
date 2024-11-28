@@ -16,6 +16,8 @@
         frame-stream2)
       )
     frame-stream1))
+
+;; as repo shows, better to check null for frame2.
 (define (merge-frame-pair frame1 frame2)
   (if (null? frame1)
     ;; return stream
