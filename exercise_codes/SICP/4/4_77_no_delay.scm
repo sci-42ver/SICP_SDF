@@ -127,6 +127,42 @@
       )
     frame-stream))
 
+;; added based on repo not-filter-vars
+(define (force-run-lambda frame)
+  (let* ((pair-with-lambda (find-pair-with-lambda frame)))
+    (if pair-with-lambda ; changed
+      (let ((proc (cdar pair-with-lambda)))
+          (set-cdr! (car pair-with-lambda) 'used)
+          (stream-flatmap
+            try-run-lambda
+            ;; return frame-stream
+            (proc frame)))
+      (singleton-stream frame)
+      )))
+(define (query-driver-loop)
+  (prompt-for-input input-prompt)
+  (let ((q (query-syntax-process (read))))
+    (cond ((assertion-to-be-added? q)
+           (add-rule-or-assertion! (add-assertion-body q))
+           (newline)
+           (display "Assertion added to data base.")
+           (query-driver-loop))
+          (else
+           (newline)
+           (display output-prompt)
+           ;; [extra newline at end] (announce-output output-prompt)
+           (display-stream
+            (stream-map
+             (lambda (frame)
+               (instantiate q
+                            frame
+                            (lambda (v f)
+                              (contract-question-mark v))))
+             ;; modified
+             (stream-flatmap force-run-lambda (qeval q (singleton-stream '())))
+             ))
+           (query-driver-loop)))))
+
 ; (trace vars)
 ; (trace all-vars-has-bindings)
 
@@ -188,6 +224,11 @@
 ;; I don't know what this is to do
 (job (Bitdiddle Ben) (computer wizard))
 
+;;; compared with poly
+;; It uses delayed-conjs to store the seq for each whole filter query.
+;; Then use `conjoin-delayed` to force them when possible.
+;; It will return those filters unable to force back into rest-conjs.
+
 ;;; from repo
 ;; 1: 4.56
 ;; I just checked the count and the result compatibility with the original exercise source (i.e. the middle one).
@@ -235,3 +276,6 @@
 ; (replace-orig (bitdiddle ben) (fect cy d))
 ; (replace-orig (hacker alyssa p) (fect cy d))
 ; (replace-orig (hacker alyssa p) (fect cy d))
+
+;; repo test for not-filter-vars
+(not (foo ?x))

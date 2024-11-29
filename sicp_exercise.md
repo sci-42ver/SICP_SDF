@@ -2567,7 +2567,12 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 
       >>>
       ```
-    - 
+  - repo
+    - It uses `not-filter-vars` to check the possible vars to be matched later.
+      So it won't wait until *all* vars can be bound but just the *maximum* possible.
+    - `(filter-already-bound? exp frame-stream)` is same as SHIMADA's to work for the entire frame-stream.
+    - It stores promise in one separate frame instead of appending as mine does.
+    - It tries force when extended, which seems too aggressive since this may ~~fail too many times~~ have too many redundant calls for `frame-passed-filter?` although fine-grained.
 ### @TODO
 - ~~17~~
   - > Design a way...
