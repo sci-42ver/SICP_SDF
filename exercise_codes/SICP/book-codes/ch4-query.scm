@@ -159,7 +159,7 @@
         the-empty-stream
         (singleton-stream match-result))))
 
-;; will only add binding for var? part.
+;; will only and must add bindings for all var? parts.
 (define (pattern-match pat dat frame)
   (cond ((eq? frame 'failed) 'failed)
         ((equal? pat dat) frame)
@@ -189,6 +189,15 @@
 ;;;SECTION 4.4.4.4
 ;;;Rules and Unification
 
+;; > Successful matches will extend this frame by providing a binding for ?person-1
+;; Cases:
+;; 1. only (address ?person-2 (?town . ?rest-2))
+;; Then ?person-1 is all unbound, same for ?x.
+;; 2. Some has ?person-1 binding.
+;; 2.a. assertions must decide ?person-1.
+;; 2.b. Compound queries at last is based on others.
+;; (or (... ?person-2 ...) (... ?person-1 ...))
+;; So inconsistent.
 (define (apply-rules pattern frame)
   (stream-flatmap (lambda (rule)
                     (apply-a-rule rule pattern frame))

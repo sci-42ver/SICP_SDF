@@ -2547,6 +2547,27 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       ...2 means by induction `(interleave-delayed (flatten-stream (stream-cddr stream)) the-empty-stream)`.
       So it returns `(cons-stream (stream-caar stream) (stream-caadr stream) ...)` which is same as here.
 - [ ] 75 repo is same as wiki.
+- [ ] 76
+- [ ] 77
+  - wrong comment
+    - ```
+      <<<LisScheSic
+      Actually, not may be located ''deeply'' in the compound query. As 4.4.4.2 implies, only compound query can have filter query inside it, so maybe not correctly ordered. So we only need to consider one more type of clause in normalize.
+      {{{scheme
+      (define (normalize clauses)
+        (let ((filters (filter filter? clauses))
+              (compounds (filter compound? clauses))
+              (rest (filter (lambda (x) (and (not (filter? x)) (not (compound? x)))) clauses)))
+          (append rest compounds filters)))
+      }}}
+
+      ---
+
+      As baby says, this works but is inefficient. 
+
+      >>>
+      ```
+    - 
 ### @TODO
 - ~~17~~
   - > Design a way...

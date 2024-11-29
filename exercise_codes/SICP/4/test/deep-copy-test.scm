@@ -1,3 +1,4 @@
+;; Use `scheme < deep-copy-test.scm | less -R -N` with -N to use j,k keybindings.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; misc test
 ;;; promise
 (define test-pair-with-promise (cons 1 (delay (lambda (x) x))))
