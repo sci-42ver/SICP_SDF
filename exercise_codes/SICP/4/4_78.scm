@@ -1,20 +1,30 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/book-codes")
 (load "ch4-ambeval.scm")
+(load "ch4-query.scm")
+
+(define (conjoin? exp)
+  (tagged-list? exp 'and))
+(define (disjoin? exp)
+  (tagged-list? exp 'or))
+(define (negate? exp)
+  (tagged-list? exp 'not))
+(define (lisp-value? exp)
+  (tagged-list? exp 'lisp-value))
+(define (always-true? exp)
+  (equal? exp '(always-true)))
 
 (define (analyze exp)
-  (cond ((assertion-to-be-added? exp) 
-         (analyze-assertion! exp))
+  (cond 
+        ;; TODO why when this is put first, `scheme --interactive --eval '(load "4_78.scm")'` and then typing inputs is different from `scheme < 4_78.scm`.
+        ; ((assertion? exp) (analyze-assertion exp))
+        ((rule? exp) (analyze-rule exp))
+        ((conjoin? exp) (analyze-conjoin exp))
+        ((disjoin? exp) (analyze-disjoin exp))
+        ((negate? exp) (analyze-negate exp))
+        ((lisp-value? exp) (analyze-lisp-value exp))
+        ((always-true? exp) (analyze-always-true exp))
+        ;; tagged-list? first
         ((assertion? exp) (analyze-assertion exp))
-        ((variable? exp) (analyze-variable exp))
-        ((assignment? exp) (analyze-assignment exp))
-        ((definition? exp) (analyze-definition exp))
-        ((if? exp) (analyze-if exp))
-        ((lambda? exp) (analyze-lambda exp))
-        ((begin? exp) (analyze-sequence (begin-actions exp)))
-        ((cond? exp) (analyze (cond->if exp)))
-        ((let? exp) (analyze (let->combination exp))) ;**
-        ((amb? exp) (analyze-amb exp))                ;**
-        ((application? exp) (analyze-application exp))
         (else
           (analyze-simple-query exp)
           ;  (error "Unknown expression type -- ANALYZE" exp)
@@ -22,6 +32,13 @@
 
 (define (assertion? exp)
   (and (not (rule? exp)) (null? (filter var? exp))))
+
+(define (check-an-assertion assertion query-pat query-frame)
+  (let ((match-result
+         (pattern-match query-pat assertion query-frame)))
+    (if (eq? match-result 'failed)
+        '()
+        match-result)))
 
 (define (analyze-assertion assertion)
   ;; 0. wait to pass in query-pat which can't be got by analyze-assertion.
@@ -31,43 +48,73 @@
     (lambda (pat) 
       (let ((res (check-an-assertion assertion pat frame)))
         ;; although here uses stream, we can do small changes to check-an-assertion returned values to not use stream.
-        (if (stream-null? res)
+        (if (null? res)
           (fail)
           ;; return one frame
-          (succeed (stream-car res) fail))))
+          (succeed res fail))))
     ))
 
+(define (apply-a-rule rule query-pattern query-frame)
+  (let ((clean-rule (rename-variables-in rule)))
+    (let ((unify-result
+           (unify-match query-pattern
+                        (conclusion clean-rule)
+                        query-frame)))
+      (if (eq? unify-result 'failed)
+          '() ; modified
+          (let ((body (analyze (rule-body clean-rule))))
+            (proc-frame body unify-result))))))
+
+(define (proc-frame body unify-result)
+  (list body unify-result))
+(define (get-proc proc-frame)
+  (car proc-frame))
+(define (get-frame proc-frame)
+  (cadr proc-frame))
+
+;; similar to analyze-assertion
 (define (analyze-rule rule)
   (lambda (frame succeed fail)
-    ;; TODO
-    (let ((res (check-an-rule rule frame)))
-      (if (stream-null? res)
-        (fail)
-        ;; return one frame
-        (succeed (stream-car res) fail)))
+    (lambda (pat) 
+      (let ((proc-frame (apply-a-rule rule pat frame)))
+        ;; although here uses stream, we can do small changes to check-an-assertion returned values to not use stream.
+        (if (null? proc-frame)
+          (fail)
+          ;; return one frame
+          ((get-proc proc-frame) (get-frame proc-frame) succeed fail))))
     ))
 
+(cd "~/SICP_SDF/exercise_codes/SICP/4")
+(load "ch4-query-using-cons.scm")
+
 (define (analyze-simple-query query-pattern)
-  (let ((assertions (map analyze (fetch-assertions pattern frame)))
-        (rules (fetch-rules pattern frame)))
+  (let ((assertions (map analyze (fetch-assertions query-pattern 'ignore)))
+        (rules (map analyze (fetch-rules query-pattern 'ignore))))
     (lambda (frame succeed fail)
       (define (try-next-assertion assertions)
         (if (null? assertions)
           (try-next-rule rules)
           (((car assertions) frame
-                             query-pat
                              succeed
                              (lambda ()
                                (try-next-assertion (cdr assertions))))
             query-pattern)))
-      (try-next assertions)
+      (define (try-next-rule rules)
+        (if (null? rules)
+          (fail)
+          (((car rules) frame
+                             succeed
+                             (lambda ()
+                               (try-next-rule (cdr rules))))
+            query-pattern)))
+      (try-next-assertion assertions)
       ))
   )
 
 (define (analyze-assertion! exp)
   (lambda (frame succeed fail)
     ;; added
-    (add-rule-or-assertion! (add-assertion-body q))
+    (add-rule-or-assertion! (add-assertion-body exp))
     (newline)
     (display "Assertion added to data base.")
 
@@ -90,15 +137,16 @@
       (loop (sequentially first-proc (car rest-procs))
             (cdr rest-procs))))
   
-  (let ((conjuncts (map analyze (contents query))))
+  (let ((conjuncts (map analyze (contents exp))))
     (lambda (frame succeed fail)
       (if (null? conjuncts)
         ;; same as conjoin to return "frame-stream".
         (succeed frame fail))
-      (loop (car conjuncts) (cdr conjuncts))
+      ((loop (car conjuncts) (cdr conjuncts))
+        frame succeed fail)
       )))
 
-;;; I don't how to implement interleave using amb
+;;; IGNORE: I don't how to implement interleave using amb
 ;; 1. revc
 ;; `((analyze-or (cdr disjuncts)) frame succeed fail)` by induction it will try by sequence instead of interleave
 ;; And it also checks all cands for each or disjunction before trying the next disjunction.
@@ -110,14 +158,6 @@
 
 ;; Here what is "subsumed"'s meaning?
 (define (analyze-disjoin exp)
-  (define (sequentially a b)
-    (lambda (frame succeed fail)
-      (a frame
-         ;; success continuation for calling a
-         (lambda (a-frame fail2)
-           (b a-frame succeed fail2)) ; changed
-         ;; failure continuation for calling a
-         fail)))
   ;; Since not all conditional branch will call (interleave first-proc rest-procs), we won't pass next-fail there.
   (define next-fail #f)
   (define (interleave first-proc rest-procs)
@@ -174,12 +214,16 @@
                 ))) ; changed
           ;; (stream-null? s1)
           (lambda ()
-            ((interleave (car rest-procs) (cdr rest-procs))
-              frame succeed fail)
+            (if next-fail
+              (next-fail)
+              ;; first-proc fails with no frame.
+              ((interleave (car rest-procs) (cdr rest-procs))
+                frame succeed fail)
+              )
             )))
       ))
   
-  (let ((disjuncts (map analyze (contents query))))
+  (let ((disjuncts (map analyze (contents exp))))
     (lambda (frame succeed fail)
       ;; similar to amb
       (if (null? disjuncts)
@@ -188,6 +232,43 @@
       ((interleave (car disjuncts) (cdr disjuncts))
         frame succeed fail)
       )))
+
+(define (analyze-negate exp)
+  (let ((negated-query (analyze (car (contents exp)))))
+    (lambda (frame succeed fail)
+      (negated-query frame
+        (lambda (a-frame fail2)
+          (fail)
+          )
+        (lambda ()
+          ;; This fail may try the next assertion before.
+          (succeed frame fail)
+          )
+        )
+      )))
+
+(define (analyze-lisp-value exp)
+  (let ((call (contents exp)))
+    (lambda (frame succeed fail)
+      (if (execute
+            (instantiate
+              call
+              frame
+              ;; As (and (salary ?person ?amount) (lisp-value > ?amount 30000)) example shows,
+              ;; We need to know ?amount which is got from the former.
+              ;; Otherwise we can't get what ?amount means.
+              (lambda (v f)
+                (error "Unknown pat var -- LISP-VALUE" v))))
+         (succeed frame fail)
+         ;; > the-empty-stream
+         (fail))
+      ))
+  )
+
+(define (analyze-always-true ignore) 
+  (lambda (frame succeed fail)
+    (succeed frame fail)
+    ))
 
 (define (ambeval exp frame succeed fail)
   ((analyze exp) frame succeed fail))
@@ -201,23 +282,66 @@
         (begin
           (newline)
           (display ";;; Starting a new problem ")
-          (ambeval input
+          (cond
+            ;; As query-driver-loop, not dispatch to eval.
+            ((assertion-to-be-added? input)
+              (add-rule-or-assertion! (add-assertion-body input))
+              (newline)
+              (display "Assertion added to data base.")
+              (internal-loop try-again) ; modified
+              )
+            (else 
+              (ambeval input
                    ;; modified
-                   (singleton-stream '())
-                   input
+                   '()
                    ;; ambeval success
-                   (lambda (val next-alternative)
+                   (lambda (frame next-alternative)
                      (announce-output output-prompt)
-                     (user-print val)
+                     ;; modified
+                     (user-print 
+                      (instantiate input
+                            frame
+                            (lambda (v f)
+                              (contract-question-mark v))))
                      (internal-loop next-alternative))
                    ;; ambeval failure
                    (lambda ()
                      (announce-output
                        ";;; There are no more values of")
                      (user-print input)
-                     (driver-loop)))))))
+                     (driver-loop)))
+              ))
+          ))))
   (internal-loop
     (lambda ()
       (newline)
       (display ";;; There is no current problem")
       (driver-loop))))
+
+; (trace ambeval)
+; (trace analyze)
+; (trace analyze-disjoin)
+; (trace analyze-assertion)
+; (trace instantiate)
+(driver-loop)
+
+(assert! (killed They Kenny))
+(assert! (killed Randy Pooh))
+(assert! (rule (killed ?x ?y) (killed ?y ?x)))
+;; always-true
+(assert! (rule (ignore ?x ?y)))
+(or (killed Kenny ?who1)
+    (killed Pooh ?who2)
+    )
+try-again
+try-again
+try-again
+(or (ignore Foo ?x)
+    ;; and, not
+    (lives-near ?y (Bitdiddle Ben))
+    ;; lisp-value
+    (and (salary ?person ?amount)
+     (lisp-value > ?amount 30000))
+    )
+try-again
+try-again
