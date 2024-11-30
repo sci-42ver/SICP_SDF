@@ -1,3 +1,5 @@
+(define primitive-apply apply)
+(define primitive-eval eval)
 (cd "~/SICP_SDF/exercise_codes/SICP/book-codes")
 (load "ch4-ambeval.scm")
 (load "ch4-query.scm")
@@ -156,8 +158,20 @@
 ;; 3. poly's https://github.com/cxphoe/SICP-solutions/blob/d35bb688db0320f6efb3b3bde1a14ce21da319bd/Chapter%204-Metalinguistic%20Abstraction/4.Logical%20Programing/4.78/evaluator.rkt#L176-L185
 ;; is similar to revc.
 
-;; Here what is "subsumed"'s meaning?
-(define (analyze-disjoin exp)
+;; 1. Here what is "subsumed"'s meaning?
+;; IMHO that means no stream operation at all.
+;; 2. To implement same as stream interleave,
+;; we need to track all disjunction fail procedure (i.e. continuation to remember what to try next)
+;; This can be seen as follows:
+;; Assume all disjunction generates infinite frame-stream, then we have the following disjunction visiting order.
+;; 1->2->1->3->1->2->1->4->1->2...
+;; At alst, we need to remember all disjunction fail procedures.
+;; 2.a. Since "we need to remember all disjunction fail procedures", 
+;; IMHO the visiting order can be simplified much.
+;; We just keep one queue for those disjunctions having next cand.
+;; This is easier to implement by (fail) continuation.
+;; 3. This naive version only considers alternately visiting 1 and the rest by next-fail because that is what I assume interleave does when thinking about this implementation.
+(define (analyze-disjoin-naive exp)
   ;; Since not all conditional branch will call (interleave first-proc rest-procs), we won't pass next-fail there.
   (define next-fail #f)
   (define (interleave first-proc rest-procs)
@@ -233,6 +247,102 @@
         frame succeed fail)
       )))
 
+;; This won't work for one weird case like the 1st is always-true.
+;; After all, it won't have one fail to try the next candidate.
+;; So it either uses the old fail (i.e. what the following gives) which will do the duplicate retry 
+;; or explicitly forbids calling this fail (i.e. what analyze-always-true does).
+(define (analyze-disjoin exp)
+  ;; IMHO not same as sequentially since when for b fail, we need to try c which then needs d ...
+  (define disjunction-queue '())
+  ;; to avoid use the old obsolete fail procedure.
+  ; (define can-skip-fail #f)
+  ; (define skip-this-fail #f)
+  (define finish-1st-traversal #f)
+  (define (loop first-proc rest-procs)
+    (if (null? rest-procs)
+      (if (null? disjunction-queue)
+        first-proc
+        (begin
+          ; (set! can-skip-fail #t)
+          (set! finish-1st-traversal #t)
+          ; (loop first-proc disjunction-queue)
+          (lambda (frame succeed fail)
+            (first-proc frame
+              ;; success continuation for calling a
+              (lambda (a-frame fail2)
+                (succeed a-frame 
+                  (lambda () 
+                    (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+                    (let ((proc (car disjunction-queue)))
+                      (set! disjunction-queue (cdr disjunction-queue))
+                      (proc frame succeed fail)
+                      )
+                    )
+                  )
+                ) ; changed
+              ;; failure continuation for calling a
+              (lambda ()
+                (if finish-1st-traversal
+                  (if (not (null? disjunction-queue))
+                    (let ((proc (car disjunction-queue)))
+                      (set! disjunction-queue (cdr disjunction-queue))
+                      (proc frame succeed fail)
+                      )
+                    (fail))
+                  ((loop (car rest-procs) (cdr rest-procs))
+                      frame succeed fail
+                      ))
+                )))
+          )
+        )
+      (lambda (frame succeed fail)
+        (first-proc frame
+          ;; success continuation for calling a
+          (lambda (a-frame fail2)
+            (succeed a-frame 
+              (lambda () 
+                ;; 0. queue
+                ;; Here fail2 will then call first-proc like try-next-assertion does.
+                ;; 1. This is wrong since normally we pass one fail2 which tries the following disjunction just like what the 1st disjunction does.
+                ;; But this won't remember what these later disjunctions have done when we retry the 1st disjunction and fails.
+                ; ((loop (car rest-procs) (append (cdr rest-procs) (list (lambda (frame succeed fail) (fail2)))))
+                ;   frame succeed fail
+                ;   )
+
+                ; (or
+                ;   skip-this-fail
+                ;   (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
+                (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+                ((loop (car rest-procs) (cdr rest-procs))
+                  frame succeed fail
+                  )
+                )
+              )
+            ) ; changed
+          ;; failure continuation for calling a
+          (lambda ()
+            (if finish-1st-traversal
+              (if (not (null? disjunction-queue))
+                (let ((proc (car disjunction-queue)))
+                  (set! disjunction-queue (cdr disjunction-queue))
+                  (proc frame succeed fail)
+                  )
+                (fail))
+              ((loop (car rest-procs) (cdr rest-procs))
+                  frame succeed fail
+                  ))
+            )))
+      ))
+  (let ((disjuncts (map analyze (contents exp))))
+    (lambda (frame succeed fail)
+      ;; similar to amb
+      (if (null? disjuncts)
+        ;; the-empty-stream implies nothing to output, similar to amb exhaustion.
+        (fail))
+      ((loop (car disjuncts) (cdr disjuncts))
+        frame succeed fail)
+      )))
+
 (define (analyze-negate exp)
   (let ((negated-query (analyze (car (contents exp)))))
     (lambda (frame succeed fail)
@@ -246,6 +356,11 @@
           )
         )
       )))
+
+(define (execute exp)
+  (primitive-apply
+    (primitive-eval (predicate exp) user-initial-environment)
+    (args exp)))
 
 (define (analyze-lisp-value exp)
   (let ((call (contents exp)))
@@ -267,7 +382,7 @@
 
 (define (analyze-always-true ignore) 
   (lambda (frame succeed fail)
-    (succeed frame fail)
+    (succeed frame (lambda () (write-line "this can't fail")))
     ))
 
 (define (ambeval exp frame succeed fail)
@@ -336,12 +451,42 @@
 try-again
 try-again
 try-again
-(or (ignore Foo ?x)
+;; Emm... interleave is difficult to implement with continuation which can't capture what to do based on the future.
+;; We can use one separate data structure to store fail's. But fail is constructed by.
+(or 
+  ; (ignore Foo ?x)
     ;; and, not
     (lives-near ?y (Bitdiddle Ben))
     ;; lisp-value
     (and (salary ?person ?amount)
      (lisp-value > ?amount 30000))
+    (and (job ?x (computer programmer))
+     (supervisor ?x ?z))
     )
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+try-again
+(and (salary ?person ?amount)
+     (lisp-value > ?amount 30000))
+try-again
+try-again
+try-again
+(and (job ?x (computer programmer))
+     (lives-near ?x (Bitdiddle Ben)))
+try-again
 try-again
 try-again
