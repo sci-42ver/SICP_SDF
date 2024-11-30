@@ -23,3 +23,8 @@
 
 (and (job ?x (computer programmer))
      (lives-near ?x (Bitdiddle Ben)))
+
+(and (job ?x (computer programmer))
+     (supervisor ?x ?z))
+; (and (job (fect cy d) (computer programmer)) (supervisor (fect cy d) (bitdiddle ben)))
+; (and (job (hacker alyssa p) (computer programmer)) (supervisor (hacker alyssa p) (bitdiddle ben)))

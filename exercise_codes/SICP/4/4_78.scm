@@ -109,6 +109,7 @@
                              (lambda ()
                                (try-next-rule (cdr rules))))
             query-pattern)))
+      ; (trace try-next-assertion)
       (try-next-assertion assertions)
       ))
   )
@@ -245,7 +246,7 @@
         (fail))
       ((interleave (car disjuncts) (cdr disjuncts))
         frame succeed fail)
-      )))
+      )))first
 
 ;; This won't work for one weird case like the 1st is always-true.
 ;; After all, it won't have one fail to try the next candidate.
@@ -254,11 +255,12 @@
 (define (analyze-disjoin exp)
   ;; IMHO not same as sequentially since when for b fail, we need to try c which then needs d ...
   (define disjunction-queue '())
+  (define disjunction-fail-queue '())
   ;; to avoid use the old obsolete fail procedure.
   ; (define can-skip-fail #f)
   ; (define skip-this-fail #f)
   (define finish-1st-traversal #f)
-  (define (loop first-proc rest-procs)
+  (define (old-loop first-proc rest-procs)
     (if (null? rest-procs)
       (if (null? disjunction-queue)
         first-proc
@@ -270,9 +272,13 @@
             (first-proc frame
               ;; success continuation for calling a
               (lambda (a-frame fail2)
+                (if (not (member fail2 disjunction-fail-queue))
+                  (begin
+                    (set! disjunction-fail-queue (cons fail2 disjunction-fail-queue))
+                    (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
+                  )
                 (succeed a-frame 
                   (lambda () 
-                    (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
                     (let ((proc (car disjunction-queue)))
                       (set! disjunction-queue (cdr disjunction-queue))
                       (proc frame succeed fail)
@@ -299,6 +305,11 @@
         (first-proc frame
           ;; success continuation for calling a
           (lambda (a-frame fail2)
+            (if (not (member fail2 disjunction-fail-queue))
+              (begin
+                (set! disjunction-fail-queue (cons fail2 disjunction-fail-queue))
+                (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
+              )
             (succeed a-frame 
               (lambda () 
                 ;; 0. queue
@@ -309,10 +320,6 @@
                 ;   frame succeed fail
                 ;   )
 
-                ; (or
-                ;   skip-this-fail
-                ;   (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
-                (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
                 ((loop (car rest-procs) (cdr rest-procs))
                   frame succeed fail
                   )
@@ -333,13 +340,60 @@
                   ))
             )))
       ))
+  (define disjuncts-have-frames (make-list (length (contents exp)) #f))
+  (define (pop-disjunction-queue fail)
+    (if (not (null? disjunction-queue))
+        (let ((proc (car disjunction-queue)))
+          (set! disjunction-queue (cdr disjunction-queue))
+          (proc 'frame 'succeed 'fail)
+          )
+        (fail)))
+  (define (loop first-proc rest-procs idx)
+    (if (null? rest-procs)
+      (lambda (frame succeed fail)
+        (first-proc frame
+          ;; success continuation for calling a
+          (lambda (a-frame fail2)
+            (list-set! disjuncts-have-frames idx #t)
+            (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+            (succeed a-frame 
+              (lambda () 
+                (pop-disjunction-queue fail)
+                )
+              )
+            ) ; changed
+          (lambda ()
+            (pop-disjunction-queue fail)
+            )))
+      (lambda (frame succeed fail)
+        (first-proc frame
+          ;; success continuation for calling a
+          (lambda (a-frame fail2)
+            (list-set! disjuncts-have-frames idx #t)
+            (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+            (succeed a-frame 
+              (lambda () 
+                ((loop (car rest-procs) (cdr rest-procs) (+ 1 idx))
+                  frame succeed fail
+                  )
+                )
+              )
+            ) ; changed
+          (lambda ()
+            (if (list-ref disjuncts-have-frames idx)
+              (pop-disjunction-queue fail)
+              ((loop (car rest-procs) (cdr rest-procs) (+ 1 idx))
+                frame succeed fail
+                ))
+            )))
+      ))
   (let ((disjuncts (map analyze (contents exp))))
     (lambda (frame succeed fail)
       ;; similar to amb
       (if (null? disjuncts)
         ;; the-empty-stream implies nothing to output, similar to amb exhaustion.
         (fail))
-      ((loop (car disjuncts) (cdr disjuncts))
+      ((loop (car disjuncts) (cdr disjuncts) 0)
         frame succeed fail)
       )))
 
@@ -438,6 +492,7 @@
 ; (trace analyze-disjoin)
 ; (trace analyze-assertion)
 ; (trace instantiate)
+; (trace try-next-assertion)
 (driver-loop)
 
 (assert! (killed They Kenny))
@@ -455,13 +510,14 @@ try-again
 ;; We can use one separate data structure to store fail's. But fail is constructed by.
 (or 
   ; (ignore Foo ?x)
-    ;; and, not
-    (lives-near ?y (Bitdiddle Ben))
     ;; lisp-value
     (and (salary ?person ?amount)
      (lisp-value > ?amount 30000))
     (and (job ?x (computer programmer))
      (supervisor ?x ?z))
+    ;; and, not
+    (lives-near ?y (Bitdiddle Ben))
+    
     )
 try-again
 try-again
