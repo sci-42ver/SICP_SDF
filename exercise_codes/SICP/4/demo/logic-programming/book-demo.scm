@@ -21,8 +21,21 @@
 ; (or (ignore foo ?x) (lives-near ?y (bitdiddle ben)) (and (salary (hacker alyssa p) 40000) (lisp-value > 40000 30000)))
 ; (or (ignore foo ?x) (lives-near ?y (bitdiddle ben)) (and (salary (bitdiddle ben) 60000) (lisp-value > 60000 30000)))
 
+(and (salary ?person ?amount)
+     (lisp-value > ?amount 30000))
+; (and (salary (scrooge eben) 75000) (lisp-value > 75000 30000))
+; (and (salary (warbucks oliver) 150000) (lisp-value > 150000 30000))
+; (and (salary (fect cy d) 35000) (lisp-value > 35000 30000))
+; (and (salary (hacker alyssa p) 40000) (lisp-value > 40000 30000))
+; (and (salary (bitdiddle ben) 60000) (lisp-value > 60000 30000))
+
 (and (job ?x (computer programmer))
      (lives-near ?x (Bitdiddle Ben)))
+
+(lives-near ?y (Bitdiddle Ben))
+; (lives-near (aull dewitt) (bitdiddle ben))
+; (lives-near (reasoner louis) (bitdiddle ben))
+
 
 (and (job ?x (computer programmer))
      (supervisor ?x ?z))

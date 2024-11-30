@@ -344,10 +344,15 @@
   (define (pop-disjunction-queue fail)
     (if (not (null? disjunction-queue))
         (let ((proc (car disjunction-queue)))
+          (set! not-to-try-loop #t)
           (set! disjunction-queue (cdr disjunction-queue))
-          (proc 'frame 'succeed 'fail)
+          ((lambda (frame succeed fail)
+            (proc)
+            )
+            'frame 'succeed 'fail)
           )
         (fail)))
+  (define not-to-try-loop #f)
   (define (loop first-proc rest-procs idx)
     (if (null? rest-procs)
       (lambda (frame succeed fail)
@@ -355,7 +360,7 @@
           ;; success continuation for calling a
           (lambda (a-frame fail2)
             (list-set! disjuncts-have-frames idx #t)
-            (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+            (set! disjunction-queue (append disjunction-queue (list fail2)))
             (succeed a-frame 
               (lambda () 
                 (pop-disjunction-queue fail)
@@ -370,12 +375,14 @@
           ;; success continuation for calling a
           (lambda (a-frame fail2)
             (list-set! disjuncts-have-frames idx #t)
-            (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2)))))
+            (set! disjunction-queue (append disjunction-queue (list fail2)))
             (succeed a-frame 
-              (lambda () 
-                ((loop (car rest-procs) (cdr rest-procs) (+ 1 idx))
-                  frame succeed fail
-                  )
+              (lambda ()
+                (if not-to-try-loop
+                  (pop-disjunction-queue fail)
+                  ((loop (car rest-procs) (cdr rest-procs) (+ 1 idx))
+                    frame succeed fail
+                    ))
                 )
               )
             ) ; changed
@@ -509,7 +516,7 @@ try-again
 ;; Emm... interleave is difficult to implement with continuation which can't capture what to do based on the future.
 ;; We can use one separate data structure to store fail's. But fail is constructed by.
 (or 
-  ; (ignore Foo ?x)
+  (ignore Foo ?x)
     ;; lisp-value
     (and (salary ?person ?amount)
      (lisp-value > ?amount 30000))
