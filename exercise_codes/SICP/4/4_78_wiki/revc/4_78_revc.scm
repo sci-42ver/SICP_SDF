@@ -16,13 +16,14 @@
 (define (lisp-value? query) (tagged-list? query 'lisp-value)) 
 
 (define (analyze query) 
-  
+  ;; not consider 1. rule? related with always-true? 2. assertion?.
   (cond ((and? query) (analyze-and (contents query))) 
         ((or? query) (analyze-or (contents query))) 
         ((lisp-value? query) (analyze-lisp-value (contents query))) 
         ((not? query) (analyze-not (contents query))) 
         (else (analyze-simple query)))) 
 
+;; analyze-lisp-value, analyze-negate, analyze-and are same as mine.
 (define (analyze-lisp-value call) 
   (lambda (frame succeed fail) 
     (if (execute 
@@ -80,6 +81,7 @@
 (define (succeeded? ext-frame)
   (not (eq? ext-frame 'failed)))
 
+;; underlying logic is same as mine.
 (define (analyze-simple query) 
   (lambda (frame succeed fail) 
     (define (try-assertion assertions) 
@@ -101,7 +103,8 @@
                 (if (rule-body clean-rule) 
                     (qeval (rule-body clean-rule) 
                           ext 
-                          succeed fail2) 
+                          succeed fail2)
+                    ;; always-true
                     (succeed ext fail2)) 
                 (fail2))))) 
     
@@ -215,5 +218,16 @@ try-again
 (or (married Mickey ?who1)
     (married Pooh ?who2)
     )
+try-again
+try-again
+
+(or 
+  ;; lisp-value
+  (and (salary ?person ?amount)
+    (lisp-value > ?amount 30000))
+  ;; and, not
+  (lives-near ?y (Bitdiddle Ben))
+  )
+try-again
 try-again
 try-again

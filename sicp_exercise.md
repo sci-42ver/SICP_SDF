@@ -2573,6 +2573,13 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - `(filter-already-bound? exp frame-stream)` is same as SHIMADA's to work for the entire frame-stream.
     - It stores promise in one separate frame instead of appending as mine does.
     - It tries force when extended, which seems too aggressive since this may ~~fail too many times~~ have too many redundant calls for `frame-passed-filter?` although fine-grained.
+- [ ] 78
+  - For wiki, only poly's and revc's are similar to me.
+    woofy's/SHIMADA's ideas are straightforward based on amb/stream-one-by-one. I won't dig into them.
+    - > cannot deal with infinite outputs or output the answers in an interleaving style
+      solved.
+  - repo
+    - 
 ### @TODO
 - ~~17~~
   - > Design a way...
