@@ -255,92 +255,15 @@
 (define (analyze-disjoin exp)
   ;; IMHO not same as sequentially since when for b fail, we need to try c which then needs d ...
   (define disjunction-queue '())
-  (define disjunction-fail-queue '())
   ;; to avoid use the old obsolete fail procedure.
-  ; (define can-skip-fail #f)
-  ; (define skip-this-fail #f)
   (define finish-1st-traversal #f)
-  (define (old-loop first-proc rest-procs)
-    (if (null? rest-procs)
-      (if (null? disjunction-queue)
-        first-proc
-        (begin
-          ; (set! can-skip-fail #t)
-          (set! finish-1st-traversal #t)
-          ; (loop first-proc disjunction-queue)
-          (lambda (frame succeed fail)
-            (first-proc frame
-              ;; success continuation for calling a
-              (lambda (a-frame fail2)
-                (if (not (member fail2 disjunction-fail-queue))
-                  (begin
-                    (set! disjunction-fail-queue (cons fail2 disjunction-fail-queue))
-                    (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
-                  )
-                (succeed a-frame 
-                  (lambda () 
-                    (let ((proc (car disjunction-queue)))
-                      (set! disjunction-queue (cdr disjunction-queue))
-                      (proc frame succeed fail)
-                      )
-                    )
-                  )
-                ) ; changed
-              ;; failure continuation for calling a
-              (lambda ()
-                (if finish-1st-traversal
-                  (if (not (null? disjunction-queue))
-                    (let ((proc (car disjunction-queue)))
-                      (set! disjunction-queue (cdr disjunction-queue))
-                      (proc frame succeed fail)
-                      )
-                    (fail))
-                  ((loop (car rest-procs) (cdr rest-procs))
-                      frame succeed fail
-                      ))
-                )))
-          )
-        )
-      (lambda (frame succeed fail)
-        (first-proc frame
-          ;; success continuation for calling a
-          (lambda (a-frame fail2)
-            (if (not (member fail2 disjunction-fail-queue))
-              (begin
-                (set! disjunction-fail-queue (cons fail2 disjunction-fail-queue))
-                (set! disjunction-queue (append disjunction-queue (list (lambda (frame succeed fail) (fail2))))))
-              )
-            (succeed a-frame 
-              (lambda () 
-                ;; 0. queue
-                ;; Here fail2 will then call first-proc like try-next-assertion does.
-                ;; 1. This is wrong since normally we pass one fail2 which tries the following disjunction just like what the 1st disjunction does.
-                ;; But this won't remember what these later disjunctions have done when we retry the 1st disjunction and fails.
-                ; ((loop (car rest-procs) (append (cdr rest-procs) (list (lambda (frame succeed fail) (fail2)))))
-                ;   frame succeed fail
-                ;   )
-
-                ((loop (car rest-procs) (cdr rest-procs))
-                  frame succeed fail
-                  )
-                )
-              )
-            ) ; changed
-          ;; failure continuation for calling a
-          (lambda ()
-            (if finish-1st-traversal
-              (if (not (null? disjunction-queue))
-                (let ((proc (car disjunction-queue)))
-                  (set! disjunction-queue (cdr disjunction-queue))
-                  (proc frame succeed fail)
-                  )
-                (fail))
-              ((loop (car rest-procs) (cdr rest-procs))
-                  frame succeed fail
-                  ))
-            )))
-      ))
+  (define not-to-try-loop #f)
   (define disjuncts-have-frames (make-list (length (contents exp)) #f))
+  (define (reset-state)
+    (set! finish-1st-traversal #f)
+    (set! not-to-try-loop #f)
+    (set! disjuncts-have-frames (make-list (length (contents exp)) #f))
+    )
   (define (pop-disjunction-queue fail)
     (if (not (null? disjunction-queue))
         (let ((proc (car disjunction-queue)))
@@ -351,8 +274,9 @@
             )
             'frame 'succeed 'fail)
           )
-        (fail)))
-  (define not-to-try-loop #f)
+        (begin
+          (reset-state)
+          (fail))))
   (define (loop first-proc rest-procs idx)
     (if (null? rest-procs)
       (lambda (frame succeed fail)
@@ -366,7 +290,7 @@
                 (pop-disjunction-queue fail)
                 )
               )
-            ) ; changed
+            )
           (lambda ()
             (pop-disjunction-queue fail)
             )))
@@ -380,12 +304,13 @@
               (lambda ()
                 (if not-to-try-loop
                   (pop-disjunction-queue fail)
+                  ;; The key is to not duplicately call this.
                   ((loop (car rest-procs) (cdr rest-procs) (+ 1 idx))
                     frame succeed fail
                     ))
                 )
               )
-            ) ; changed
+            )
           (lambda ()
             (if (list-ref disjuncts-have-frames idx)
               (pop-disjunction-queue fail)
@@ -443,7 +368,9 @@
 
 (define (analyze-always-true ignore) 
   (lambda (frame succeed fail)
-    (succeed frame (lambda () (write-line "this can't fail")))
+    ; (succeed frame (lambda () (write-line "this can't fail")))
+    ;; Use this to allow call fail which may have unexpected behaviors.
+    (succeed frame fail)
     ))
 
 (define (ambeval exp frame succeed fail)
@@ -502,6 +429,7 @@
 ; (trace try-next-assertion)
 (driver-loop)
 
+;; from repo
 (assert! (killed They Kenny))
 (assert! (killed Randy Pooh))
 (assert! (rule (killed ?x ?y) (killed ?y ?x)))
@@ -516,16 +444,16 @@ try-again
 ;; Emm... interleave is difficult to implement with continuation which can't capture what to do based on the future.
 ;; We can use one separate data structure to store fail's. But fail is constructed by.
 (or 
-  (ignore Foo ?x)
-    ;; lisp-value
-    (and (salary ?person ?amount)
-     (lisp-value > ?amount 30000))
-    (and (job ?x (computer programmer))
-     (supervisor ?x ?z))
-    ;; and, not
-    (lives-near ?y (Bitdiddle Ben))
-    
-    )
+  ;; The above queue assumes fail can try next cand, but this will try 
+  (ignore Foo ?foo)
+  ;; lisp-value
+  (and (salary ?person ?amount)
+    (lisp-value > ?amount 30000))
+  (and (job ?x (computer programmer))
+    (supervisor ?x ?z))
+  ;; and, not
+  (lives-near ?y (Bitdiddle Ben))
+  )
 try-again
 try-again
 try-again
@@ -551,5 +479,47 @@ try-again
 (and (job ?x (computer programmer))
      (lives-near ?x (Bitdiddle Ben)))
 try-again
+try-again
+try-again
+
+;; revc
+(assert! 
+  (rule (reverse () ?z)
+    (same () ?z)
+    ))
+(assert! (rule (reverse (?x . ?y) ?z)
+               (and (reverse ?y ?v)
+                    (append-to-form ?v (?x) ?z))))
+
+(reverse (1 2 3) ?x)
+try-again
+
+(assert!
+  (rule (replace ?person1 ?person2) 
+    (and (job ?person1 ?job1) 
+        (or (job ?person2 ?job1) 
+            (and (job ?person2 ?job2) 
+                  (can-do-job ?job1 ?job2))) 
+        (not (same ?person1 ?person2)))))
+; (replace ?x (Fect Cy D))
+(and (job (Fect Cy D) ?job1) 
+      (or (job ?person2 ?job1) 
+          (and (job ?person2 ?job2) 
+                (can-do-job ?job1 ?job2))) 
+      (not (same (Fect Cy D) ?person2)))
+try-again
+try-again
+(and (job ?person1 ?job1) 
+      (or (job (Fect Cy D) ?job1) 
+          (and (job (Fect Cy D) ?job2) 
+                (can-do-job ?job1 ?job2))) 
+      (not (same ?person1 (Fect Cy D))))
+try-again
+try-again
+(and (replace ?x ?y)
+  (salary ?x ?amount1)
+  (salary ?y ?amount2)
+  (lisp-value > ?amount2 ?amount1)
+  )
 try-again
 try-again

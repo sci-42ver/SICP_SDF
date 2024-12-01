@@ -24,6 +24,16 @@
 ;; IMHO here using 2 distinct ?who's is more appropriate.
 ; (or (killed Kenny ?who)
 ;     (killed Pooh ?who))
-(or (killed Kenny ?who1)
-    (killed Pooh ?who2))
+; (or (killed Kenny ?who1)
+;     (killed Pooh ?who2))
 
+(assert! (married Minnie Mickey))
+(assert! (married Randy Pooh))
+(assert! (rule (married ?x ?y)
+               (married ?y ?x)))
+(or (married Mickey ?who1)
+    (married Pooh ?who2)
+    )
+;; loop
+; (or (married mickey minnie) (married pooh ?who2))
+; (or (married mickey ?who1) (married pooh randy))
