@@ -35,6 +35,7 @@ Same as my former exercise solution repos, `- [ ]` means my solution is at least
 ## skipped exercises (also see exercises with * before the number possibly)
 Also see https://gitlab.com/Lockywolf/chibi-sicp/-/blob/master/Experience_Report.org for what exercises are very hard.
 - 2.92
+- 4.79
 ## chapter 1
 Up to 1.28 I mistakenly use 20220522214709 (verified by viewing the saved page link colors which has the most *orange* count in my browser history. Its adjacent saved pages [1](https://web.archive.org/web/20220605020839/http://community.schemewiki.org/?SICP-Solutions) [2](https://web.archive.org/web/20220516112916/http://community.schemewiki.org/?SICP-Solutions) all have only the *red* link color) wiki archive instead of 20240228133955 which is latest at that time.
 To compare them, I only give one *brief* comparison after inspecting they are mostly similar in  exercise 1.6. And I skip comparing all pages "Last modified" before 20220522214709.
@@ -2010,6 +2011,9 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 77 trivial by using `let` (same as repo and wiki)
 - [x] 78
 - [x] 79 just as the book to use `(stream-map f dy y)` (see mg's which is right. Same as *repo* and meteorgan's).
+  - http://community.schemewiki.org/?sicp-solutions
+    > didn't solve the "Fokker-Planck equation on computational graphs"
+    This is not said in its org "Cool. As long as ~f~ is implemented in terms of streams, it works.".
 - [x] 80
 - [ ] 81
   - if based on Exercise 3.6, then we just call `(rand 'generate)` or `((rand 'reset) 1)`.
@@ -2573,13 +2577,21 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     - `(filter-already-bound? exp frame-stream)` is same as SHIMADA's to work for the entire frame-stream.
     - It stores promise in one separate frame instead of appending as mine does.
     - It tries force when extended, which seems too aggressive since this may ~~fail too many times~~ have too many redundant calls for `frame-passed-filter?` although fine-grained.
-- [ ] 78
+- [x] 78
   - For wiki, only poly's and revc's are similar to me.
     woofy's/SHIMADA's ideas are straightforward based on amb/stream-one-by-one. I won't dig into them.
     - > cannot deal with infinite outputs or output the answers in an interleaving style
       solved.
   - repo
-    - 
+    - skipped due to being similar to wiki woofy's.
+  - Emm... My implementations may be not expected by the book author. Anyway the basic ideas are same as what woofy says in wiki. 
+- [ ] 79
+  - > Can you relate any of this to the problem of making deductions in a context (e.g., ``If I supposed that P were true, then I would be able to deduce A and B.'') as a method of problem solving? (This problem is open-ended. A good answer is probably worth a Ph.D.)
+    IMHO this is more related with `if`...
+    - "block-structured" is just nested definition which is to be used for the final result.
+  - repo skipped this.
+  - IMHO this is harder than 4.77 although lockywolf doesn't think that way.
+    It changes data structure for 4.77 while I doesn't.
 ### @TODO
 - ~~17~~
   - > Design a way...

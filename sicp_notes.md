@@ -21,6 +21,7 @@ Review the top comment and the 2 tests. Give one sample implementation.
 remove one wrong comment contents and add one notice
 review the top 2 comment seqs.
 add one description based on the reference from the book 
+add one reference
 ```
   - IMHO wiki always have many redundant comments for some easy exercises
     like 2.1, etc.
@@ -322,7 +323,8 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
   see sicp_exercise.md
 - ~~> Unlike ordinary flatmap, however, we accumulate the streams with an *interleaving process, rather than simply appending* them (see exercises 4.72 and  4.73).~~
 - ~~> an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).~~
-- > Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.
+- ~~> Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.~~
+- ~~> One way to do this would be to implement the query system as a nondeterministic program, using the amb evaluator of section 4.3 (see exercise 4.78)~~
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
