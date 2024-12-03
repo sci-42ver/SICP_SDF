@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.54,4.70~76 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.60,4.70~79 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2517,6 +2517,31 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 54
   - `(not pred-value), (fail2)`.
     - see wiki better same as repo.
+- [x] 55
+  - `(supervisor ?x (Bitdiddle Ben))`
+    `(job ?person (accounting . ?job))`
+    `(address ?person (Slumerville . ?addr))`
+    - similar to repo and same as wiki.
+- [x] 56
+  ```scheme
+  (and (supervisor ?x (Bitdiddle Ben))
+     (address ?x ?addr))
+  (and (salary (Bitdiddle Ben) ?x)
+     (salary ?person ?z)
+     (lisp-value < ?z ?x)
+     )
+  (and (supervisor ?x ?y)
+      (not (job ?y (computer . ?rest)))
+     (job ?y ?z)
+     )
+  ```
+  - same as repo, wiki.
+- [x] 57
+- [x] 58
+- [ ] 59
+  - a. trivial
+- [ ] 60
+  - due to symmetry (i.e. swap `?person-1 ?person-2` the rule body still holds).
 - [ ] 70
   - As hint says, to avoid constructing the infinite stream unexpectedly.
     - wiki
@@ -2621,7 +2646,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
         - So the above meteorgan's will "generate an error" due to accessing `'*unassigned*` while the original won't but saying ";Unbound variable: v".
       > than to produce an incorrect answer (as Ben would have it).
       But actually MIT/GNU Scheme will output as Ben's (IMHO this is just how *environment model* works where `(+ a x)` will search frame*s* and find `(a 1)` and `(+ a b)` just uses the *first* frame `(define a 5)`.)
-
+- 4.78
+  Update about (big-shot ?x ?y).
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 

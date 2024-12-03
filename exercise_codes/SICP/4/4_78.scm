@@ -483,6 +483,22 @@ try-again
 try-again
 
 ;; revc
+;; https://web.archive.org/web/20230221202235/http://community.schemewiki.org/?sicp-ex-4.58
+(assert! (rule (big-shot ?person ?division) 
+              (and (job ?person (?division . ?rest)) 
+                    (or (not (supervisor ?person ?boss)) 
+                        (and (supervisor ?person ?boss) 
+                            (not (job ?boss (?division . ?r))))))))
+(big-shot ?p ?q)
+try-again
+; (big-shot (scrooge eben) accounting)
+try-again
+; (big-shot (warbucks oliver) administration)
+try-again
+; (big-shot (bitdiddle ben) computer)
+try-again
+; ;;; There are no more values of
+
 (assert! 
   (rule (reverse () ?z)
     (same () ?z)

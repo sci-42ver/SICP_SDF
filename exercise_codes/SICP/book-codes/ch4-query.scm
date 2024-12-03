@@ -163,17 +163,20 @@
 (define (pattern-match pat dat frame)
   (cond ((eq? frame 'failed) 'failed)
         ((equal? pat dat) frame)
-        ;; > Paerns with doed tails
+        ((var? pat) (extend-if-consistent pat dat frame))
+        ;; 0. > Paerns with doed tails
         ;; As `(computer . ?type)` shows, here `cdr` is done *in parallel*, so "?type as the list (programmer trainee)".
         ;; Also see
         ;; > matches the variable after the dot (which is a cdr of the pattern) against a sublist
-        ((var? pat) (extend-if-consistent pat dat frame))
+        ;; 0.a. Here each time we select one element by car.
+        ;; So (computer ?type) won't match (computer programmer trainee) since at last '() will throw fail.
         ((and (pair? pat) (pair? dat))
          (pattern-match (cdr pat)
                         (cdr dat)
                         (pattern-match (car pat)
                                        (car dat)
                                        frame)))
+        ;; > A paern can have no variables ... if not, there will be no matches
         (else 'failed)))
 
 (define (extend-if-consistent var dat frame)

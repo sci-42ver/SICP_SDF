@@ -3,24 +3,28 @@
 
 (query-driver-loop)
 
-; (assert! 
-;   (rule (replace ?person1 ?person2)
-;     (and (job ?person1 ?job1)
-;       (job ?person2 ?job2)
-;       (not (same ?person1 ?person2))
-;       (or (same ?job1 ?job2)
-;         (can-do-job ?job1 ?job2)
-;         )
-;       )
-;     ))
+;; 0. Their orders are not same maybe due to stream-flatmap for each simple query.
+;; 1.  Similar to repo except for not part.
+(assert! 
+  (rule (replace ?person1 ?person2)
+    (and (job ?person1 ?job1)
+      (job ?person2 ?job2)
+      ;; IMHO this is better to filter immediately when possible.
+      (not (same ?person1 ?person2))
+      (or (same ?job1 ?job2)
+        (can-do-job ?job1 ?job2)
+        )
+      )
+    ))
 
-(assert!
-  (rule (replace ?person1 ?person2) 
-    (and (job ?person1 ?job1) 
-        (or (job ?person2 ?job1) 
-            (and (job ?person2 ?job2) 
-                  (can-do-job ?job1 ?job2))) 
-        (not (same ?person1 ?person2)))) )
+;; from wiki
+; (assert!
+;   (rule (replace ?person1 ?person2) 
+;     (and (job ?person1 ?job1) 
+;         (or (job ?person2 ?job1) 
+;             (and (job ?person2 ?job2) 
+;                   (can-do-job ?job1 ?job2))) 
+;         (not (same ?person1 ?person2)))) )
 
 (replace (Fect Cy D) ?x)
 ; (replace (fect cy d) (reasoner louis))

@@ -325,6 +325,7 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - ~~> an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).~~
 - ~~> Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.~~
 - ~~> One way to do this would be to implement the query system as a nondeterministic program, using the amb evaluator of section 4.3 (see exercise 4.78)~~
+- > The real behavior of not is more complex. We will examine not's peculiarities in sections 4.4.2 and 4.4.3.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
