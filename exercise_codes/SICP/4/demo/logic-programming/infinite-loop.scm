@@ -22,7 +22,7 @@
 
 ; (married Mickey ?who)
 
-;; 4.71 ericwen229
+;;; 4.71 ericwen229
 ;; similar to son...
 (assert! (rule (job ?x ?y)
                (job ?x ?y)))
@@ -30,3 +30,8 @@
 ;; > But the query (not (son ?x ?y)) can avoid the infinite loop thanks to lazy evaluation.
 ;; Since partial info is enough for stream-null?.
 (not (job ?x ?y))
+
+;;; no result at all
+;; due to seemingly call itself (append-to-form ?v ?y ?z).
+(append-to-form ?x (2 3) ?z)
+

@@ -101,7 +101,7 @@ Different from SDF, here the preface doesn't give one systematic introduction of
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @%%*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.3 (included).
+- up to section 4.4 "Rules" (included).
 ## @%%to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -326,6 +326,8 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - ~~> Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.~~
 - ~~> One way to do this would be to implement the query system as a nondeterministic program, using the amb evaluator of section 4.3 (see exercise 4.78)~~
 - > The real behavior of not is more complex. We will examine not's peculiarities in sections 4.4.2 and 4.4.3.
+- > the general methods may break down in more complex cases, as we will see in section 4.4.3.
+- > See exercise 4.69 for some rules to deduce more complicated relationships.
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5

@@ -2,6 +2,9 @@
 (load "ch4-query.scm")
 
 (query-driver-loop)
+;; 2 to 1 is fine.
+(append-to-form ?x (2 3) (1 2 3))
+
 (assert! 
   (rule (reverse () ?z)
     (same () ?z)

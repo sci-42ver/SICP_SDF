@@ -703,6 +703,19 @@
 
 ;; added from book
 (rule (append-to-form () ?y ?y))
+;; 0. Why 2 to 1 is always fine.
+;; This can be done by induction.
+;; There are 4 variables in inputs and 3 in outputs.
+;; IGNORE: To make only 1 known var is in outputs, we can only know one input var since .
+;; But 3 output vars has the one-to-one map with input vars.
+;; So "one-to-one map" implies 2 known input vars means 2 known output vars.
+;; 0.a. Then
+;; 0.a.0. we match against `() ?y ?y`, i.e. either (() ...) or (?x foo foo).
+;; 0.a.1. `(?u . ?v) ?y (?u . ?z)` we must reach (() ...) if the 1st is known and it can match.
+;; Otherwise we will reach (... ?y ?y).
+;; 1. 1 to 2 may be infinite like only knowning ?y.
+;; 2. > (append-to-form ?x ?y (a b c d))
+;; works due to when (?u . ?z) is done n times, we can always match `() ?y ?y`.
 (rule (append-to-form (?u . ?v) ?y (?u . ?z))
       (append-to-form ?v ?y ?z))
 ))
