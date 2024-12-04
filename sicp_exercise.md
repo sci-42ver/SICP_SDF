@@ -2624,6 +2624,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - repo skipped this.
   - IMHO this is harder than 4.77 although lockywolf doesn't think that way.
     It changes data structure for 4.77 while I doesn't.
+  - maybe related with [annotated syntax objects](https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e)
 ### @TODO
 - ~~17~~
   - > Design a way...

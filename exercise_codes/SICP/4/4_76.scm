@@ -54,6 +54,7 @@
     ;          frame-stream))
 
     ;; n^2/k is due to the many output frames. This won't happen if each query is based on the mere the-empty-stream singleton-stream.
+    ;; (That is also said by book footnote "tend to reduce rather than expand the number of frames produced.")
     ;; This is just what the above does.
     ;; But this may also lose the short-circuit property.
     ;; So I combine them in the following.

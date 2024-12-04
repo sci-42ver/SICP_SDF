@@ -3514,6 +3514,19 @@ Like before, I only checked the first sentence for each paragraph if that is eno
   relation is implied in pattern matching.
   > But the same two rules are also sufficient for answering the following sorts of questions, which the procedure can't answer:
   So "Logic programming" also implied bidirectional computation.
+- > we show how the entire query interpreter fits together through a procedure that classifies expressions in a manner analogous to the way eval classifies expressions
+  just by `(get (type query) 'qeval)` (i.e. data-directed programming) which is a bit different from Section 4.1.
+- > In order to handle rules in the query language, we must be able to find the rules whose *conclusions* match a given query pattern. Rule conclusions are like assertions except that they can *contain variables*, so we will need a generalization of pattern matching -- called unification -- in which both the ``pattern'' and the ``datum'' may contain variables.
+  i.e. the original "pattern matching" only has "variables" in "pattern".
+- > the other evaluators
+  i.e. [remaining](https://dictionary.cambridge.org/us/grammar/british-grammar/other-others-the-other-or-another)
+- > In a logic programming language, the programmer writes an append ``procedure'' by stating the two rules about append given above.
+  where "Find all x and y" implies relation.
+- > (the car of a cons whose cdr will be the rest of the list)
+  this may mean not `cadr` although in this case "the rest of the list" should be the rest of "the rest of the list".
+  This is also implied by
+  > it makes the next item be the *cdr of the list* structure.
+  - Also see codes it will do `cdr` in each recursion and also `car` to get the 1st element in the rest list.
 #### codes
 - > We never modify a stored binding and we never store more than one binding for a given variable.
   They are both achieved by `(pattern-match (binding-value binding) dat frame)` as
@@ -3565,54 +3578,60 @@ Like before, I only checked the first sentence for each paragraph if that is eno
 #### @%%TODO
 Emm... Reading 4.4.2 without reading the codes doesn't help much...
 Next time better directly reading the codes and check the description when necessary besides the  recommendation that we should check examples like 4.4.1 after reading the codes as section 4.3 implies.
-- 4.4.2 preface underlined
-- pattern variable relation with `syntax-rules`.
-- > extend the given frame via a match to some assertion in the data base
-- Figure 4.4 (2 "as indicated in figure 4.4")
-  - > All these streams are then combined to form one huge stream
-- > This stream of frames is then used to generate a stream of copies of the original query pattern with the variables instantiated by the values in each frame
+- ~~4.4.2 preface underlined~~
+- ~~pattern variable relation with `syntax-rules`.~~
+  ~~The former doesn't have env, so the ~~
+  - Here we only care about the mechanism to avoid name collision.
+    The latter uses [env tag maybe (annotated syntax objects)](https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e) while the former uses id.
+  - `rename-variables-in` is very similar to the mechanism of [`syntax-rules` in MIT/GNU Scheme](https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e) (`.loop.0`) but not same
+    > then the interpreter will *still* rename loop to .loop.0.
+- ~~> extend the given frame via a match to some assertion in the data base~~
+- ~~Figure 4.4 (2 "as indicated in figure 4.4")~~
+  - ~~> All these streams are then combined to form one huge stream~~
+- ~~> This stream of frames is then used to generate a stream of copies of the original query pattern with the variables instantiated by the values in each frame~~
   So replace `?x` etc with variable values?
-- > an and query could, in the worst case, have to perform a number of matches that is exponential in the number of queries (see exercise 4.76)
+  Yes.
+- ~~> an and query could, in the worst case, have to perform a number of matches that is exponential in the number of queries (see exercise 4.76)~~
   and footnote
 - > There is a subtle difference between this filter implementation of not and the usual meaning of not in mathematical logic. See section 4.4.3.
-- > The lisp-value special form is implemented as a similar filter on frame streams.
-- > In order to handle rules in the query language, we must be able to find the rules whose *conclusions* match a given query pattern. Rule conclusions are like assertions except that they can contain variables, so we will need a generalization of pattern matching -- called unification -- in which both the ``pattern'' and the ``datum'' may contain variables.
-  i.e. the original "pattern matching" only has "variables" in "pattern".
-- > The unification algorithm is the most technically difficult part of the query system. ... 
+- ~~> The lisp-value special form is implemented as a similar filter on frame streams.~~
+- ~~> The unification algorithm is the most technically difficult part of the query system. ... ~~
   until footnote 71.
-- > we produce, for each frame in the input stream, two streams
+  - implemented by `unify-match` call in `extend-if-possible`.
+- ~~> we produce, for each frame in the input stream, two streams~~
   why not stop when the "pattern matcher" has already satisfied results?
+  due to stream.
   - footnote 73
-- > the other evaluators
-  i.e. [remaining](https://dictionary.cambridge.org/us/grammar/british-grammar/other-others-the-other-or-another)
-- footnote 74
-- > In a logic programming language, the programmer writes an append ``procedure'' by stating the two rules about append given above.
-  where "Find all x and y" implies relation.
-- > (the car of a cons whose cdr will be the rest of the list)
-  this may mean not `cadr` although in this case "the rest of the list" should be the rest of "the rest of the list".
-  This is also implied by
-  > it makes the next item be the *cdr of the list* structure.
+    - also implied by the code difference.
+- ~~footnote 74~~
+  - Also see Exercise 4.71.
 - footnote 77.
 ##### codes
-- `contract-question-mark`
+- ~~`contract-question-mark`~~
 - ~~`flatten-stream`~~
   ~~why `(stream-car stream)` is also stream?~~
 - why `(fetch-assertions pattern frame)` pass one unused `frame`.
-- When `(get-stream '? 'rule-stream)` will be non-null.
-- `rename-variables-in` is very similar to the mechanism of `syntax-rules`.
-- what if `fetch-rules` has multiple candidates which seems weird?
-- Why for `not`
+  - Emm... when review, I don't know what I meant before ...
+- ~~When `(get-stream '? 'rule-stream)` will be non-null.~~
+  - See book
+    > whose conclusions start with a variable as well as those whose conclusions have the same car as the pattern.
+- ~~what if `fetch-rules` has multiple candidates which seems weird?~~
+  - This lets the coder decides the behavior. See `exercise_codes/SICP/4/4_62_redundant_rules.scm`.
+- ~~Why for `not`~~
   > we attempt, for *each frame* in the input stream
   instead of directly "the input stream", i.e. `frame-stream`.
   - Actually this implicitly needs one context like `(and (supervisor ?x ?y) (not (job ?x (computer programmer))))`
     ~~So `?x` be bound to ~~
     Here `(supervisor ?x ?y)` will just filter nothing for `supervisor` assertions and then create bindings for `?x, ?y`. Then `(job ?x (computer programmer))` will use these bindings.
-- > the system is following a well-determined algorithm in unraveling the rules.
-- Why `(use-index? pat)` doesn't use `var?`.
-  - Maybe due to
+  - ~~Since its purpose is to filter~~
+    After all, `conjoin, disjoin, rule` all are reduced to simple-query etc which obviously  manipulates with each frame since at last we instantiates with each frame.
+- ~~> the system is following a well-determined algorithm in unraveling the rules.~~
+  Actually, it is just reduced to manipulating with one compound query probably. 
+- ~~Why `(use-index? pat)` doesn't use `var?`.~~
+  - ~~Maybe due to~~
     > For this purpose we store all rules whose conclusions start with a variable in a separate stream in our table, indexed by the symbol ?.
     Only *stored* rules/assertions have variable starting.
-##### exercises like "(see exercise 4.71)"
+  - Because `var` index *can't filter* assertions etc at all.
 ## lec
 ### 17
 - From this, SICP just uses ["Interpretation" ("a way of implementing the evaluation")](https://stackoverflow.com/a/61497305/21294350). <a id="Interpreter_vs_evaluator"></a>
