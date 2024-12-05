@@ -29,6 +29,7 @@
                (and (reverse ?y ?v)
                     (append-to-form ?v (?x) ?z))))
 
+;; work trivially due to induction.
 (reverse (1 2 3) ?x)
 ; (reverse (1) ?x)
 

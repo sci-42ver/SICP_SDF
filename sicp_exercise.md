@@ -8,7 +8,7 @@
 - I mainly follow the wiki (from about sicp-ex-2.53 I only read codes first and then possibly the description if not understanding the solution for *code exercises*).
   Then I read repo xxyzz/SICP codes.
   - *repo read up to* (notice from about 2.42, I only gives a glimpse of these solutions and  probably they are already in schemewiki).
-    I have read repo solution chapter 1,2,3,4.1~4.63,4.70~79 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
+    I have read repo solution chapter 1,2,3,4.1~4.64,4.70~79 (This line is kept to avoid forgetting to check this repo solution). repo solution may be better like 1.7.
     - I assumed the solution is *either in the code or README* but splitted into 2 parts where one is in the code and the other is in README.
 # misc clipboard
 sci-42ver/SICP_SDF
@@ -2547,7 +2547,33 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [x] 62
 - [x] 63
   - trivial by and
-- [ ] 
+- [x] 64
+  - `(outranked-by ?middle-manager ?boss)` has no var bindings available.
+    So it will keep calling itself.
+- [x] 65
+  - trivial by definition since `Bitdiddle Ben` is the supervisor of 3 people etc.
+- [ ] 66
+  - just `(and (wheel ?who) (salary ?who ?amount))` will *duplicately* accumulates something.
+  - > Outline a method he can use to salvage the situation.
+    Since frame is manipulated independently, we need to filter duplicate `?x`s in evaluator. Then do as Ben's original thoughts.
+    - same as repo.
+- [ ] 67
+  - > The general idea is that the system should maintain some sort of history of its current chain of deductions and should not begin processing a query that it is already working on.
+    just DFS as Exercise 3.18 does.
+    - > (After you study the details of the query-system implementation in section 4.4.4, you may want to modify the system to include your loop detector.)
+      Emm... As said before, just DFS...
+      - TODO see wiki user-unknown's.
+  - > Describe what kind of information (patterns and frames) is included in this history, and how the check should be made.
+    both.
+    - check: replace patterns with possible values. Then compare the current transformed pattern with the former ones. If using the same rule and same number of var's with the same locations, then loop. 
+      - `(outranked-by ?n_middle-manager ?k_boss)`
+      - `(married ?y-1 Mickey)`
+        -> `(married ?Mickey ?x-2)` loops with `(married Mickey ?who)`
+    - wiki
+      - "rule name" and "unbouned" just implies pattern.
+    - same as repo.
+- [ ] 68
+- [ ] 69
 - [ ] 70
   - As hint says, to avoid constructing the infinite stream unexpectedly.
     - wiki
@@ -2616,6 +2642,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - repo
     - skipped due to being similar to wiki woofy's.
   - Emm... My implementations may be not expected by the book author. Anyway the basic ideas are same as what woofy says in wiki. 
+  - ~~I am stuck at this exercise for a long time, maybe it is better~~
 - [ ] 79
   - > Can you relate any of this to the problem of making deductions in a context (e.g., ``If I supposed that P were true, then I would be able to deduce A and B.'') as a method of problem solving? (This problem is open-ended. A good answer is probably worth a Ph.D.)
     ~~IMHO this is more related with `if`...~~

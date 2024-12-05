@@ -31,3 +31,5 @@
 (son Lamech ?s)
 
 (grandson Methushael ?s)
+
+(son ?f ?s)

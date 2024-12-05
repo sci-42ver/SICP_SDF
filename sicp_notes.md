@@ -76,7 +76,7 @@ add one reference
     Here `cont` is just one local variable.
     See [`(define W1 (make-withdraw 100)) (define W2 (make-withdraw 100)) ...`](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html)
   - "*garbage* collected"
-- section 3.1
+- ~~section 3.1~~
   - TODO
     - ~~Also see~~
       > In Lisp, we consider this “identity” to be the quality that is tested by eq?, i.e., by equality of pointers.
@@ -95,13 +95,13 @@ add one reference
             then?
 ## @%%check *underlined* words in the *chapter and section prefaces*
 Different from SDF, here the preface doesn't give one systematic introduction of each chapter.
-- up to section 4.3 included and chapter 3.
+- up to section 4.4 included and chapter 4.
 ### TODO
 - chapter 3
   - > a more mechanistic but less theoretically tractable environment model of computation
     "substitution model" seems to be "more mechanistic but less theoretically tractable"...
 ## @%%*em* tracking when reading the book (Read *before doing the related exercises*)
-- up to section 4.4 "Rules" (included).
+- up to section 4.4 (included).
 ## @%%to reread after reading later chapters (strikethrough to mark already read)
 tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
 ### ~~1.2~~
@@ -220,14 +220,15 @@ checked up to section 3.5.5 (included) and exercise checking up to 3.5.5 (includ
     see
     > But the stream formulation is particularly elegant and *convenient* because the *entire sequence of states is available* to us as a data structure that can be *manipulated with a uniform set of operations*.
 ### 4
-checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
-- > On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4
+checked up to section 4.4 (included) and exercise checking up to 4.4 (included)
+- ~~> On the other hand, *normal-order evaluation* can be an extremely valuable tool, and we will investigate some of its implications in Chapter 3 and Chapter 4~~
+  i.e. stream and lazy evaluation.
 - ~~> In Section 4.2 we will modify the Scheme interpreter to *produce a normal-order variant* of Scheme.~~
-- > nondeterministic evaluation in Chapter 4.
-- > for their contributions to the exposition of nondeterministic evaluation in Chapter 4.
-- chapter 1 footnote 20
+- ~~> nondeterministic evaluation in Chapter 4.~~
+- ~~> for their contributions to the exposition of nondeterministic evaluation in Chapter 4.~~
+- ~~chapter 1 footnote 20~~
   > e idea is to make interpreters sophisticated enough so that, *given “what is” knowledge specified by the programmer, they can generate “how to”* knowledge auto-matically. is cannot be done in general, but there are important areas where progress has been made. We shall revisit this idea in Chapter 4.
-  see 4.3.
+  see 4.4 `append-to-form`.
 - ~~> is can serve as a framework for ex-perimenting with evaluation rules, as we shall do later in this chapter.~~
   see section 4.2
 - ~~> It makes perfect sense, for instance, to *compute the length of a list without knowing the values* of the individual elements in the list. We will exploit this idea in section 4.2.3 to implement the streams of chapter 3 as lists formed of non-strict cons pairs.~~
@@ -268,13 +269,15 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
           i.e. `foo` defined by itself?
 - ~~> *requires reserving storage for a procedure’s free variables* even while the procedure is *not executing*. In the Scheme implementation we will study in Section 4.1, these variables are stored in the procedure’s environment.~~
   i.e. ["free variables"](https://en.wikipedia.org/wiki/Free_variables_and_bound_variables#:~:text=A%20free%20variable%20is%20a,this%20or%20any%20container%20expression.) (not formal parameters and locally defined variables) in env.
-- > otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)
-- >  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works. e quotation mark is *just a single-character abbreviation* for wrapping the next complete expression with quote to form (quote ⟨ expression ⟩). is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a data object.
-  see 4.1 where (read) will transform `'` to `quote` automatically.
+- ~~> otation is powerful because it gives us a way to build expres-sions that manipulate other expressions (as we will see when we write an interpreter in Chapter 4)~~
+- ~~>  us, we would type (quote a) instead of 'a, and we would type (quote (a b c)) instead of '(a b c). is is precisely how the interpreter works. e quotation mark is *just a single-character abbreviation* for wrapping the next complete expression with quote to form (quote ⟨ expression ⟩). is is important because it maintains the principle that any expression seen by the interpreter can be manipulated as a *data object*.~~
+  see 4.1 where `(read)` will transform `'` to `quote` automatically.
   "data object": list where almost all data in Scheme is *connected* by *just* `cons`.
-- > For the interpreter we implement in Chapter 4, the code is in fact shared
-- > In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter
-- > For the interpreter we implement in Chapter 4, the code is in fact shared.
+- ~~> For the interpreter we implement in Chapter 4, the code is in fact shared~~
+  i.e. all are `make-procedure` which contains the env when *defined*.
+- ~~> In Chapter 4 we shall see how this model can serve as a blueprint for implementing a working interpreter~~
+  "binding the formal parameters of the procedure": `extend-environment`
+  "a pair con-sisting of the text of the λ-expression and a pointer to the envi-ronment": `make-procedure`
 - ~~> at is, they are described not by single-valued functions, but by functions whose results are sets of possible values. In Section 4.3 we will study a language for expressing nondeterministic computations.~~
   Better see Exercise 4.45 etc. Here it just means the sequential order is (amb)iguous.
 - ~~> In Section 4.2, we’ll develop a framework that unifies lists and streams.~~
@@ -308,14 +311,15 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - ~~> ere are also languages (see Exercise 4.31) that give programmers de-tailed control over the strictness of the procedures they define.~~
 - ~~> we can build our evaluator to memoize, not to memoize, or leave this an option for programmers (exercise 4.31). As you might expect from chapter 3, these choices raise issues that become both subtle and confusing in the presence of assignments. (See exercises 4.27 and 4.29.)~~
   Same problems shown also in Exercise 3.51, 52.
-- > By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go even farther in this direction in section 4.4.
+- ~~> By incorporating a search mechanism into the evaluator, we are eroding the distinction between purely declarative descriptions and imperative specifications of how to compute answers. We'll go *even farther* in this direction in section 4.4.~~
+  i.e. just "what is" -> how.
 - ~~> Section 4.3.1 introduces amb and explains how it supports nondeterminism through the evaluator's automatic search mechanism. Section 4.3.2 presents examples of nondeterministic programs, and section 4.3.3 gives the details of how to implement the amb evaluator by modifying the ordinary Scheme evaluator.~~
   - > explains how it supports nondeterminism through the evaluator's automatic search mechanism
     search "search".
   - 
-- > Similar ideas, arising from logic and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).
+- ~~> Similar ideas, arising from *logic* and theorem proving, led to the genesis in Edinburgh and Marseille of the elegant language Prolog (which we will discuss in section 4.4).~~
 - ~~> Alyssa's technique ``falls into'' one of these recursions and gets stuck. See exercise 4.50 for a way to deal with this.~~
-- > some of the work of coarse matching can be done when the data base is constructed ... Our implementation, described in Section 4.4.4, contains a simple-minded form of such an optimization.
+- ~~> some of the work of coarse matching can be done when the data base is constructed ... Our implementation, described in Section 4.4.4, contains a simple-minded form of such an optimization.~~
 - ~~> These two streams are combined (using *stream-append-delayed*, section 4.4.4.6) to make a stream of *all the ways* that the given pattern can be satisfied *consistent with the original frame* (see exercise 4.71).~~
 - ~~> The output streams for the various disjuncts of the or are computed separately and *merged using the interleave-delayed procedure* from section 4.4.4.6. (See exercises 4.71 and 4.72.)~~
   4.72 shows why we don't use `append`.
@@ -325,9 +329,18 @@ checked up to section 4.3 (included) and exercise checking up to 4.3 (included)
 - ~~> an and query could, in the worst case, have to perform a number of matches that is *exponential* in the number of queries (see exercise 4.76).~~
 - ~~> Similar problems occur with the use of lisp-value -- the Lisp predicate can't work if some of its arguments are unbound. See exercise 4.77.~~
 - ~~> One way to do this would be to implement the query system as a nondeterministic program, using the amb evaluator of section 4.3 (see exercise 4.78)~~
-- > The real behavior of not is more complex. We will examine not's peculiarities in sections 4.4.2 and 4.4.3.
-- > the general methods may break down in more complex cases, as we will see in section 4.4.3.
-- > See exercise 4.69 for some rules to deduce more complicated relationships.
+- ~~> The real behavior of not is more complex. We will examine not's peculiarities in sections 4.4.2 and 4.4.3.~~
+  See footnote 70.
+- ~~> the general methods may break down in more complex cases, as we will see in section 4.4.3.~~
+- ~~> See exercise 4.69 for some rules to deduce more complicated relationships.~~
+- ~~> even this qualified statement is false for our implementation of the query language (and also false for programs in Prolog and most other current logic programming languages) because of our use of *not and lisp-value*. As we will describe below, the not implemented in the query language is *not always consistent* with the not of mathematical logic, and lisp-value introduces additional complications.~~
+  just see
+  ```scheme
+  (and (not (job ?x (computer programmer)))
+     (supervisor ?x ?y))
+  ```
+- ~~> the appearance of a loop can depend on the order of clauses in an and (see exercise 4.64)~~
+- ~~> Another technique, which does not lead to such serious control problems, is to put in special knowledge, such as detectors for particular kinds of loops (exercise 4.67)~~
 ### 5
 - > culminat-ing with a complete implementation of an interpreter and com-piler in Chapter 5
 - > When we discuss the implementation of procedures on register machines in Chap-ter 5
@@ -3431,7 +3444,7 @@ what amb should achieve (for how is achieved, please check codes...)
   3. "failure continuation", i.e. book "Execution procedures and continuations" list.
     in a nutshell, i.e. backtracking and assignment restoration.
   4. "passing the continuations around"
-#### @%%TODO
+#### TODO
 - ~~How footnote 51 is done?~~
   See `old-value` in `analyze-assignment`.
   - See the 2nd example in `amb-process-demo.scm` which shows
@@ -3527,7 +3540,37 @@ Like before, I only checked the first sentence for each paragraph if that is eno
   This is also implied by
   > it makes the next item be the *cdr of the list* structure.
   - Also see codes it will do `cdr` in each recursion and also `car` to get the 1st element in the rest list.
+- > if one starts with true premises, only true conclusions can be derived.
+  This may mean *wrong conclusions can't* be derived.
+- > the data base must be scanned for each intermediate result (frame) produced by the first clause of the and.
+  In the codes, we use index to avoid always scanning the whole data base.
+- > ?y is bound to ?who
+  It is better to say in the reverse direction due to the code implementation.
+- > there can be no general scheme for reliably preventing a system from going down infinite paths in performing deductions. Imagine a diabolical rule of the form ``To show P(x) is true, show that P(f(x)) is true,'' for some suitably chosen function f.
+  because this even has loops in mathematical logic.
+- > The trouble is that our implementation of not really is meant to serve as a filter on values for the variables.
+  This is due to procedural interpretation since the program must do something *first*. It can't do simultaneous match for all [literals](https://en.wikipedia.org/wiki/Literal_(mathematical_logic)). <a id="not_here_is_not_simultaneous"></a>
+#### preface
+- > the resolution principle
+  [see](https://mathworld.wolfram.com/ResolutionPrinciple.html) similar to `not`.
+- > merging the control structure of a programming language with the operations of a logic-manipulation system
+  IMHO similar to here we implement `and, or` etc with `cond` etc.
+- > using a proof technique called linear Horn-clause resolution
+  at least includes [proof by contradiction](https://en.wikipedia.org/wiki/Horn_clause#Significance).
+- > only some of which can be turned into effective devices for computing in *any direction*.
+  See `reverse` for unidirectional case.
+- > LIPS
+  [see](https://courses.cs.washington.edu/courses/cse415/02sp/slides.0/Unification/tsld013.htm#:~:text=LIPS%20are%20sometimes%20used%20to,%2D%3E%201%20successful%20resolution%20step.)
+- > spurious infinite loops or other undesirable behavior
+  see 4.4.3.
+- > knowledge is expressed in terms of relations
+  i.e. assertion list.
+- > the logic-programming evaluator shares the essential structure of the Lisp evaluator.
+  i.e. eval/apply where the latter means rule.
 #### codes
+- > We saw earlier in this section how to evaluate simple queries in the absence of rules.
+  see
+  > The pattern matcher is all the mechanism that is needed to process simple queries that don't involve rules.
 - > We never modify a stored binding and we never store more than one binding for a given variable.
   They are both achieved by `(pattern-match (binding-value binding) dat frame)` as
   > ?X remains bound to (f ?y).
@@ -3570,12 +3613,16 @@ Like before, I only checked the first sentence for each paragraph if that is eno
 - `(married Mickey ?who)`
   1. assertion -> the-empty-stream
     rule -> `(qeval (married ?1y ?1x) s((?who . ?1y) (?1x . Mickey) '()))` where `s()` means stream.
+    - > in effect, to process the query (married ?who Mickey).
+      due to ?who means *same* as ?1y.
+      - by induction
+        > which this time is equivalent to (married Mickey ?who).
   2. For the 2nd qeval, then `(pattern-match query-pat assertion query-frame)` where `?1y` is bound to Minnie and then `?1x` to be bound with `Mickey` is consistent.
   3. Then again the rule `?1y` is to be bound with `?2x`.
     Then `(?1x . ?2y)` -> `(Mickey . ?2y)`, i.e. by `(var? p2)` we will have `(?2y . Mickey)`. Still consistent.
   4. So the 3rd qeval, `(qeval (married ?2y ?2x) s((?2y . Mickey) (?1y . ?2x) (?who . ?1y) (?1x . Mickey) '()))`. So `(married ?2y ?2x)` means `(married Mickey ?who)` where ?who is got by 2 transformations.
     > which this time is equivalent to (married Mickey ?who).
-#### @%%TODO
+#### TODO
 Emm... Reading 4.4.2 without reading the codes doesn't help much...
 Next time better directly reading the codes and check the description when necessary besides the  recommendation that we should check examples like 4.4.1 after reading the codes as section 4.3 implies.
 - ~~4.4.2 preface underlined~~
@@ -3593,7 +3640,10 @@ Next time better directly reading the codes and check the description when neces
   Yes.
 - ~~> an and query could, in the worst case, have to perform a number of matches that is exponential in the number of queries (see exercise 4.76)~~
   and footnote
-- > There is a subtle difference between this filter implementation of not and the usual meaning of not in mathematical logic. See section 4.4.3.
+- ~~> There is a subtle difference between this filter implementation of not and the usual meaning of not in mathematical logic. See section 4.4.3.~~
+  2 points
+  1. See "not_here_is_not_simultaneous".
+  2. > There is also a much more serious way
 - ~~> The lisp-value special form is implemented as a similar filter on frame streams.~~
 - ~~> The unification algorithm is the most technically difficult part of the query system. ... ~~
   until footnote 71.
@@ -3605,13 +3655,15 @@ Next time better directly reading the codes and check the description when neces
     - also implied by the code difference.
 - ~~footnote 74~~
   - Also see Exercise 4.71.
-- footnote 77.
+- ~~footnote 77.~~
 ##### codes
 - ~~`contract-question-mark`~~
 - ~~`flatten-stream`~~
   ~~why `(stream-car stream)` is also stream?~~
-- why `(fetch-assertions pattern frame)` pass one unused `frame`.
-  - Emm... when review, I don't know what I meant before ...
+- ~~why `(fetch-assertions pattern frame)` pass one unused `frame`.~~
+  - ~~Emm... when review, I don't know what I meant before ...~~
+  - > should be checked for a match against the pattern and the frame.
+    Here frame is not used to do `fetch-assertions` operation. Maybe just one memo to show `assertion` should be matched against with `pattern` based on `frame` which is just what `check-an-assertion` does.
 - ~~When `(get-stream '? 'rule-stream)` will be non-null.~~
   - See book
     > whose conclusions start with a variable as well as those whose conclusions have the same car as the pattern.
@@ -3781,11 +3833,11 @@ This is much more trivial than the book exercises.
 ## (maybe related with compiler) analytic philosophy and computer science
 - https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
 
-# @%TODO read Lecture 5,6 & 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+# @%TODO read ~~Lecture 5,6 &~~ 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
 - 5,6 have been checked.
-- 6.001 2007 only has Guest lecture pdf's and those lecs after Lecture 22 not offered.
-  - TODO check 6.001 2005 L22,23,26. But "Explicit control evaluator" in 6.001 2007 has no corresponding part in 6.001 2005.
-    - [6.001 2005 rec](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/recitations/) lacks many rec's.
+- 6.001 2007 only doesn't offer Guest lecture pdf's and those lecs after Lecture 22.
+  - TODO check 6.001 *2005* L22,23,26. But "Explicit control evaluator" in 6.001 2007 has no corresponding part in 6.001 2005.
+    - [6.001 2005 lec](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/recitations/) lacks many rec's.
       > presenting *some* of the 6.001 recitations
 
 <!-- in-page link -->
