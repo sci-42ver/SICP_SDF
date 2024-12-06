@@ -1126,6 +1126,10 @@ No related doc for stk by googling 'stk "get-last-mapreduce-output"'.
     -> `(square 25 (lambda (x) x))` -> 625
   - foo -> 25
   - trivial
+## Week 15
+- [x] 1,2 trivial
+- > Anything else is a query.
+  Implied by `cond` in `query-driver-loop`.
 # @CS 61A notes
 ## skipped underlined words
 - p2
