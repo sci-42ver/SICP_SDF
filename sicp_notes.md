@@ -1307,8 +1307,13 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > Each method is a procedure de ned within the scope of one or the other class procedure, and Scheme's lexical scoping rules restrict each method to the variables whose scope contains it.
   ~~Based on `make-checking-account-instance` code, `(lambda (message) ...)` can access `MY-ACCOUNT` but only `MY-ACCOUNT` can access ~~
   TODO Since I didn't check the details of the code implementation, I won't dig into the above.
-  - > The technical distinction between inheritance and delegation is that an inheritance-based OOP system does not have this restriction.
-    At least [C++ can do that](https://stackoverflow.com/a/6187813)
+  - > the deposit method only has access to the local state variables of the account class, not those of the checking-account class. Similarly, the write-check method doesn't have access to the account local state variables like balance. ... The technical distinction between inheritance and delegation is that an inheritance-based OOP system does not have this restriction.
+    At least [C++ can do that](https://stackoverflow.com/a/6187813), i.e. local variable access between parent and child.
+    - [Delegation](https://en.wikipedia.org/wiki/Delegation_(object-oriented_programming)) just means
+      > delegation refers to evaluating a member (property or method) of one object (the *receiver*) in the context of another original object (the sender).
+      i.e.
+      > the message is *delegated to the parent account* object.
+      so here parent is the "receiver" but "context" only means sender can use receiver method in *its  dispatcher*. However, that method has receiver env.
 - > But if an instance is the my-whatever of some child instance, then self should mean that child.
   i.e. parent should do `initialize` for child instead of itself.
 - > It is provided by the instantiate procedure.
@@ -1613,6 +1618,24 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   implied by rule.
 - > to be satisfied within the environment(s) that qeval gave us when we matched the conclusion.
   actually it is `(singleton-stream unify-result)` instead of `(singleton-stream query-frame)`.
+## Week 16
+- > show how each topic involves an abstraction barrier
+  Application programs
+  (API)
+  High-level language (Scheme)
+  (The above has no need to care about memory allocation)
+  Low-level language (C)
+  ...
+- https://en.wikipedia.org/wiki/Actor_model seems to be visited before.
+  - better to see [this](https://stackoverflow.com/q/41215734/21294350) which highlights the  *concurrency* difference. (same as [this](https://stackoverflow.com/questions/15147924/how-do-erlang-actors-differ-from-oop-objects))
+    both are from [this](https://stackoverflow.com/q/41215734/21294350)
+- > identity vs. equal value
+  related with mutation, see p56.
+- callback [back meaning](https://stackoverflow.com/a/7549753/21294350) or [see](https://stackoverflow.com/questions/824234/what-is-a-callback-function#comment110726387_824234) which explains
+  > callback from operating system for *events*
+  - or just [ignores "back"](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)
+  - [Non-Blocking example](https://medium.com/@susanne.lundkvist/how-to-use-callbacks-in-node-js-79ebe29408e0) 
+    also [see](https://stackoverflow.com/q/9362823/21294350) meaning same.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 
@@ -2464,8 +2487,9 @@ not use
     Here we adds the nil at the end to ensure base case `((null? records) false)` in `assoc` work (same for `(list '*table*)` in `(make-table)`).
 - > These gluing pairs are called the backbone of the table
   For Figure 3.22, i.e. the 1st row.
+- > event-driven simulation
+  Similar to [event-driven programming](https://stackoverflow.com/a/11063414/21294350)/process (said by CS 61A notes)
 - TODO
-  - > event-driven simulation
   - ~~When is `(propagate)` run?~~
     `(propagate)` is manipulating the scheduled things in `the-agenda` just as codes show. 
     This is different from [Carry-lookahead adder](https://en.wikipedia.org/wiki/Carry-lookahead_adder#Implementation_details) which uses `P,G` to do calculation beforehand to decrease delay.
@@ -3849,6 +3873,11 @@ This is much more trivial than the book exercises.
   - automatic analysis in compiler
 - [left recursion elimination](http://community.schemewiki.org/?sicp-ex-4.47)
 - lexer_vs_parser above.
+# TODO after networking
+- https://stackoverflow.com/a/152863/21294350
+  why we define socket and port.
+  - maybe [see](https://www.ibm.com/docs/en/zos/2.4.0?topic=concepts-understanding-sockets#:~:text=A%20socket%20uniquely%20identifies%20the,TCP%2C%20UDP%2C%20or%20IP.)
+    > but the port number itself does not indicate the protocol being used
 ## (maybe related with compiler) analytic philosophy and computer science
 - https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
 
