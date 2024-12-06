@@ -24,6 +24,7 @@
 ; (assert! (rule (reverse () ())))
 
 ;; wiki poly
+;; Same as cs61a/lectures/4.4/reverse.scm
 ;; just uses and to call reverse internally.
 (assert! (rule (reverse (?x . ?y) ?z)
                (and (reverse ?y ?v)
@@ -35,6 +36,12 @@
 
 ;; fail due to ?x can't be matched
 ;; Then it end up calling (reverse ?y ?v) always uselessly.
-(reverse ?x (1 2 3))
+; (reverse ?x (1 2 3))
 
+;;
+(assert! (rule (reverse ?z (?x . ?y))
+               (reverse (?x . ?y) ?z)))
+;; fail due to it becomes (reverse ?x (1 2 3)) and then back...
+(reverse (1 2 3) ?x)
+; (reverse ?x (1 2 3))
 

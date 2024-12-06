@@ -1594,6 +1594,21 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
     > but I think this way makes the issues clearer because it’s more nearly parallel to the division of labor between eval and apply in the vanilla metacircular evaluator.
 - > (stream-filter Fermat? (pairs (pairs integers integers) ...))
   I don't know what this Fermat? means? It is https://en.wikipedia.org/wiki/Fermat_primality_test#Concept ?
+## Week 15
+- > When we discovered streams, we saw how to express an algorithm in a way that’s independent of the order of evaluation.
+  "independent of the order of evaluation." may mean p75
+  > decouple the form of a program—the order in which computations are presented—from the actual order of evaluation
+  i.e. "the order of evaluation" is undetermined or at least varies depending on the input args.
+- > do composition of functions
+  should be better with
+  `(grandmother ?younger)` -> `(mother (mother ?younger))`
+- `(append a b)` is same as book p139.
+- > one for each set of variable values that satisfy some previous query.
+  i.e. frame.
+- > recursively use qeval to evaluate p
+  implied by rule.
+- > to be satisfied within the environment(s) that qeval gave us when we matched the conclusion.
+  actually it is `(singleton-stream unify-result)` instead of `(singleton-stream query-frame)`.
 # chapter 1
 Since I was to learn programming, so for paragraphs not intensively with programming knowledge I only read their first sentence.
 

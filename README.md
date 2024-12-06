@@ -61,6 +61,14 @@
   to Nov 20, give one feasible amb implementation functioning same as the book one.
   to Nov 21, found the guile doc saying much better than MIT/GNU Scheme doc about macro/syntax transformer like `syntax-rules` etc.
   to Nov 22, finish one rec and lab.
+  to Nov 23, one rec.
+  to Nov 26, finish SICP section 4.2, 4.4.
+  to Nov 27, finish SICP exercise 4.76 (section 4.4.2 and 4.4.4).
+  to Nov 29, exercise 4.77 (Emm... some exercise is a bit complex).
+  to Dec 1, exercise 4.78.
+  to Dec 2, 4.79.
+  to Dec 4, finish section 4.4.1.
+  to Dec 5, finish section 4.4.3.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF
