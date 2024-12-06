@@ -1130,7 +1130,7 @@ No related doc for stk by googling 'stk "get-last-mapreduce-output"'.
 - [x] 1,2 trivial
 - > Anything else is a query.
   Implied by `cond` in `query-driver-loop`.
-# @CS 61A notes
+# CS 61A notes
 ## skipped underlined words
 - p2
 - p11
@@ -1139,8 +1139,8 @@ No related doc for stk by googling 'stk "get-last-mapreduce-output"'.
 - p54
 - p58
 - p68
-## @TODO
-### @underlined words checked up to p88
+## TODO
+### underlined words checked up to p88
 - ~~p24 MapReduce~~
   > (accumulate reducer base-case (map mapper data))
   See p26 where we actually combine related kv-pairs sharing the key into one *bucket*. Then `(reduce reducer base-case (map kv-value subset)` only for *value*s. Same as p85
@@ -1503,7 +1503,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
   I can't get the `mapreduce` code, so skipped understanding this block.
   same for
   > Streams you make yourself with cons-stream, etc., can’t be used.
-### @TODO check underlined words (1 in each of page 80~82 all about first-class expressions)
+### TODO check underlined words (1 in each of page 80~82 *all* about *first-class expressions*)
 - all contexts of "first-class expression".
 ## Week 13
 - > Software *doesn’t degrade like hardware*
@@ -1595,7 +1595,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
     - > So instead, we just evaluate the predicate, giving it a success continuation that will evaluate the consequent or the alternative, supposing that evaluating the predicate succeeds.
       This uses `succeed` for the *actual value* of the `if` form instead of for predicate unexpectedly.
       - This is similar to avoiding *early* return for `call/cc`.
-### @TODO
+### TODO
 - ~~> This isn’t quite true, and I’ll fix it in a few paragraphs.~~
   i.e. delay-it
   - then why directly `(LIST-OF-DELAYED-VALUES (operands exp) env)))` while the book just passes `exp` (maybe to avoid doing unnecessary redundant things?)
@@ -3836,6 +3836,8 @@ This is much more trivial than the book exercises.
 - > As such let’s represent a solution as a list of n elements: each element represents the row that that column’s queen is in.
   same ideas as wiki `queens-iterate-cols`
   - Here `(except 1st-elem (enumerate-interval 1 max-row))` to implement `distinct?` but diagonal needs the more detailed iter.
+### rec21 (no related lec in SP2007, SP2005, 6.037)
+Emm... All exercises are all included in book exercises or contents.
 # Colophon
 - > is image of the engraving is hosted by J. E. Johnson of New Goland.
   [See](https://www.pinterest.com/newgottland/mechanisms/) -> [this](https://www.pinterest.com/pin/116108496617565759/)

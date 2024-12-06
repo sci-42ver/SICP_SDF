@@ -12,6 +12,7 @@
       ;; IMHO this is better to filter immediately when possible.
       (not (same ?person1 ?person2))
       (or (same ?job1 ?job2)
+        ;; Here job1 can be still same as job2
         (can-do-job ?job1 ?job2)
         )
       )

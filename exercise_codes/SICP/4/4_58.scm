@@ -20,6 +20,18 @@
                             (not (job ?boss (?division . ?r))))))))
 
 (big-shot ?x)
+
+(assert!
+  (rule (big-shot-r21 ?p)
+    ;; wrong with no dot.
+    (and 
+      ; (job ?p (?dept ?x))
+      (job ?p (?dept . ?x))
+      (supervisor ?p ?super)
+      (job ?super (?superdept . ?y))
+      (not (same ?dept ?superdept)))))
+(big-shot-r21 ?p)
+
 (big-shot ?x ?y)
 ; (big-shot (warbucks oliver) administration)
 ; (big-shot (scrooge eben) accounting)
