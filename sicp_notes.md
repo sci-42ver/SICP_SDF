@@ -3883,7 +3883,9 @@ Emm... All exercises are all included in book exercises or contents.
 ## (maybe related with compiler) analytic philosophy and computer science
 - https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
 
-# @%TODO read ~~Lecture 5,6 &~~ 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) ([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography)).
+# @%TODO read ~~Lecture 5,6 &~~ 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. 
+- Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) 
+  ~~([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography))~~.
 - 5,6 have been checked.
 - 6.001 2007 only doesn't offer Guest lecture pdf's and those lecs after Lecture 22.
   - TODO check 6.001 *2005* L22,23,26. But "Explicit control evaluator" in 6.001 2007 has no corresponding part in 6.001 2005.

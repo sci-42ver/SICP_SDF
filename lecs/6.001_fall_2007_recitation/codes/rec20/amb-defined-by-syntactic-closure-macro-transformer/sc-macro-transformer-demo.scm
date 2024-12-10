@@ -64,6 +64,9 @@
   (aif (memv i '(2 4 6 8))
        (car it)))
 ;; captured by the output form, i.e. that created by let in the transformer.
+;; > All the identifiers used in form, except those explicitly excepted by free-names, obtain their meanings from environment.
+;; So it obtains from (it ,test) instead of (it (cons 1 2)).
+;; IMHO i.e. get value from transformer environment https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/SC-Transformer-Definition.html
 ; 4
 
 ;; here we need no extra literal

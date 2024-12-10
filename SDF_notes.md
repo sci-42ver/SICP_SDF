@@ -1,3 +1,6 @@
+As one reference if someone don't know how "Bitwise operators avoid branching instructions": https://softwareengineering.stackexchange.com/a/381829. Notice "replace testA() || testB() || testC() with" only works when functioning as the conditional predicate. The actual values are not same as the replacement. The more detailed is shown in https://sdremthix.medium.com/branchless-programming-why-your-cpu-will-thank-you-5f405d97b0c8 where "Conditional Move Instructions" means same as the former link 2nd example.
+
+"Arithmetic Operations" example is related with https://stackoverflow.com/a/22634965/21294350.
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -17,12 +20,19 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 - Sometimes I use *yellow mark* to show I have read some footnotes.
 # miscs
 - cph: Competitive Programming Helper
+## misc clipboard
+- SDF_exercises TODO
+- code_base TODO
+  - check by `grep TODO -r . | grep -v SDF_exercises | grep -v ";;;\|IGNORE"`
+- regex search `sdf/**/*.scm`
 # @How to learn
-## @Check p14, 23~27 (chapter 1 underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+## @%Check p14, 23~27 (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
 - chapter 2, 3 checked.
-## @Check the preface of each chapter and section same as SICP.
-- done up to section 3.6 included.
-## @Chapters to check
+## @%Check the preface of each chapter and *section* same as SICP.
+From chapter 4, also check the "page" context.
+- done up to section 4.2 included (not including chapter 4).
+## Chapters to check
 Updated up to section 3.6 included.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
@@ -47,9 +57,28 @@ Updated up to section 3.6 included.
   See `tagging-strategy:always` where `tag` only has data `simple-tag-shared` got by `%make-tag-shared` for `make-simple-tag`.
 - ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
   IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
-### chapter 4
+### @%chapter 4
+page checked up to Exercise 4.6, section checked before p272 ("chapter" checking is finished).
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
-- > (We will explore algebraic simplification in section 4.2.)
+- ~~> (We will explore algebraic simplification in section 4.2.)~~
+- ~~> In section 4.2 we will demonstrate this in a term-rewriting system for elementary algebra.~~
+- > unless, somehow, x=(+ x y).1 We will learn about that sort of situation when we study unification matching in section 4.4
+- ~~> We will learn how a pattern is compiled into a match procedure in section 4.3;~~
+- > This will be needed in the code supporting section 4.5.
+- > In this chapter we have seen how to build a term-rewriting system.
+- > This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.
+- > This code is more complex than one might expect, because we
+will extend the variable syntax in section 4.5 and some of the
+exercises.
+- > In section 4.4.4, when we add code to experiment with
+segment variables in the patterns, we will be able to extract multiple
+matches by returning #f from succeed, indicating that the result
+was not the one wanted
+- > This will have consequences that we
+will see in section 4.5.4.
+- > This pattern shares several characteristics with those we've looked
+at in previous sections
+- 
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
@@ -78,6 +107,8 @@ Updated up to section 3.6 included.
 ## @SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
   >  The instructions for which files to load
+- `guarantee` ~~(TODO seemingly defined in code base)~~
+  search `name guarantee)` in SDF_exercises/software/sdf/manager/saved-total-index
 ### not in MIT_Scheme_Reference, saved-total-index and the book
 - `#!default`
 - `bundle?`
@@ -572,6 +603,36 @@ Problems with combinators and possible solutions using generic procedure:
   See `type-instantiator` where "information" is something like `tag-supersets` to be used for `rule<` used by `make-subsetting-dispatch-store-maker` -> `get-handler`.
   > Such audit trails may be useful for access control, for tracing the use of sensitive data, or for debugging complex systems
   After all it can do anything if possible since it is *data*.
+# chapter 4
+I first read 4.2.2 (actually directly read the codes after reading the contents before Exercise 4.1 since the book doesn't say much about codes seemingly...)
+- > if more than one rule is applicable, the results may depend on the ordering of application
+  - ~~Similar to SICP~~
+    > depend on the order of clauses in an and
+    i.e. one rule may cause
+  - SICP uses `stream-flatmap`
+    Here at least result *order* "may depend on".
+- > We already encountered problems with the interaction of rules, in the boardgame rule interpreter. (See the critique on page 63.)
+  These problems are not about correctness but *design improvements*.
+- > The first rule could be in the control-structure part of the optimizer,
+  [see](https://www.avrfreaks.net/s/topic/a5C3l000000UALjEAO/t053581?comment=P-428870) although [the normal call](https://en.wikipedia.org/wiki/Peephole_optimization#Removing_redundant_stack_instructions) doesn't have this pattern seemingly
+- https://en.wikiversity.org/wiki/Basic_Laws_of_Algebra
+- > See section 5.4.2 on page 273 for more examples and explanation of this success/failure pattern.
+  I didn't dig into that codes currently, but with a glance, it should be similar to SICP implementation based on "backtracking".
+  Actually, understanding SICP amb implementation is enough to understand codes here.
+- > convergent term-rewriting systems
+  [see (I skipped digging)](https://en.wikipedia.org/wiki/Abstract_rewriting_system#Termination_and_convergence)
+- > matches a list of any number of elements
+  IMHO it is >= 2.
+- > headed list
+  see sicp_notes.md or SICP Figure 3.22.
+- > change the syntax of patterns any way we like
+  i.e. the way patterns are constructed.
+## TODO
+- ~~> Let's see how to organize programs based on pattern matching.~~
+## difference from SICP logic programming
+adds
+1. segment variable
+2. predicate like `(? x ,number?)`.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:

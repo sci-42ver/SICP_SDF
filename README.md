@@ -69,6 +69,7 @@
   to Dec 2, 4.79.
   to Dec 4, finish section 4.4.1.
   to Dec 5, finish section 4.4.3.
+  to Dec 6, finish CS_61A notes and rec which are much more trivial when having finished all SICP exercises.
   - Up to now, the main time is spent on reading the book and *schemewiki*.
     Emm about one month for each chapter... up to chapter 3.
 ## SDF

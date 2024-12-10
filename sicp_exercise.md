@@ -2259,6 +2259,8 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       i.e. 4.16
     - almost same as "Consider a procedure with internal definitions, such as", then "would be transformed into", so just 4.16.
     - As wiki meteorgan's shows, this is simpler than 4.16 since we don't need to traverse to get all `define`s.
+      - This is same as what [MIT_Scheme_Reference](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Lexical-Binding.html#index-letrec-1) says except for "*unspecified order*".
+        > The variables are bound to fresh locations *holding unassigned values*, the inits are evaluated in the *extended environment* (in some *unspecified order*), each variable is assigned to the result of the corresponding init
   - b.
     - letrec:
       E1: x->5
@@ -2682,7 +2684,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
       > than to produce an incorrect answer (as Ben would have it).
       But actually MIT/GNU Scheme will output as Ben's (IMHO this is just how *environment model* works where `(+ a x)` will search frame*s* and find `(a 1)` and `(+ a b)` just uses the *first* frame `(define a 5)`.)
 - 4.78
-  Update about (big-shot ?x ?y).
+  Update wiki about (big-shot ?x ?y).
 
 [repo_reference_1_20]:https://mngu2382.github.io/sicp/chapter1/01-exercise06.html
 
