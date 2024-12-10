@@ -103,7 +103,8 @@ Different from SDF, here the preface doesn't give one systematic introduction of
 ## @%%*em* tracking when reading the book (Read *before doing the related exercises*)
 - up to section 4.4 (included).
 ## @%%to reread after reading later chapters (strikethrough to mark already read)
-tracked up to section 2.5 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd*  began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
+~~This line won't be updated~~ tracked up chapter 4 (included) by searching "chapter", "section" and "*exercise*" (*the 3rd* began from chapter 3 since in the former chapters I will just do the exercises when they are referred to. But that may probably lack some background knowledge when doing exercises a bit earlier).
+These bullet lists are in level 4 in VSCode (so fold level 4 to see the overview).
 ### ~~1.2~~
 - ~~> You may wonder why anyone would care about raising numbers to the 1000th power. See Section 1.2.6.~~
 ### ~~1.3~~

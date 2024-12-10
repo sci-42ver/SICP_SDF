@@ -29,11 +29,13 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 ## @%Check p14, 23~27 (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
 - chapter 2, 3 checked.
-## @%Check the preface of each chapter and *section* same as SICP.
-From chapter 4, also check the "page" context.
+## @%Check the *preface* of each chapter and *section* same as SICP.
 - done up to section 4.2 included (not including chapter 4).
 ## Chapters to check
-Updated up to section 3.6 included.
+"chapter, section" contexts
+- Updated up to section 3.6 included.
+- From chapter 4, also check the "page, exercise" context.
+  I forgot whether I checked exercise contexts in chapter 1~3.
 ### chapter 2
 - ~~> In the implementation of section 2.4.1, we used the terms jumping and capturing interchangeably.~~
 ### chapter 3
@@ -58,7 +60,7 @@ Updated up to section 3.6 included.
 - ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
   IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
 ### @%chapter 4
-page checked up to Exercise 4.6, section checked before p272 ("chapter" checking is finished).
+exercise checked before section 4.4, page checked up to Exercise 4.6, section checked before p272 ("chapter" checking is finished).
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - ~~> (We will explore algebraic simplification in section 4.2.)~~
 - ~~> In section 4.2 we will demonstrate this in a term-rewriting system for elementary algebra.~~
@@ -627,12 +629,19 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   see sicp_notes.md or SICP Figure 3.22.
 - > change the syntax of patterns any way we like
   i.e. the way patterns are constructed.
+## 4.4
+- `(unifier a b)` etc have been taught in SICP.
+- ~~> Often there are constraints among the variables in an expression.~~
+- Here I read codes following the book based on *abstraction* (e.g. understanding `unifier` ideas only knowing what `unify` should do but not how) since unification ideas have been taught in SICP.
 ## TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 ## difference from SICP logic programming
-adds
-1. segment variable
-2. predicate like `(? x ,number?)`.
+- one-sided matching
+  adds (see `algebra-2`)
+  1. segment variable
+  2. predicate like `(? x ,number?)`.
+  3. extension in exercises.
+  4. ...
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
