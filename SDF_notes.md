@@ -688,6 +688,18 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   Here it means cdr of each binding is "type variables".
 - > the same as the types
   Emm... My English is poor that I used merely "same as" before which is [wrong](https://textranch.com/c/is-the-same-as-or-is-same-as/)...
+### 4.4.4
+- > ((w () ??) (y () ??) (x (b b b) ??))
+  > ((w () ??) (y () ??) (x (b b b) ??))
+  ~~This is due to `unify:segment-var-var` has ~~
+  See SDF_exercises/chapter_4/term-rewriting/book-demo/bidirectional-segments.scm
+- TODO
+  ["general unifier" p17](https://www.csd.uwo.ca/~mmorenom/cs2209_moreno/read/read6-unification.pdf)
+- > The other four are not as general as possible.
+  i.e. same here.
+- > But these expressions do match, with the following bindings:
+  Here `(?? x)` intersects with `(?? y)` sharing the value 5.
+  But tht codes only consider the containing relation in `grab-segment`.
 ## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 - > And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.
@@ -695,6 +707,9 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   > (define addition-commutativity 
   >  ’(= (+ (? u) (? v)) (+ (? v) (? u))))
 - ~~`SDF_exercises/software/sdf/unification/possible-bug.scm`~~
+- > here we are not trying to build a complete and correct segment unifier.
+  - maybe
+    > but an element variable may not have a segment variable as its value.
 ## difference from SICP logic programming
 - one-sided matching
   adds (see `algebra-2`)
@@ -705,6 +720,7 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
 - unification
   - doesn't consider recursive unification.
     The implicit renaming in SDF_exercises/software/sdf/unification/type-resolver.scm is not used for unification but for the *general* `type:...` var is used many times.
+  - again has segment variable.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:

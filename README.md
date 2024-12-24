@@ -28,6 +28,11 @@
   I may also use Racket libs for some SICP exercises.
 - What doc should I read?
   Maybe [this](https://stackoverflow.com/q/79098453/21294350) is helpful. So you can also try guile implementation although I am not familiar with that.
+# Notice
+- Here most of all exercises are independent like the reference SICP repo xxyzz does.
+  However, it is better to make some extension introduced by the exercise available for latter exercises.
+  - Anyway if you are interested, you can make them as dependent as possible.
+    I didn't realize this problem until finishing SCIP chapter 4 and reading SDF chapter 4.
 # How long I have taken to read these books
 ## SICP
 - From Jun 2 to Jul 2, chapter 1 is finished.
