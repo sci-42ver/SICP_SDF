@@ -18,6 +18,13 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   or 6.001 lec11
   > Stack Contract
 - Sometimes I use *yellow mark* to show I have read some footnotes.
+- [SDF_original_book] search is a bit weird. Better to search codes which will be successful most of time (searching paragraph contents may fail).
+  - Emm... codes may fail at some time.
+## Won't dig into
+- I am to learn programming *general strategies*
+  so won't dig into
+  1. maths proof etc
+  2. ingenious algorithm or program structure etc (should be taught in CRLS etc).
 # miscs
 - cph: Competitive Programming Helper
 ## misc clipboard
@@ -26,6 +33,11 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   - check by `grep TODO -r . | grep -v SDF_exercises | grep -v ";;;\|IGNORE"`
 - regex search `sdf/**/*.scm`
 # @How to learn
+- I forgot how I read book contents in chapter 1~3 (maybe just read the 1st sentence in each paragraph if that is sufficient to get the main ideas).
+  From chapter 4, I will read codes first and then read 
+  1. *code term* contexts since IMHO SDF codes are complexer than SICP although this may not hold for chapter 4.
+  2. the 1st sentence in each paragraph
+  3. contents enclosed by square brackets
 ## @%Check p14, 23~27 (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
 - chapter 2, 3 checked.
@@ -166,6 +178,10 @@ at in previous sections
   - > It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.”
     the former may mean "the types of all of the arguments"
     while the latter may mean sometimes "thing being moved" is "the principal dispatch center" while sometimes "the source location" is.
+## TODO after compiler
+- 4.4.3. exercises. At least 4.14.
+  - algorithm W [may be not the best](https://stackoverflow.com/q/66825356/21294350) for Hindley-Milner type inference
+    - also see [1](https://stackoverflow.com/a/415574/21294350) [2](https://cs.stackexchange.com/q/90190/161388) [3](https://www.reddit.com/r/haskell/comments/4s71um/is_there_any_easy_to_understand_type_inference/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) [4](https://web.archive.org/web/20180913063304/http://dev.stephendiehl.com/fun/006_hindley_milner.html#constraint-generation)
 # [ps](https://github.com/sci-42ver/6.945_assignment_solution) (It doesn't have solutions for all SDF exercises)
 ## ps00
 - I won't dig into the reasons of implementation shown in https://ee.stanford.edu/%7Ehellman/publications/24.pdf.
@@ -257,7 +273,7 @@ Interestingly this chapter compares the computer system with many other systems 
   Same domain and codomain.
 - `(((iterate 3) square) 5)` same as python `((5**2)**2)**2`.
 - > so it does not have a well-defined numerical arity, and thus it cannot be passed to another combinator that needs its arity.
-  I didn't dig into the arity implementation `(hash-table-ref/default arity-table proc #f)` since it is related with data structure which should be learnt in CRLS, i.e. [`procedure-arity`][MIT_Scheme_Reference].
+  I didn't dig into the arity implementation `(hash-table-ref/default arity-table proc #f)` since it is related with data structure (i.e. hash table) which should be learnt in CRLS, i.e. [`procedure-arity`][MIT_Scheme_Reference].
 - > In the mathematical tensor product, f and g are linear functions of their inputs, and h is a trace over some shared indices
   TODO IMHO it is more related with ["direct sum"](https://www.math3ma.com/blog/the-tensor-product-demystified).
 - > Note that here we do not need to use restrict-arity because the returned procedure has exactly one argument.
@@ -632,9 +648,53 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
 ## 4.4
 - `(unifier a b)` etc have been taught in SICP.
 - ~~> Often there are constraints among the variables in an expression.~~
-- Here I read codes following the book based on *abstraction* (e.g. understanding `unifier` ideas only knowing what `unify` should do but not how) since unification ideas have been taught in SICP.
-## TODO
+- ~~Here I read codes following the book based on *abstraction* (e.g. understanding `unifier` ideas only knowing what `unify` should do but not how) since unification ideas have been taught in SICP.~~
+  - IMHO better to read codes and then read the book contents which will be more fluent.
+- > In the guts of this unifier it is convenient for a failure to make an *explicit call* to a failure continuation.
+  maybe it means what SICP does by *explicitly* issuing `try-again`.
+  > returning #f from a success continuation
+  i.e. we change *success continuation* instead of calling `fail` *explicitly*.
+  - Anyway at last we will call `fail`.
+  - > we had to make the reverse transition: the matcher used the #f convention, so make-rule (on page 166) had to implement the transition.
+    i.e. `or` in `match:segment`.
+    So `make-rule` needs to pass `#f` to `succeed`, which is what `print-all-matches` does.
+    - "reverse" just means ~~`make-rule` needs to be compatible with "matcher" reversely.~~
+      i.e. use #f without using `fail` at all -> use `fail`.
+      > This is to make the convention for use of the unifier the same as the convention for use of the matcher of section 4.3.This is an interesting transition.
+      i.e. use #f but here we uses `fail` which is similar to what `make-rule` does.
+  - ~~TODO~~
+    > is easy to interface these disparate ways of implementing backtracking.
+    see
+    > This is to make the convention for use of the unifier the same as the convention for use of the matcher of section 4.3.
+    where matcher actually *doesn't have fail continuation* (see SDF_exercises/software/sdf/design-of-the-matcher/matcher.scm).
+    - So "interface" just means between ways using `fail` (i.e. SDF_exercises/software/sdf/term-rewriting/rules.scm) and not (i.e. matcher).
+- > recursively descend into the pattern, comparing subpatterns of the patterns as lists of terms.
+  same as one-sided `match:list`.
+- > the unification matcher is organized around lists of terms to allow later extension to segment variables.
+  i.e. allowing `grab` one arbitrary subsequence in the *rest*.
+### 4.4.2
+- > it is a procedure that takes one numerical input and produces a numerical output.
+  > takes two numerical arguments and produces a numerical result.
+  These are all be done by `unify` with `primitive-type`.
+  i.e.
+  > the type of each *internal variable* has been determined
+- > The process of type inference has four phases.
+  i.e. `annotate-program` -> `program-constraints` -> `unify-constraints` -> `match:dict-substitution`.
+  - > semantic structure of the program.
+    here "semantic" means type.
+- > this could be accomplished by passing information back in the failure continuations.
+  This is just what `fail` should do. But then `fail` 1. won't be thunk 2. or depends on one global variable 3. or just add infos like SICP does for `set!`, i.e. redefine `fail`.
+- > The annotate-expr procedure takes an environment for bindings of the type variables.
+  Here it means cdr of each binding is "type variables".
+- > the same as the types
+  Emm... My English is poor that I used merely "same as" before which is [wrong](https://textranch.com/c/is-the-same-as-or-is-same-as/)...
+## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
+- > And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.
+  TODO Maybe like
+  > (define addition-commutativity 
+  >  ’(= (+ (? u) (? v)) (+ (? v) (? u))))
+- ~~`SDF_exercises/software/sdf/unification/possible-bug.scm`~~
 ## difference from SICP logic programming
 - one-sided matching
   adds (see `algebra-2`)
@@ -642,6 +702,9 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   2. predicate like `(? x ,number?)`.
   3. extension in exercises.
   4. ...
+- unification
+  - doesn't consider recursive unification.
+    The implicit renaming in SDF_exercises/software/sdf/unification/type-resolver.scm is not used for unification but for the *general* `type:...` var is used many times.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:

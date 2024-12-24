@@ -31,6 +31,7 @@ add one reference
 - I may probably skip some obscure words like "the plethora of declarable data structures" since it doesn't influence understanding programming.
 - https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/errata.html seems to be already contained in sicp.pdf by "Page 112, line 2 of exercise 2.30" is already contained.
 ## whether it is needed to read *course lecs/notes* after reading the SICP book and doing its exercises
+IMHO it only taught `syntax` etc which is not taught in SICP, but the underlying ideas for syntax are taught in SICP.
 ### lacked by the book but included in 6.001 lec
 - lec11
   - Stack example

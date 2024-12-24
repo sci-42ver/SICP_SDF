@@ -9,6 +9,19 @@
   - exercise solutions
   - 6.5150 ps solution
   - TODO 6.5150 project demo
+    - Recommendations from [rfp](./rfp.pdf)
+      - Emm... IMHO they are better done with *compiler background*...
+        - [analysis and synthesis](https://www.csd.uwo.ca/~mmorenom/CS447/Lectures/Introduction.html/node10.html#:~:text=During%20the%20analysis%20or%20synthesis,errors%20detectable%20by%20the%20compiler.) 
+        - semantic search: [wikipedia](https://en.wikipedia.org/wiki/Semantic_search) is more than "matching patterns".
+          > understanding the overall meaning of the query.
+        - except for [point 4](https://en.wikipedia.org/wiki/Mechanism_design#Description)
+          > deals with designing game forms (or mechanisms) to implement a given social choice function
+          social choice function
+          > Each person's preferences are combined in some way to determine which outcome is considered *better by society* as a whole.
+    - IMHO "Scheme Type System" is a bit more acceptable for me without much compiler background.
+      - The expected behavior is ~~like~~ different from Python type hint which [doesn't throw errors](https://stackoverflow.com/a/67412291/21294350).
+      - See [typed/racket](https://docs.racket-lang.org/ts-guide/quick.html#%28part._.Using_.Typed_.Racket_from_the_.Racket_.R.E.P.L%29)
+        - also [see](https://www.cs.ucf.edu/~leavens/ui54/docs/typedscm.html)
 # Q&A
 - What Scheme implementation should I use?
   I just follow the 6.5150 (6.945)/6.5151 (6.905) to use MIT/GNU Scheme. That's fine.
@@ -78,9 +91,16 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Jul 21, finish ps00.
   to Aug 4, finish chapter 2.
   to Aug 5, finish ps01 (14 Feb to 23 Feb) (recommended to use 10 days. So exceed 4 days).
-  From Aug 19 to Aug 22, finish ps02 (21 Feb to 1 Mar) (recommended to use 10 days).
+  From Aug 19 to Aug 22, finish ps02 (21 Feb to 1 Mar) (recommended to use 10 days. So exceed 3 days).
   From Aug 22 to Sep 1 (11 days), finish ps03 (28 February to 8 March) (recommended to use 10 days).
   From Sep 2 to Sep 11 (10 days), finish ps04 (6 March to 15 March) (recommended to use 10 days).
+  From Dec 6 to Dec 9, section 4.1~4.3.
+  to Dec 12, up to exercise 4.10 (a bit slow).
+  to Dec 13, up to exercise 4.13.
+  to Dec 16, up to exercise 4.16 partially.
+  to Dec 21, spend 4.5 days to deal with some problems for my parents and finish 4.16.
+  to Dec 22, finish 4.17 (too slow).
+  to Dec 24, finish 4.18 (too slow).
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
@@ -195,15 +215,19 @@ I use MIT/GNU Scheme.
 > This book is built on the *lectures and problem sets* that are now used in our class.
 ## TODO
 - https://lobste.rs/s/m6gnaq/review_software_design_for_flexibility from https://www.reddit.com/r/scheme/comments/t4bbrq/have_you_read_the_book_software_design_for/
+## other possible notes
+- https://buffer.thebitmage.com/%2F20240410114903-mit_ocw_6_945_aiasp.html
 ## course 6.5151 (6.905)
 1. I *can't find the pdf lecture* by "mit 6.5151 lecture filetype:pdf".
 2. It seems to have no homework by '6.5151 "homework"' (with only Red Tape pdf), similarly for Exam by 'mit 6.5151 "exam"' and Quizzes by "mit 6.5151 Quiz".
    It *only* has *problem set / assignment*.
    - By seeing their pdf's, they are mainly directly book exercises.
-- [old ~~project~~ assignment implementation 2009 (partial)](https://buffer.rajpatil.dev/%2F20240410114903-mit_ocw_6_945_aiasp.html) and [2019 (only have the project solution)](https://github.com/bmitc/mit-6.945-project) (weird still [can't find its fork](https://github.com/bmitc/mit-6.945-project/forks?include=active&page=1&period=&sort_by=stargazer_counts))
-  TODO [project](https://groups.csail.mit.edu/mac/users/gjs/6.945/final-project.pdf) needs team and is a bit general about "symbolic-manipulation software".
-  - It doesn't say what "some ideas" are (also for https://groups.csail.mit.edu/mac/users/gjs/6.945/red-tape.pdf, FAQ and Overview).
+- [old ~~project~~ assignment implementation 2009 (partial)](https://buffer.rajpatil.dev/%2F20240410114903-mit_ocw_6_945_aiasp.html) and [2019 (only have the project solution by bmitc)](https://github.com/bmitc/mit-6.945-project) (weird still [can't find its fork](https://github.com/bmitc/mit-6.945-project/forks?include=active&page=1&period=&sort_by=stargazer_counts))
+  TODO [final-project](https://groups.csail.mit.edu/mac/users/gjs/6.945/final-project.pdf) needs team and is a bit general about "symbolic-manipulation software" (no suggestion for project types).
+  - red-tape doesn't say what "some ideas" are (also for the above final-project link, FAQ and Overview).
     > If you don’t come up with a great IDEA yourself, we *have some ideas that you might pursue*. You will be expected to write elegant code that can be easily read and understood by us
+  - The 1st link seems to be https://buffer.thebitmage.com/%2F20240410114903-mit_ocw_6_945_aiasp.html now.
+  - bmitc's is already [ps9](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps09/ps.pdf) at least for actor.
 - I only find one 2009 [video lectues](https://archive.org/details/adventures-in-advanced-symbolic-programming)
   - https://news.ycombinator.com/item?id=23599794
     > but the entire class is centered around psets
