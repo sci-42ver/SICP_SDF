@@ -1417,10 +1417,19 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
 - [ ] 91
 - [ ] *92
   - IMHO here what we needs to do is just make 2 poly share the same order of var's.
+    - Review when reading SDF chapter 4:
+      > By imposing an ordering on variables
+      > One can impose a towerlike structure on this by ordering the variables and thus always converting any polynomial to a ``canonical form'' with the *highest-priority variable dominant* and the lower-priority variables buried in the coefficients.
+      The basic ideas are straightforward compared with 4.79. I may skip this exercise due to "This is not easy!" and I have already got the *underlying programming ideas* which are what I learnt SICP for.
+      > This strategy works fairly well, except that the conversion *may expand a polynomial unnecessarily*, making it hard to read and perhaps less efficient to work with.
+      e.g. $(f_1(x)*z^2+f_2(x)*z+f_3(x)*z)$ is already one simplified form when we think of `z` as the highest-priority variable. But we will expand and re-connect when thinking of `x` as "the highest-priority variable".
+      - This is ~~probably~~ the 2nd exercise with something like "This is not easy!" (the 1st is  probably SDF exercise 2.14) since I read SDF chapter 3 after SDF Chapter 2 and then SICP "sections 2.4 and 2.5".
   - wiki
     > So everything will be "raised" to a polynomial in x.
+    
     this doesn't ensure the ordering by reading the paragraph (The codes are too long, I didn't dig into it.)
   - > Well, the sketch of the idea was to rearrange the polynomials to a canonical form, so that the variables are *ordered sequentially*.
+    
     lockywolf may be right but I won't dig into it due to the complexity of "the net amount of hours spent is about 10" ...
 - [x] 2.93
   - just change `+` etc. to `add` etc. and check tag in `make-rat`.
@@ -2654,6 +2663,10 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - IMHO this is harder than 4.77 although lockywolf doesn't think that way.
     It changes data structure for 4.77 while I doesn't.
   - maybe related with [annotated syntax objects](https://stackoverflow.com/questions/79098453/how-to-implement-one-anonymous-loop-form-like-do-in-the-evaluator-as-a-derived-e)
+  - wiki
+    - TODO
+      I don't know what SophiaG means by "never evaluated".
+  - Also see SDF_notes.md "... SICP 4.79 ..."
 ### @TODO
 - ~~17~~
   - > Design a way...

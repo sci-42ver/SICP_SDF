@@ -1,6 +1,3 @@
-As one reference if someone don't know how "Bitwise operators avoid branching instructions": https://softwareengineering.stackexchange.com/a/381829. Notice "replace testA() || testB() || testC() with" only works when functioning as the conditional predicate. The actual values are not same as the replacement. The more detailed is shown in https://sdremthix.medium.com/branchless-programming-why-your-cpu-will-thank-you-5f405d97b0c8 where "Conditional Move Instructions" means same as the former link 2nd example.
-
-"Arithmetic Operations" example is related with https://stackoverflow.com/a/22634965/21294350.
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -721,6 +718,23 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - doesn't consider recursive unification.
     The implicit renaming in SDF_exercises/software/sdf/unification/type-resolver.scm is not used for unification but for the *general* `type:...` var is used many times.
   - again has segment variable.
+  - SDF_exercises/software/sdf/unification/type-resolver.scm
+    - still uses counter to differentiate the same var *name* in different unrelated locations.
+      env is to connect var with types but not 2 vars which is done by unify.
+      - Similarly 4.7, 4.9 also don't connect 2 vars but connect var with actual non-var value.
+        - The above is different from SICP 4.79 which connect *2 vars*.
+          Then `depends-on?` needs special manipulation.
+          e.g. `(?x ?y)` -> `(?y (+ ?y 1))` should work since after renaming we have `(?x ?y)` -> `(?y1 (+ ?y1 1))`, so ?y->(+ ?y1 1) doesn't fail for `depends-on?`.
+          - IGNORE: But with env where we add one new frame for each application, so when adding to that frame in `unify-match` we fail for `depends-on?` due to ?y->(+ ?y 1). We may assume we just always add these bindings but that is not that case for the book example `(?x ?x) and (?y <expression involving ?y>)`.
+            ~~More specifically, we need to use env to differentiate these 2 ?y's.~~
+            - Maybe we can change `unify-match` so that `(unify-match (binding-value binding) val frame)` will check depends-on? while the `unify-match` in `unify-match` won't.
+              Also for `equal? p1 p2` checking where if p1 and p2 are on different sides, we should not skip binding them.
+              - Anyway we can change `unify-match` to add one arg to denote which side each of `p1` and `p2` belongs to. So we add one idx implicitly.
+                **But this is not done by env...**
+          - See my comments in http://community.schemewiki.org/?sicp-ex-4.79 where we need to "uses environments rather than renaming".
+            So maybe store each var seq in one application in different frames to *differentiate*, then why not use the straightforward index method.
+            - My comments are not archived in https://web.archive.org/web/20220520045055/http://community.schemewiki.org/?sicp-ex-4.79 when schemewiki is again down on 2024 Dec 25.
+            - This differentiation problem **doesn't hold** for the above cases *not connecting 2 vars*.
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
