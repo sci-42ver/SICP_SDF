@@ -238,8 +238,9 @@
 
 ;;; test cases
 ;;;(chars->bytes (string->list "hello")) ; -> (104 101 108 108 111)
-;;;(chars->bytes (string->list "\u0000\u0000\u0000")) ; -> (0 0 0)
-(chars->bytes (string->list "\u3293\u5953\uabab")) ; TODO this doesn't output the expected result.
+;; As the above codes show, this constructs char seqs and then byte seq, so len is not what here shows.
+(chars->bytes (string->list "\u0000\u0000\u0000")) ; -> (0 0 0)
+(chars->bytes (string->list "\u3293\u5953\uabab"))
 ;;;      -> (255 147 50 255 83 89 255 171 171)
 
 

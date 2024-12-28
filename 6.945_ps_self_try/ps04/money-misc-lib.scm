@@ -77,7 +77,10 @@
 (define (negotiate-price to-sell-thing seller purchaser price)
   (define (error-msg)
     (displayln "please say (y/n target-price)")
-    ;; TODO add one goto like C to go to the appropriate restart location.
+    ;; Emm... when review after finishing Exercise 4.19
+    ;; I forgot what this meant...
+    ;; maybe it means reply-yes?/no? etc are used in similar structures.
+    ;; SKIPPED: TODO add one goto like C to go to the appropriate restart location.
     )
   (define (target-price-from-reply reply)
     (substring reply 2))
