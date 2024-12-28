@@ -80,7 +80,7 @@ z2
 
 (div-complex z1 z2)
 ;Value 19: (1. . 0.)
-
+
 ;;;SECTION 2.4.2
 
 (define z1 (make-from-real-imag 1 1))
@@ -125,7 +125,7 @@ z2
 ;Value 25: (polar 2.0000000000000004 . 1.5707963267948966)
 (div-complex z1 z2)
 ;Value 26: (polar 1. . 0.)
-
+
 ;;;SECTION 2.5.2
 
 (define z1 (make-complex-from-real-imag 1 1))
@@ -146,7 +146,7 @@ z2
 
 (add (make-scheme-number 3) z1)
 ;Value 7: (complex rectangular 4 . 1)
-
+
 ;;;SECTION 2.5.3
 
 (define a (make-polynomial 'x '((5 1) (4 2) (2 3) (1 -2) (0 -5))))

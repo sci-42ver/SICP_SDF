@@ -197,7 +197,7 @@
     (div-interval one
                   (add-interval (div-interval one r1)
                                 (div-interval one r2)))))
-
+
 ;;;SECTION 2.2.1
 
 ;: (cons 1
@@ -444,7 +444,7 @@
       (let ((rest (subsets (cdr s))))
         (append rest (map ??FILL-THIS-IN?? rest)))))
 
-
+
 ;;;SECTION 2.2.3
 
 (define (sum-odd-squares tree)
@@ -653,7 +653,7 @@
 		 (queen-cols (- k 1))))
 	  (enumerate-interval 1 board-size)))))
   (queen-cols board-size))
-
+
 ;;;SECTION 2.2.4
 
 ;: (define wave2 (beside wave (flip-vert wave)))
@@ -815,7 +815,7 @@
       (lambda (frame)
         (paint-left frame)
         (paint-right frame)))))
-
+
 ;;;SECTION 2.3.1
 
 ;: (a b c d)
@@ -1163,7 +1163,7 @@
 
 (define (generate-huffman-tree pairs)
   (successive-merge (make-leaf-set pairs)))
-
+
 ;;;SECTION 2.4.1
 
 ;: (make-from-real-imag (real-part z) (imag-part z))
@@ -1223,7 +1223,7 @@
 
 (define (make-from-mag-ang r a) (cons r a))
 
-
+
 ;;;SECTION 2.4.2
 
 (define (attach-tag type-tag contents)
@@ -1330,7 +1330,7 @@
 
 (define (make-from-mag-ang r a)
   (make-from-mag-ang-polar r a))
-
+
 ;;;SECTION 2.4.3
 
 ;; uses get/put (from 3.3.3) -- see ch2support.scm
@@ -1458,7 +1458,7 @@
   dispatch)
 
 (define (apply-generic op arg) (arg op))
-
+
 ;;;SECTION 2.5.1
 
 (define (add x y) (apply-generic 'add x y))
@@ -1627,7 +1627,7 @@
 (define (exp x y) (apply-generic 'exp x y))
 ;: (put 'exp '(scheme-number scheme-number)
 ;:      (lambda (x y) (tag (expt x y))))
-
+
 ;;;SECTION 2.5.3
 
 ;;; ALL procedures in 2.5.3 except make-polynomial

@@ -503,7 +503,7 @@
 
 (define (extend variable value frame)
   (cons (make-binding variable value) frame))
-
+
 
 ;;;;From Section 4.1
 
@@ -587,7 +587,7 @@
             ((eq? m 'insert-proc!) insert!)
             (else (error "Unknown operation -- TABLE" m))))
     dispatch))
-
+
 ;;;; From instructor's manual
 
 ;; Also see book p363.

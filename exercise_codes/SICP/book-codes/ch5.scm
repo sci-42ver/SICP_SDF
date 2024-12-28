@@ -194,7 +194,7 @@
         product
         (expt-iter (- counter 1) (* b product))))
   (expt-iter n 1))
-
+
 ;;;SECTION 5.2
 ;;; **SEE ALSO** ch5-regsim.scm (loadable/runnable simulator)
 
@@ -656,7 +656,7 @@ there
             (else
              (error "Unknown request -- STACK" message))))
     dispatch))
-
+
 ;;;SECTION 5.3
 
 ;;;SECTION 5.3.1
@@ -682,7 +682,7 @@ there
           (else (count-iter (cdr tree)
                             (count-iter (car tree) n)))))
   (count-iter tree 0))
-
+
 ;;;SECTION 5.3.2
 
 (accumulate + 0 (filter odd? (enumerate-interval 0 n)))
@@ -753,7 +753,7 @@ gc-flip
   (assign temp (reg the-cars))
   (assign the-cars (reg new-cars))
   (assign new-cars (reg temp))
-
+
 ;;;SECTION 5.4
 
 ;;;SECTION 5.4.1
@@ -1084,7 +1084,7 @@ print-result
   (if (< n 2)
       n
       (+ (fib (- n 1)) (fib (- n 2)))))
-
+
 ;;;SECTION 5.5
 ;;; **SEE ALSO** ch5-compiler.scm (loadable/runnable compiler)
 
@@ -1595,7 +1595,7 @@ after-lambda15
 (lambda (+ * a b x y)
   (+ (* a x) (* b y)))
 
-
+
 ;;;SECTION 5.5.7
 
 (compile-and-go

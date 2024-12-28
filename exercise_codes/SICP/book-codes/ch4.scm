@@ -421,7 +421,7 @@
   (if (halts? p p)
       (run-forever)
       'halted))
-
+
 ;;;SECTION 4.1.6
 
 (define (f x)
@@ -495,7 +495,7 @@
         false
         (even? (- n 1))))
   (even? x))
-
+
 ;;;SECTION 4.1.7
 
 (define (factorial n)
@@ -608,7 +608,7 @@
     (if (null? procs)
         (error "Empty sequence -- ANALYZE"))
     (lambda (env) (execute-sequence procs env))))
-
+
 ;;;SECTION 4.2.1
 
 (define (try a b)
@@ -624,7 +624,7 @@
   (unless (= n 1)
           (* n (factorial (- n 1)))
           1))
-
+
 ;;;SECTION 4.2.2
 ;;; **SEE ALSO** ch4-leval.scm (loadable/runnable evaluator)
 
@@ -797,7 +797,7 @@ count
     e
     x)
   (p (set! x (cons x '(2)))))
-
+
 ;;;SECTION 4.2.3
 ;;;
 ;;; This code can be loaded as a whole into the lazy evaluator,
@@ -859,7 +859,7 @@ count
 ;; EXERCISE 4.33
 ;: (car '(a b c))
 
-
+
 ;;;SECTION 4.3
 ;;;
 ;;; The code from 4.3 (intro), 4.3.1, and 4.3.2 can be loaded into the
@@ -923,7 +923,7 @@ count
         (let ((k (sqrt ksq)))
           (require (integer? k))
           (list i j k))))))
-
+
 ;;;SECTION 4.3.2 -- Logic Puzzles
 
 (define (distinct? items)
@@ -952,7 +952,7 @@ count
           (list 'fletcher fletcher)
           (list 'miller miller)
           (list 'smith smith))))
-
+
 ;;;SECTION 4.3.2 -- Parsing natural language
 
 ;;; In this section, sample calls to parse are commented out with ;:
@@ -1085,7 +1085,7 @@ count
              (parse-verb-phrase)
              (parse-prepositional-phrase))))
 
-
+
 ;;;SECTION 4.3.3
 ;;; **SEE ALSO** ch4-ambeval.scm (loadable/runnable evaluator)
 
@@ -1322,7 +1322,7 @@ count
              (amb))
            pairs))
 
-
+
 ;;  what about query assertions, rules, and queries?
 ;;  ***a few left -- ex 4.59, 4.61, 4.63, 4.64
 ;;  also append-to-form and assert!
@@ -1481,7 +1481,7 @@ count
 
 (outranked-by (Bitdiddle Ben) ?who)
 
-
+
 ;;;SECTION 4.4.4
 ;;; **SEE ALSO** ch4-query.scm (loadable/runnable query system)
 

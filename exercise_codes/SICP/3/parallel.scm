@@ -75,7 +75,7 @@ gjs
 (foo)
 ;No value
 |#
-
+
 (define (make-serializer)
   (let ((mutex (make-thread-mutex)))
     (define (serialized f)

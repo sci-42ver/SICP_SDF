@@ -257,7 +257,7 @@
         guess
         (sqrt-iter (improve guess))))
   (sqrt-iter 1.0))
-
+
 ;;;SECTION 1.2.1
 
 ;; Recursive
@@ -514,7 +514,7 @@
         (else
          (remainder (* base (expmod base (- exp 1) m))
                     m))))
-
+
 ;;;SECTION 1.3
 
 (define (cube x) (* x x x))

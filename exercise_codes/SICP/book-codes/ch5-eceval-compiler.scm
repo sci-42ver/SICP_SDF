@@ -56,7 +56,7 @@
     (set-register-contents! eceval 'val instructions)
     (set-register-contents! eceval 'flag true)
     (start eceval)))
-
+
 ;;**NB. To [not] monitor stack operations, comment in/[out] the line after
 ;; print-result in the machine controller below
 ;;**Also choose the desired make-stack version in regsim.scm

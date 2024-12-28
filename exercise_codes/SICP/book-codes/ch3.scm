@@ -229,7 +229,7 @@
 ;: (define paul-acc
 ;:   (make-joint peter-acc 'open-sesame 'rosebud))
 
-
+
 ;;;;SECTION 3.2
 
 ;;;SECTION 3.2.1
@@ -344,7 +344,7 @@
 ;: 
 ;: (define acc2 (make-account 100))
 
-
+
 ;;;;SECTION 3.3
 
 ;;;SECTION 3.3.1
@@ -618,7 +618,7 @@
                    ((= n 1) 1)
                    (else (+ (memo-fib (- n 1))
                             (memo-fib (- n 2))))))))
-
+
 ;;;SECTION 3.3.4
 
 ;: (define a (make-wire))
@@ -1042,7 +1042,7 @@
   (let ((z (make-connector)))
     (adder x y z)
     z))
-
+
 
 ;;;SECTION 3.4
 ;;;**Need parallel-execute, available for MIT Scheme
@@ -1268,7 +1268,7 @@
          true
          (begin (set-car! cell true)
                 false)))))
-
+
 ;;;SECTION 3.5
 
 ;;;SECTION 3.5.1
