@@ -39,7 +39,8 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
 - chapter 2, 3 checked.
 ## @%Check the *preface* of each chapter and *section* same as SICP.
-- done up to section 4.2 included (not including chapter 4).
+I probably only checked the preface before something like "Pattern constants" instead of 4.3.1
+- done up to section 4.4 included (not including chapter 4).
 ## Chapters to check
 "chapter, section" contexts
 - Updated up to section 3.6 included.
@@ -69,7 +70,7 @@ Here chapter 1 is like one introduction chapter not teaching the detailed progra
 - ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
   IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
 ### @%chapter 4
-exercise checked before section 4.4, page checked up to Exercise 4.6, section checked before p272 ("chapter" checking is finished).
+exercise checked before section 4.5, page checked before section 4.5, section checked before p272 ("chapter" checking is finished).
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - ~~> (We will explore algebraic simplification in section 4.2.)~~
 - ~~> In section 4.2 we will demonstrate this in a term-rewriting system for elementary algebra.~~
@@ -87,9 +88,7 @@ matches by returning #f from succeed, indicating that the result
 was not the one wanted
 - > This will have consequences that we
 will see in section 4.5.4.
-- > This pattern shares several characteristics with those we've looked
-at in previous sections
-- 
+- > This pattern shares several characteristics with those we've looked at in previous sections
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
@@ -669,6 +668,8 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   same as one-sided `match:list`.
 - > the unification matcher is organized around lists of terms to allow later extension to segment variables.
   i.e. allowing `grab` one arbitrary subsequence in the *rest*.
+- > The unifier is the most general *common* substitution instance of the two patterns: any other common substitution instance of the two patterns is a *substitution instance* of the unifier.
+  Here "common" means shared. See Exercise 4.19 and 4.20.
 ### 4.4.2
 - > it is a procedure that takes one numerical input and produces a numerical output.
   > takes two numerical arguments and produces a numerical result.
@@ -699,14 +700,16 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   But tht codes only consider the containing relation in `grab-segment`.
 ## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
-- > And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.
+- ~~> And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.~~
   TODO Maybe like
   > (define addition-commutativity 
   >  ’(= (+ (? u) (? v)) (+ (? v) (? u))))
+  where `=` is like the constraint form, so data for `unify` are just `(+ (? u) (? v))` etc.
 - ~~`SDF_exercises/software/sdf/unification/possible-bug.scm`~~
-- > here we are not trying to build a complete and correct segment unifier.
-  - maybe
+- ~~> here we are not trying to build a complete and correct segment unifier.~~
+  - ~~maybe~~
     > but an element variable may not have a segment variable as its value.
+  - See Exercise 4.19 and 4.20.
 ## difference from SICP logic programming
 - one-sided matching
   adds (see `algebra-2`)
