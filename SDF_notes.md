@@ -17,6 +17,7 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 - Sometimes I use *yellow mark* to show I have read some footnotes.
 - [SDF_original_book] search is a bit weird. Better to search codes which will be successful most of time (searching paragraph contents may fail).
   - Emm... codes may fail at some time.
+- [CPH means chris-hanson](https://sites.google.com/a/chris-hanson.org/cph/)
 ## Won't dig into
 - I am to learn programming *general strategies*
   so won't dig into
@@ -119,6 +120,7 @@ will see in section 4.5.4.
   >  The instructions for which files to load
 - `guarantee` ~~(TODO seemingly defined in code base)~~
   search `name guarantee)` in SDF_exercises/software/sdf/manager/saved-total-index
+- `missed-essential-match!` is not defined.
 ### not in MIT_Scheme_Reference, saved-total-index and the book
 - `#!default`
 - `bundle?`

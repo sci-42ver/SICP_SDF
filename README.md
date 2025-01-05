@@ -106,6 +106,14 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Dec 21, spend 4.5 days to deal with some problems for my parents and finish 4.16.
   to Dec 22, finish 4.17 (too slow).
   to Dec 24, finish 4.18 (too slow).
+  to Dec 25, finish the long exercise 4.19 before d.
+  to Dec 28, finish exercise 4.19 d (too slow) and asked one SO question for verification.
+  to Dec 30, check some 'SDF_exercises TODO's and ask one SE (Stack Exchange) question for commandline usage.
+  to Dec 31, finish 4.20 trivially based on 4.19.
+  to Jan 1, finish 4.11 and then trivially 4.21.
+  to Jan 2, add one command to search for reference implementation (too slow).
+  to Jan 3, read the Stack Exchange answers of the question I asked.
+  to Jan 5, finish 4.7 (these 2 days I cooked meals by myself which took some time).
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
