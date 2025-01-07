@@ -224,6 +224,8 @@
                 (frame-values frame)))))
   (env-loop env))
 
+;; Here we won't search for all frames, so no need for check (eq? env the-empty-environment).
+;; And the init env by (setup-environment) must have at least one frame.
 (define (define-variable! var val env)
   (let ((frame (first-frame env)))
     (define (scan vars vals)
