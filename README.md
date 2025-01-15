@@ -114,6 +114,11 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Jan 2, add one command to search for reference implementation (too slow).
   to Jan 3, read the Stack Exchange answers of the question I asked.
   to Jan 5, finish 4.7 (these 2 days I cooked meals by myself which took some time).
+  to Jan 7, finish 4.9.
+  to Jan 9, finish before Exercise 4.22 (too slow).
+  to Jan 11, my right eye is carelessly hurt. Fortunately it can be cured by itself as the  doctor says. I rest for 2 days.
+  to Jan 12, finish Exercise 4.22 when what to do has been thought in one day previously.
+  to Jan 14, sometimes my dad said something strange to me...; rest for one day.
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP

@@ -75,20 +75,15 @@ exercise checked before section 4.5, page checked before section 4.5, section ch
 - > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
 - ~~> (We will explore algebraic simplification in section 4.2.)~~
 - ~~> In section 4.2 we will demonstrate this in a term-rewriting system for elementary algebra.~~
-- > unless, somehow, x=(+ x y).1 We will learn about that sort of situation when we study unification matching in section 4.4
+- ~~> unless, somehow, x=(+ x y).1 We will learn about that sort of situation when we study unification matching in section 4.4~~
+  See SDF_exercises/chapter_4/tests/unify-book-demos.scm
 - ~~> We will learn how a pattern is compiled into a match procedure in section 4.3;~~
 - > This will be needed in the code supporting section 4.5.
 - > In this chapter we have seen how to build a term-rewriting system.
 - > This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.
-- > This code is more complex than one might expect, because we
-will extend the variable syntax in section 4.5 and some of the
-exercises.
-- > In section 4.4.4, when we add code to experiment with
-segment variables in the patterns, we will be able to extract multiple
-matches by returning #f from succeed, indicating that the result
-was not the one wanted
-- > This will have consequences that we
-will see in section 4.5.4.
+- > This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.
+- ~~> In section 4.4.4, when we add code to experiment with segment variables in the patterns, we will be able to extract multiple matches by returning #f from succeed, indicating that the result was not the one wanted~~
+- > This will have consequences that we will see in section 4.5.4.
 - > This pattern shares several characteristics with those we've looked at in previous sections
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
@@ -700,6 +695,15 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
 - > But these expressions do match, with the following bindings:
   Here `(?? x)` intersects with `(?? y)` sharing the value 5.
   But tht codes only consider the containing relation in `grab-segment`.
+## 4.5
+- > The pattern matching we have developed so far is for matching list structures.
+  Just term-rewriting or the general unification.
+  The former see SDF_exercises/software/sdf/term-rewriting/rule-implementation.scm which is just based on `match:compile-pattern`. Since all exp's in Scheme are list as SICP says in chapter 4, we have "matching list structures".
+  > Such structures are excellent for representing expressions
+  - Similar for SDF_exercises/software/sdf/unification/unify.scm `(unify:dispatch (list pattern1) (list pattern2))` etc.
+- > just the description of the interconnect
+  [interconnect](https://semiengineering.com/all-about-interconnects/) related with *layer*s (see global interconnect and local interconnect).
+- > 
 ## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 - ~~> And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.~~
@@ -712,6 +716,10 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - ~~maybe~~
     > but an element variable may not have a segment variable as its value.
   - See Exercise 4.19 and 4.20.
+### skipped
+- Exercise 2.12,13 -> SDF_exercises/chapter_2/test-chess.scm
+  are also "chess referee".
+  But it is a bit too long time ago that I wrote these *heavy codes*. I won't compare these with the "chess referee" here...
 ## difference from SICP logic programming
 - one-sided matching
   adds (see `algebra-2`)
@@ -787,9 +795,25 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   > This sections introduces parameter objects, which can be *bound to new values* for the duration of a dynamic extent.
 - > A bundle is sometimes called a message-accepting procedure, where the message type is the delegate name and the message body is the arguments
   This is not recorded in [R7RS]
+  also not related with https://srfi.schemers.org/srfi-29/srfi-29.html (since no relation with `locale`) (also see https://wiki.call-cc.org/eggref/5/srfi-29#documentation) and https://srfi.schemers.org/srfi-114/ searched by "bundle" in https://srfi.schemers.org/?q=bundle.
+  "guile language "bundle"" also has no related results.
+  - IMHO this is similar to SICP tagged data in p238 and Message passing in p252.
+    Actually this combines these 2 together in some way that we can use predicate different from `procedure?` on "Message passing" data.
+    - "the message type is the delegate name" is ~~like `'point` in `(make-bundle-predicate 'point)`~~ `point?`, i.e. predicate *procedure*.
+  - > the rest of the arguments are passed to the specified delegate.
+    may mean *using* delegate precedures like `get-x get-y` etc.
+    > The bundle macro creates a bundle procedure, for which those procedures are the delegates.
+    > The remaining arguments to the bundle macro are the names of the delegate procedures
+    e.g. `(p13 'get-x)` will *call* (i.e. delegate later things to) `get-x` in that bundle to manipulate later things.
+  - > containing an association from each name to its delegate procedure.
+    similar to srfi-29
+    > (time . "Its ~a, ~a.") ... 
+    > The list contains associations between *Scheme symbols and the message templates* (Scheme strings) they name.
+    Here "Scheme symbol" is just `message-name`.
 
 ---
 
-[R7RS]:https://standards.scheme.org/unofficial/errata-corrected-r7rs.pdf
+<!-- [109] -->
+[R7RS]:https://standards.scheme.org/unofficial/errata-corrected-r7rs.pdf 
 [MIT_Scheme_Reference]:https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref.pdf
 [SDF_original_book]:https://mitpress.ublish.com/ebook/software-design-for-flexibility-preview/12618/110
