@@ -119,6 +119,9 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Jan 11, my right eye is carelessly hurt. Fortunately it can be cured by itself as the  doctor says. I rest for 2 days.
   to Jan 12, finish Exercise 4.22 when what to do has been thought in one day previously.
   to Jan 14, sometimes my dad said something strange to me...; rest for one day.
+  to Jan 16, finish Exercise 4.23 (too slow).
+  to Jan 17, Exercise 4.24.
+  to Jan 19, before Exercise 4.25 (too slow).
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP

@@ -457,6 +457,7 @@ TODO who is the instructor Mike Phillips, is [him](https://en.wikipedia.org/wiki
   > Since this course is a *heavily condensed* version of 6.001
 - newer 6.037 uses Racket but [6.001 uses DrScheme](https://web.archive.org/web/20161201164940/http://sicp.csail.mit.edu/Spring-2007/dont_panic_ft06.html#SEC1). [See](https://stackoverflow.com/questions/13003850/little-schemer-and-racket)
 ### [DON'T PANIC](https://web.archive.org/web/20161201164940/http://sicp.csail.mit.edu/Spring-2007/dont_panic_ft06.html#SEC6)
+At least the contents table is same as https://web.archive.org/web/20160415060555/http://sicp.csail.mit.edu/Fall-2007/dont_panic_ft07.html
 - > the basic things that occur when you use the computer to write and evaluate code written in Scheme.
   - Flow of Control (trivial without saying much about more basic things like assembly)
     window manager -> the application (DrScheme window: one text editor 1. with "definitions window" and "interaction window" 2. can "Save Interactions as Text" 3. clicking on the Run tab similar to *python*) -> 

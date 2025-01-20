@@ -85,6 +85,7 @@ exercise checked before section 4.5, page checked before section 4.5, section ch
 - ~~> In section 4.4.4, when we add code to experiment with segment variables in the patterns, we will be able to extract multiple matches by returning #f from succeed, indicating that the result was not the one wanted~~
 - > This will have consequences that we will see in section 4.5.4.
 - > This pattern shares several characteristics with those we've looked at in previous sections
+- > In exercise 4.24 on page 225 we will fix this problem.
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
 ### chapter 6
@@ -703,7 +704,19 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - Similar for SDF_exercises/software/sdf/unification/unify.scm `(unify:dispatch (list pattern1) (list pattern2))` etc.
 - > just the description of the interconnect
   [interconnect](https://semiengineering.com/all-about-interconnects/) related with *layer*s (see global interconnect and local interconnect).
-- > 
+- > The order in which the symmetry transformations are applied doesn't matter *for the transformations we use*.
+  See comments for `symmetrize-move` in SDF_exercises/software/sdf/pattern-matching-on-graphs/chess-moves.scm.
+- > the others are similar remappings of the compass directions
+  "remapping" refers to the `map` used many times in `symmetrize-move`.
+- > likewise each color sees the leftmost column as 0 and the rightmost as 7. 
+  This is different from [wikipedia indexing conventions](https://en.wikipedia.org/wiki/Rules_of_chess#Movement).
+- > The inverse of node-at is the delegate procedure address-of .
+  same as [converse in logic](https://en.wikipedia.org/wiki/Converse_(logic)).
+- > from that node with the label n
+  Notice here graphs are all default to be directional.
+- > King Bishop 3
+  [See](https://en.wikipedia.org/wiki/Descriptive_notation#Nomenclature)
+- BNF in p275 shows the path from the `source-node` but not includes that `source-node`.
 ## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 - ~~> And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.~~
@@ -716,7 +729,8 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - ~~maybe~~
     > but an element variable may not have a segment variable as its value.
   - See Exercise 4.19 and 4.20.
-### skipped
+- > handle (literal) edge cases
+### maybe skipped
 - Exercise 2.12,13 -> SDF_exercises/chapter_2/test-chess.scm
   are also "chess referee".
   But it is a bit too long time ago that I wrote these *heavy codes*. I won't compare these with the "chess referee" here...
