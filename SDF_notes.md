@@ -1,3 +1,4 @@
+"remove the password" seems to need setting password to empty which may still let the request box pop out. "disable the wallet" worked in plasma 6 with `kwalletmanager5` (I used plasma 6.1.2).
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
