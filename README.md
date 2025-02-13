@@ -126,7 +126,14 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Jan 23, finish SDF exercise 4.24 4_24_based_on_graph_match and half of SDF exercise 4.23 predicate implementation.
   to Jan 24, my dad said something strange sometimes (rest for one day).
   to Jan 25, almost finish SDF exercise 4.23.
-  to Feb 1, rest for a week due to the high fever and the severe cough infected by my dad who has a bit of difficulty taking care of himself.
+  to Feb 1, *rest* for a week due to the high fever and the severe cough infected by my dad who has a bit of difficulty taking care of himself.
+  to Feb 2, "finish SDF exercise 4.23 implementation with tests left to finish".
+  to Feb 3, fix bugs for castling_tests.scm (4.23 implementation is a bit large).
+  to Feb 4, fix bugs for 4.19...
+  to Feb 5, fix bugs for castling_tests.scm which is related with 4.24.
+  to Feb 9 noon (3.5 days), try to find one better time tracker than iOS notes to do time tracking. At last, I chose Coda similar to Notion but [better](https://www.reddit.com/r/PKMS/comments/14l76io/comment/mb9g8wg/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) (*Unrelated things*).
+  to Feb 11, adjust coda based on daily requirements.
+  to Feb 12, spend 29 mins to adjust coda in the morning while spending 1h 3 mins for SDF coding on Feb 9 (Time got by coda recording and the customized calculation using its internal formula).
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
