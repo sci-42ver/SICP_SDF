@@ -28,6 +28,9 @@
   I may also use Racket libs for some SICP exercises.
 - What doc should I read?
   Maybe [this](https://stackoverflow.com/q/79098453/21294350) is helpful. So you can also try guile implementation although I am not familiar with that.
+# Tips about Scheme usage.
+- How to better search inside the Scheme output with `less` etc?
+  See [this](https://unix.stackexchange.com/a/146428/568529) where IMHO `< <()` is better than `|` since the former will have the contents inside one file instead of a bit unstable pipe.
 # Notice
 - Here most of all exercises are independent like the reference SICP repo xxyzz does.
   However, it is better to make some extension introduced by the exercise available for latter exercises.
@@ -134,6 +137,10 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Feb 9 noon (3.5 days), try to find one better time tracker than iOS notes to do time tracking. At last, I chose Coda similar to Notion but [better](https://www.reddit.com/r/PKMS/comments/14l76io/comment/mb9g8wg/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) (*Unrelated things*).
   to Feb 11, adjust coda based on daily requirements.
   to Feb 12, spend 29 mins to adjust coda in the morning while spending 1h 3 mins for SDF coding on Feb 9 (Time got by coda recording and the customized calculation using its internal formula).
+  to Feb 14, Most of time are still used for adjusting coda (Use group and summary row in Coda to check this) except for Feb 12. That is 8 hrs 2 mins + 4 hrs vs 5 hrs 30 mins from 12 to 14 (So from Feb 6 to Feb 11 and from Feb 13 to 15 where Feb 14 I spent 5 hrs + 4 hrs = 9 hrs to check for the speed problem... Totally I spent 7 days to adjust coda). Here Feb 13 time is spent most (only consider those can be reduced) on adjusting coda (2h), taobao after sales problem (about 54 min).
+  to Feb 15, 2 hrs 17 mins vs 58 mins.
+  to Feb 16, 1 hr 12 mins vs 1 hr 45 mins.
+  In summary, from Feb 6 to Feb 16, I spent 5 hrs 30 mins + 58 mins + 1 hr 45 mins = 8 hrs 13 mins for coding (*TODO* transform this to the normal day count).
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 # SICP
@@ -320,3 +327,6 @@ I use MIT/GNU Scheme.
   i.e. it is inside MIT-Scheme. So it may have less functions than `drracket`.
 - > If you start the debugger in this way, then you will get a very nice looking window that constantly displays many of the things you could otherwise access through the commands you *have just been shown*. Try it out; it's neat!
   In a summary the key useful feature is `v`. TODO how to do that in `drracket`?
+
+# TODO
+- What is the purpose of "sicp_codes" dir?

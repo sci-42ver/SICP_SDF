@@ -1,4 +1,3 @@
-"remove the password" seems to need setting password to empty which may still let the request box pop out. "disable the wallet" worked in plasma 6 with `kwalletmanager5` (I used plasma 6.1.2).
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -37,12 +36,12 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   1. *code term* contexts since IMHO SDF codes are complexer than SICP although this may not hold for chapter 4.
   2. the 1st sentence in each paragraph
   3. contents enclosed by square brackets
-## @%Check p14, 23~27 (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
+## @%Check p14, 23~27 and other pages (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
-- chapter 2, 3 checked.
+- chapter 2, 3, 4 checked (no need for checking "section" contexts since they have no underlined words).
 ## @%Check the *preface* of each chapter and *section* same as SICP.
 I probably only checked the preface before something like "Pattern constants" instead of 4.3.1
-- done up to section 4.4 included (not including chapter 4).
+- done up to section 4.6 included.
 ## Chapters to check
 "chapter, section" contexts
 - Updated up to section 3.6 included.
@@ -72,28 +71,31 @@ I probably only checked the preface before something like "Pattern constants" in
 - ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
   IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
 ### @%chapter 4
-exercise checked before section 4.5, page checked before section 4.5, section checked before p272 ("chapter" checking is finished).
-- > We will see this technique again in chapter 4, where we use it to compile combinations of pattern-matching procedures from patterns.
+exercise checked until section 4.6, page checked until section 4.6, section checked until section 4.6 ("chapter" checking is finished).
+- ~~> We will see this technique again in chapter 4, where we use it to compile *combinations* of pattern-matching procedures from patterns.~~
 - ~~> (We will explore algebraic simplification in section 4.2.)~~
 - ~~> In section 4.2 we will demonstrate this in a term-rewriting system for elementary algebra.~~
 - ~~> unless, somehow, x=(+ x y).1 We will learn about that sort of situation when we study unification matching in section 4.4~~
   See SDF_exercises/chapter_4/tests/unify-book-demos.scm
 - ~~> We will learn how a pattern is compiled into a match procedure in section 4.3;~~
-- > This will be needed in the code supporting section 4.5.
-- > In this chapter we have seen how to build a term-rewriting system.
-- > This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.
-- > This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.
+- ~~> This will be needed in the code supporting section 4.5.~~
+- ~~> In this chapter we have seen how to build a term-rewriting system.~~
+- ~~> This code is more complex than one might expect, because we will extend the variable syntax in section 4.5 and some of the exercises.~~
 - ~~> In section 4.4.4, when we add code to experiment with segment variables in the patterns, we will be able to extract multiple matches by returning #f from succeed, indicating that the result was not the one wanted~~
-- > This will have consequences that we will see in section 4.5.4.
-- > This pattern shares several characteristics with those we've looked at in previous sections
-- > In exercise 4.24 on page 225 we will fix this problem.
+- ~~> the graph can be changed only by *adding* more nodes and edges. This will have consequences that we will see in section 4.5.4.~~
+  See `populate-side`.
+- ~~> a dictionary of bindings accumulated in the match, as described in section 4.3.~~
+- ~~> This pattern shares several characteristics with those we've looked at in previous sections~~
+- ~~> In exercise 4.24 on page 225 we will fix this problem.~~
 ### chapter 5
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
+- > We will examine more general ways of dealing with backtracking in section 5.4.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
 ### chapter 7
 - > We will examine a very nice example of this optimization in chapter 7
   in chapter 1 footnote 17.
+- > We will investigate even more powerful backtracking strategies in section 7.5.2.
 # func description
 ## code base
 - [`n:...`](https://stackoverflow.com/questions/78815439/weird-definition-of-close-enuf-in-software-design-for-flexibility)
@@ -111,11 +113,16 @@ exercise checked before section 4.5, page checked before section 4.5, section ch
   > `<type name>` is bound to a representation of the record type itself.
 - checked
   - `lset-adjoin`
-# @TODO
-## @SDF code base
+- `reduce` compared with `fold`
+  [See](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Folding-of-Lists.html#index-reduce)
+  > You typically use reduce when applying f is expensive and you’d like to *avoid the extra application incurred when fold applies f to the head of list* and the identity value, redundantly producing the same value passed in to f.
+  The diff is just on `ridentity`
+  > ridentity should be a "right identity" ... ...in other words, we compute (fold f ridentity list).
+# TODO
+## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
   >  The instructions for which files to load
-- `guarantee` ~~(TODO seemingly defined in code base)~~
+- ~~`guarantee`~~ ~~(TODO seemingly defined in code base)~~
   search `name guarantee)` in SDF_exercises/software/sdf/manager/saved-total-index
 - `missed-essential-match!` is not defined.
 ### not in MIT_Scheme_Reference, saved-total-index and the book
@@ -137,7 +144,7 @@ exercise checked before section 4.5, page checked before section 4.5, section ch
 - `(declare (ignore fail))` works
   but directly `(ignore fail)` won't.
   It seems to be in [common lisp](http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/Body/dec_ignorecm_ignorable.html).
-### @skipped due to small relations with where it is referred to.
+### skipped due to small relations with where it is referred to.
 - ~~`package-installer`~~
 - temporarily
   - ~~`arithmetic->package`~~
@@ -146,7 +153,7 @@ exercise checked before section 4.5, page checked before section 4.5, section ch
 - `simple-function` in `is-generic-handler-applicable?`.
 - ~~`parse-plist`~~
 - ~~`autonomous-agent?`~~
-### @after reading related chapters
+### after reading related chapters
 - generic-procedure
   - `equal*?` used by `tagged-data=`.
     - not used by chapter 3.
@@ -640,6 +647,18 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   see sicp_notes.md or SICP Figure 3.22.
 - > change the syntax of patterns any way we like
   i.e. the way patterns are constructed.
+- > the need for backtracking because of segment variables
+  See SICP or [wikipedia](https://en.wikipedia.org/wiki/Backtracking#Pseudocode) where `next(P,s)` just means `(lp (+ i 1))` in SDF_exercises/software/sdf/design-of-the-matcher/matcher.scm.
+- > the creation of domain-specific languages and other systems that should have an additive character
+  see 4.6
+  > they are also a very useful way to *organize parts of a system for additivity*. ... but compilers do huge amounts of this kind of manipulation, to compute optimizations and sometimes to *generate code*.
+- > A pattern can be matched to a part of a larger datum; the context of the match is unspecified.
+  Sometimes "the context" may have something like `board` var in `graph-match`.
+- > Generic procedures allow us to do miraculous things by modulating the meanings of the free variables in a program
+  Maybe in some special "Generic procedures", its handler has different "meanings of the free variables" for different combinations of predicates.
+- > If we instead use patterns to advertise jobs to be done and other patterns to advertise procedures that might do those jobs, we have a much richer language: pattern-directed invocation.
+  See [this](https://dspace.mit.edu/bitstream/handle/1721.1/41187/AI_WP_296.pdf?sequence=4&isAllowed=y) p2~3 `f(0, ?x)` which corresponds to the latter "other patterns ..."
+  - TODO the meaning of "use patterns to advertise jobs to be done".
 ## 4.4
 - `(unifier a b)` etc have been taught in SICP.
 - ~~> Often there are constraints among the variables in an expression.~~
@@ -718,6 +737,12 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
 - > King Bishop 3
   [See](https://en.wikipedia.org/wiki/Descriptive_notation#Nomenclature)
 - BNF in p275 shows the path from the `source-node` but not includes that `source-node`.
+## 4.6
+- > We also saw a flexible way to construct a pattern matcher, by “compiling” a pattern *into a combination of simple matchers* that all have the same interface structure.
+  “compiling” [means](https://www.geeksforgeeks.org/difference-between-compiler-and-interpreter/)
+  > translates the whole program at once
+- > because there may be multiple possible matches to any particular data if the pattern has more than one segment variable.
+  If there is only "one segment variable", then all the rest positions are determined, which then decide the "segment variable" position.
 ## @%TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 - ~~> And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.~~
@@ -730,11 +755,17 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - ~~maybe~~
     > but an element variable may not have a segment variable as its value.
   - See Exercise 4.19 and 4.20.
-- > handle (literal) edge cases
-### maybe skipped
-- Exercise 2.12,13 -> SDF_exercises/chapter_2/test-chess.scm
+- ~~> handle (literal) edge cases~~
+  i.e. edge *between nodes* instead of something like `(node ’connect! ’address address)`.
+### @%maybe skipped
+- ~~Exercise 2.12,13 -> SDF_exercises/chapter_2/test-chess.scm~~
   are also "chess referee".
   But it is a bit too long time ago that I wrote these *heavy codes*. I won't compare these with the "chess referee" here...
+  - chapter2 gets *all possible moves* like `summarize-move-checking-type` while here we check for one specific move.
+    The former seems to have no procedure to execute the step move like `simple-move` here but just `initial-pieces-generator` in `make-chess*`.
+  - chapter2 uses `(define-evolution-rule 'simple-move ...)` to calculate all one-step moves while here we uses pattern path.
+    The former uses `(define-aggregate-rule 'promotion ...)` to do post operations while here I changed the internal procedure (see `SDF_exercises/chapter_4/4_23_graph_match_lib/promotion_lib.scm`) to implement that (maybe also can be done by changing the interface of `simple-move`).
+    - IMHO "pattern path" is *more elegant*.
 ## difference from SICP logic programming
 - one-sided matching
   adds (see `algebra-2`)
