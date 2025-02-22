@@ -106,7 +106,7 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Dec 12, up to exercise 4.10 (a bit slow).
   to Dec 13, up to exercise 4.13.
   to Dec 16, up to exercise 4.16 partially.
-  to Dec 21, spend 4.5 days to deal with some problems for my parents and finish 4.16.
+  to Dec 21, *spend 4.5 days to deal with some problems for my parents* and finish 4.16.
   to Dec 22, finish 4.17 (too slow).
   to Dec 24, finish 4.18 (too slow).
   to Dec 25, finish the long exercise 4.19 before d.
@@ -119,7 +119,7 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Jan 5, finish 4.7 (these 2 days I cooked meals by myself which took some time).
   to Jan 7, finish 4.9.
   to Jan 9, finish before Exercise 4.22 (too slow).
-  to Jan 11, my right eye is carelessly hurt. Fortunately it can be cured by itself as the  doctor says. I rest for 2 days.
+  to Jan 11, my right eye is carelessly hurt. Fortunately it can be cured by itself as the doctor says. I rest for 2 days.
   to Jan 12, finish Exercise 4.22 when what to do has been thought in one day previously.
   to Jan 14, sometimes my dad said something strange to me...; rest for one day.
   to Jan 16, finish Exercise 4.23 (too slow).
@@ -141,8 +141,31 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Feb 15, 2 hrs 17 mins vs 58 mins.
   to Feb 16, 1 hr 12 mins vs 1 hr 45 mins.
   In summary, from Feb 6 to Feb 16, I spent 5 hrs 30 mins + 58 mins + 1 hr 45 mins = 8 hrs 13 mins for coding (*TODO* transform this to the normal day count).
+  to Feb 22 noon, finish chapter 4 in the book.
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
+### @%Chapter 4 time review (my efficiency decreases a lot during this range)
+- From Dec 6 to Dec 9, the efficiency is normal.
+  to Dec 16, I should finish all before section 4.5, but just until exercise 4.16, the speed is *slow*...
+  to Dec 21, vaguely 0.5 day to read the book.
+  From Dec 22 to Dec 28, finish exercise 4.19 d (*slow*).
+  From Dec 29 to Dec 31, check some 'SDF_exercises TODO's and one SE question I asked.
+  Jan 1, finish 4.11 and then trivially 4.21.
+  From Jan 2 to Jan 3, one SE question I asked.
+  to Jan 9, finish before section 4.5 (So totaly `16-6+1+0.5+28-22+1+3/2+1+9-4+1=27.0` where 3/2 is one vague time estimation. So I only reached *at most `10/27=0.37` of the required efficiency*...).
+  Jan 12 to Jan 13, Exercise 4.22 (*slow*)
+  Jan 15 to Jan 19, almost finish SDF exercise 4.25
+  to Jan 23, finish 4.23 predicate implementation which is *not needed by the book* but just done to see how graph-match can do things done in chapter 2 chess rules.
+  Jan 25, almost finish SDF exercise 4.23.
+  Feb 2, finish SDF exercise 4.23 with tests left.
+  to Feb 5, fix bugs.
+  From Feb 6 to Feb 16,  8 hrs 13 mins for coding (see the above *TODO*).
+  to Feb 18, finish all tests.
+  to Feb 19, finish SDF exercise 4.25.
+  to Feb 21, review chapter 4 (*slow*).
+  So I spent `3-2+1+9-5+1+3-0+1+1+1+5-3+1=16` days where I did household by myself. And I spent `21-16=5` days plus 8 hrs 13 mins additionally for section 4.5 (*so slow*)...
+  - From Dec 24 (vaguely, the railway ticket app doesn't support searching for history before one month ago) to Jan 16, my mom went to my grandma's home, so I did all household which vaguely took `(Hours(13)+Minutes(22))/11*(Date(2025, 1, 16)-Date(2024,12,24)+1)=1 day 5 hrs 9 mins` based on coda data (2/6 to 2/14: 10 hrs 24 mins, 2/15 to 2/16: 2 hrs 58 mins, so totally 13 hrs 22 mins, i.e. 1 hrs 12 mins each day). (*TODO*: consider these time for efficiency calculation)
+  - From Feb 17 to Feb 22 (6 days), I was a bit regretful for something I haven't done in junior middle school.
 # SICP
 Notice I also have exercise solutions in `sicp_exercise.md` and exercise_codes/ repo besides the SICP submodule.
 
@@ -327,6 +350,25 @@ I use MIT/GNU Scheme.
   i.e. it is inside MIT-Scheme. So it may have less functions than `drracket`.
 - > If you start the debugger in this way, then you will get a very nice looking window that constantly displays many of the things you could otherwise access through the commands you *have just been shown*. Try it out; it's neat!
   In a summary the key useful feature is `v`. TODO how to do that in `drracket`?
-
+## related md files
+- ```bash
+  $ find . -regex '.*\.md' -o \( -type d \( -path ./QA_templates -o -path ./sdf_mbillingr -o -path ./SICP -o -path ./comment_archive -o -path ./exercise_codes -o -path ./lecs -o -path ./6.945_assignment_solution -o -path ./chebert_software-design-for-flexibility \) -prune \) | grep -v md
+  ./comment_archive
+  ./exercise_codes
+  ./lecs
+  ./SICP
+  ./6.945_assignment_solution
+  ./sdf_mbillingr
+  ./chebert_software-design-for-flexibility
+  ./QA_templates
+  $ find . -regex '.*\.md' -o \( -type d \( -path ./QA_templates -o -path ./sdf_mbillingr -o -path ./SICP -o -path ./comment_archive -o -path ./exercise_codes -o -path ./lecs -o -path ./6.945_assignment_solution -o -path ./chebert_software-design-for-flexibility \) -prune \) | grep md
+  ./sicp_exercise.md
+  ./sicp_notes.md
+  ./README.md
+  ./SDF_notes.md
+  ./SDF_exercises/chapter_4/4_17.md
+  ./SDF_exercises/README.md
+  ```
+  Here only `SDF_notes.md` and `SDF_exercises/README.md` are related.
 # TODO
 - What is the purpose of "sicp_codes" dir?
