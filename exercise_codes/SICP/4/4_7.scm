@@ -1,6 +1,9 @@
 (cd "~/SICP_SDF/exercise_codes/SICP/4")
 (load "lib.scm")
 
+;;; Also see SDF_exercises/chapter_5/tests/recursive_define.scm
+;; where we add one explicit begin to differentiate the original body from the intermediate body parts.
+
 ;; meteorgan modification
 (define (let*? expr) (tagged-list? expr 'let*)) 
 (define (let*-body expr) (sequence->exp (cddr expr))) 

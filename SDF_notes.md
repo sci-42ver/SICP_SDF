@@ -1,3 +1,22 @@
+I haven't heard about "lexical variable" before but just lexical scoping. It is defined here https://www.lispworks.com/documentation/lcl50/aug/aug-110.html closely related with lexical scoping. As https://stackoverflow.com/a/382498/21294350 says, closure will make bookkeep so that the variable can be used "beyond the lexical scope", therefore not one "lexical variable". But lexical scoping seems to be always implemented by closure although I didn't find one  reference showing that. So no closure -> no lexical scoping -> no lexical variable.
+
+The above `special` implies that history "like Perl and Common Lisp, allow the programmer to *choose static or dynamic scope*" https://en.wikipedia.org/wiki/Scope_(computer_science)#Dynamic_scope.
+
+Sorry for my neglect. *early* Lisp originally uses dynamic scope as https://en.wikipedia.org/wiki/Scope_(computer_science)#History shows. So it seems to support "downward funarg" already without the problem of callee `inner` that it can't refer to the caller argument `cb` shown in https://stackoverflow.com/a/44575491/21294350. But dynamic scope can't do bookkeep for each procedure *separately*, so can't directly implement "upwards funarg". Do you mean that by "downward funargs are easy to implement in a traditional Lisp that *lacks lexical variables*, whereas the *general* case is hard"?
+
+"whereas the general case is hard.": Could you say more about that as one comparison to better understand "downward funargs"? IMHO Upwards funarg can be also solved with environment which implies closure as http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/#funarg-problem implies. Anyway it just bookkeep the related variables for further usage when lexical scope.
+
+Thanks. After some re-thoughts, "downward funarg" doesn't need that "bookkeep" mechanism since it is callee that uses variable declared outside. But for Upwards funarg, the returned proc may be used elsewhere so we need to carry `env` around. Do you mean that?
+
+As one notice for future readers, http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/#funarg-problem is so good which also says why we uses heap instead of stack here for `cb`. Here the reason why the downward funarg problem can't be solved easily by stack is that *normally* callee can't access caller stack (i.e. `cb` variable for `inner`) although with assembly we can do that with more efforts https://cboard.cprogramming.com/c-programming/166765-accessing-stack-caller-post1230758.html#post1230758 https://stackoverflow.com/a/76048002/21294350.
+
+As amon says, it is a bit difficult to understand these code blocks if not knowing about Pascal syntax. Pascal doc seems to be much less and readable than those docs of Python/C++(cppreference)/Scheme(e.g. MIT/GNU Scheme). 1. I only found https://docs.oracle.com/cd/E19957-01/802-5762/802-5762.pdf which seems to show that `procedure` definition is always done by `begin ... end` by its comments on page 68. https://downloads.freepascal.org/fpc/docs-pdf/ref.pdf INDEX links about `procedure` like page 208 doesn't show that explicitly but just gives one example also using `begin`.
+
+2. If so, knowing `(* ... *)` means comments in Pascal, the codes are much more understandable then.
+
+IMHO this code block can be modified slight so that all work same for dynamic scoping. See https://stackoverflow.com/q/1753186/21294350 which uses local variable which will be passed around when dynamic scoping instead of lexical binding for `I` introduced by procedure call. This just means Deep/Shallow Binding is independent of dynamic/static scoping.
+
+To say more specifically, "B uses that invocation’s instance of I in its writeln statement" is due to that is the binding when "the procedure is passed as an argument" while "With shallow binding" it will use the binding when "the procedure is actually called", i.e. that of the 2nd invocation of `A`. (IMHO https://cs.stackexchange.com/a/136028/161388 explains these well with the similar example to the above but with the detailed definitions of Deep/Shallow Binding)
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -23,6 +42,8 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   so won't dig into
   1. maths proof etc
   2. ingenious algorithm or program structure etc (should be taught in CRLS etc).
+# related summary
+- See https://www.infoq.com/presentations/We-Really-Dont-Know-How-To-Compute/ from https://news.ycombinator.com/item?id=14169292
 # miscs
 - cph: Competitive Programming Helper
 ## misc clipboard
@@ -35,7 +56,8 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   From chapter 4, I will read codes first and then read 
   1. *code term* contexts since IMHO SDF codes are complexer than SICP although this may not hold for chapter 4.
   2. the 1st sentence in each paragraph
-  3. contents enclosed by square brackets
+  3. contents enclosed by ~~square brackets~~ parentheses
+  - ~~For chapter 5, since most of contents in the preface have been taught in SICP, so I will  focus on the general ideas first (the above 3 items) and then detailed codes.~~
 ## @%Check p14, 23~27 and other pages (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
 - chapter 2, 3, 4 checked (no need for checking "section" contexts since they have no underlined words).
@@ -184,6 +206,13 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - 4.4.3. exercises. At least 4.14.
   - algorithm W [may be not the best](https://stackoverflow.com/q/66825356/21294350) for Hindley-Milner type inference
     - also see [1](https://stackoverflow.com/a/415574/21294350) [2](https://cs.stackexchange.com/q/90190/161388) [3](https://www.reddit.com/r/haskell/comments/4s71um/is_there_any_easy_to_understand_type_inference/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) [4](https://web.archive.org/web/20180913063304/http://dev.stephendiehl.com/fun/006_hindley_milner.html#constraint-generation)
+- more about how tail-call optimization is implemented.
+- > For example, in C there are lvalues and rvalues, and they are handled differently.
+  [brief difference](https://stackoverflow.com/a/10646838/21294350)
+- https://stackoverflow.com/a/9234136/21294350 about Deep/Shallow binding
+### Maybe
+- https://en.wikipedia.org/wiki/Scope_(computer_science)#Dynamic_scope
+  > With referential transparency the dynamic scope is restricted to the argument stack of the current function only, and coincides with the lexical scope.
 # [ps](https://github.com/sci-42ver/6.945_assignment_solution) (It doesn't have solutions for all SDF exercises)
 ## ps00
 - I won't dig into the reasons of implementation shown in https://ee.stanford.edu/%7Ehellman/publications/24.pdf.
@@ -794,6 +823,160 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
             So maybe store each var seq in one application in different frames to *differentiate*, then why not use the straightforward index method.
             - My comments are not archived in https://web.archive.org/web/20220520045055/http://community.schemewiki.org/?sicp-ex-4.79 when schemewiki is again down on 2024 Dec 25.
             - This differentiation problem **doesn't hold** for the above cases *not connecting 2 vars*.
+# chapter 5
+Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering the time to read the related SICP part vaguely) based on the starting time of the next ps and the finished time of the former ps (i.e. `Date(2024, 4, 3)-Date(2024, 3, 22)=12` in Coda).
+- > We explored this idea in limited contexts in chapters 2, 3, and 4. Here we will pursue this idea in full generality.
+  IMHO "this idea" means "domain-specific language" which is trivial for chapters 2, and 4 where the latter focuses on "pattern matching".
+  In chapter 3, all blocks of each program are just based on one specific arithmetic which just means "domain-specific language".
+- > An interpreter is just such a mechanism.
+  [compared](https://www.geeksforgeeks.org/difference-between-compiler-and-interpreter/) with Compiler
+  > A compiler translates *the whole program* at once, which can make it run faster but takes more time to compile. An interpreter translates and runs the code *line by line*, making it easier to catch errors and debug, though it may run slower.
+## code comparison description with SICP
+```scheme
+;;; difference
+;; no abstraction compared with SICP
+
+;; different from SICP
+;; different from SICP due to
+
+;;; similarity
+;; similar to SICP but uses the different structure.
+;; similar comments to ...
+
+;; almost same basic ideas as SICP
+
+;;; better than SICP ...
+;; better than SICP due to the compliance with the standard
+;; better than SICP with abstraction
+;; better than SICP due to using the internal definition for the procedure used only by something.
+
+;; more robust than SICP
+
+;;; addition
+;; extra things added besides SICP
+```
+## @% TODO
+- > These declarations will allow a procedure to defer evaluation of the corresponding argument to when its value is actually needed, providing for lazy evaluation, with or without memoization of the value.
+  similar to SICP Exercise 4.31.
+- > So we next separate the interpretation into two phases, analysis and execution. ... The execution procedures all have the same form, and constitute a system of combinators.
+  IMHO just same as exercise_codes/SICP/book-codes/ch4-analyzingmceval.scm where all `exp` args are moved from `lambda`.
+  - "combinators" just means something like ~~recursive calls~~ `analyze-definition` may be based on `analyze` for subparts.
+    > a thing that combines subparts together into a larger part.
+    - > It is possible to create *combinator languages*, in which the components and the composite all have the same interface specification.
+      > A combinator language defines primitives and means of combination
+      See 2.2.1 where "means of combination" are ~~just procedure calls~~ special `r:seq` etc
+      > the means of combination are the combinators compose , parallel-combine, spread-combine , and *others we may introduce*
+- > Remarkably, this requires no change to the analysis part of the evaluator.
+  See exercise_codes/SICP/book-codes/ch4-ambeval.scm which needs small addition for `(analyze exp)`.
+- > it turns out that all we need is call/cc to implement amb directly in Scheme, so we conclude by showing how to do this.
+  in http://community.schemewiki.org/?LisScheSic but it is down when I wrote this. The archive https://web.archive.org/web/20241114023648/http://community.schemewiki.org/?LisScheSic doesn't have the contents I wrote about `amb`.
+- > we also enable the implementation of declarations on the formal parameters, and perhaps some other options.
+- > with generic hooks for extension.
+## 5.1
+- > But because our eval is a generic procedure, the set of symbols that are defined by eval may be changed easily and even dynamically
+  i.e. adding more handlers by `add-handler!` in `SDF_exercises/software/sdf/common/generic-procedures.scm`.
+- > In our interpreter we will pass the *unevaluated* operands and the environment for their evaluation to apply to make it possible to implement a variety of evaluation strategies
+  This is different from exercise_codes/SICP/book-codes/ch4-mceval.scm where it uses `list-of-values` (also exercise_codes/SICP/book-codes/ch4-analyzingmceval.scm where `analyze-application` will call `(aproc env)` for `args`).
+  It is similar to exercise_codes/SICP/book-codes/ch4-leval.scm.
+- > We inherit the Scheme reader, so our syntax is very simple
+  i.e. we have primitive accessor procedures for "syntax" (see SICP for what "syntax procedure" means).
+  > we inherit tail recursion, so we don't need to pay special care when implementing procedure calls
+  [tail-call optimization](https://en.wikipedia.org/wiki/Tail_call), so even if we didn't call at last, the optimization may do that.
+- > some of which start with distinguished keywords
+  ~~i.e. tagged list.~~
+- > The implementation will be organized as a set of rules for each expression type
+  for example, `let` may have the named version or not.
+- > We define g:eval as a generic procedure with two arguments.
+  so just one replacement for `cond` in exercise_codes/SICP/book-codes/ch4-leval.scm
+- > given meanings from the lexical context (where the lambda expression appears textually)
+  See SICP for more. In a nutshell, just based on the parent env(s) when *created* instead of the runtime.
+- > allow for side-effecting actions, such as assignment, or I/O control actions
+  [relation with I/O](https://softwareengineering.stackexchange.com/a/258668)
+- > Scheme hygienic macro systems
+  is said in one of my SO questions.
+- > input/output operations are usually implemented in hardware by assignment to particular sensitive locations in the address space.
+  - "sensitive locations in the address space" [see](https://stackoverflow.com/questions/3215878/what-are-in-out-instructions-in-x86-used-for/3215958#3215958)
+    > I/O devices share the address space with memory
+  - "in hardware" [see](https://c9x.me/x86/html/file_module_x86_id_139.html)
+- footnote 9 see SDF_exercises/chapter_5/tests/recursive_define.scm
+- "syntactic construct" [see](https://www.sciencedirect.com/science/article/pii/S0957417422024162#:~:text=For%20Java%2C%20we%20identified%20seven,constructs%20used%20by%20Java%20programmers.)
+  > Each AST node represents a syntactic construct
+- > remember Alan Perlis's maxim on page 159
+  See sicp_notes.md
+- > call by need
+  See SICP Exercise 3.57.
+  - (based on exercise_codes/SICP/book-codes/ch4-leval.scm which probably shares the same basic ideas here due to being both by Sussman) Here the thunk value can be reused due to their values are just *delayed*, more specifically each of they just one value which is based on `env` arg due to *lexical scope*.
+    - Notice each call of one procedure will create *new* thunks by `delay-it` which can't be used when calling this procedure with the same arguments and *`env`*.
+      - How to reuse, see
+        ```scheme
+        (define fibs
+          (cons-stream 0
+                       (cons-stream 1
+                                    (add-streams (stream-cdr fibs)
+                                                 fibs))))
+        ```
+        where `fibs` *object* is reused, therefore its sub-objects are also reused.
+- > The environment argument also makes it possible to accommodate non-lexically scoped variables
+  based on exercise_codes/SICP/book-codes/ch4-leval.scm, just use `(extend-environment ... env)` for `apply` which then will use the dynamic `env` which may be changed during runtime by `add-binding-to-frame!` etc.
+  - > it is generally a bad idea.
+    See SICP_SDF/sicp_notes.md "dynamic_scope_disadvantage_...".
+- > like arithmetic addition (usually named by the + operator), are strict: they need all of their arguments evaluated before they can compute a value
+  because *primitive* `+` will need the argument values *immediately* after the call.
+- > including primitive procedures (implemented in the system or hardware below the level of the language)
+  see OSTEP where `lock` etc is implemented "in the system" which may be just implemented by assembly based on "hardware".
+- > For lexical scoping, that extended environment is built on the environment *packaged* with the procedure by the evaluation of the lambda expression that *constructed* the procedure.
+  Better to see [wikipedia](https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scope_vs._dynamic_scope_2) instead of other  references in SICP_SDF/sicp_notes.md etc.
+  - this implies the above "packaged" (i.e. `make-compound-procedure`).
+    > In languages with lexical scope (also called static scope), name resolution depends on the location in the source code and the lexical context (also called static context), which is defined by *where the named variable or function is defined*.
+    - Compared with *dynamic scope*, see the following.
+  - > In practice, with lexical scope a name is resolved by searching the local lexical context, then if that fails, by searching the *outer* lexical context, and so on
+    implies `extend-environment`, i.e. "built on ...".
+    - Compared with *dynamic scope*, lexical context can be just seen as `env` var here not depending one "*execution*" (same for the former quote).
+  - implied by 1st quote.
+    - > Importantly, in lexical scope a variable with function scope has scope only within the lexical context of the function: it goes *out of context when another function is called within* the function, and comes back into context when the function returns—*called functions have no access* to the local variables of calling functions
+      lexical context definition (see the above for "Compared with *dynamic scope*")
+      - implied by ...: see the following where it is also about the definition of the called procedure. Anyway these 2 quotes mean the same thing.
+      - also see
+        > function g does not have access to f's local variables (assuming the *text* of g is not inside the text of f)
+        - "Compared with *dynamic scope*"
+          > since g is *invoked* during the invocation of f
+        - IGNORE: implied by ~~`env`~~ static analysis where we can't associate g and f at all.
+          implied by that `g` can't know "f's local variables" when manipulated by `lambda?`-eval. Then when extended, it still can't.
+    - > In lexical scope (or lexical scoping; also called static scope or static scoping), if a variable name's scope is a certain function, then its scope is the *program text* of the function definition: within that text, the variable name exists, and is bound to the variable's value, but *outside that text, the variable name does not exist.*
+      "Compared with *dynamic scope*"
+      > then its scope is the time-period during which the function is *executing*
+      - ~~implied by `make-compound-procedure` using `env` corresponding to the time when *defined* by `lambda`~~
+        implied `g:apply` with `strict-compound-procedure?` where extended env is *only* used for that body.
+      - same as
+        - "Compared with *dynamic scope*" implicitly
+          > With lexical scope, a name always refers to its lexical context. This is a property of the program *text* and is made independent of the *runtime* call stack by the language implementation.
+  - > In languages with lexical scope and nested functions, local variables are in context for nested functions
+    implied by `env` *passed along* during calls and `define` etc modifies `env` in place.
+    - No "Compared with *dynamic scope*".
+  - > If the language of this program is one that uses lexical scope ...
+    trivial if understanding the above.
+  - > Correct implementation of lexical scope in languages with first-class nested functions is not trivial, as it requires each function value to *carry with it a record* of the values of the variables that it depends on (the pair of the function and this context is called a closure).
+    i.e. `make-compound-procedure`
+    - No "Compared with *dynamic scope*".
+  - > *Deep binding*, which *approximates static (lexical) scope*, was introduced around 1962 in LISP 1.5 (via the *Funarg* device developed by Steve Russell, working under John McCarthy).
+    - how "approximates", see [this](https://stackoverflow.com/a/1753505/21294350) where we doesn't use the *recent* value for `x` possibly (better based on [this](https://stackoverflow.com/questions/1753186/dynamic-scoping-deep-binding-vs-shallow-binding#comment56763368_1753505)).
+      - The ideas can be just [*directly* ported](https://softwareengineering.stackexchange.com/questions/331885/differences-between-deep-and-shallow-bindings-for-static-scoping?newreg=74f6eae1cad541f58127f3f3ea189cdc#comment1009473_331885) to "static scoping".
+      - [ad hoc binding](https://www.oreilly.com/library/view/programming-languages-concepts/9781284222739/xhtml/086_Chapter06_11.xhtml), so it will uses `second`'s env which just has no introduction of the "dynamically created" `x, y`, therefore outputting `1+2=3`. See SO_1.
+      - trivially [Scheme uses Deep binding](https://stackoverflow.com/a/4383122/21294350) which is more like "static scoping".
+        - TODO see [SO_1](https://stackoverflow.com/q/79469121/21294350)
+      - IMHO Deep means the distance from the callee to the used env if searching from the most recent frame to the least.
+    - Funarg
+      - see `downward_funarg.c` for the normal behavior where we can't access caller stack.
+      - Also see [this](https://stackoverflow.com/a/44575491/21294350) for why we uses closure and [this](https://stackoverflow.com/questions/44574946/difference-between-a-closure-and-the-funarg-problem#comment140150976_44574946).
+        - http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/#funarg-problem
+          - > We see that in systems with dynamic scope, variable resolution is managed with a dynamic (active) stack of variables.
+            This is [not for C](https://stackoverflow.com/q/71282687/21294350).
+      - [Funarg device](https://stackoverflow.com/a/34889366/21294350): IMHO just means closure above.
+      - Also see https://stackoverflow.com/a/587670/21294350 for the comparison with upward version
+        - deleted comment
+          > Thanks for your patience. Maybe I have said too much and a bit distracting, what I want to know is that why "downward funarg" is easy while "the general case" (i.e. upwards funarg) is hard for "a traditional Lisp". Do your "shadow" mean "dynamic scope" so that "downward funarg" is easy as the above "Sorry for my neglect. ..." shows and then "upwards funarg" is hard due to lacking one direct mechanism to *carry on necessary information around*?
+  - [Dynamic binding](https://softwareengineering.stackexchange.com/a/331902/466148) better to see wikipedia [late binding](https://en.wikipedia.org/wiki/Late_binding)
+    > early binding ... This is usually stored in the compiled program as an offset in a virtual method table ("v-table")
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:

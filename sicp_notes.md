@@ -1307,7 +1307,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 ### belowline
 - > The overall structure of a class de nition looks something like this:
   See `class-variable-methods` (TODO I won't dig further since the note even just give one abstraction)
-- > Each method is a procedure de ned within the scope of one or the other class procedure, and Scheme's lexical scoping rules restrict each method to the variables whose scope contains it.
+- > Each method is a procedure defined within the scope of one or the other class procedure, and Scheme's lexical scoping rules restrict each method to the variables whose scope contains it.
   ~~Based on `make-checking-account-instance` code, `(lambda (message) ...)` can access `MY-ACCOUNT` but only `MY-ACCOUNT` can access ~~
   TODO Since I didn't check the details of the code implementation, I won't dig into the above.
   - > the deposit method only has access to the local state variables of the account class, not those of the checking-account class. Similarly, the write-check method doesn't have access to the account local state variables like balance. ... The technical distinction between inheritance and delegation is that an inheritance-based OOP system does not have this restriction.
@@ -1455,7 +1455,7 @@ For `aboveline.pdf` I will just focus on the concepts instead of how the lib `ob
 - > That is, a procedure that has a local state variable must be defined within the scope where that variable is created
   maybe `(let ((local ...)) (define proc1 ...))` like ["We can make balance internal to withdraw by rewriting the definition as follows:"](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-20.html#%_sec_3.1.1)
 - how lexical scope Prevents “name capture” bugs
-  see `(area rad)` example where the original free variable `pi` is captured by the context caller when using dynamic scope.
+  see `(area rad)` example where the original free variable `pi` is *captured by the context caller* when using dynamic scope. <a id="dynamic_scope_disadvantage_1"></a>
 - > because the variable x is not bound in any environment lexically surrounding while.
   this is due to we pass quote by `[:x > 0]`, so we need the value of `x`.
 - TODO
@@ -1842,7 +1842,7 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   - An5Drama's question
     2: here $z$ won't exist in $t,e,y$, so it is safe to replace (i.e. "a *fresh* name"). More detailed about "free" see the book.
 - [lexical scoping](https://www.shecodes.io/athena/9740-what-is-lexical-scoping-and-how-does-it-work-in-javascript#:~:text=Lexical%20scoping%20is%20a%20way,interact%20with%20examples%20in%20JavaScript.) just means child scope can use all variables defined in the parent scope but not vice versa.
-  > > For example, lexical scoping determines that when a variable is *declared inside a function*, it is local to that function and *cannot be accessed outside* of it. This means that variables *declared outside of the function can be accessed* by the functions defined within it.
+  > For example, lexical scoping determines that when a variable is *declared inside a function*, it is local to that function and *cannot be accessed outside* of it. This means that variables *declared outside of the function can be accessed* by the functions defined within it.
 - > the simplest name-packaging problem
   i.e. to [package the function](https://stackoverflow.com/a/20520767/21294350).
   > better structuring a procedure, not for efficiency
@@ -3871,8 +3871,10 @@ Emm... All exercises are all included in book exercises or contents.
 # TODO after distributed systems
 - footnote 51 in section 3.4.
 # TODO after compiler
-- Why is [dynamic scope implementation](https://stackoverflow.com/a/1048531/21294350) harder as CS 61A notes p81 says?
+- Why is [dynamic scope implementation](https://stackoverflow.com/a/1048531/21294350) harder as CS 61A notes p81 says? <a id="dynamic_scope_disadvantage_2"></a>
   > With dynamic scope you have to defer the name-location correspondence until the program actually runs
+  - Also see https://en.wikipedia.org/wiki/Scope_(computer_science)#History
+    > while the compiler assumes all variables to be local unless forced to assume otherwise
 - CS 61A notes 
   - paragraph "recursive descent compiler ...".
   - automatic analysis in compiler
