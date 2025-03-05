@@ -2961,7 +2961,7 @@ I only read the context of "Search" and codes.
 - > However, both depth and breadth-first search techniques are "blind", in that they have no notion of the relative values of different states
   i.e. only check depth instead of actual distance.
 - > However, assuming that we don't ever want to revisit a city on a worthwhile path, we can change the implementation of next-states by doing the map not over all reachable destinations from here, but only *those that are not already on our previous* path:
-  Also see `/home/czg_arch/SICP_SDF/SDF_exercises/chapter_2/graph-lib/DFS_tests.scm` -> `visited` although not structural.
+  Also see `/home/hervey_arch/SICP_SDF/SDF_exercises/chapter_2/graph-lib/DFS_tests.scm` -> `visited` although not structural.
 - > Breadth and best-first searches both find solutions the same as in the case of the asymmetric road network, but do more work along the way.
   ~~For Breadth, we are just adding some extra nodes at each ~~level~~ recursion (With proof by contradiction, we can't add goal before the level of goal).~~
   This is not always true. Counterexample: 1->2->3->4, 5->1, 5->4.
@@ -3252,7 +3252,8 @@ Emm... still duplicate of much book contents but relates with env model...
 - > types 'x, read returns a two-element list containing the symbol quote
   see `(car (read))` when typing `'x`.
 - > or may even contain cycles
-  i.e. binding in `env` may contain the binding pair `(foo env)`.
+  ~~i.e. binding in `env` may contain the binding pair `(foo env)`.~~ (This can't work for the `(driver-loop)` here since it doesn't `env` is not exposed at all.)
+  One trivial case is just `env` contains one binding whose val has cycle.
   - `compound-procedure` is just the `lambda` structure taught in environment model.
 - > In a similar way, we can regard the evaluator as a very special machine that takes as input a description of a machine.
   i.e. one expression "as input"

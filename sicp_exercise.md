@@ -2182,6 +2182,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - wiki
     - we also need to define the *syntax* of "special form make-unbound!".
 - [x] 14
+  - IMHO meteorgan's is right same as repo.
 - [x] 15
   - > whether p halts on a for *any* procedure p and object a
   - if halts, then will `(run-forever)` which implies `(try try)` will not halt.

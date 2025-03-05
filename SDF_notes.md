@@ -1,22 +1,3 @@
-I haven't heard about "lexical variable" before but just lexical scoping. It is defined here https://www.lispworks.com/documentation/lcl50/aug/aug-110.html closely related with lexical scoping. As https://stackoverflow.com/a/382498/21294350 says, closure will make bookkeep so that the variable can be used "beyond the lexical scope", therefore not one "lexical variable". But lexical scoping seems to be always implemented by closure although I didn't find one  reference showing that. So no closure -> no lexical scoping -> no lexical variable.
-
-The above `special` implies that history "like Perl and Common Lisp, allow the programmer to *choose static or dynamic scope*" https://en.wikipedia.org/wiki/Scope_(computer_science)#Dynamic_scope.
-
-Sorry for my neglect. *early* Lisp originally uses dynamic scope as https://en.wikipedia.org/wiki/Scope_(computer_science)#History shows. So it seems to support "downward funarg" already without the problem of callee `inner` that it can't refer to the caller argument `cb` shown in https://stackoverflow.com/a/44575491/21294350. But dynamic scope can't do bookkeep for each procedure *separately*, so can't directly implement "upwards funarg". Do you mean that by "downward funargs are easy to implement in a traditional Lisp that *lacks lexical variables*, whereas the *general* case is hard"?
-
-"whereas the general case is hard.": Could you say more about that as one comparison to better understand "downward funargs"? IMHO Upwards funarg can be also solved with environment which implies closure as http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/#funarg-problem implies. Anyway it just bookkeep the related variables for further usage when lexical scope.
-
-Thanks. After some re-thoughts, "downward funarg" doesn't need that "bookkeep" mechanism since it is callee that uses variable declared outside. But for Upwards funarg, the returned proc may be used elsewhere so we need to carry `env` around. Do you mean that?
-
-As one notice for future readers, http://dmitrysoshnikov.com/ecmascript/chapter-6-closures/#funarg-problem is so good which also says why we uses heap instead of stack here for `cb`. Here the reason why the downward funarg problem can't be solved easily by stack is that *normally* callee can't access caller stack (i.e. `cb` variable for `inner`) although with assembly we can do that with more efforts https://cboard.cprogramming.com/c-programming/166765-accessing-stack-caller-post1230758.html#post1230758 https://stackoverflow.com/a/76048002/21294350.
-
-As amon says, it is a bit difficult to understand these code blocks if not knowing about Pascal syntax. Pascal doc seems to be much less and readable than those docs of Python/C++(cppreference)/Scheme(e.g. MIT/GNU Scheme). 1. I only found https://docs.oracle.com/cd/E19957-01/802-5762/802-5762.pdf which seems to show that `procedure` definition is always done by `begin ... end` by its comments on page 68. https://downloads.freepascal.org/fpc/docs-pdf/ref.pdf INDEX links about `procedure` like page 208 doesn't show that explicitly but just gives one example also using `begin`.
-
-2. If so, knowing `(* ... *)` means comments in Pascal, the codes are much more understandable then.
-
-IMHO this code block can be modified slight so that all work same for dynamic scoping. See https://stackoverflow.com/q/1753186/21294350 which uses local variable which will be passed around when dynamic scoping instead of lexical binding for `I` introduced by procedure call. This just means Deep/Shallow Binding is independent of dynamic/static scoping.
-
-To say more specifically, "B uses that invocation’s instance of I in its writeln statement" is due to that is the binding when "the procedure is passed as an argument" while "With shallow binding" it will use the binding when "the procedure is actually called", i.e. that of the 2nd invocation of `A`. (IMHO https://cs.stackexchange.com/a/136028/161388 explains these well with the similar example to the above but with the detailed definitions of Deep/Shallow Binding)
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -130,6 +111,7 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - [`fresh-line`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Output-Procedures.html#index-fresh_002dline)
   > If port is such a port, this procedure writes an *end-of-line* to the port only if the port is *not already at the beginning of a line*. If port is not such a port, this procedure is identical to newline.
   `newline` -> "Writes *an end of line* to textual output port."
+  - Also see SDF_exercises/chapter_5/tests/read_behaviors.scm
 - > `define-record-type <property>`
   Here it may be just used when debugging due to "bound".
   > `<type name>` is bound to a representation of the record type itself.
@@ -140,6 +122,10 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   > You typically use reduce when applying f is expensive and you’d like to *avoid the extra application incurred when fold applies f to the head of list* and the identity value, redundantly producing the same value passed in to f.
   The diff is just on `ridentity`
   > ridentity should be a "right identity" ... ...in other words, we compute (fold f ridentity list).
+- [`read`](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Input-Procedures.html#index-read-7)
+  - i.e. the object newly "convert"ed from "external representations".
+    > It returns the next object parsable from the given textual input port
+  - TODO "end of file" can't be used by MIT/GNU Scheme seemingly when typing [Ctrl-d](https://stackoverflow.com/a/463944/21294350) which will just  exiting this Scheme application.
 # TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
@@ -149,17 +135,20 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - `missed-essential-match!` is not defined.
 ### not in MIT_Scheme_Reference, saved-total-index and the book
 - `#!default`
-- `bundle?`
+- ~~`bundle?`~~ (see p473 for bundle which is just one family of related procedures *bundled* together)
 - `uninterned-symbol?` (but works in mere MIT/GNU Scheme.)
   - Also for 
     1. `symbol>?`
-    2. `make-bundle-predicate`
+    2. ~~`make-bundle-predicate`~~
     3. `->environment`
     4. `object-type`
     5. `symbol`
     6. `list-of-type?`
     7. `list-of-unique-symbols?`
     8. `unspecific`
+    9. make-working-env-model
+    10. enter-working-environment
+    11. current-load-pathname
   - not knowing how to use
     - `define-pp-describer`
     - `(conjoin)`
@@ -275,6 +264,16 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   - OSTEP
     since csapp has already contained 3 types. I won't review it.
 - "video interface" and "distributed game" are beyond the intention of following this course and reading this book. So I won't do these.
+## ps05
+- > section 2.11: Macros. This is complicated stuff, so don’t try to read it until you need to.
+  Actually only needed by the code base but not the exercises (at least when I did the exercises, I didn't use that).
+  ```bash
+  [~/SICP_SDF/SDF_exercises/software/sdf/generic-interpreter]$ grep 'syntax' -r ../**/*.scm --color=always | grep -E '(term|design|unification|graph)'
+  ../design-of-the-matcher/matcher.scm:;;;; Pattern syntax
+  ../term-rewriting/rule-implementation.scm:                              ;; make-rule is only used by (define-syntax rule ...).
+  ../term-rewriting/rule-implementation.scm:(define-syntax rule
+  ...
+  ```
 # [project](https://github.com/bmitc/mit-6.945-project) (it only has https://github.com/bmitc/the-little-schemer but not solutions for SDF exercises)
 - Also see https://ocw.mit.edu/courses/6-945-adventures-in-advanced-symbolic-programming-spring-2009/pages/projects/ and https://groups.csail.mit.edu/mac/users/gjs/6.945/rfp.pdf.
   - kw: free software
@@ -852,6 +851,8 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
 
 ;; more robust than SICP
 
+;;; IMHO worse than SICP ...
+
 ;;; addition
 ;; extra things added besides SICP
 ```
@@ -977,6 +978,8 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
           > Thanks for your patience. Maybe I have said too much and a bit distracting, what I want to know is that why "downward funarg" is easy while "the general case" (i.e. upwards funarg) is hard for "a traditional Lisp". Do your "shadow" mean "dynamic scope" so that "downward funarg" is easy as the above "Sorry for my neglect. ..." shows and then "upwards funarg" is hard due to lacking one direct mechanism to *carry on necessary information around*?
   - [Dynamic binding](https://softwareengineering.stackexchange.com/a/331902/466148) better to see wikipedia [late binding](https://en.wikipedia.org/wiki/Late_binding)
     > early binding ... This is usually stored in the compiled program as an offset in a virtual method table ("v-table")
+- [S-expression](https://en.wikipedia.org/wiki/S-expression) (i.e. `list` in Scheme)
+  TODO "like-named notation"
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:

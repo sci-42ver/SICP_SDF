@@ -142,6 +142,8 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Feb 16, 1 hr 12 mins vs 1 hr 45 mins.
   In summary, from Feb 6 to Feb 16, I spent 5 hrs 30 mins + 58 mins + 1 hr 45 mins = 8 hrs 13 mins for coding (*TODO* transform this to the normal day count).
   to Feb 22 noon, finish chapter 4 in the book.
+  to Feb 27, finish up to considering the ideas for Exercise 5.1.
+  Feb 28, rest for one day due to my dad saying strange things maybe because he is sad?
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 ### @%Chapter 4 time review (my efficiency decreases a lot during this range)

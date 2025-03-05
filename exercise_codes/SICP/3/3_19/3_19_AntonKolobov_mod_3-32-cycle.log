@@ -9,7 +9,7 @@ Image saved on Friday January 6, 2023 at 10:11:41 PM
   Release 12.1 || SF || LIAR/x86-64
 
 1 ]=> (cd "~/SICP_SDF/exercise_codes/SICP/3")
-;Value: #[pathname 12 "/home/czg_arch/SICP_SDF/exercise_codes/SICP/3/"]
+;Value: #[pathname 12 "/home/hervey_arch/SICP_SDF/exercise_codes/SICP/3/"]
 
 1 ]=> (load "../lib.scm")
 ;Loading "../lib.scm"... done
@@ -69,7 +69,7 @@ Image saved on Friday January 6, 2023 at 10:11:41 PM
 ;Value: has-cycle?
 
 1 ]=> (cd "~/SICP_SDF/exercise_codes/SICP/3")
-;Value: #[pathname 13 "/home/czg_arch/SICP_SDF/exercise_codes/SICP/3/"]
+;Value: #[pathname 13 "/home/hervey_arch/SICP_SDF/exercise_codes/SICP/3/"]
 
 1 ]=> (load "3_18_19_tests.scm")
 ;Loading "3_18_19_tests.scm"...
