@@ -1,3 +1,4 @@
+If you want to get one brief introduction of hygiene implementation, https://www.gnu.org/software/guile/manual/html_node/Hygiene-and-the-Top_002dLevel.html is helpful which is probably based on "syntax objects as is needed to maintain referential transparency" https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html. IMHO Guile doc is much more readable than MIT/GNU Scheme or Racket doc.
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -126,6 +127,10 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   - i.e. the object newly "convert"ed from "external representations".
     > It returns the next object parsable from the given textual input port
   - TODO "end of file" can't be used by MIT/GNU Scheme seemingly when typing [Ctrl-d](https://stackoverflow.com/a/463944/21294350) which will just  exiting this Scheme application.
+- `make-key-weak-eqv-hash-table`
+  see SDF_exercises/software/sdf/combinators/function-combinators.scm reference.
+  - [TODO](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Construction-of-Hash-Tables.html)
+    > Note that if *a datum holds a key strongly*, the table will effectively hold that key strongly.
 # TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
@@ -199,6 +204,10 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - > For example, in C there are lvalues and rvalues, and they are handled differently.
   [brief difference](https://stackoverflow.com/a/10646838/21294350)
 - https://stackoverflow.com/a/9234136/21294350 about Deep/Shallow binding
+- https://stackoverflow.com/q/55797832/21294350 related with Pratt Parser in ex 5.7.
+- https://en.wikipedia.org/wiki/Operator-precedence_parser#Precedence_climbing_method
+  - [predictive recursive-descent parser](https://www.geeksforgeeks.org/predictive-parser-in-compiler-design/)
+    why no backtracking
 ### Maybe
 - https://en.wikipedia.org/wiki/Scope_(computer_science)#Dynamic_scope
   > With referential transparency the dynamic scope is restricted to the argument stack of the current function only, and coincides with the lexical scope.

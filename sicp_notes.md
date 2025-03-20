@@ -3888,7 +3888,18 @@ Emm... All exercises are all included in book exercises or contents.
     > but the port number itself does not indicate the protocol being used
 ## (maybe related with compiler) analytic philosophy and computer science
 - https://en.wikipedia.org/wiki/Referential_transparency#Referential_transparency and "This sentence cannot be transformed to a nutty one." https://stackoverflow.com/a/9859966/21294350 (exercise 4.9)
-
+  - For
+    > replacing a subexpression with another one that denotes the same value[b] does not change the value of the expression
+    [this](https://rockthejvm.com/articles/what-is-referential-transparency-and-why-should-you-care) is helpful.
+    > This expression is not referentially transparent, because, *besides the actual value* the expression computes (the money you need to pay back), you also do something else (printing a respect line to the boss).
+    - So for https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html
+      it just means
+      ```scheme
+      (let ((t #t))
+        (let ((t #f))
+          (if t t t)))
+      ```
+      should have outer `t` uninfluenced by the inner one.
 # @%TODO read ~~Lecture 5,6 &~~ 6.001 in perspective & The Magic Lecture in 6.037 which *don't have corresponding chapters in the book*. 
 - Also read [~~6.001 2005 Lectures without corresponding sections~~](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/readings/) 
   ~~([6.001 2007](https://web.archive.org/web/20161201165314/http://sicp.csail.mit.edu/Spring-2007/calendar.html) is almost same as 2005 and they are both taught by [Prof. Eric Grimson](https://orgchart.mit.edu/leadership/vice-president-open-learning-interim-and-chancellor-academic-advancement/biography))~~.
