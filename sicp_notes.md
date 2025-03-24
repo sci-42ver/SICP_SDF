@@ -1,3 +1,4 @@
+To be more specific about what aruisdante says, https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md is helpful (a reference from https://devguide.python.org/internals/garbage-collector/index.html). In a nutshell, reference counting is "a form of garbage collection" while (cyclic) garbage *collector* is used for "reference cycles" which can be used in companion with `del` to delete bindings etc https://docs.python.org/3/reference/simple_stmts.html#grammar-token-python-grammar-del_stmt.
 # Notice
 - I am using Ryzen 4800H which is related the test result in this repo.
 - I won't dig into all *complexity computation* in this book since this is *not the target* of learning this book although I will do that sometimes.
@@ -359,6 +360,8 @@ checked up to section 4.4 (included) and exercise checking up to 4.4 (included)
 - > This technique is an integral part of the compilation process, which we shall discuss in chapter 5.
 - > As we will show in section 5.5.6, one can determine the position in the environment structure where the value of the variable will be found
 - > allows this structure to be garbage-collected and its space recycled, as we will discuss in section 5.3.
+#### related
+- https://stackoverflow.com/questions/25286171/when-does-python-delete-variables#comment39407127_25286230 and https://stackoverflow.com/questions/25286171/when-does-python-delete-variables#comment140252478_25286230
 # miscs
 ## blogspot comments left
 - https://billthelizard.blogspot.com/2010/02/sicp-exercise-126-explicit.html?showComment=1719034722891#c6043924970819337247

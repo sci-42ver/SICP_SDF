@@ -196,6 +196,14 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   - > It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.”
     the former may mean "the types of all of the arguments"
     while the latter may mean sometimes "thing being moved" is "the principal dispatch center" while sometimes "the source location" is.
+- "class-free" in SDF_exercises/chapter_5/5_7_pratt_operator_precedence_parser/README.md
+  - better usage of this (maybe dropped as QA1 there says.)
+  - how to implement class without using Prototypal inheritance, i.e. different from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain.
+- https://stackoverflow.com/questions/3545080/c-and-java-use-of-virtual-base-class#comment3712771_3545080 https://en.wikipedia.org/wiki/Virtual_function#Abstract_classes_and_pure_virtual_functions
+- Java vs Python https://stackoverflow.com/a/34249160/21294350
+  https://stackoverflow.com/a/16872315/21294350
+  > I find classical inheritance usually gets in the way of programming, but maybe that's just Java. Python has an amazing classical inheritance system.
+  - Multiple Inheritance https://www.geeksforgeeks.org/how-to-implement-multiple-inheritance-by-using-interfaces-in-java/
 ## TODO after compiler
 - 4.4.3. exercises. At least 4.14.
   - algorithm W [may be not the best](https://stackoverflow.com/q/66825356/21294350) for Hindley-Milner type inference
@@ -208,6 +216,13 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - https://en.wikipedia.org/wiki/Operator-precedence_parser#Precedence_climbing_method
   - [predictive recursive-descent parser](https://www.geeksforgeeks.org/predictive-parser-in-compiler-design/)
     why no backtracking
+- [LR(0)](https://cs.stackexchange.com/a/132101/161388) and [LR(0) parsing table](https://en.wikipedia.org/wiki/LR_parser#Constructing_LR(0)_parsing_tables)
+- tokenizer more robust than I implemented based on regex (same as thegreenplace) in ex 5.7.
+- https://stackoverflow.com/a/17382911/21294350 (same as Closing words in https://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing)
+  Here Pratt isn't like LR is due to it is [not based on grammar](https://u-aizu.ac.jp/~hamada/LP/L06-LP-Handouts.pdf)?
+- TODO in SDF_exercises/chapter_5/5_7_naive_algorithm_for_operator_precedence_parser/README.md.
+## TODO after Automata theory
+- https://stackoverflow.com/questions/17381930/what-kind-of-parser-is-a-pratt-parser#comment137698939_17382911
 ### Maybe
 - https://en.wikipedia.org/wiki/Scope_(computer_science)#Dynamic_scope
   > With referential transparency the dynamic scope is restricted to the argument stack of the current function only, and coincides with the lexical scope.
