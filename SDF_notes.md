@@ -1,4 +1,14 @@
-If you want to get one brief introduction of hygiene implementation, https://www.gnu.org/software/guile/manual/html_node/Hygiene-and-the-Top_002dLevel.html is helpful which is probably based on "syntax objects as is needed to maintain referential transparency" https://www.gnu.org/software/guile/manual/html_node/Syntax-Case.html. IMHO Guile doc is much more readable than MIT/GNU Scheme or Racket doc.
+@PeterWinton Sorry for ambiguity. I have updated my question. Probably you want to also say the same as Shawn have said. So `(require "bar_lib/foo.rkt")` can be *safely* used here which *won't be influenced* by where we run `racket file.rkt`.
+
+@PeterWinton Thanks for the reply. 0. I meant that I haven't looked at the Racket source codes for `require`. I only checked the doc and run my file with `pwd` as the different directories in shell. That shows as what the doc says. So "I can't ensure". Continued...
+
+1. Sorry. I am a bit newbie for Racket. Previously I run `(cd target-dir-str) (load relative-target-file-path)` in MIT/GNU Scheme. Recently I used Racket temporarily for my homework because its regex supports more than MIT/GNU Scheme, at least for `?<!`. So I asked here for some support about my understanding for the doc and maybe one better workaround.
+
+One good answer. Here I give one summary for the comments: What AbrahamCoding says is already implied in the title structure of https://docs.python.org/3/reference/lexical_analysis.html#literals. What Charles Duffy says is due to 1. `r` only do special manipulation for "treat backslashes as literal characters"  2. parse order is implied by that here we actually call one method https://docs.python.org/3/library/stdtypes.html#str.format for the same class instance compared by `==` https://stackoverflow.com/a/1227325/21294350.
+
+For Gabriel Staples's, IMHO here are all about the general string which can be used as one regular expression. So it is not specific to regular expression's dot.
+
+@WillNess 0. "just don't try to use if as a name of a variable.": Thanks. Since the standard doesn't exclude that explicitly https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-6.html#TAG:__tex2page_sec_4.1.1, e.g. it is fine to run `(define if 1)` (so also `(let ((if 1)) if)`) in MIT/GNU Scheme and also Racket. Anyway this is one bad habit. 1. The error here is thrown since `if` is not one *expression* https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-6.html#TAG:__tex2page_sec_4.2.8 but `(if <test> <consequent> <alternate>)` is.
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
