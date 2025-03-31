@@ -1,14 +1,22 @@
-@PeterWinton Sorry for ambiguity. I have updated my question. Probably you want to also say the same as Shawn have said. So `(require "bar_lib/foo.rkt")` can be *safely* used here which *won't be influenced* by where we run `racket file.rkt`.
+As one notice, the above point 7 is from https://web.archive.org/web/20150905184303/https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02. Later that specification removed point 7 and it is still that case for the later version https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_03 (the newly added newline contexts are all about "Here-Document"). Continued...
 
-@PeterWinton Thanks for the reply. 0. I meant that I haven't looked at the Racket source codes for `require`. I only checked the doc and run my file with `pwd` as the different directories in shell. That shows as what the doc says. So "I can't ensure". Continued...
+But the newer version has some weirdness which may be clarified in the future: "If any saved token includes a <newline> character, the behavior is unspecified." seems to be in conflict with the former "while searching for *the next NEWLINE* token shall be saved for processing".
 
-1. Sorry. I am a bit newbie for Racket. Previously I run `(cd target-dir-str) (load relative-target-file-path)` in MIT/GNU Scheme. Recently I used Racket temporarily for my homework because its regex supports more than MIT/GNU Scheme, at least for `?<!`. So I asked here for some support about my understanding for the doc and maybe one better workaround.
+In bash, word splitting won't be done for the quoted "$b" but done for the unquoted $b which is said in your doc reference. So `echo "$b"` should outputs `"1  2     3 4"` instead of `"1 2 3 4"`.
 
-One good answer. Here I give one summary for the comments: What AbrahamCoding says is already implied in the title structure of https://docs.python.org/3/reference/lexical_analysis.html#literals. What Charles Duffy says is due to 1. `r` only do special manipulation for "treat backslashes as literal characters"  2. parse order is implied by that here we actually call one method https://docs.python.org/3/library/stdtypes.html#str.format for the same class instance compared by `==` https://stackoverflow.com/a/1227325/21294350.
+To be more specific about what antshar says, this is actually "Brace Expansion". The doc says "a series of *comma-separated* strings or a sequence expression between a pair of braces" where the latter means `{X..Y[..INCR]}`.
 
-For Gabriel Staples's, IMHO here are all about the general string which can be used as one regular expression. So it is not specific to regular expression's dot.
+@Larry `info bash` says "It is intended to be a conformant implementation of the IEEE POSIX Shell and Tools portion of the IEEE POSIX specification (*IEEE Standard 1003.1*)." So IMHO it is fine to follow the above Token Recognition link. And here since only space or tab in metacharacter can separate words, IMHO this answer is better for your "how (and when) bash interprets spaces".
 
-@WillNess 0. "just don't try to use if as a name of a variable.": Thanks. Since the standard doesn't exclude that explicitly https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-6.html#TAG:__tex2page_sec_4.1.1, e.g. it is fine to run `(define if 1)` (so also `(let ((if 1)) if)`) in MIT/GNU Scheme and also Racket. Anyway this is one bad habit. 1. The error here is thrown since `if` is not one *expression* https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-6.html#TAG:__tex2page_sec_4.2.8 but `(if <test> <consequent> <alternate>)` is.
+See https://stackoverflow.com/a/32186654/21294350 for how `"one" "two"` works to give something like list. In a nutshell, space is one delimiter for WORDS argument of for loop in bash.
+
+@untore IMHO "the for loop uses IFS to split iterations": Actually it is not that case. Here tokenizer takes effects. See https://stackoverflow.com/a/32186654/21294350. So `... arr=("c,3" "e,5"); for i in $arr; ...` will outputs `c,3 and ` for the 1st arr element.
+
+More specifically for what untore says. 0. "the value of $i will be just c and e, it will split away 3 and 5": `arr` should be delimited to `(c 3 e 5)` after quote removal. 1. "it should be simply IFS= which is default": That is null (see `man unset` example) which will disable word  splitting. We should use `unset IFS` to make it unset https://stackoverflow.com/a/39546334/21294350. 2. How inline works: see https://stackoverflow.com/a/32186654/21294350.
+
+OLDIFS=$IFS; IFS=',';arr=("c,3" "e,5");for i in $arr;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
+OLDIFS=$IFS; IFS=;tuples="a,1 b,2 c,3";for i in $tuples;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
+OLDIFS=$IFS; IFS=',';tuples="a,1 b,2 c,3";for i in $tuples;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -214,6 +222,7 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   https://stackoverflow.com/a/16872315/21294350
   > I find classical inheritance usually gets in the way of programming, but maybe that's just Java. Python has an amazing classical inheritance system.
   - Multiple Inheritance https://www.geeksforgeeks.org/how-to-implement-multiple-inheritance-by-using-interfaces-in-java/
+- virtual dispatch https://stackoverflow.com/a/3972780/21294350 said in https://www.oilshell.org/blog/2016/11/03.html.
 ## TODO after compiler
 - 4.4.3. exercises. At least 4.14.
   - algorithm W [may be not the best](https://stackoverflow.com/q/66825356/21294350) for Hindley-Milner type inference
@@ -231,6 +240,11 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - https://stackoverflow.com/a/17382911/21294350 (same as Closing words in https://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing)
   Here Pratt isn't like LR is due to it is [not based on grammar](https://u-aizu.ac.jp/~hamada/LP/L06-LP-Handouts.pdf)?
 - TODO in SDF_exercises/chapter_5/5_7_naive_algorithm_for_operator_precedence_parser/README.md.
+- https://en.cppreference.com/w/c/language/operator_precedence#cite_note-4
+  > Many compilers ignore this rule and detect the invalidity semantically. For example, e = a < d ? a++ : a = d is an expression that *cannot be parsed* because of this rule. However, many compilers ignore this rule and parse it as e = ( ((a < d) ? (a++) : a) = d ), and then give an error because it is *semantically invalid*.
+  so what is the difference between manipulating that with rule and detecting semantically? 
+  - semantically invalid https://stackoverflow.com/a/2816250/21294350
+    Here it means lhs of = is not lvalue. see https://en.cppreference.com/w/c/language/operator_other#Notes_3
 ## TODO after Automata theory
 - https://stackoverflow.com/questions/17381930/what-kind-of-parser-is-a-pratt-parser#comment137698939_17382911
 ### Maybe
