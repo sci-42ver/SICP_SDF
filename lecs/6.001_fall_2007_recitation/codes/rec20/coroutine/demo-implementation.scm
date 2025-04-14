@@ -20,14 +20,21 @@
 ;; > But that’s not the sort of coroutine I’m talking about here.
 ;; b.3.1.1 yield from
 ;; > And so, the real reason to use “yield from” is when you have a coroutine that acts as an agent between its caller and other coroutines.
-;; https://wiki.c2.com/?SchemeCoroutineExample
+
+;; https://wiki.c2.com/?SchemeCoroutineExample different from https://rosettacode.org/wiki/Concurrent_computing#Scheme
+;; Relation with Python *old* coroutine https://peps.python.org/pep-0342/ (Notice not the async new version https://peps.python.org/pep-0492/)
+;; See "Rationale and Goals" in 492
+(define nil '())
+(define FINISH-MARK 'finish-routine)
 (define (coroutine routine)
   (let ((current routine)
         (status 'suspended))
+    ;; For MIT/GNU Scheme, we can use bundle. See https://stackoverflow.com/q/79570000/21294350
     (lambda args
-      (cond ((null? args) 
+      (cond ((or (null? args) (eq? (car args) 'next)) ; Similar to Python API for yield iterator. 
             (if (eq? status 'dead)
-                (error 'dead-coroutine)
+                ; (error 'dead-coroutine)
+                'coroutine-iteration-finished
                 (let ((continuation-and-value
                         (call/cc (lambda (return)
                                   (let ((returner
@@ -51,7 +58,7 @@
                                     (current returner)
                                     (set! status 'dead)
                                     ;; added
-                                    'finish-routine
+                                    FINISH-MARK
                                     )))))
                   (if (pair? continuation-and-value)
                       (begin 
@@ -66,12 +73,14 @@
             (true nil)))))
 
 (define test-coroutine-1
-     (coroutine (lambda (yield)
-                  (print "HELLO!")
-                  (yield 1)
-                  (print "WORLD!")
-                  (yield 2)
-                  (print "SORRY, I'M OUT"))))
+  ;; Same as Python behaviours https://docs.python.org/3/reference/simple_stmts.html#the-yield-statement.
+  ;; > Yield expressions and statements are only used when defining a generator function, and are only used in the body of the generator function.
+  (coroutine (lambda (yield)
+              (print "HELLO!")
+              (yield 1)
+              (print "WORLD!")
+              (yield 2)
+              (print "SORRY, I'M OUT"))))
 
 ;; added
 (define print write-line)
@@ -90,12 +99,15 @@
 ; 2
 (test-coroutine-1)
 ; "SORRY, I'M OUT"
+;Value: finish-routine
 (test-coroutine-1 'status?)
 ; dead
 (test-coroutine-1 'dead?)
 ; #t
-(test-coroutine-1)
-; . error: dead-coroutine
+
+; (test-coroutine-1)
+;; error
+; dead-coroutine
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; test2
 (define (make-iterator list)

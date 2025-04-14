@@ -2330,6 +2330,7 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
   - > it might be useful to have unless available as a procedure
     debug?
     - *wrong*
+    - wiki doesn't say about this.
   - TODO 
     See `4_31_dot_list_for_4_26.scm`: how to get `apply` being nested?
 - [ ] 27

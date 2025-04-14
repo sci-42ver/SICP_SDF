@@ -1,22 +1,92 @@
-As one notice, the above point 7 is from https://web.archive.org/web/20150905184303/https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02. Later that specification removed point 7 and it is still that case for the later version https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_03 (the newly added newline contexts are all about "Here-Document"). Continued...
+Link seems to be invalid now: use https://web.archive.org/web/20220324173409/https://markmail.org/message/t2a6tp33n5lddzvy instead.
 
-But the newer version has some weirdness which may be clarified in the future: "If any saved token includes a <newline> character, the behavior is unspecified." seems to be in conflict with the former "while searching for *the next NEWLINE* token shall be saved for processing".
+@user207421 Recently I referred to the Dragon book 2nd version (ebook to help searching), unfortunately the "Pratt" contexts only have https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm but not Pratt parsing. I also searched for the paper reference by "Top Down Operator Precedence" but also found no related contents. All searches are case-insensitive. Anyway, thanks for your help.
 
-In bash, word splitting won't be done for the quoted "$b" but done for the unquoted $b which is said in your doc reference. So `echo "$b"` should outputs `"1  2     3 4"` instead of `"1 2 3 4"`.
+Similarly, no related contexts in the Dragon book about the related algorithm shunting yard https://stackoverflow.com/a/13637731/21294350 by searching for "shunting".
 
-To be more specific about what antshar says, this is actually "Brace Expansion". The doc says "a series of *comma-separated* strings or a sequence expression between a pair of braces" where the latter means `{X..Y[..INCR]}`.
+(This is the clarified version of my former deleted comments) 0. "there can be only 2 possibilities ...": Could you say more about that? Based on the implicit "from left to right" order https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Lookbehind_assertion, for something like `a|b|c` etc, we may do implicit grouping, i.e. `##a|b#|c#` (I use `#` to keep meanings of `()` etc). But then for one input character, we may move forward more than one states, so each step will have $2^{O(n)}$ paths, then finally we have $2^{O(nl)}$. So this is not $2^l$.
 
-@Larry `info bash` says "It is intended to be a conformant implementation of the IEEE POSIX Shell and Tools portion of the IEEE POSIX specification (*IEEE Standard 1003.1*)." So IMHO it is fine to follow the above Token Recognition link. And here since only space or tab in metacharacter can separate words, IMHO this answer is better for your "how (and when) bash interprets spaces".
+1. I agree that "up to n possibilities" seems to be impossible for regular expression generated NFA. I can't think of one example to have that NFA a bit like complete graph which will be then so complex.
 
-See https://stackoverflow.com/a/32186654/21294350 for how `"one" "two"` works to give something like list. In a nutshell, space is one delimiter for WORDS argument of for loop in bash.
+So my assertion $n^l$ seems to be the theoretical *general* worst case which won't hold for the NFA  constructed there. $2^l$ is the *possible* worst case there. I get it.
 
-@untore IMHO "the for loop uses IFS to split iterations": Actually it is not that case. Here tokenizer takes effects. See https://stackoverflow.com/a/32186654/21294350. So `... arr=("c,3" "e,5"); for i in $arr; ...` will outputs `c,3 and ` for the 1st arr element.
+"state #1 moves on again to the back part": State is the internal properties of FA which *can't move*. It is better to use one different word to avoid ambiguity.
 
-More specifically for what untore says. 0. "the value of $i will be just c and e, it will split away 3 and 5": `arr` should be delimited to `(c 3 e 5)` after quote removal. 1. "it should be simply IFS= which is default": That is null (see `man unset` example) which will disable word  splitting. We should use `unset IFS` to make it unset https://stackoverflow.com/a/39546334/21294350. 2. How inline works: see https://stackoverflow.com/a/32186654/21294350.
+What is the reason for "looks like it should take $O(k^2)$ time in the worst case."? IMHO since state number is $2k$ https://cs.stackexchange.com/a/151657/161388, then we does $2k$ computation for each $w\in W$ (maybe you have one typo) where each computation of the function should be constant. So we have the $O(k)$ worst time.
 
-OLDIFS=$IFS; IFS=',';arr=("c,3" "e,5");for i in $arr;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
-OLDIFS=$IFS; IFS=;tuples="a,1 b,2 c,3";for i in $tuples;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
-OLDIFS=$IFS; IFS=',';tuples="a,1 b,2 c,3";for i in $tuples;do set -- $i; echo $1 and $2; done; IFS=$OLDIFS
+@user207421 0. I was not arguing at all. Maybe I said too much which made you felt like I was arguing. Sorry if that case. I plan to learn compiler in the future, so I sincerely asked for some advice for that although that is a bit inappropriate to ask here in one comment for one *specific* compiler question post. Continued...
+
+1. I agree that the Dragon book is good to answer my posted question, but I doubt whether it is good as one *beginner* book. I planned to learn some *more basic, simpler and more realistic* knowledge by reading one basic book first and then *the good and very detailed* Dragon book. Maybe the latter is better to be one reference while learning the former just like referring to one book more about theory while learning one book more about implementation. Your last comment has answered about my learning plan. Thanks.
+
+@user207421 I found many reviews saying that the Dragon book is hefty and is not fine as one introductory book for one undergraduate level. Many (e.g. https://www.reddit.com/r/learnprogramming/comments/1gyxsfk/comment/lytlktu/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) said it is better to follow one course to read that book but there are few courses following that book to teach. Continued...
+
+https://www.reddit.com/r/Compilers/comments/109uwhf/comment/j40tmcc/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button says the relation between the Dragon book and others, i.e. the former is always *the most detailed* one. So to learn compiler, is it fine to follow Crafting Interpreters book first for working needs? Then when free, read the Dragon book and doing exercises inside. If just to solve with this question, then just check the related contexts in the Dragon book. Do you have any better advice? Continued...
+
+OK. This comment is actually one learning advice question.
+
+@user207421 0. "I agree with you": Do you mean that for "Is the above convince description fine to classify Precedence climbing and Pratt parsing?". 1. "Stack Overflow isn't a validation site for arbitrary Internet garbage.": Thanks for pointing out that. I will edit my question to remove those. Continued...
+
+2. "Trust the text books": Do you have any recommendation? C/Cpp is closely related with compiler. So https://github.com/MattPD/cpplinks/blob/master/compilers.md may be one good reference. It recommends Crafting Interpreters by Bob Nystrom. The old and a bit too academic dragon book is not listed there. I encountered the above problem while doing one  exercise in one programming book without much compiler background but just those from SICP chapter 4. My learning goal about compiler is just to satisfy the daily work needs.
+
+Janus Troelsen's reference is about elisp. Their differences are shown in https://www.gnu.org/software/emacs/manual/html_node/cl/Porting-Common-Lisp.html "Common Lisp provides a number of notations beginning with # that the Emacs Lisp parser *won’t understand*". Also see wikipedia "Emacs Lisp is a Lisp-2 like Common Lisp" https://en.wikipedia.org/wiki/Emacs_Lisp#Language_features. So they are similar but still have many differences. For `#'`, since that is included in elisp doc, then probably that shares the meaning with that in common-lisp.
+
+As one notice for what `aif` means: that is anaphoric macro, see https://en.wikipedia.org/wiki/Anaphoric_macro#cite_note-3 for one example. More specifically it means it may use anaphor like `it` to capture "some form" like `test-form` https://en.wikipedia.org/wiki/Anaphoric_macro#Defining_anaphoric_macros. Anaphor, e.g. pronoun or pro-form, is borrowed from linguistic Anaphora.
+
+Fine. Thanks for pointing out that difference. 0. Since my reference link is based on Python which is probably based on C, it has no *implicit tail call* which is different from the Scheme standard. So it may be a bit inappropriate here for Scheme. Actually, my reference link is to give more explanation for "recursion" to help future readers, not to say that your answer lacks some  useful information. Apologize if ambiguity. 1. `call/cc` is implemented in Scheme to have something like `return` in C.
+
+"all loops are actually done with recursion.": More specifically, that means "You don't "break" out of the inner calls, you return a solution back *up one level*." https://stackoverflow.com/a/10544666/21294350.
+
+@ikegami In a nutshell, ikegami shows "*common*-language sense of “unary”" is inappropriate. And actually Eric Postpischil also shows that this description is "not a hard-and fast definition" and "Words are flexible" before. So I don't know why both of you keep arguing one statement which has been negotiated before at all. And then you argue about "bad faith" due to that ikegami think that "K&R defining modern *common*-language" is inappropriate (again the conflict is on that "common" word). Continued...
+
+I edited the answer which I thought can be accepted by both of you. https://stackoverflow.com/review/suggested-edits/36800473 Please review that if you have time.
+
+@ikegami and Eric Postpischil, Stack Overflow and Stack Exchange network are very great. They have helped me so much while self learning. Please **be harmonic** and it doesn't help any one to argue about one thing unnecessarily when we have one good solution to peacefully end that argument already.
+
+@Eric Postpischil, I don't know why you rejected that edit since that edit actually uses **your offered reference**. Anyway ikegami's intention is just wanting to point out one **possible** error in your answer. I truly believed ikegami's original intention is **kind** although s/he may say something inappropriately and ad hominem. Please focus on the answer description self **without taking into emotions**. IMHO **"common"** is a bit too general and it can be **better** to use one more neutral description like using one book as the support.
+
+Based on https://docs.racket-lang.org/guide/racket.html#%28part._start-load-mode%29, the mere `-e ...` "supports *loading top-level* expressions", does `-i` also always run in "top-level context" https://docs.racket-lang.org/reference/syntax-model.html#%28tech._top._level._context%29 although it "first requires the racket/init module" https://docs.racket-lang.org/guide/racket.html#%28part._start-interactive-mode%29?
+
+Back to the answer link in the question which is also answered by you (Thanks for your helps), that is where I encountered with the above problems when thinking about the extra "dir = /tmp/" output. There we just run `require` but it seems to not do the *lazy* visit. Could you explain about that?
+
+Back to the answer link in the question which is also answered by you (Thanks for your helps), that is where I encountered with the above problems when thinking about the extra "dir = /tmp/" output. There we just run `require` but it seems to not do the *lazy* visit. Based on `racket` invocation mechanism https://docs.racket-lang.org/guide/racket.html#%28part._start-interactive-mode%29, it seems to be in top-level as "lattens the content of a top-level begin into the top level" https://docs.racket-lang.org/guide/macro-module.html#(part._stx-available-module) implies.
+
+To see how globing works, we can temporarily use `set -x`.
+
+0. "module body expressions are executed *only* when the module is *explicitly instantiated*": But `racket -h` says "3. Evaluate/load expressions/files in order, until first error" and it actually runs `printf`. What's wrong with my understanding? 1. "So while it would be possible to set the current directory in the same phase as require": I tried `(begin-for-syntax (current-directory "/tmp")) (require "foo.rkt")` but that won't load the existing `/tmp/foo.rkt`. Could you clarify about this behavior? Continued...
+
+2. "phase level" seems to be different from environment frame said in SICP (more like `namespace` https://docs.racket-lang.org/rhombus/namespaces-overview.html?url=http%3A%2F%2Fdocs.racket-lang.org%2Fmore%2Findex.html in Racket which can be also used in `eval` although with different APIs), due to having no inheritance. "phase level" is more Racket-specific since R7RS doesn't say about that.
+
+0. One good explanation! Most of the reference is from the standard https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf (the draft is given here). 1. As a reference for "Precedence is built into the formal grammar of the language.", hinted by ref1 https://stackoverflow.com/a/12963342/21294350 and ref2 https://stackoverflow.com/a/63677576/21294350 with its reference paper https://dl.acm.org/doi/pdf/10.1145/321172.321179 definitions about `⋖, ≐` etc which I read while learning about Pratt parsing, continued... 
+
+`postfix-expression` can be only unidirectionally constructed from `unary-expression` which causes the former has the higher precedence than the latter. But `unary-expression` and `cast-expression` can be constructed by each other, so they have  relation `≐`, i.e. the same precedence order.
+
+@xyf https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf gives one example in p119 6.7.3.6 EXAMPLE 5. abelenky's answer is similar to that.
+
+0. You and ikegami seem to talk too much about "unary" definition. IMHO it is enough if we can differentiate the unary-expression token in C standard from cast. There is no necessary need to be entangled with those. 1. Could you help checking my point 1 and 3 above? Thanks in advance.
+
+This one English QA forum. Here I put related sentences here for reference in English. "A derivation of a string for a grammar is a *sequence* of grammar rule *applications* that transform the start symbol into the string." and "The members of R are called the (rewrite) *rules or productions* of the grammar." where the latter can be easily understood with maths if you know about "context-free grammar" maths definition https://en.wikipedia.org/wiki/Context-free_grammar. In a nutshell, your understanding is right. Continued...
+
+"The Wikipedia-page in my language contradicts me": Sorry. Probably you mean German https://de.wikipedia.org/wiki/Kontextfreie_Grammatik. But I can't speak that language. With translation tool, "mit folgender Ableitung erzeugt werden" and "eine endliche Menge an Produktionsregeln" should mean similar to the above 2 references. You can also use translation tool to make the above English one into your native language (probably German. Sorry I can't speak that so can't check whether Google translate is right to make you comprehend.)
+
+Now a follow-up question is asked and well answered https://stackoverflow.com/a/79495779/21294350 which also implicitly says about the 3rd sentence in my question quote 'If the variable was previously declared with "my", it uses that variable instead of the global one' by "makes any use of *unqualified* $x refer to that lexical, from the following statement until the end of scope". It is also shown in perlfunc doc "The declaration will not  apply  to additional  uses  of  the  same  variable until the next statement.".
+
+@ikegami Hey guys, please calm down! Both of you seem to be trapped in that definition ambiguity. It's a bit excessive.
+
+Regarding 1, so we can assert that cast-expression and unary-expression *can* have the same precedence order. Is that right? Regarding 3, you mean "the code that parses (int) x has to use both int and x" for "grammatically", i.e. `( type-name ) cast-expression`. And then use "(int) x merely takes the value of x and converts it to an int" for "computationally" because in the *compiled* program it only knows casting to *that type*, e.g. `cvtsi2sd` https://www.felixcloutier.com/x86/cvtsi2sd from int to double in https://godbolt.org/z/rvWoxh5ax. Am my understanding fine?
+
+Thanks for the clarification. Regarding 3, you mean "the code that parses (int) x has to use both int and x" for "grammatically", i.e. `( type-name ) cast-expression`. And then use "(int) x merely takes the value of x and converts it to an int" for "computationally" because in the *compiled* program it only knows casting to *that type*, e.g. `cvtsi2sd` https://www.felixcloutier.com/x86/cvtsi2sd from int to double in https://godbolt.org/z/rvWoxh5ax. Is my understanding fine?
+
+check for clarification for one answer of my question.
+
+It is a more appropriate place to discuss about one question than comments.
+
+@ikegami "I was trying get an error in the answer corrected.": Ok. I got what both of you are arguing about a bit. IMHO `(type)expr` is better to be considered as binary due to from right to left it parses `expr` and then *must also* parse `type` to know what to do. But anyway the answer poster has said "I can also see considering a cast as binary when *taking a different view*". So we can peacefully end the argument.
+
+@Eric Postpischil Maybe the answer should be clarified a bit to show that flexibility explicitly. Do you think that is fine, Eric Postpischil? Then the argument can be peacefully ended.
+
+Re to point 1 I asked: OK. That is a bit beyond to daily usage to change `current-load/use-compiled` behaviour. Re to 2: For "an appropriate degree of *isolation*", so it is different from environment taught in SICP (I refers to this because I am self-learning that now and also self-learning Software Design for Flexibility SDF https://groups.csail.mit.edu/mac/users/gjs/6.945/ which is closely related with SICP.) due to no *inheritance*. For "R6RS", SDF uses R7RS and SICP has no explicit standard reference. I won't dig into that. Anyway thanks for your reference.
+
+Probably someone wants one page in Firefox similar to Chrome's `chrome://version/`, then https://www.reddit.com/r/firefox/comments/lwdkns/comment/gpukjdn/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button `about:support` may help.
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -245,6 +315,11 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   so what is the difference between manipulating that with rule and detecting semantically? 
   - semantically invalid https://stackoverflow.com/a/2816250/21294350
     Here it means lhs of = is not lvalue. see https://en.cppreference.com/w/c/language/operator_other#Notes_3
+- [static loading advantages over dynamic loading programming](https://stackoverflow.com/questions/23114414/is-the-static-loading-of-shared-libraries-linked-like-dynamic-loading-or-static)
+- https://www.oilshell.org/blog/2017/03/30.html
+  - > Python: uses a bespoke LL parser generator.
+    https://stackoverflow.com/a/53597413/21294350
+  - > uses yacc, an LR parser generator.
 ## TODO after Automata theory
 - https://stackoverflow.com/questions/17381930/what-kind-of-parser-is-a-pratt-parser#comment137698939_17382911
 ### Maybe
