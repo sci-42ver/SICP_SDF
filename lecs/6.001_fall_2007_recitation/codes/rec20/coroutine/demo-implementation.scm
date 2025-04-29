@@ -26,10 +26,47 @@
 ;; See "Rationale and Goals" in 492
 (define nil '())
 (define FINISH-MARK 'finish-routine)
-(define (coroutine routine)
-  (let ((current routine)
+(define-syntax coroutine-wrapper
+  (syntax-rules (yield)
+    ((_ routine)
+      (let ((yield #f))
+        (coroutine routine))
+      )
+    )
+  )
+; (define demo
+;   (let ((yield #f))
+;     (lambda () 'test))
+;   )
+(define (has-yield-binding? proc)
+  (environment-bound? (procedure-environment proc) 'yield)
+  )
+;; can't check for this
+; (has-yield-binding? (lambda (yield) 'test))
+;Value: #f
+
+;; similar to environment-assign! https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Environment-Operations.html#index-environment_002dassign_0021
+(define (set-proc-env! proc symbol object)
+  (environment-assign!
+    (procedure-environment proc)
+    symbol object))
+; (has-yield-binding? demo)
+
+(define (coroutine routine-with-yield)
+  (assert 
+    (and
+      ; ;; To be compatible with continuation return procedure.
+      ; (and (procedure? routine-with-yield) (equal? '(1 . 1) (procedure-arity routine-with-yield)))
+      (thunk? routine-with-yield)
+      (has-yield-binding? routine-with-yield)))
+  (let* (
+        ;  (yield #f)
+        ;  ;; make routine able to access yield.
+        ;  (routine-with-yield routine)
+         )
+    (let ((current routine-with-yield)
         (status 'suspended)
-        (global-returner #f)
+        ; (global-returner #f)
         )
     ;; For MIT/GNU Scheme, we can use bundle. See https://stackoverflow.com/q/79570000/21294350
     (lambda args
@@ -41,20 +78,33 @@
                         (call/cc (lambda (return)
                                   (let ((returner
                                           (lambda (value)
-                                            (if (or (not global-returner) (equal? global-returner returner))
+                                            ; (if (or (not global-returner) (equal? global-returner returner))
                                               (call/cc (lambda (next)
                                                       ;; 0. called by the 1st (yield 1)
                                                       ;; yield is binded as returner
                                                       ;; Then value is 1
                                                       ;; so return (cons cc value)
-                                                      (return (cons next value))))
+                                                      (let* ((cc (lambda () (next 'return-value-is-ignored)))
+                                                             (env (procedure-environment cc)))
+                                                        (for-each
+                                                          (lambda (binding)
+                                                            (assert (= 2 (length binding)))
+                                                            (environment-define env (car binding) (cadr binding))
+                                                            )
+                                                          (environment-bindings (procedure-environment next))
+                                                          )
+                                                        (return (cons cc value))
+                                                        )
+                                                      ))
                                               ;; i.e. (and global-returner (not (equal? global-returner returner)))
-                                              (global-returner value)
-                                              )
+                                              ; (global-returner value))
                                             )))
                                     ;; we also need to use the new returner to return rightly.
                                     ;; This returner can influence the former one due to it is inherent inside returner procedure.
-                                    (set! global-returner returner)
+                                    ; (set! global-returner returner)
+                                    (write-line (list "returner" returner))
+                                    (set-proc-env! current 'yield returner)
+
                                     ;; 1. the 2nd (test-coroutine-1)
                                     ;; i.e. apply (lambda (value) _) in (let ((returner (lambda (value) _))) ...) to returner
                                     ;; Notice this is not the whole let expression since we have finished part of them at least for defining the 1st returner.
@@ -65,7 +115,7 @@
                                     ;; Then finish the 1st (current returner) when finishing (lambda (yield) ...)
                                     ;; Then (set! status 'dead) which will return the old status in MIT/GNU Scheme although the MIT_Scheme_Reference doc says "unspecified".
                                     ;; So "return the old status" if without the following addition.
-                                    (current returner)
+                                    (current)
                                     (set! status 'dead)
                                     ;; added
                                     FINISH-MARK
@@ -75,13 +125,17 @@
                       (begin 
                         ;; so we can return to the former yield location.
                         (set! current (car continuation-and-value))
-                        (cdr continuation-and-value))
+                        (let ((ret (cdr continuation-and-value)))
+                          (write-line (list "to return" ret))
+                          ret))
                       continuation-and-value))))
             ((eq? (car args) 'status?) status)
             ((eq? (car args) 'dead?) (eq? status 'dead))
             ((eq? (car args) 'alive?) (not (eq? status 'dead)))
             ((eq? (car args) 'kill!) (set! status 'dead))
-            (true nil)))))
+            (true nil))))
+    )
+  )
 
 ;; TODO better to use tagged-list
 (define (coroutine? coroutine)
@@ -93,7 +147,7 @@
 (define test-coroutine-1
   ;; Same as Python behaviours https://docs.python.org/3/reference/simple_stmts.html#the-yield-statement.
   ;; > Yield expressions and statements are only used when defining a generator function, and are only used in the body of the generator function.
-  (coroutine (lambda (yield)
+  (coroutine-wrapper (lambda ()
               (print "HELLO!")
               (yield 1)
               (print "WORLD!")
@@ -129,21 +183,27 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; test2
 (define (make-iterator list)
-     (coroutine (lambda (yield)
+     (coroutine-wrapper (lambda ()
                   (for-each yield list))))
 (define (iterator-empty? iterator)
     (iterator 'dead?))
 (define my-iterator (make-iterator (list 1 2 3)))
 (write-line "begin my-iterator")
-(my-iterator)
+(cd "~/SICP_SDF/SDF_exercises/common-lib/")
+(load "test_lib.scm")
+(define (test-iterator val expected)
+  (assert* (= val 1) (list val expected))
+  )
+(test-iterator (my-iterator) 1)
 ;; regex (^[^(].*) -> ; $1
 ; 1
+; (assert (= (my-iterator) 2))
 (my-iterator)
 ; 2
-(my-iterator)
+(assert (= (my-iterator) 3))
 ; 3
-(iterator-empty? my-iterator)
+(assert (not (iterator-empty? my-iterator)))
 ; #f
-(my-iterator)
-(iterator-empty? my-iterator)
+(assert (= (my-iterator) FINISH-MARK))
+(assert (iterator-empty? my-iterator))
 ; #t
