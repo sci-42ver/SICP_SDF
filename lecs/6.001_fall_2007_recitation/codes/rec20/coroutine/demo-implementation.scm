@@ -72,6 +72,13 @@
             ((eq? (car args) 'kill!) (set! status 'dead))
             (true nil)))))
 
+;; TODO better to use tagged-list
+(define (coroutine? coroutine)
+  (and (procedure? coroutine)
+    (equal? '(0 . #f) (procedure-arity coroutine))
+    )
+  )
+
 (define test-coroutine-1
   ;; Same as Python behaviours https://docs.python.org/3/reference/simple_stmts.html#the-yield-statement.
   ;; > Yield expressions and statements are only used when defining a generator function, and are only used in the body of the generator function.
