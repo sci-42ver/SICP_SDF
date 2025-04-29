@@ -28,7 +28,9 @@
 (define FINISH-MARK 'finish-routine)
 (define (coroutine routine)
   (let ((current routine)
-        (status 'suspended))
+        (status 'suspended)
+        (global-returner #f)
+        )
     ;; For MIT/GNU Scheme, we can use bundle. See https://stackoverflow.com/q/79570000/21294350
     (lambda args
       (cond ((or (null? args) (eq? (car args) 'next)) ; Similar to Python API for yield iterator. 
@@ -39,12 +41,20 @@
                         (call/cc (lambda (return)
                                   (let ((returner
                                           (lambda (value)
-                                            (call/cc (lambda (next)
+                                            (if (or (not global-returner) (equal? global-returner returner))
+                                              (call/cc (lambda (next)
                                                       ;; 0. called by the 1st (yield 1)
                                                       ;; yield is binded as returner
                                                       ;; Then value is 1
                                                       ;; so return (cons cc value)
-                                                      (return (cons next value)))))))
+                                                      (return (cons next value))))
+                                              ;; i.e. (and global-returner (not (equal? global-returner returner)))
+                                              (global-returner value)
+                                              )
+                                            )))
+                                    ;; we also need to use the new returner to return rightly.
+                                    ;; This returner can influence the former one due to it is inherent inside returner procedure.
+                                    (set! global-returner returner)
                                     ;; 1. the 2nd (test-coroutine-1)
                                     ;; i.e. apply (lambda (value) _) in (let ((returner (lambda (value) _))) ...) to returner
                                     ;; Notice this is not the whole let expression since we have finished part of them at least for defining the 1st returner.
@@ -60,6 +70,7 @@
                                     ;; added
                                     FINISH-MARK
                                     )))))
+                  (write-line "continuation-and-value is got")
                   (if (pair? continuation-and-value)
                       (begin 
                         ;; so we can return to the former yield location.
@@ -92,25 +103,25 @@
 ;; added
 (define print write-line)
 
-(test-coroutine-1 'status?)
-; suspended
-(test-coroutine-1 'dead?)
-; #f
-(test-coroutine-1 'alive?)
-; #t
-(test-coroutine-1)
-; "HELLO!"
-; 1
-(test-coroutine-1)
-; "WORLD!"
-; 2
-(test-coroutine-1)
-; "SORRY, I'M OUT"
-;Value: finish-routine
-(test-coroutine-1 'status?)
-; dead
-(test-coroutine-1 'dead?)
-; #t
+; (test-coroutine-1 'status?)
+; ; suspended
+; (test-coroutine-1 'dead?)
+; ; #f
+; (test-coroutine-1 'alive?)
+; ; #t
+; (test-coroutine-1)
+; ; "HELLO!"
+; ; 1
+; (test-coroutine-1)
+; ; "WORLD!"
+; ; 2
+; (test-coroutine-1)
+; ; "SORRY, I'M OUT"
+; ;Value: finish-routine
+; (test-coroutine-1 'status?)
+; ; dead
+; (test-coroutine-1 'dead?)
+; ; #t
 
 ; (test-coroutine-1)
 ;; error
@@ -123,6 +134,7 @@
 (define (iterator-empty? iterator)
     (iterator 'dead?))
 (define my-iterator (make-iterator (list 1 2 3)))
+(write-line "begin my-iterator")
 (my-iterator)
 ;; regex (^[^(].*) -> ; $1
 ; 1
