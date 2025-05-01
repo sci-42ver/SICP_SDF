@@ -56,8 +56,8 @@
   (assert 
     (and
       ; ;; To be compatible with continuation return procedure.
-      ; (and (procedure? routine-with-yield) (equal? '(1 . 1) (procedure-arity routine-with-yield)))
-      (thunk? routine-with-yield)
+      (and (procedure? routine-with-yield) (equal? '(1 . 1) (procedure-arity routine-with-yield)))
+      ; (thunk? routine-with-yield)
       (has-yield-binding? routine-with-yield)))
   (let* (
         ;  (yield #f)
@@ -84,17 +84,18 @@
                                                       ;; yield is binded as returner
                                                       ;; Then value is 1
                                                       ;; so return (cons cc value)
-                                                      (let* ((cc (lambda () (next 'return-value-is-ignored)))
-                                                             (env (procedure-environment cc)))
-                                                        (for-each
-                                                          (lambda (binding)
-                                                            (assert (= 2 (length binding)))
-                                                            (environment-define env (car binding) (cadr binding))
-                                                            )
-                                                          (environment-bindings (procedure-environment next))
-                                                          )
-                                                        (return (cons cc value))
-                                                        )
+                                                      ; (let* ((cc (lambda () (next 'return-value-is-ignored)))
+                                                      ;        (env (procedure-environment cc)))
+                                                      ;   (for-each
+                                                      ;     (lambda (binding)
+                                                      ;       (assert (= 2 (length binding)))
+                                                      ;       (environment-define env (car binding) (cadr binding))
+                                                      ;       )
+                                                      ;     (environment-bindings (procedure-environment next))
+                                                      ;     )
+                                                      ;   (return (cons cc value))
+                                                      ;   )
+                                                      (return (cons next value))
                                                       ))
                                               ;; i.e. (and global-returner (not (equal? global-returner returner)))
                                               ; (global-returner value))
@@ -115,7 +116,7 @@
                                     ;; Then finish the 1st (current returner) when finishing (lambda (yield) ...)
                                     ;; Then (set! status 'dead) which will return the old status in MIT/GNU Scheme although the MIT_Scheme_Reference doc says "unspecified".
                                     ;; So "return the old status" if without the following addition.
-                                    (current)
+                                    (current 'unused)
                                     (set! status 'dead)
                                     ;; added
                                     FINISH-MARK
@@ -147,7 +148,7 @@
 (define test-coroutine-1
   ;; Same as Python behaviours https://docs.python.org/3/reference/simple_stmts.html#the-yield-statement.
   ;; > Yield expressions and statements are only used when defining a generator function, and are only used in the body of the generator function.
-  (coroutine-wrapper (lambda ()
+  (coroutine-wrapper (lambda (unused)
               (print "HELLO!")
               (yield 1)
               (print "WORLD!")
@@ -183,7 +184,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; test2
 (define (make-iterator list)
-     (coroutine-wrapper (lambda ()
+     (coroutine-wrapper (lambda (unused)
                   (for-each yield list))))
 (define (iterator-empty? iterator)
     (iterator 'dead?))
