@@ -52,6 +52,7 @@
     symbol object))
 ; (has-yield-binding? demo)
 
+;; Failure to fix the bug in https://stackoverflow.com/a/79197544/21294350.
 (define (coroutine routine-with-yield)
   (assert 
     (and
@@ -104,6 +105,7 @@
                                     ;; This returner can influence the former one due to it is inherent inside returner procedure.
                                     ; (set! global-returner returner)
                                     (write-line (list "returner" returner))
+                                    ;; See https://stackoverflow.com/a/79197544/21294350 for why this fails.
                                     (set-proc-env! current 'yield returner)
 
                                     ;; 1. the 2nd (test-coroutine-1)
