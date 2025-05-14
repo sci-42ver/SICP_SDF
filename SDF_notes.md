@@ -1,92 +1,8 @@
-Link seems to be invalid now: use https://web.archive.org/web/20220324173409/https://markmail.org/message/t2a6tp33n5lddzvy instead.
+As one note for future readers: Here "always maps to $\bot$" means we always do that if possible. You can check https://en.wikipedia.org/wiki/Least_fixed_point#Denotational_semantics definition of $\text{fact}_0$ and $\text{fact}$. "The set of all mathematical functions ..." definition for "the least fixed point" may give you one more understandable interpretation for "the least fixed point".
 
-@user207421 Recently I referred to the Dragon book 2nd version (ebook to help searching), unfortunately the "Pratt" contexts only have https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm but not Pratt parsing. I also searched for the paper reference by "Top Down Operator Precedence" but also found no related contents. All searches are case-insensitive. Anyway, thanks for your help.
+1. For $\bot$, wikipedia means "undefined" which is same as the above "diverge" if we doesn't do fine-grained classification including exception etc https://stackoverflow.com/q/14698414/21294350. We can always think that they are same https://stackoverflow.com/a/34466765/21294350 which is actually one "artificial mathematical object" besides those normal objects in the mapping domain to capture the corner case.
 
-Similarly, no related contexts in the Dragon book about the related algorithm shunting yard https://stackoverflow.com/a/13637731/21294350 by searching for "shunting".
-
-(This is the clarified version of my former deleted comments) 0. "there can be only 2 possibilities ...": Could you say more about that? Based on the implicit "from left to right" order https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Lookbehind_assertion, for something like `a|b|c` etc, we may do implicit grouping, i.e. `##a|b#|c#` (I use `#` to keep meanings of `()` etc). But then for one input character, we may move forward more than one states, so each step will have $2^{O(n)}$ paths, then finally we have $2^{O(nl)}$. So this is not $2^l$.
-
-1. I agree that "up to n possibilities" seems to be impossible for regular expression generated NFA. I can't think of one example to have that NFA a bit like complete graph which will be then so complex.
-
-So my assertion $n^l$ seems to be the theoretical *general* worst case which won't hold for the NFA  constructed there. $2^l$ is the *possible* worst case there. I get it.
-
-"state #1 moves on again to the back part": State is the internal properties of FA which *can't move*. It is better to use one different word to avoid ambiguity.
-
-What is the reason for "looks like it should take $O(k^2)$ time in the worst case."? IMHO since state number is $2k$ https://cs.stackexchange.com/a/151657/161388, then we does $2k$ computation for each $w\in W$ (maybe you have one typo) where each computation of the function should be constant. So we have the $O(k)$ worst time.
-
-@user207421 0. I was not arguing at all. Maybe I said too much which made you felt like I was arguing. Sorry if that case. I plan to learn compiler in the future, so I sincerely asked for some advice for that although that is a bit inappropriate to ask here in one comment for one *specific* compiler question post. Continued...
-
-1. I agree that the Dragon book is good to answer my posted question, but I doubt whether it is good as one *beginner* book. I planned to learn some *more basic, simpler and more realistic* knowledge by reading one basic book first and then *the good and very detailed* Dragon book. Maybe the latter is better to be one reference while learning the former just like referring to one book more about theory while learning one book more about implementation. Your last comment has answered about my learning plan. Thanks.
-
-@user207421 I found many reviews saying that the Dragon book is hefty and is not fine as one introductory book for one undergraduate level. Many (e.g. https://www.reddit.com/r/learnprogramming/comments/1gyxsfk/comment/lytlktu/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) said it is better to follow one course to read that book but there are few courses following that book to teach. Continued...
-
-https://www.reddit.com/r/Compilers/comments/109uwhf/comment/j40tmcc/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button says the relation between the Dragon book and others, i.e. the former is always *the most detailed* one. So to learn compiler, is it fine to follow Crafting Interpreters book first for working needs? Then when free, read the Dragon book and doing exercises inside. If just to solve with this question, then just check the related contexts in the Dragon book. Do you have any better advice? Continued...
-
-OK. This comment is actually one learning advice question.
-
-@user207421 0. "I agree with you": Do you mean that for "Is the above convince description fine to classify Precedence climbing and Pratt parsing?". 1. "Stack Overflow isn't a validation site for arbitrary Internet garbage.": Thanks for pointing out that. I will edit my question to remove those. Continued...
-
-2. "Trust the text books": Do you have any recommendation? C/Cpp is closely related with compiler. So https://github.com/MattPD/cpplinks/blob/master/compilers.md may be one good reference. It recommends Crafting Interpreters by Bob Nystrom. The old and a bit too academic dragon book is not listed there. I encountered the above problem while doing one  exercise in one programming book without much compiler background but just those from SICP chapter 4. My learning goal about compiler is just to satisfy the daily work needs.
-
-Janus Troelsen's reference is about elisp. Their differences are shown in https://www.gnu.org/software/emacs/manual/html_node/cl/Porting-Common-Lisp.html "Common Lisp provides a number of notations beginning with # that the Emacs Lisp parser *won’t understand*". Also see wikipedia "Emacs Lisp is a Lisp-2 like Common Lisp" https://en.wikipedia.org/wiki/Emacs_Lisp#Language_features. So they are similar but still have many differences. For `#'`, since that is included in elisp doc, then probably that shares the meaning with that in common-lisp.
-
-As one notice for what `aif` means: that is anaphoric macro, see https://en.wikipedia.org/wiki/Anaphoric_macro#cite_note-3 for one example. More specifically it means it may use anaphor like `it` to capture "some form" like `test-form` https://en.wikipedia.org/wiki/Anaphoric_macro#Defining_anaphoric_macros. Anaphor, e.g. pronoun or pro-form, is borrowed from linguistic Anaphora.
-
-Fine. Thanks for pointing out that difference. 0. Since my reference link is based on Python which is probably based on C, it has no *implicit tail call* which is different from the Scheme standard. So it may be a bit inappropriate here for Scheme. Actually, my reference link is to give more explanation for "recursion" to help future readers, not to say that your answer lacks some  useful information. Apologize if ambiguity. 1. `call/cc` is implemented in Scheme to have something like `return` in C.
-
-"all loops are actually done with recursion.": More specifically, that means "You don't "break" out of the inner calls, you return a solution back *up one level*." https://stackoverflow.com/a/10544666/21294350.
-
-@ikegami In a nutshell, ikegami shows "*common*-language sense of “unary”" is inappropriate. And actually Eric Postpischil also shows that this description is "not a hard-and fast definition" and "Words are flexible" before. So I don't know why both of you keep arguing one statement which has been negotiated before at all. And then you argue about "bad faith" due to that ikegami think that "K&R defining modern *common*-language" is inappropriate (again the conflict is on that "common" word). Continued...
-
-I edited the answer which I thought can be accepted by both of you. https://stackoverflow.com/review/suggested-edits/36800473 Please review that if you have time.
-
-@ikegami and Eric Postpischil, Stack Overflow and Stack Exchange network are very great. They have helped me so much while self learning. Please **be harmonic** and it doesn't help any one to argue about one thing unnecessarily when we have one good solution to peacefully end that argument already.
-
-@Eric Postpischil, I don't know why you rejected that edit since that edit actually uses **your offered reference**. Anyway ikegami's intention is just wanting to point out one **possible** error in your answer. I truly believed ikegami's original intention is **kind** although s/he may say something inappropriately and ad hominem. Please focus on the answer description self **without taking into emotions**. IMHO **"common"** is a bit too general and it can be **better** to use one more neutral description like using one book as the support.
-
-Based on https://docs.racket-lang.org/guide/racket.html#%28part._start-load-mode%29, the mere `-e ...` "supports *loading top-level* expressions", does `-i` also always run in "top-level context" https://docs.racket-lang.org/reference/syntax-model.html#%28tech._top._level._context%29 although it "first requires the racket/init module" https://docs.racket-lang.org/guide/racket.html#%28part._start-interactive-mode%29?
-
-Back to the answer link in the question which is also answered by you (Thanks for your helps), that is where I encountered with the above problems when thinking about the extra "dir = /tmp/" output. There we just run `require` but it seems to not do the *lazy* visit. Could you explain about that?
-
-Back to the answer link in the question which is also answered by you (Thanks for your helps), that is where I encountered with the above problems when thinking about the extra "dir = /tmp/" output. There we just run `require` but it seems to not do the *lazy* visit. Based on `racket` invocation mechanism https://docs.racket-lang.org/guide/racket.html#%28part._start-interactive-mode%29, it seems to be in top-level as "lattens the content of a top-level begin into the top level" https://docs.racket-lang.org/guide/macro-module.html#(part._stx-available-module) implies.
-
-To see how globing works, we can temporarily use `set -x`.
-
-0. "module body expressions are executed *only* when the module is *explicitly instantiated*": But `racket -h` says "3. Evaluate/load expressions/files in order, until first error" and it actually runs `printf`. What's wrong with my understanding? 1. "So while it would be possible to set the current directory in the same phase as require": I tried `(begin-for-syntax (current-directory "/tmp")) (require "foo.rkt")` but that won't load the existing `/tmp/foo.rkt`. Could you clarify about this behavior? Continued...
-
-2. "phase level" seems to be different from environment frame said in SICP (more like `namespace` https://docs.racket-lang.org/rhombus/namespaces-overview.html?url=http%3A%2F%2Fdocs.racket-lang.org%2Fmore%2Findex.html in Racket which can be also used in `eval` although with different APIs), due to having no inheritance. "phase level" is more Racket-specific since R7RS doesn't say about that.
-
-0. One good explanation! Most of the reference is from the standard https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf (the draft is given here). 1. As a reference for "Precedence is built into the formal grammar of the language.", hinted by ref1 https://stackoverflow.com/a/12963342/21294350 and ref2 https://stackoverflow.com/a/63677576/21294350 with its reference paper https://dl.acm.org/doi/pdf/10.1145/321172.321179 definitions about `⋖, ≐` etc which I read while learning about Pratt parsing, continued... 
-
-`postfix-expression` can be only unidirectionally constructed from `unary-expression` which causes the former has the higher precedence than the latter. But `unary-expression` and `cast-expression` can be constructed by each other, so they have  relation `≐`, i.e. the same precedence order.
-
-@xyf https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3220.pdf gives one example in p119 6.7.3.6 EXAMPLE 5. abelenky's answer is similar to that.
-
-0. You and ikegami seem to talk too much about "unary" definition. IMHO it is enough if we can differentiate the unary-expression token in C standard from cast. There is no necessary need to be entangled with those. 1. Could you help checking my point 1 and 3 above? Thanks in advance.
-
-This one English QA forum. Here I put related sentences here for reference in English. "A derivation of a string for a grammar is a *sequence* of grammar rule *applications* that transform the start symbol into the string." and "The members of R are called the (rewrite) *rules or productions* of the grammar." where the latter can be easily understood with maths if you know about "context-free grammar" maths definition https://en.wikipedia.org/wiki/Context-free_grammar. In a nutshell, your understanding is right. Continued...
-
-"The Wikipedia-page in my language contradicts me": Sorry. Probably you mean German https://de.wikipedia.org/wiki/Kontextfreie_Grammatik. But I can't speak that language. With translation tool, "mit folgender Ableitung erzeugt werden" and "eine endliche Menge an Produktionsregeln" should mean similar to the above 2 references. You can also use translation tool to make the above English one into your native language (probably German. Sorry I can't speak that so can't check whether Google translate is right to make you comprehend.)
-
-Now a follow-up question is asked and well answered https://stackoverflow.com/a/79495779/21294350 which also implicitly says about the 3rd sentence in my question quote 'If the variable was previously declared with "my", it uses that variable instead of the global one' by "makes any use of *unqualified* $x refer to that lexical, from the following statement until the end of scope". It is also shown in perlfunc doc "The declaration will not  apply  to additional  uses  of  the  same  variable until the next statement.".
-
-@ikegami Hey guys, please calm down! Both of you seem to be trapped in that definition ambiguity. It's a bit excessive.
-
-Regarding 1, so we can assert that cast-expression and unary-expression *can* have the same precedence order. Is that right? Regarding 3, you mean "the code that parses (int) x has to use both int and x" for "grammatically", i.e. `( type-name ) cast-expression`. And then use "(int) x merely takes the value of x and converts it to an int" for "computationally" because in the *compiled* program it only knows casting to *that type*, e.g. `cvtsi2sd` https://www.felixcloutier.com/x86/cvtsi2sd from int to double in https://godbolt.org/z/rvWoxh5ax. Am my understanding fine?
-
-Thanks for the clarification. Regarding 3, you mean "the code that parses (int) x has to use both int and x" for "grammatically", i.e. `( type-name ) cast-expression`. And then use "(int) x merely takes the value of x and converts it to an int" for "computationally" because in the *compiled* program it only knows casting to *that type*, e.g. `cvtsi2sd` https://www.felixcloutier.com/x86/cvtsi2sd from int to double in https://godbolt.org/z/rvWoxh5ax. Is my understanding fine?
-
-check for clarification for one answer of my question.
-
-It is a more appropriate place to discuss about one question than comments.
-
-@ikegami "I was trying get an error in the answer corrected.": Ok. I got what both of you are arguing about a bit. IMHO `(type)expr` is better to be considered as binary due to from right to left it parses `expr` and then *must also* parse `type` to know what to do. But anyway the answer poster has said "I can also see considering a cast as binary when *taking a different view*". So we can peacefully end the argument.
-
-@Eric Postpischil Maybe the answer should be clarified a bit to show that flexibility explicitly. Do you think that is fine, Eric Postpischil? Then the argument can be peacefully ended.
-
-Re to point 1 I asked: OK. That is a bit beyond to daily usage to change `current-load/use-compiled` behaviour. Re to 2: For "an appropriate degree of *isolation*", so it is different from environment taught in SICP (I refers to this because I am self-learning that now and also self-learning Software Design for Flexibility SDF https://groups.csail.mit.edu/mac/users/gjs/6.945/ which is closely related with SICP.) due to no *inheritance*. For "R6RS", SDF uses R7RS and SICP has no explicit standard reference. I won't dig into that. Anyway thanks for your reference.
-
-Probably someone wants one page in Firefox similar to Chrome's `chrome://version/`, then https://www.reddit.com/r/firefox/comments/lwdkns/comment/gpukjdn/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button `about:support` may help.
+Can we say that we can't calculate the exact value of "least fixed point" in program analysis just like we can't calculate exact $\pi$ value but just give one property for $\pi$, e.g. circle area relation with that which is similar to the above $\text{W}  \equiv  \Phi(\text{W})$?
 # Notice
 I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/pages/syllabus/) recommends and then finds 6.5151 course. So my intention is "A strong understanding of *programming*".
 - I won't read many reference papers except when they are *specifically about programming*.
@@ -112,6 +28,12 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
   so won't dig into
   1. maths proof etc
   2. ingenious algorithm or program structure etc (should be taught in CRLS etc).
+## related docs from 6.945 course
+### commented on 5/7/2025
+- https://groups.csail.mit.edu/mac/users/gjs/6.945/L17-anti-unification.pdf
+  - fine to skip since it is not in the book
+- https://groups.csail.mit.edu/mac/users/gjs/6.945/code/introduction-to-scheme/introduction-to-scheme.pdf
+  - fine to skip since SICP has already taught enough about scheme basics.
 # related summary
 - See https://www.infoq.com/presentations/We-Really-Dont-Know-How-To-Compute/ from https://news.ycombinator.com/item?id=14169292
 # miscs
@@ -121,12 +43,14 @@ I learnt SICP as [mit_6_006_2005](https://ocw.mit.edu/courses/6-046j-introductio
 - code_base TODO
   - check by `grep TODO -r . | grep -v SDF_exercises | grep -v ";;;\|IGNORE"`
 - regex search `sdf/**/*.scm`
+- compared with SICP 
 # @How to learn
 - I forgot how I read book contents in chapter 1~3 (maybe just read the 1st sentence in each paragraph if that is sufficient to get the main ideas).
   From chapter 4, I will read codes first and then read 
   1. *code term* contexts since IMHO SDF codes are complexer than SICP although this may not hold for chapter 4.
-  2. the 1st sentence in each paragraph
-  3. contents enclosed by ~~square brackets~~ parentheses
+  2. the *1st sentence* in each paragraph
+  3. contents enclosed by ~~square brackets~~ *parentheses*
+  4. contexts of italic words if I found those.
   - ~~For chapter 5, since most of contents in the preface have been taught in SICP, so I will  focus on the general ideas first (the above 3 items) and then detailed codes.~~
 ## @%Check p14, 23~27 and other pages (*chapter 1* underlined words by searching "section"/"chapter" as what I did when learning SICP) *after reading each chapter*.
 Here chapter 1 is like one introduction chapter not teaching the detailed programming techniques.
@@ -162,7 +86,7 @@ I probably only checked the preface before something like "Pattern constants" in
   See `tagging-strategy:always` where `tag` only has data `simple-tag-shared` got by `%make-tag-shared` for `make-simple-tag`.
 - ~~> We will see an example of this in the clock handler of the adventure game in section 3.5.4.~~
   IMHO it is more appropriate to check something like `enter-place!` since `avatar?` <= `person?`.
-### @%chapter 4
+### chapter 4
 exercise checked until section 4.6, page checked until section 4.6, section checked until section 4.6 ("chapter" checking is finished).
 - ~~> We will see this technique again in chapter 4, where we use it to compile *combinations* of pattern-matching procedures from patterns.~~
 - ~~> (We will explore algebraic simplification in section 4.2.)~~
@@ -179,9 +103,17 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
 - ~~> a dictionary of bindings accumulated in the match, as described in section 4.3.~~
 - ~~> This pattern shares several characteristics with those we've looked at in previous sections~~
 - ~~> In exercise 4.24 on page 225 we will fix this problem.~~
-### chapter 5
+### @%chapter 5
+exercise checked before section 5.2
+page checked before section 5.2
+section checked before section 5.2
+"chapter" checking is finished.
 - > In chapter 5 we will transcend this embedding strategy, using the powerful idea of metalinguistic abstraction.
+- > We will not need to postpone evaluations until section 5.2, so until then g:advance is just an identity function
+- > we make it possible to include procedures that require *normal-order evaluation for some parameters* (e.g., call by need) or procedures that make declarations on parameters, such as *types* and *units*. We will make some extensions like these in section 5.2.
+  > a parameter could be declared to require that its argument satisfy given *predicates*, which could be types and units; etc.
 - > We will examine more general ways of dealing with backtracking in section 5.4.
+- > In this chapter we have seen that we have great power from the Church-Turing universality of computation.
 ### chapter 6
 - > This is a kind of layering strategy, which we will expand upon in chapter 6.
 ### chapter 7
@@ -219,6 +151,20 @@ exercise checked until section 4.6, page checked until section 4.6, section chec
   see SDF_exercises/software/sdf/combinators/function-combinators.scm reference.
   - [TODO](https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-ref/Construction-of-Hash-Tables.html)
     > Note that if *a datum holds a key strongly*, the table will effectively hold that key strongly.
+- `delay-force`
+  - [purpose](https://standards.scheme.org/corrected-r7rs/r7rs-Z-H-6.html#TAG:__tex2page_index_200)
+    > Thus iterative lazy algorithms that might result in *a long series of chains of delay and force* can be rewritten using delay-force to *prevent consuming unbounded space* during evaluation.
+    where space consumption means stack space.
+  - [same](https://www.gnu.org/software/kawa/Lazy-evaluation.html) as `lazy`
+    also see https://srfi.schemers.org/srfi-45/srfi-45.html
+    > In order to correctly simulate naive graph reduction we should instead find a way of forcing tail suspensions *iteratively*, each time *overwriting the previous result*. 
+  - [this](https://srfi.schemers.org/srfi-155/srfi-155.html) says `delay-force` is unneeded due to
+    > (delay-force <expression>) Equivalent to (delay (force <expression>)).
+    > It is, however, possible to implement this requirement using the continuation marks of SRFI 157, which is demonstrated by the sample implementation accompanying this SRFI. 
+    TODO check the implementation.
+    - [TODO](https://srfi.schemers.org/srfi-154/srfi-154.html)
+      >  Fruitful discussions with him led to the definition of shallow keys to prevent space leaks in SRFI 155
+  - tail call better see wikipedia.
 # TODO
 ## SDF code base
 - `define-load-spec` seems to be [only one instruction](https://groups.csail.mit.edu/mac/users/gjs/6.945/psets/ps02/ps.pdf) but does nothing.
@@ -894,7 +840,7 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   > translates the whole program at once
 - > because there may be multiple possible matches to any particular data if the pattern has more than one segment variable.
   If there is only "one segment variable", then all the rest positions are determined, which then decide the "segment variable" position.
-## @%TODO
+## TODO
 - ~~> Let's see how to organize programs based on pattern matching.~~
 - ~~> And with only a small amount of work we can add semantic attachments, such as the commutativity of lists beginning with the symbols + and *.~~
   TODO Maybe like
@@ -908,7 +854,7 @@ I first read 4.2.2 (actually directly read the codes after reading the contents 
   - See Exercise 4.19 and 4.20.
 - ~~> handle (literal) edge cases~~
   i.e. edge *between nodes* instead of something like `(node ’connect! ’address address)`.
-### @%maybe skipped
+### maybe skipped
 - ~~Exercise 2.12,13 -> SDF_exercises/chapter_2/test-chess.scm~~
   are also "chess referee".
   But it is a bit too long time ago that I wrote these *heavy codes*. I won't compare these with the "chess referee" here...
@@ -979,7 +925,7 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
 ;;; addition
 ;; extra things added besides SICP
 ```
-## @% TODO
+## @% TODO for the preface of chapter 5
 - > These declarations will allow a procedure to defer evaluation of the corresponding argument to when its value is actually needed, providing for lazy evaluation, with or without memoization of the value.
   similar to SICP Exercise 4.31.
 - > So we next separate the interpretation into two phases, analysis and execution. ... The execution procedures all have the same form, and constitute a system of combinators.
@@ -994,8 +940,9 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
   See exercise_codes/SICP/book-codes/ch4-ambeval.scm which needs small addition for `(analyze exp)`.
 - > it turns out that all we need is call/cc to implement amb directly in Scheme, so we conclude by showing how to do this.
   in http://community.schemewiki.org/?LisScheSic but it is down when I wrote this. The archive https://web.archive.org/web/20241114023648/http://community.schemewiki.org/?LisScheSic doesn't have the contents I wrote about `amb`.
-- > we also enable the implementation of declarations on the formal parameters, and perhaps some other options.
-- > with generic hooks for extension.
+## code misc description
+- [rtdata meaning](https://model-realtime.hcldoc.com/help/topic/com.ibm.xtools.rsarte.webdoc/pdf/ModelRealTime%20Services%20Library.pdf)
+  Here it is about runtime procedures like `apply-primitive-procedure` etc.
 ## 5.1
 - > But because our eval is a generic procedure, the set of symbols that are defined by eval may be changed easily and even dynamically
   i.e. adding more handlers by `add-handler!` in `SDF_exercises/software/sdf/common/generic-procedures.scm`.
@@ -1028,7 +975,7 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
 - > remember Alan Perlis's maxim on page 159
   See sicp_notes.md
 - > call by need
-  See SICP Exercise 3.57.
+  See SICP Exercise 3.57 and https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_need
   - (based on exercise_codes/SICP/book-codes/ch4-leval.scm which probably shares the same basic ideas here due to being both by Sussman) Here the thunk value can be reused due to their values are just *delayed*, more specifically each of they just one value which is based on `env` arg due to *lexical scope*.
     - Notice each call of one procedure will create *new* thunks by `delay-it` which can't be used when calling this procedure with the same arguments and *`env`*.
       - How to reuse, see
@@ -1103,6 +1050,72 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
     > early binding ... This is usually stored in the compiled program as an offset in a virtual method table ("v-table")
 - [S-expression](https://en.wikipedia.org/wiki/S-expression) (i.e. `list` in Scheme)
   TODO "like-named notation"
+### @% TODO
+- > we also enable the implementation of *declarations on the formal parameters*, and perhaps some other options.
+- > with generic hooks for extension.
+  IMHO i.e. generic-procedure. I only got one exact definition from google AI
+  > A "generic hook" refers to a *reusable* piece of code, often a function, that can be applied to *various types of data or scenarios*. It's like a general-purpose tool that can be adapted to specific needs by providing appropriate input or parameters.
+  or [see](https://graphite.dev/guides/typescript-generics#:~:text=TypeScript%20generic%20function,length%20property%2C%20so%20no%20error)
+  > Generic interfaces allow you to define a contract that can be applied to various types.
+## 5.2
+- > We could have many kinds of declarations on formal parameters, describing how to handle *operands and arguments*.
+  the former is [specific to operator](https://stackoverflow.com/a/32554318/21294350)
+  > you are analyzing its *execution* then in 2 + 3 you have operands and when looking into *operator method body*, you just received arguments. So look into context.
+  > If analyzing *expression tree*, you can speak about operators and their operands.
+  which is [also one procedure](https://math.stackexchange.com/a/2842453/1059606) where IMHO Function<=Operator<=Procedure where <= means $\subset$.
+  > Operator: usually in higher math and physics contexts is a function whose domain includes other functions. Computer Scientists call these *“higher order functions*”
+  > Procedure: a super set of Algorithm, procedures don’t have a connotation of *mapping inputs to outputs, although they can if you want*.
+  - See codes `g:handle-operand` part in `g:apply` for `general-compound-procedure?`.
+    so for the interpreter, `operand` is that input symbol list which is then interpreted as arguments.
+- > In the original implementations of *by-name parameters* in Algol-60 these combinations of *expression and environment* were called *thunks*.
+  [see](https://gtoal.com/languages/algol60/jff-algol-60-compiler/doc/jff-manual.pdf) p20 where `value l, u;` implies only `a,b` are "by name parameter"s.
+  "the value thunk" and "the address thunk" are just like ~~accessor~~ selectors and mutator said in SICP.
+  > in addition to selectors and constructors, operations called mutators
+  - The details of compiler implementation for how to implement that env and then the related thunks is beyond the doc.
+- > allowing that environment to be garbage-collected if there are *no other pointers to it*.
+  IMHO This only works for Reference counting which is [limited](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)#Reference_counting), [see](https://docs.python.org/release/2.5.2/ext/refcounts.html)
+  > even though there are no further references to *the cycle itself*.
+  also see [the figure](https://en.wikipedia.org/wiki/Reference_counting#Advantages_and_disadvantages) where "all counts remain >0." means all 1s.
+  - see [one tracing strategy](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Na%C3%AFve_mark-and-sweep)
+    "The frequent updates" can be avoided by "run on a time schedule" etc.
+    "reference cycles" can be avoided as the example shows (You can assume object-7 and object-8 constitutes one cycle).
+    "concurrent" see https://en.wikipedia.org/wiki/Tracing_garbage_collection#Real-time_garbage_collection (TODO check the paper).
+  - Escape analysis isn't ~~based on the former 2~~ one separate *independent* strategy for garbage collection.
+  - All in all, all 3 strategies IMHO are based on pointer.
+- > An ancient but important paper by Dan Friedman and David Wise, entitled “Cons should not evaluate its arguments”[40], showed how *lazy functional programming* can be powerful, but is *easily obtained using kons* rather than cons.
+  ~~https://legacy.cs.indiana.edu/ftp/techreports/TR44.pdf is not selectable.~~ [see](./references/papers/TR44.pdf)
+  - see https://www.reddit.com/r/lisp/comments/3w6lf1/comment/cxu19ro/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button, i.e. https://help.luddy.indiana.edu/techreports/TRNNN.cgi?trnum=TR44
+    - > Landin's streams are subsumed into McCarthy's LISP merely by the *redefinition of elementary functions*
+      i.e. that in [SICP](https://sarabander.github.io/sicp/html/3_002e5.xhtml#FOOT186)
+      > In their implementation, cons always delays evaluating its arguments, so that lists *automatically behave as streams*.
+      - also in [SRFI](https://srfi.schemers.org/srfi-41/streams.pdf)
+        - [signature](https://web.cs.dal.ca/~nzeh/Teaching/3137/haskell/first_steps/basic_types/signatures/)
+      - also in https://dtai.cs.kuleuven.be/projects/ALP/newsletter/archive_93_96/comment/streams.html
+        - > Streams can provide *modularity without the need for state variables*. Landin proposes lazy evaluation for processing streams.
+          [i.e.](https://www.xfront.com/stream/streams.pdf)
+          > Stream models can provide an equivalent modularity *without the use of assignment*. Stream functions are *stateless*.
+          see [SICP](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book-Z-H-24.html#%_sec_3.5.5)
+          where *state* is implicit in the stream sequence *steps* (compare `random-numbers` with `rand` or other comparisons).
+    - TODO
+      > This new insight into the role of constructor fdunctions will do much to ease the interface between recursive programmers and iterative programmers, as well as the interface *between programmers and data structure designers.*
+      - Also [see](https://www.reddit.com/r/lisp/comments/p693hi/comment/h9c6d1c/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) although that video doesn't say that specifically.
+    - > The main results are ...
+      shows SDF
+      > showed how lazy functional programming can be powerful
+  - Also see SDF
+    > but the fact that the kons pairs are memoized reduces this to a linear problem.
+- > Some streams are finite, so it is useful to choose a representation for the empty stream.
+  here it uses [odd stream](https://srfi.schemers.org/srfi-41/srfi-41.html)
+  if using even, it should be "even stream" by induction.
+- > The usual *doubly recursive* Fibonacci program is *exponential*
+  [see](https://understanding-recursion.readthedocs.io/en/latest/10%20Fibonacci%201.html)
+- 
+## 5.5
+### @%TODO
+- https://groups.csail.mit.edu/mac/users/gjs/6.945/evaluator-pages.pdf
+# chapter 6
+## 6.5
+- https://groups.csail.mit.edu/mac/users/gjs/6.945/better-layering.pdf
 # Appendix B
 ## concepts not covered in SICP up to now
 - > In MIT/GNU Scheme we can use the sugar recursively, to write:
@@ -1165,6 +1178,10 @@ Recommended time to read Sections 5.1 and 5.2: 12/2=6 days (/2 is considering th
     > (time . "Its ~a, ~a.") ... 
     > The list contains associations between *Scheme symbols and the message templates* (Scheme strings) they name.
     Here "Scheme symbol" is just `message-name`.
+
+# References
+## common
+- [109] R7RS
 
 ---
 

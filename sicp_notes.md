@@ -1816,9 +1816,9 @@ IMHO 6.037 is the condensed (as its main page says) of 6.001 lectures by removin
   [See](https://stackoverflow.com/q/57091377/21294350)
 - > Syntactic sugar causes cancer of the semicolon
   [See](https://stackoverflow.com/questions/547710/why-is-syntactic-sugar-sometimes-considered-a-bad-thing#comment138572595_547760)
-  https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees
-  > The pointer is now clearly below the array
-  i.e. [array of pointers](https://stackoverflow.com/q/6130712/21294350) as expected.
+  - https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees
+    > The pointer is now clearly below the array
+    i.e. [array of pointers](https://stackoverflow.com/q/6130712/21294350) as expected.
 - > e problem arises from the possibility of confusion between the names used for the formal parameters of a procedure and the (possibly identical) names used in the expressions to which the procedure may be applied
   i.e. local compared with global
 ```scheme

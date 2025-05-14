@@ -144,6 +144,44 @@ From Jul 17 to Aug 9, my efficiency is low (continued up to Aug 11, and then up 
   to Feb 22 noon, finish chapter 4 in the book.
   to Feb 27, finish up to considering the ideas for Exercise 5.1.
   Feb 28, rest for one day due to my dad saying strange things maybe because he is sad?
+  to Mar 5, finish up to ex 5.6.
+  to Mar 13, think of ex 5.7 based on a bit naive thoughts by self (*TOO MUCH TIME*).
+  to Mar 20, finish `pratt_new_compatible_with_MIT_GNU_Scheme.scm` which is enough.
+  See 
+  ```bash
+  ~/SICP_SDF/SDF_exercises/chapter_5$ git diff 1c446f44cf68f6f55cfd071fef148922ccc1a2d5...b013ebd2754ee5790db25581e752c807d9066f61 --stat -- .
+  ...
+   chapter_5/5_7_pratt_operator_precedence_parser/python_demo/pratt.py                                       |  114 +++++++
+  ...
+   chapter_5/5_7_pratt_operator_precedence_parser/scheme_demo/compatible_lib.scm                             |   73 +++++
+  ...
+   chapter_5/5_7_pratt_operator_precedence_parser/scheme_demo/orig/pratt_new.scm                             |  650 +++++++++++++++++++++++++++++++++++++++
+   chapter_5/5_7_pratt_operator_precedence_parser/scheme_demo/orig/pratt_new_orig.scm                        |  359 +++++++++++++++++++++
+  ...
+   chapter_5/5_7_pratt_operator_precedence_parser/scheme_demo/syntax_tests/free_identifier.scm               |   10 +
+  ...
+   chapter_5/perl_tests/my_in_for.perl                                                                       |    2 +
+  ...
+  ```
+  In a nutshell, here I checked 
+  0. thegreenplace 
+  1. & siod implementation for Pratt parsing. 
+  2. I also checked for one doc problem shown inside `free_identifier.scm` 
+  3. and one former question asked before for the parenthesis matching algorithm used in that naive implementation (see `perl_tests`).
+  Also see `git diff 1c446f44cf68f6f55cfd071fef148922ccc1a2d5...b013ebd2754ee5790db25581e752c807d9066f61 --dirstat=0 -- .` where `chapter_5/5_7_related_python_behavior/` is mainly about the Python expression grammar checking.
+  to Mar 26, check oilshell blogs (*UNNECESSARY*). 
+  to Mar 29, try to implement re's `?<!` (i.e. `neg-look-behind`) etc using racket (*UNNECESSARY*).
+  to Apr 6, check oilshell blogs (*UNNECESSARILY TOO MUCH*) and check QAs asked by me.
+  to Apr 14, port oilshell implementation to Scheme (*UNNECESSARY*) and rest for 3 days.
+  to Apr 19, port those inside the former `pratt_new_compatible_with_MIT_GNU_Scheme.scm` (*UNNECESSARY*).
+  to Apr 22, add `SentinelLib.scm` etc (*UNNECESSARY*).
+  to Apr 28, finish all *basic* grammar structure in Python expression (*UNNECESSARY*).
+  to May 2 (4 days), fix bugs related with `pratt_new_compatible_with_MIT_GNU_Scheme.scm` (*UNNECESSARY*). (bug/implementation time = 4/(Apr 28-Apr 6)=0.18)
+  to May 4, finish the rest tests for the additional grammar, fix ex 5.5 compatibility problem (*UNNECESSARY*).
+  (4+30+11=45 days can be thought as wasted...)
+  to May 6, give one summary for the former perl QAs (IMHO better to check those *after a bit long time*. So we can give one check without much influence by *historic thoughts for that old problem* which may be wrong. And that check can be also even clear after we think about other unrelated things to make the head clear without being confused too much when *sticking into* that former old problem.).
+  to May 14, finish before ex 5.8 (*CAN BE RECUCED*) with much time spent on solving with the historic physical problem which should be solved when 17 yrs. That is mainly due to *intellectual poverty* instead of financial poverty. The former means something like appearance is not that important compared with the learning rank even we can *temporarily* not care about the appearance but just spend days and nights studying until almost going mad. 
+  I have to say I may probably have a bit of bipolar disorder since my energy is a bit like roller coaster. Or maybe that is just due to I spend long time doing one thing, i.e. self-studying, without having much entertainment besides watching drama sometimes. But IMHO that entertainment has been like paralysis for a long time. I lack money to do something I really wants to do, or maybe just due to human rights lacked in one *centralized* country.
   - Notice the above ps recommendation time have overlap, so my efficiency seems to be very low...
   - Up to now, the main time is spent on reading the book and finishing chapter exercises
 ### @%Chapter 4 time review (my efficiency decreases a lot during this range)

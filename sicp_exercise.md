@@ -1932,6 +1932,12 @@ To compare them, I only give one *brief* comparison after inspecting they are mo
     fib(n) means item n, needing $a_{n}=F_{n+1}-1=fib(n+1)-1$.
   - > Our call-by-need stream optimization effectively constructs such a table automatically, *storing values in the previously forced parts* of the stream.
     This is just how `memo-proc` does.
+    - Also see exercise_codes/SICP/book-codes/ch4-leval.scm `force-it` where argument for one  *specific* procedure won't be reevaluated twice, same as https://cs.stackexchange.com/a/28618/161388 and https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_need.
+      > if the *function* argument is evaluated, that value is stored for *subsequent* use.
+      - TODO
+        > all arguments are passed, meaning that R allows arbitrary side effects.
+        compared with
+        > Haskell supports only side effects (such as mutation) via the use of *monads*.
 - [x] 58
   - this is just `(num*radix)/den` with the first item being the number before the decimal point.
     - same as repo.

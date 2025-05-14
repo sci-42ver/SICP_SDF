@@ -31,7 +31,10 @@
               (parameter-names parameters)
               ;; similar to compound-procedure-args procedure
               ;; > when arguments are to be delayed, and to force or delay arguments accordingly, and you must arrange for forcing to memoize or not
-              (map (lambda (var val) (interpret-var-for-val var val env)) parameters arguments)
+              (map 
+                (lambda (var val) 
+                  (interpret-var-for-val var val env)) 
+                parameters arguments)
               (procedure-environment procedure)))))
         (else
          (error
