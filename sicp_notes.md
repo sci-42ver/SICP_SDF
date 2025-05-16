@@ -2614,6 +2614,10 @@ not use
   - so `int` recursive call in `int`.
 - > we could try to model this system using the procedure
   notice here `(stream-map f y)` is actually `dy/dt`, then we have $\int \frac{dy}{dt}\cdot dt=\int dy=y$ where the last step is based on `y0`.
+  This is also said in
+  > figure 3.34 shows a signal-processing system for solving the differential equation *dy/dt = f(y)* where f is a given function
+  - This should be "t = 1".
+    > by computing the value at y = 1 of the solution to the differential equation dy/dt = y with initial condition y(0) = 1:
 - > One way of dealing with this problem is illustrated by the language ML
   [See](https://courses.cs.washington.edu/courses/cse341/02wi/functional/basics.html)
   > In fact, functions in ML can *only take one argument*. We can write functions which take multiple arguments by having them take *tuples of arguments*
