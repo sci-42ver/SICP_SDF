@@ -1,3 +1,59 @@
+For future readers, see https://stackoverflow.com/questions/20558036/r-function-called-when-pressing-ctrld/20558228#comment30784241_20558228, the top answer by Joshua Ulrich won't work for pressing ^D, also for Pafnucy's and flyingfinger's.
+
+If someone doesn't want to install `lazyeval` which has many dependencies, we can just check the doc https://cran.r-project.org/web/packages/lazyeval/lazyeval.pdf `as.lazy` for "examples" of `?lazy`.
+
+As Noldorin says, Wikipedia says "a function call is performed as soon as it is encountered in a procedure, so it is *also called* eager evaluation or greedy evaluation." IMHO it is better to check its reference which both says something like "Eager evaluation: An *operation* is executed as soon as it is encountered" which includes both function call and function argument evaluation. Trivially the latter is done before the former. Then it just means applicative order. So Wikipedia also says they "are synonymous".
+
+At the first glance, "Non-strict refers to semantics" contradicts with https://en.wikipedia.org/wiki/Evaluation_strategy#Non-strict_evaluation "non-strict *evaluation* order" which is related with runtime. But following its reference, section 2.1 & 2.2 just says same as https://en.wikibooks.org/wiki/Haskell/Denotational_semantics#Strict_and_Non-Strict_Semantics.
+
+Thanks so much. I updated my question to offer more information for the OS in use. With `Sys.getenv("PAGER")`, `PAGER` defaults to be `/usr/bin/more`. I updated that envvar to be `less` in `.Renviron`, then it works as expected.
+
+0. As one complement for what user2357112 says, introselect may be based on heapselect https://en.wikipedia.org/wiki/Introselect which is related with heapsort https://en.wikipedia.org/wiki/Heap_(data_structure)#Applications. `heapify` is O(n) as https://en.wikipedia.org/wiki/Heapsort#Pseudocode says which is enough to get the top. Heapq is related with priority queue, i.e. heap https://en.wikipedia.org/wiki/Heap_(data_structure)#cite_ref-4 used by heapsort.
+
+1. OP may refer to this blog https://apfelmus.nfshost.com/articles/quicksearch.html#message-1---mergesort for "linear time using lazy evaluation with take" which IMHO is *wrong* as point 0 says. That behavior doesn't hold for some recursive sorting algorithm like mergesort which has no guarantee when we find the max/min. We can think for mergesort using one example to illustrate that https://en.wikipedia.org/wiki/Merge_sort#Analysis: to get the final min 3 there, we need to get the min of its two merged lists, and so on.
+
+Based on https://stackoverflow.com/q/66293709/21294350, IMHO `heapify` used by heapsort will work although less straightforward than one-pass traversal. But that won't work for mergesort or quicksort.
+
+Partial summary for luqui's link (notice it shows lazy evaluation advantages instead of disadvantages): with lazy evaluation, sort won't sort the whole list until they are needed. So for mergesort https://en.wikipedia.org/wiki/Merge_sort#Analysis, if we only want to get the min, we only need to compare min of the 2 lists to merge, so the recurrence relation becomes T(n) = 2T(n/2) + *1*, which is O(n) https://www.wolframalpha.com/input?i2d=true&i=a%5C%2891%29n%5C%2893%29%3D%3D++2+a%5C%2891%29Divide%5Bn%2C2%5D%5C%2893%29+%2B+1. This is similar for max. Continued...
+
+0. WFH: work from home :). Fine although not related with this QA at all. 1. @alternative could you give some reference? https://en.wikipedia.org/wiki/Beta_normal_form#cite_note-:1-5 uses normal form and explains the *inclusive* relation among (Weak) (Head) Normal Form. 1.a. For all readers, here the definition from the book for Weak Head Normal Form adds `y e1 . . . em` compared with that in wikipedia where `y` is one un-evaluated variable instead of one possible function (You can check this in p32 of that book) which is same as https://en.wikipedia.org/wiki/Lambda_calculus rules. Cont.
+
+For both definitions, the single variable and function application are all not WHNF, so also not NF. (Thanks for user295190 to point out that helpful wikipedia link.)
+
+0. Firefox needs to disable Quick Find https://support.mozilla.org/en-US/questions/1287036#answer-1312882. 1. The problem is that it can't support case-insensitive search, even with flag https://stackoverflow.com/a/2287449/21294350. To support that, see https://superuser.com/a/1317035.
+
+@CMCDragonkai see user295190's comment.
+
+More specifically for future readers, this corresponds to constructor in https://wiki.haskell.org/index.php?title=Weak_head_normal_form.
+
+WHNF means lambda body can be redex at least compared with HNF and the rest for them are same, then what does "I.e. the top level is not a redex" in the reference mean?
+
+0. This won't work if some website doesn't use form to implement that login part. 1. For  future readers, also see https://doc.scrapy.org/en/latest/topics/request-response.html#using-formrequest-from-response-to-simulate-a-user-login for more about the case when login is implemented with form.
+
+For me, this problem is due to I have no project shown in https://doc.scrapy.org/en/latest/intro/tutorial.html#creating-a-project. Only one file shown in https://doc.scrapy.org/en/latest/intro/overview.html#walk-through-of-an-example-spider won't work.
+
+More specifically, the blog gives one possible haskell  implementation for mergesort. You can check "((1 `f` 2) `f` (3 `f` 4)) `f` ((5 `f` 6) `f` (7 `f` 8))" example which is just doing many `pairs` operations, so "O(n + n/2 + n/4 + n/8 + ..) = O(n) time" https://www.wolframalpha.com/input?i2d=true&i=n%2BDivide%5Bn%2C2%5D%2BDivide%5Bn%2C4%5D%2B...%2B1. Then to get each min element requires O(log n) due to binary tree structure. So O(n + k*log n) time. (You can check others there like that for quicksort if interested.)
+
+1. Actually mergesort also works if with lazy evaluation, see https://stackoverflow.com/questions/63698539/how-is-lazy-evaluation-implemented-in-a-way-that-doesnt-require-more-overhead-t#comment140438797_63698539.
+
+It is possible if with lazy evaluation https://stackoverflow.com/questions/63698539/how-is-lazy-evaluation-implemented-in-a-way-that-doesnt-require-more-overhead-t#comment140438797_63698539 or we only do partial work in one sorting algorithm like `heapify` in heapsort https://stackoverflow.com/questions/66293709/lazy-sort-in-python#comment140438540_66293709.
+
+Also see https://stackoverflow.com/a/76020184/21294350 which says about the above quote more clearly.
+
+At least in R 4.5.0, this method doesn't work.
+
+We can also set env for R in `.Renviron`.
+
+More specifically, we set `R_LIBS` https://www.nas.nasa.gov/hecc/support/kb/installing-r-packages-in-your-own-directories_542.html which is also said in https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#index-R_005fLIBS. Then we can use `Sys.getenv()` to check that.
+
+"But as FUZxxl points out, laziness is not the only way to implement non-strict semantics.": It is unavailable now. https://wiki.haskell.org/index.php?title=Lazy_vs._non-strict#Further_references may help where lazy may have  one huge influence for *parallelisation*. So https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_future is preferred which is non-deterministic to help parallelisation. Then we need something like lock etc to ensure program can achieve what we wants. Optimistic evaluation IMHO is just call-by-need version for lenient evaluation.
+
+One very good explanation based on comparison with `map`! IMHO it is clearer to check haskell official definitions (search with hoogle) of `map` https://hackage.haskell.org/package/base-4.21.0.0/docs/Prelude.html#v:map and functor https://hackage.haskell.org/package/base-4.21.0.0/docs/Prelude.html#t:Functor. So `map f a` is just applying `f` to each element of `a` while `fmap` is normally one *method* of one functor. So the above `Maybe` and `Either` are functors as AndrewC says. That is also implied in https://wiki.haskell.org/index.php?title=Functor. Continued...
+
+IMHO It is better to relate with maths https://en.wikipedia.org/wiki/Functor#Definition where `fmap` corresponds to morphism part while "associates each object ..." part is just what the original function does. For example, `Maybe` just maps one type, e.g. `Int`, to its codomain and also has one `fmap` method for `F(f)` part.
+
+"implies a loss of control": More specifically if someone is confused. That means "lose control over the order in which their code is executed" https://softwareengineering.stackexchange.com/q/163985/466148. But we have more  control for definging control structures since all are lazy https://en.wikipedia.org/wiki/Lazy_evaluation#Control_structures although for eager evaluation we have macro etc to do that in the Scheme language context.
+
 As one note for future readers: Here "always maps to $\bot$" means we always do that if possible. You can check https://en.wikipedia.org/wiki/Least_fixed_point#Denotational_semantics definition of $\text{fact}_0$ and $\text{fact}$. "The set of all mathematical functions ..." definition for "the least fixed point" may give you one more understandable interpretation for "the least fixed point".
 
 1. For $\bot$, wikipedia means "undefined" which is same as the above "diverge" if we doesn't do fine-grained classification including exception etc https://stackoverflow.com/q/14698414/21294350. We can always think that they are same https://stackoverflow.com/a/34466765/21294350 which is actually one "artificial mathematical object" besides those normal objects in the mapping domain to capture the corner case.
@@ -157,7 +213,10 @@ section checked before section 5.2
     where space consumption means stack space.
   - [same](https://www.gnu.org/software/kawa/Lazy-evaluation.html) as `lazy`
     also see https://srfi.schemers.org/srfi-45/srfi-45.html
-    > In order to correctly simulate naive graph reduction we should instead find a way of forcing tail suspensions *iteratively*, each time *overwriting the previous result*. 
+    > In order to correctly simulate naive graph reduction we should instead find a way of forcing tail suspensions *iteratively*, each time *overwriting the previous result*.
+    - > wrap procedure bodies with (delay (force ...)).
+      just to delay.
+      But for the mere `delay`, when `force`, we will have `(force (delay (if ...)))` instead of `(if ... (force (delay '())))` which will help iterative algorithm as the above says.
   - [this](https://srfi.schemers.org/srfi-155/srfi-155.html) says `delay-force` is unneeded due to
     > (delay-force <expression>) Equivalent to (delay (force <expression>)).
     > It is, however, possible to implement this requirement using the continuation marks of SRFI 157, which is demonstrated by the sample implementation accompanying this SRFI. 
